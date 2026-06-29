@@ -16,5 +16,7 @@ public record CvFullAnalysisResponse(
         List<StrengthItem> strengths,
         List<WeaknessItem> weaknesses,
         List<ImprovementTip> tips,
-        List<String> extractedSkills
+        List<String> extractedSkills,
+        ScoreBreakdownResponse breakdown,
+        ScoreEvidenceResponse evidence
 ) {}
