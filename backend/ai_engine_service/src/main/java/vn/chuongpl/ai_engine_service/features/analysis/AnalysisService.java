@@ -54,6 +54,7 @@ public class AnalysisService {
     private final UserClient userClient;
     private final StructuredProfileExtractionService structuredProfileExtractionService;
     private final DeterministicCvScoringService deterministicCvScoringService;
+    private final OnetOccupationKnowledgeService onetOccupationKnowledgeService;
 
     @Value("${app.ai.recommend-batch-size:20}")
     private int recommendBatchSize;
@@ -364,9 +365,23 @@ public class AnalysisService {
                     String.join("\n- ", safeList(job.requirements()))
             );
         } else {
-            matchAnalysis = analyzeWithText(cvText, targetPosition, targetPosition, "", "");
-            overallScore = matchAnalysis.matchScore();
-            improvement = improveWithText(cvText, targetPosition, targetPosition, "", "");
+            OnetJobProfile onetJobProfile = onetOccupationKnowledgeService.resolve(cvProfile).orElse(null);
+            if (onetJobProfile != null) {
+                matchAnalysis = deterministicCvScoringService.score(cvProfile, onetJobProfile.requirements());
+                overallScore = matchAnalysis.matchScore();
+                targetPosition = nvl(onetJobProfile.targetPosition()).isBlank() ? targetPosition : onetJobProfile.targetPosition();
+                improvement = improveWithText(
+                        cvText,
+                        onetJobProfile.jobDescription(),
+                        onetJobProfile.jobTitle(),
+                        onetJobProfile.jobSkills(),
+                        onetJobProfile.jobRequirements()
+                );
+            } else {
+                matchAnalysis = analyzeWithText(cvText, targetPosition, targetPosition, "", "");
+                overallScore = matchAnalysis.matchScore();
+                improvement = improveWithText(cvText, targetPosition, targetPosition, "", "");
+            }
         }
 
         String scoreLabel = request.jobId() != null ? matchAnalysis.scoreLabel() : computeScoreLabel(overallScore);

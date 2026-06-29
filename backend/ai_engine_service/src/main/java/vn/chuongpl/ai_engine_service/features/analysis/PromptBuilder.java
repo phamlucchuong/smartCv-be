@@ -54,6 +54,10 @@ public class PromptBuilder {
         return apply(load("prompts/extract_jd_requirements.md"), vars);
     }
 
+    public String buildExtractOnetRequirementsPrompt(Map<String, Object> vars) {
+        return apply(load("prompts/extract_onet_requirements.md"), vars);
+    }
+
     public String systemPrompt() {
         return load("prompts/skill.md");
     }

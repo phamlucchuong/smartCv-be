@@ -14,8 +14,11 @@ import vn.chuongpl.ai_engine_service.enums.ErrorCode;
 import vn.chuongpl.ai_engine_service.exception.AppException;
 import vn.chuongpl.ai_engine_service.features.analysis.AnalysisService;
 import vn.chuongpl.ai_engine_service.features.analysis.DeterministicCvScoringService;
+import vn.chuongpl.ai_engine_service.features.analysis.OnetJobProfile;
+import vn.chuongpl.ai_engine_service.features.analysis.OnetOccupationKnowledgeService;
 import vn.chuongpl.ai_engine_service.features.analysis.PromptBuilder;
 import vn.chuongpl.ai_engine_service.features.analysis.StructuredCvProfile;
+import vn.chuongpl.ai_engine_service.features.analysis.StructuredJobRequirements;
 import vn.chuongpl.ai_engine_service.features.analysis.StructuredProfileExtractionService;
 import vn.chuongpl.ai_engine_service.integration.cv.CvTextExtractor;
 import vn.chuongpl.ai_engine_service.integration.job.JobClient;
@@ -47,6 +50,7 @@ class AnalysisServiceCvFullTest {
     @Mock UserClient userClient;
     @Mock StructuredProfileExtractionService structuredProfileExtractionService;
     @Mock DeterministicCvScoringService deterministicCvScoringService;
+    @Mock OnetOccupationKnowledgeService onetOccupationKnowledgeService;
 
     @InjectMocks AnalysisService analysisService;
 
@@ -77,6 +81,7 @@ class AnalysisServiceCvFullTest {
         when(userClient.getCvInfo(CV_ID)).thenReturn(cvInfo);
         when(cvTextExtractor.resolveCvText(null, CV_URL)).thenReturn(CV_TEXT);
 
+        when(onetOccupationKnowledgeService.resolve(any())).thenReturn(java.util.Optional.empty());
         when(promptBuilder.buildExtractJobTargetPrompt(any())).thenReturn("extract prompt");
         when(modelRouter.call(anyString(), eq("extract prompt")))
                 .thenReturn("{\"targetPosition\":\"Backend Engineer\",\"targetDomain\":\"Tech\"}");
@@ -116,6 +121,7 @@ class AnalysisServiceCvFullTest {
         when(userClient.getCvInfo(CV_ID)).thenReturn(cvInfo);
         when(cvTextExtractor.resolveCvText(null, CV_URL)).thenReturn(CV_TEXT);
 
+        when(onetOccupationKnowledgeService.resolve(any())).thenReturn(java.util.Optional.empty());
         when(promptBuilder.buildExtractJobTargetPrompt(any())).thenReturn("extract prompt");
         when(modelRouter.call(anyString(), eq("extract prompt")))
                 .thenReturn("{\"targetPosition\":\"Back-end Developer Intern\",\"targetDomain\":\"Tech\"}");
@@ -150,6 +156,7 @@ class AnalysisServiceCvFullTest {
         when(userClient.getCvInfo(CV_ID)).thenReturn(cvInfo);
         when(cvTextExtractor.resolveCvText(null, CV_URL)).thenReturn(CV_TEXT);
 
+        when(onetOccupationKnowledgeService.resolve(any())).thenReturn(java.util.Optional.empty());
         when(promptBuilder.buildExtractJobTargetPrompt(any())).thenReturn("extract prompt");
         when(modelRouter.call(anyString(), eq("extract prompt")))
                 .thenReturn("{\"targetPosition\":\"Back-end Developer Intern\",\"targetDomain\":\"Tech\"}");
@@ -217,6 +224,66 @@ class AnalysisServiceCvFullTest {
         assertThat(result.extraSkills()).containsExactly("React.js", "Spring Boot", "Postman");
         assertThat(result.extractedSkills()).containsExactly(
                 "Back-end development", "Golang", "React.js", "Spring Boot", "Postman");
+    }
+
+    @Test
+    void analyzeCv_no_jobId_prefers_onet_requirements_when_available() {
+        CvInfoResponse cvInfo = new CvInfoResponse(CV_ID, CV_URL, "cv.pdf", USER_ID);
+        when(userClient.getCvInfo(CV_ID)).thenReturn(cvInfo);
+        when(cvTextExtractor.resolveCvText(null, CV_URL)).thenReturn(CV_TEXT);
+
+        StructuredCvProfile cvProfile = new StructuredCvProfile(
+                new StructuredCvProfile.CandidateProfile(List.of("Backend Engineer"), "Mid", List.of("Tech"), 4),
+                new StructuredCvProfile.SkillProfile(List.of("Java"), List.of("Git"), List.of("Spring Boot"),
+                        List.of("PostgreSQL"), List.of(), List.of(), List.of("English")),
+                List.of(),
+                List.of(),
+                List.of(),
+                List.of()
+        );
+        when(structuredProfileExtractionService.extractCvProfile(CV_TEXT)).thenReturn(cvProfile);
+
+        StructuredJobRequirements requirements = new StructuredJobRequirements(
+                new StructuredJobRequirements.JobInfo("Software Developers", "Mid", "Tech", "Full-time"),
+                new StructuredJobRequirements.RequirementProfile(
+                        List.of("Java"), List.of("Docker"), List.of("Git"), List.of("Spring Boot"),
+                        List.of("PostgreSQL"), List.of(), List.of("English"), List.of(), 3
+                ),
+                List.of("Build APIs"),
+                List.of()
+        );
+
+        when(onetOccupationKnowledgeService.resolve(cvProfile)).thenReturn(java.util.Optional.of(
+                new OnetJobProfile(
+                        "Software Developers",
+                        "Software Developers",
+                        "O*NET-backed role profile",
+                        "Java, Spring Boot, PostgreSQL",
+                        "3+ years\nBuild APIs",
+                        requirements
+                )
+        ));
+        when(deterministicCvScoringService.score(eq(cvProfile), eq(requirements))).thenReturn(
+                new vn.chuongpl.ai_engine_service.dtos.response.CvAnalysisResponse(
+                        84, "Good", List.of("Java"), List.of("Docker"), List.of("Git"),
+                        "Deterministic score from O*NET requirements", null, null
+                )
+        );
+
+        when(promptBuilder.buildImproveStructuredPrompt(any())).thenReturn("improve prompt");
+        when(modelRouter.call(anyString(), eq("improve prompt")))
+                .thenReturn("{\"strengths\":[],\"weaknesses\":[],\"tips\":[]}");
+
+        doNothing().when(userClient).updateCvAnalysis(anyString(), anyString(), anyString());
+
+        CvFullAnalysisResponse result = analysisService.analyzeCv(
+                new CvFullAnalysisRequest(CV_ID, null), USER_ID, true);
+
+        assertThat(result.targetPosition()).isEqualTo("Software Developers");
+        assertThat(result.matchScore()).isEqualTo(84);
+        verify(deterministicCvScoringService).score(cvProfile, requirements);
+        verify(promptBuilder, never()).buildAnalyzePrompt(any());
+        verify(promptBuilder, never()).buildExtractJobTargetPrompt(any());
     }
 
     @Test

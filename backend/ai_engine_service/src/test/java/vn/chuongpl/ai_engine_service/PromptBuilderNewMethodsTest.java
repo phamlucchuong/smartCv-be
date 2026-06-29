@@ -58,4 +58,18 @@ class PromptBuilderNewMethodsTest {
         assertThat(prompt).contains("mustHaveSkills");
         assertThat(prompt).contains("minYearsExperience");
     }
+
+    @Test
+    void buildExtractOnetRequirementsPrompt_contains_onet_payload() {
+        String prompt = promptBuilder.buildExtractOnetRequirementsPrompt(Map.of(
+                "TARGET_ROLE", "Backend Engineer",
+                "TARGET_LEVEL", "Mid",
+                "TARGET_YEARS", "4",
+                "ONET_JOB_JSON", "{\"title\":\"Software Developers\",\"tasks\":[\"Build APIs\"]}"
+        ));
+        assertThat(prompt).contains("Backend Engineer");
+        assertThat(prompt).contains("Software Developers");
+        assertThat(prompt).contains("mustHaveSkills");
+        assertThat(prompt).contains("Build APIs");
+    }
 }
