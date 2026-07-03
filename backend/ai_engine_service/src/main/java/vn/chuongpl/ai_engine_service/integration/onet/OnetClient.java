@@ -56,7 +56,7 @@ public class OnetClient {
 
     private <T> T exchange(String url, Class<T> responseType) {
         HttpHeaders headers = new HttpHeaders();
-        headers.setBasicAuth(properties.getUsername(), properties.getPassword());
+        headers.set("X-API-Key", properties.getApiKey());
         headers.setAccept(java.util.List.of(MediaType.APPLICATION_JSON));
         return restTemplate.exchange(url, HttpMethod.GET, new HttpEntity<>(headers), responseType).getBody();
     }

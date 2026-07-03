@@ -14,6 +14,7 @@ Files:
 - `job-service.tables.md`
 - `application-service.tables.md`
 - `notification-service.tables.md`
+- `payment-service.tables.md`
 - `smartcv.tables.md`
 
 Scope:

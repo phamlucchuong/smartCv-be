@@ -9,6 +9,7 @@ import vn.chuongpl.ai_engine_service.enums.ErrorCode;
 import vn.chuongpl.ai_engine_service.exception.AppException;
 import vn.chuongpl.ai_engine_service.model.AiProvider;
 import vn.chuongpl.ai_engine_service.model.AiModelGatewayRouter;
+import vn.chuongpl.ai_engine_service.security.AiCredentialCipher;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,14 +22,18 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class AiAdminServiceTest {
 
+    private static final String TEST_KEY = "MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDE=";
+
     @Mock AiProviderConfigRepository repository;
     @Mock AiModelGatewayRouter router;
 
+    AiCredentialCipher cipher;
     AiAdminService service;
 
     @BeforeEach
     void setUp() {
-        service = new AiAdminService(repository, router);
+        cipher = new AiCredentialCipher(TEST_KEY);
+        service = new AiAdminService(repository, router, cipher);
     }
 
     @Test
@@ -46,7 +51,9 @@ class AiAdminServiceTest {
         assertThat(response.getProvider()).isEqualTo(AiProvider.GROQ);
         assertThat(response.isConfigured()).isTrue();
         assertThat(response.getModel()).isEqualTo("llama-3.1-8b-instant");
-        verify(repository).save(any(AiProviderConfig.class));
+        verify(repository).save(argThat(c -> c.getId() != null && !c.getId().isBlank()
+                && !"gsk-test".equals(c.getApiKey())
+                && cipher.decrypt(c.getApiKey()).equals("gsk-test")));
     }
 
     @Test
@@ -136,5 +143,16 @@ class AiAdminServiceTest {
         assertThat(result).hasSize(2);
         assertThat(result.get(0).isConfigured()).isTrue();
         assertThat(result.get(1).isConfigured()).isFalse();
+    }
+
+    @Test
+    void listAll_never_exposes_raw_oauthToken() {
+        when(repository.findAll()).thenReturn(List.of(
+            AiProviderConfig.builder().provider(AiProvider.CLAUDE_AGENT_SDK).oauthToken("raw-oauth-secret").build()
+        ));
+
+        List<AiProviderConfigResponse> result = service.listAll();
+
+        assertThat(result.get(0).isOauthConfigured()).isTrue();
     }
 }

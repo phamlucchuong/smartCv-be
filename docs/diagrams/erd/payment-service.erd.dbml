@@ -1,0 +1,36 @@
+Project payment_service_erd {
+  database_type: "MongoDB"
+}
+
+// Logical ERD for payment-service.
+
+Table payment_orders {
+  id varchar [pk]
+  order_code bigint [not null]
+  user_id varchar [not null]
+  user_role varchar
+  package_id varchar [not null]
+  package_name varchar
+  package_ai_credits int
+  package_job_limit int
+  package_cv_limit int
+  package_duration_days int
+  amount bigint
+  status varchar
+  payment_url text
+  qr_code text
+  created_at datetime
+  updated_at datetime
+  paid_at datetime
+}
+
+Table users {
+  id varchar [pk]
+}
+
+Table service_packages {
+  id varchar [pk]
+}
+
+Ref: payment_orders.user_id > users.id
+Ref: payment_orders.package_id > service_packages.id

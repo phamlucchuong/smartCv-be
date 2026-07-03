@@ -43,6 +43,8 @@ spring:
     password: ${RABBITMQ_PASSWORD:admin123}
 
 app:
+  security:
+    credential-key: ${APP_ENCRYPTION_KEY:}
   gateway:
     internal-secret: ${GATEWAY_INTERNAL_SECRET:changeme}
   user-service:
@@ -53,27 +55,10 @@ app:
     base-url: ${APPLICATION_SERVICE_URL:http://localhost:8083/application}
   ai:
     recommend-batch-size: ${AI_RECOMMEND_BATCH:20}
-    providers:
-      groq:
-        api-key: ${GROQ_API_KEY:}
-        base-url: ${GROQ_BASE_URL:https://api.groq.com/openai/v1}
-        model: ${GROQ_DEFAULT_MODEL:llama-3.3-70b-versatile}
-      gemini:
-        api-key: ${GEMINI_API_KEY:}
-        base-url: ${GEMINI_BASE_URL:https://generativelanguage.googleapis.com/v1beta/openai}
-        model: ${GEMINI_DEFAULT_MODEL:gemini-2.0-flash}
-      anthropic:
-        api-key: ${ANTHROPIC_API_KEY:}
-        model: ${ANTHROPIC_DEFAULT_MODEL:claude-haiku-4-5-20251001}
-      azure-openai:
-        api-key: ${AZURE_OPENAI_API_KEY:}
-        endpoint: ${AZURE_OPENAI_ENDPOINT:}
-        deployment-name: ${AZURE_OPENAI_DEPLOYMENT_NAME:gpt-4o}
   onet:
     enabled: ${ONET_ENABLED:false}
     base-url: ${ONET_BASE_URL:https://api-v2.onetcenter.org}
-    username: ${ONET_USERNAME:}
-    password: ${ONET_PASSWORD:}
+    api-key: ${ONET_API_KEY:}
     search-limit: ${ONET_SEARCH_LIMIT:5}
 
 logging:

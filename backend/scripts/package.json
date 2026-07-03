@@ -1,0 +1,12 @@
+{
+  "name": "smartcv-seed",
+  "private": true,
+  "type": "module",
+  "description": "Master data seeder for SmartCV databases",
+  "scripts": {
+    "seed": "node seed_master.mjs"
+  },
+  "dependencies": {
+    "mongodb": "^6.10.0"
+  }
+}

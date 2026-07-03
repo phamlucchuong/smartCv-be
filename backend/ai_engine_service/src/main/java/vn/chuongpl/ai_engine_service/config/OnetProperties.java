@@ -8,13 +8,10 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class OnetProperties {
     private boolean enabled;
     private String baseUrl = "https://api-v2.onetcenter.org";
-    private String username;
-    private String password;
+    private String apiKey;
     private int searchLimit = 5;
 
     public boolean isConfigured() {
-        return enabled
-                && username != null && !username.isBlank()
-                && password != null && !password.isBlank();
+        return enabled && apiKey != null && !apiKey.isBlank();
     }
 }

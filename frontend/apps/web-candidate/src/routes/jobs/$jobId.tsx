@@ -17,6 +17,10 @@ import {
   Users,
   X,
   Upload,
+  Sparkles,
+  BarChart3,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react'
 import {
   useGetJobById,
@@ -34,10 +38,13 @@ import {
   getListCvsQueryKey,
   AXIOS_INSTANCE,
   useGetAssessmentsByJob,
+  useAnalyzeCv,
+  type AiModels,
 } from '@smart-cv/api'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { hasCandidateRole, useAuthStore } from '../../store/useAuthStore'
+import { usePreferencesStore } from '../../store/usePreferencesStore'
 
 export const Route = createFileRoute('/jobs/$jobId')({
   component: JobDetailPage,
@@ -105,9 +112,14 @@ function JobDetailPage() {
   const queryClient = useQueryClient()
   const { isAuthenticated, role } = useAuthStore()
   const isCandidate = isAuthenticated && hasCandidateRole(role)
+  const lang = usePreferencesStore((s) => s.language)
 
   const [showApplyModal, setShowApplyModal] = React.useState(false)
   const [showStickyBar, setShowStickyBar] = React.useState(false)
+  const [showAnalyzeModal, setShowAnalyzeModal] = React.useState(false)
+  const [analysisResult, setAnalysisResult] = React.useState<AiModels.CvFullAnalysisResponse | null>(null)
+  const [showAnalysisPanel, setShowAnalysisPanel] = React.useState(false)
+  const [isAnalyzing, setIsAnalyzing] = React.useState(false)
   const heroRef = React.useRef<HTMLDivElement>(null)
 
   const { data: jobData, isLoading, isError } = useGetJobById(jobId)
@@ -238,6 +250,19 @@ function JobDetailPage() {
     }
   }
 
+  function handleAnalyzeClick() {
+    if (!isCandidate) {
+      toast.error(
+        lang === 'VI'
+          ? 'Vui lòng đăng nhập tài khoản ứng viên để phân tích CV!'
+          : 'Please log in as a candidate to analyze your CV!'
+      )
+      setTimeout(() => { navigate({ to: '/signin' }) }, 1500)
+      return
+    }
+    setShowAnalyzeModal(true)
+  }
+
   if (isLoading) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
@@ -277,6 +302,31 @@ function JobDetailPage() {
           jobId={jobId}
           onSuccess={() => queryClient.invalidateQueries({ queryKey: getGetMyApplicationForJobQueryKey(jobId) })}
           onClose={() => setShowApplyModal(false)}
+        />
+      )}
+      {showAnalyzeModal && (
+        <AnalyzeCvModal
+          jobId={jobId}
+          lang={lang}
+          isAnalyzing={isAnalyzing}
+          onAnalyze={(cvId) => {
+            setIsAnalyzing(true)
+          }}
+          onAnalyzeDone={(result) => {
+            setIsAnalyzing(false)
+            setAnalysisResult(result)
+            setShowAnalysisPanel(true)
+            setShowAnalyzeModal(false)
+            toast.success(
+              lang === 'VI' ? 'Phân tích CV hoàn thành!' : 'CV analysis complete!',
+              { description: lang === 'VI' ? 'Nhấn "Xem kết quả" để xem chi tiết.' : 'Click "View Results" to see details.' }
+            )
+          }}
+          onError={(msg) => {
+            setIsAnalyzing(false)
+            toast.error(msg)
+          }}
+          onClose={() => { if (!isAnalyzing) setShowAnalyzeModal(false) }}
         />
       )}
 
@@ -431,7 +481,52 @@ function JobDetailPage() {
                       <Heart className={cn('h-4 w-4 mr-2', saved && 'fill-current')} />
                       {saved ? t('job_saved') : t('job_save')}
                     </Button>
+                    {isCandidate && (
+                      <Button
+                        variant="outline"
+                        className="h-11 px-6 rounded-xl border-[var(--ai)]/50 text-[var(--ai)] hover:bg-[var(--ai)]/5 hover:border-[var(--ai)]"
+                        onClick={handleAnalyzeClick}
+                        disabled={isAnalyzing}
+                      >
+                        <Sparkles className={cn('h-4 w-4 mr-2', isAnalyzing && 'animate-pulse')} />
+                        {isAnalyzing
+                          ? (lang === 'VI' ? 'Đang phân tích...' : 'Analyzing...')
+                          : (lang === 'VI' ? 'Phân tích CV' : 'Analyze CV')}
+                      </Button>
+                    )}
+                    {analysisResult && !isAnalyzing && (
+                      <Button
+                        variant="outline"
+                        className="h-11 px-6 rounded-xl border-emerald-500/50 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-50 dark:hover:bg-emerald-950/20"
+                        onClick={() => setShowAnalysisPanel((v) => !v)}
+                      >
+                        <BarChart3 className="h-4 w-4 mr-2" />
+                        {lang === 'VI' ? 'Xem kết quả' : 'View Results'}
+                        {showAnalysisPanel
+                          ? <ChevronUp className="h-3.5 w-3.5 ml-1.5" />
+                          : <ChevronDown className="h-3.5 w-3.5 ml-1.5" />}
+                      </Button>
+                    )}
                   </div>
+
+                  {/* Inline Analysis Result Panel */}
+                  {showAnalysisPanel && analysisResult && (
+                    <div className="mt-5 rounded-2xl border border-purple-100 dark:border-purple-900/30 bg-gradient-to-br from-purple-50/60 via-white to-indigo-50/40 dark:from-purple-950/10 dark:via-slate-900/60 dark:to-indigo-950/10 p-5 space-y-4 animate-in fade-in slide-in-from-top-2 duration-200">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-2 text-sm font-bold text-[var(--ai)]">
+                          <Sparkles className="h-4 w-4" />
+                          {lang === 'VI' ? 'Kết quả phân tích CV theo job này' : 'CV Analysis Results for this Job'}
+                        </div>
+                        <button
+                          onClick={() => setShowAnalysisPanel(false)}
+                          className="p-1 rounded-lg hover:bg-muted/60 text-muted-foreground hover:text-foreground transition-colors"
+                        >
+                          <X className="h-4 w-4" />
+                        </button>
+                      </div>
+                      <CvJobAnalysisResult result={analysisResult} lang={lang} />
+                    </div>
+                  )}
 
 
                 </CardContent>
@@ -977,6 +1072,413 @@ function ApplyModal({ jobId, onSuccess, onClose }: ApplyModalProps) {
           )}
         </CardContent>
       </Card>
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// AnalyzeCvModal — lets user pick or upload a CV, then triggers analysis
+// ---------------------------------------------------------------------------
+interface AnalyzeCvModalProps {
+  jobId: string
+  lang: string
+  isAnalyzing: boolean
+  onAnalyze: (cvId: string) => void
+  onAnalyzeDone: (result: AiModels.CvFullAnalysisResponse) => void
+  onError: (msg: string) => void
+  onClose: () => void
+}
+
+function AnalyzeCvModal({ jobId, lang, isAnalyzing, onAnalyze, onAnalyzeDone, onError, onClose }: AnalyzeCvModalProps) {
+  const { isAuthenticated, role } = useAuthStore()
+  const isCandidate = isAuthenticated && hasCandidateRole(role)
+  const [selectedCvId, setSelectedCvId] = React.useState('')
+  const fileInputRef = React.useRef<HTMLInputElement>(null)
+  const queryClient = useQueryClient()
+
+  const { data: cvsData, isLoading: cvsLoading } = useListCvs({
+    query: { enabled: isCandidate },
+  })
+  const cvList = React.useMemo(() => cvsData?.data ?? [], [cvsData?.data])
+  const effectiveCvId = selectedCvId || cvList.find((c) => c.default)?.id || cvList[0]?.id || ''
+
+  const uploadMutation = useMutation({
+    mutationFn: async (file: File) => {
+      const form = new FormData()
+      form.append('file', file)
+      return AXIOS_INSTANCE.post('/api/candidates/cv/upload', form, {
+        transformRequest: [
+          (data, headers) => {
+            if (headers) delete (headers as Record<string, unknown>)['Content-Type']
+            return data
+          },
+        ],
+      })
+    },
+    onSuccess: () => {
+      toast.success(lang === 'VI' ? 'Tải lên CV thành công!' : 'CV uploaded successfully!')
+      queryClient.invalidateQueries({ queryKey: getListCvsQueryKey() })
+    },
+    onError: () => toast.error(lang === 'VI' ? 'Tải lên thất bại. Vui lòng thử lại.' : 'Upload failed. Please try again.'),
+  })
+
+  const analyzeMutation = useAnalyzeCv({
+    mutation: {
+      onSuccess: (data) => {
+        const result = (data as any)?.data as AiModels.CvFullAnalysisResponse
+        onAnalyzeDone(result)
+      },
+      onError: (err: any) => {
+        const code = err?.response?.data?.code
+        if (code === 8012 || code === 6008) {
+          onError(lang === 'VI' ? 'Hết lượt sử dụng AI. Vui lòng nâng cấp gói dịch vụ.' : 'Out of AI credits. Please upgrade your package.')
+        } else {
+          onError(lang === 'VI' ? 'Phân tích CV thất bại. Vui lòng thử lại.' : 'CV analysis failed. Please try again.')
+        }
+      },
+    },
+  })
+
+  const handleUpload = (file: File | null) => {
+    if (!file) return
+    if (file.type !== 'application/pdf') {
+      toast.error(lang === 'VI' ? 'Chỉ chấp nhận file PDF' : 'Only PDF files are accepted')
+      return
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error(lang === 'VI' ? 'File CV tối đa 5MB' : 'CV file must be under 5MB')
+      return
+    }
+    uploadMutation.mutate(file)
+  }
+
+  const handleAnalyze = () => {
+    if (!effectiveCvId) return
+    onAnalyze(effectiveCvId)
+    analyzeMutation.mutate({ data: { cvId: effectiveCvId, jobId } })
+  }
+
+  const busy = isAnalyzing || analyzeMutation.isPending || uploadMutation.isPending
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+      <Card className="w-full max-w-[460px] border-border bg-card shadow-2xl rounded-2xl">
+        <CardContent className="p-6 space-y-5">
+          {/* Header */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <div className="p-2 bg-[var(--ai)]/10 rounded-xl">
+                <Sparkles className="h-5 w-5 text-[var(--ai)]" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-foreground">
+                  {lang === 'VI' ? 'Phân tích CV với Job này' : 'Analyze CV for this Job'}
+                </h3>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  {lang === 'VI' ? 'AI sẽ đánh giá mức độ phù hợp của bạn' : 'AI will evaluate your fit for this position'}
+                </p>
+              </div>
+            </div>
+            <button
+              type="button"
+              onClick={onClose}
+              disabled={busy}
+              className="p-1.5 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground disabled:opacity-40"
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
+
+          {cvsLoading ? (
+            <p className="text-sm text-muted-foreground py-4 text-center animate-pulse">
+              {lang === 'VI' ? 'Đang tải danh sách CV...' : 'Loading CVs...'}
+            </p>
+          ) : cvList.length === 0 ? (
+            /* No CV — show upload area */
+            <div className="space-y-4">
+              <div className="rounded-xl bg-amber-50 dark:bg-amber-950/20 border border-amber-200 dark:border-amber-900/30 p-3 text-sm text-amber-700 dark:text-amber-400">
+                {lang === 'VI'
+                  ? 'Bạn chưa tải lên CV nào. Hãy tải lên CV để tiến hành phân tích.'
+                  : 'You have no CV uploaded yet. Please upload one to analyze.'}
+              </div>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".pdf"
+                disabled={uploadMutation.isPending}
+                onChange={(e) => handleUpload(e.target.files?.[0] ?? null)}
+                className="hidden"
+              />
+              <div
+                className="flex flex-col items-center justify-center gap-3 border-2 border-dashed border-[var(--ai)]/20 bg-[var(--ai)]/[0.02] p-6 text-center rounded-xl transition-all cursor-pointer hover:border-[var(--ai)]/40 hover:bg-[var(--ai)]/[0.04]"
+                onClick={() => !uploadMutation.isPending && fileInputRef.current?.click()}
+              >
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[var(--ai)]/10 text-[var(--ai)]">
+                  <Upload className="h-5 w-5" />
+                </div>
+                <div>
+                  <p className="text-sm font-semibold text-foreground">
+                    {lang === 'VI' ? 'Kéo thả hoặc bấm để chọn file PDF' : 'Drag & drop or click to choose PDF'}
+                  </p>
+                  <p className="mt-1 text-xs text-muted-foreground">PDF • {lang === 'VI' ? 'Tối đa 5MB' : 'Max 5MB'}</p>
+                </div>
+              </div>
+              {uploadMutation.isPending && (
+                <p className="text-xs text-muted-foreground text-center animate-pulse">
+                  {lang === 'VI' ? 'Đang tải lên...' : 'Uploading...'}
+                </p>
+              )}
+            </div>
+          ) : (
+            /* Has CVs — show selector */
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-foreground mb-1.5">
+                  {lang === 'VI' ? 'Chọn CV để phân tích' : 'Select CV to analyze'}
+                </label>
+                <select
+                  value={effectiveCvId}
+                  onChange={(e) => setSelectedCvId(e.target.value)}
+                  disabled={busy}
+                  className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm text-foreground focus:outline-none focus:ring-2 focus:ring-[var(--ai)]/30 disabled:opacity-60"
+                >
+                  {cvList.map((cv) => (
+                    <option key={cv.id} value={cv.id ?? ''}>
+                      {cv.filename} {cv.default ? (lang === 'VI' ? '(Mặc định)' : '(Default)') : ''}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Upload another */}
+              <div>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept=".pdf"
+                  disabled={busy}
+                  onChange={(e) => handleUpload(e.target.files?.[0] ?? null)}
+                  className="hidden"
+                />
+                <button
+                  type="button"
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={busy}
+                  className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors disabled:opacity-50"
+                >
+                  <Upload className="h-3.5 w-3.5" />
+                  {lang === 'VI' ? 'Hoặc tải lên CV mới' : 'Or upload a new CV'}
+                </button>
+              </div>
+
+              {/* Analyze CTA */}
+              <Button
+                className="w-full bg-[var(--ai)] hover:bg-[var(--ai)]/90 text-white h-11"
+                disabled={!effectiveCvId || busy}
+                onClick={handleAnalyze}
+              >
+                <Sparkles className={cn('h-4 w-4 mr-2', busy && 'animate-pulse')} />
+                {busy
+                  ? (lang === 'VI' ? 'Đang phân tích...' : 'Analyzing...')
+                  : (lang === 'VI' ? 'Bắt đầu phân tích' : 'Start Analysis')}
+              </Button>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    </div>
+  )
+}
+
+// ---------------------------------------------------------------------------
+// CvJobAnalysisResult — renders the analysis response inline
+// ---------------------------------------------------------------------------
+function scoreColor(score: number) {
+  if (score >= 85) return { text: 'text-emerald-600 dark:text-emerald-400', ring: 'text-emerald-500', bg: 'bg-emerald-100 dark:bg-emerald-950/30' }
+  if (score >= 70) return { text: 'text-blue-600 dark:text-blue-400', ring: 'text-blue-500', bg: 'bg-blue-100 dark:bg-blue-950/30' }
+  if (score >= 50) return { text: 'text-amber-600 dark:text-amber-400', ring: 'text-amber-500', bg: 'bg-amber-100 dark:bg-amber-950/30' }
+  return { text: 'text-rose-600 dark:text-rose-400', ring: 'text-rose-500', bg: 'bg-rose-100 dark:bg-rose-950/30' }
+}
+
+const CIRC = 99.9
+
+function CvJobAnalysisResult({ result, lang }: { result: AiModels.CvFullAnalysisResponse; lang: string }) {
+  const score = result.overallScore ?? 0
+  const matchScore = result.matchScore ?? 0
+  const colors = scoreColor(score)
+  const dash = (score / 100) * CIRC
+
+  const summary = lang === 'VI' && result.summaryVi ? result.summaryVi : result.summary
+
+  const sortedTips = [...(result.tips ?? [])].sort((a, b) => {
+    const order: Record<string, number> = { High: 0, Medium: 1, Low: 2 }
+    return (order[a.priority ?? ''] ?? 2) - (order[b.priority ?? ''] ?? 2)
+  })
+
+  return (
+    <div className="space-y-4">
+      {/* Score + Summary */}
+      <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/60 p-5 shadow-sm">
+        <div className="flex items-start gap-4">
+          {/* Overall score ring */}
+          <div className="relative shrink-0 w-[76px] h-[76px]">
+            <svg viewBox="0 0 36 36" className="w-[76px] h-[76px]">
+              <circle cx="18" cy="18" r="15.9" fill="none" stroke="currentColor"
+                className="text-slate-200 dark:text-slate-800" strokeWidth="3" />
+              <circle cx="18" cy="18" r="15.9" fill="none" stroke="currentColor"
+                className={colors.ring} strokeWidth="3"
+                strokeDasharray={`${dash} ${CIRC - dash}`}
+                strokeDashoffset="0"
+                transform="rotate(-90, 18, 18)"
+                strokeLinecap="round" />
+            </svg>
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <span className={cn('text-xl font-bold tabular-nums leading-none', colors.text)}>{score}</span>
+              <span className="text-[9px] text-muted-foreground font-medium mt-0.5">/ 100</span>
+            </div>
+          </div>
+
+          <div className="flex-1 min-w-0">
+            <div className="flex flex-wrap items-center gap-2 mb-1">
+              <span className={cn('text-base font-bold', colors.text)}>{result.scoreLabel}</span>
+              {result.targetPosition && (
+                <span className="inline-flex items-center rounded-md border border-slate-200 dark:border-border/60 bg-slate-50 dark:bg-muted/40 px-2 py-0.5 text-xs text-slate-600 dark:text-muted-foreground font-medium">
+                  {lang === 'VI' ? 'Vị trí:' : 'Position:'} {result.targetPosition}
+                </span>
+              )}
+              {matchScore > 0 && (
+                <span className={cn('inline-flex items-center rounded-md px-2 py-0.5 text-xs font-bold border', colors.bg, colors.text)}>
+                  {lang === 'VI' ? 'Phù hợp:' : 'Match:'} {matchScore}%
+                </span>
+              )}
+            </div>
+            {summary && (
+              <p className="mt-1.5 text-sm text-slate-600 dark:text-muted-foreground leading-relaxed">{summary}</p>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Skills */}
+      {((result.matchedSkills?.length ?? 0) + (result.missingSkills?.length ?? 0) + (result.extraSkills?.length ?? 0)) > 0 && (
+        <div className="rounded-xl border border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-900/60 p-5 space-y-4 shadow-sm">
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-muted-foreground">Skills</p>
+          {(result.matchedSkills?.length ?? 0) > 0 && (
+            <div className="space-y-2">
+              <p className="text-xs font-semibold text-emerald-600 dark:text-emerald-400">
+                {lang === 'VI' ? 'Kỹ năng phù hợp' : 'Matched Skills'} ({result.matchedSkills!.length})
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {result.matchedSkills!.map((s) => (
+                  <span key={s} className="inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-medium bg-emerald-50 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-300 border border-emerald-100 dark:border-emerald-900/30">
+                    <span className="opacity-70">✓</span> {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+          {(result.missingSkills?.length ?? 0) > 0 && (
+            <div className="space-y-2">
+              <p className="text-xs font-semibold text-rose-600 dark:text-rose-400">
+                {lang === 'VI' ? 'Kỹ năng còn thiếu' : 'Missing Skills'} ({result.missingSkills!.length})
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {result.missingSkills!.map((s) => (
+                  <span key={s} className="inline-flex items-center gap-1 rounded-md px-2 py-0.5 text-xs font-medium bg-rose-50 dark:bg-rose-950/20 text-rose-700 dark:text-rose-300 border border-rose-100 dark:border-rose-900/30">
+                    <span className="opacity-70">✗</span> {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+          {(result.extraSkills?.length ?? 0) > 0 && (
+            <div className="space-y-2">
+              <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">
+                {lang === 'VI' ? 'Kỹ năng bổ sung' : 'Extra Skills'} ({result.extraSkills!.length})
+              </p>
+              <div className="flex flex-wrap gap-1.5">
+                {result.extraSkills!.map((s) => (
+                  <span key={s} className="inline-flex rounded-md px-2 py-0.5 text-xs font-medium bg-slate-50 dark:bg-slate-900/30 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+                    {s}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Strengths & Weaknesses */}
+      {((result.strengths?.length ?? 0) + (result.weaknesses?.length ?? 0)) > 0 && (
+        <div className="grid gap-4 sm:grid-cols-2">
+          {(result.strengths?.length ?? 0) > 0 && (
+            <div className="rounded-xl border border-emerald-100 dark:border-emerald-900/30 bg-emerald-50/40 dark:bg-emerald-950/10 p-4 space-y-3 shadow-sm">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
+                {lang === 'VI' ? 'Điểm mạnh' : 'Strengths'} · {result.strengths!.length}
+              </p>
+              <ul className="space-y-3">
+                {result.strengths!.map((s, i) => (
+                  <li key={`${s.area}-${i}`}>
+                    <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-300">{s.area}</p>
+                    <p className="mt-0.5 text-xs leading-relaxed text-emerald-900/80 dark:text-muted-foreground">{s.detail}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {(result.weaknesses?.length ?? 0) > 0 && (
+            <div className="rounded-xl border border-amber-100 dark:border-amber-900/30 bg-amber-50/40 dark:bg-amber-950/10 p-4 space-y-3 shadow-sm">
+              <p className="text-[11px] font-semibold uppercase tracking-wider text-amber-600 dark:text-amber-400">
+                {lang === 'VI' ? 'Điểm cần cải thiện' : 'Weaknesses'} · {result.weaknesses!.length}
+              </p>
+              <ul className="space-y-3">
+                {result.weaknesses!.map((w, i) => (
+                  <li key={`${w.area}-${i}`}>
+                    <p className="text-sm font-semibold text-amber-700 dark:text-amber-300">{w.area}</p>
+                    <p className="mt-0.5 text-xs leading-relaxed text-amber-900/80 dark:text-muted-foreground">{w.detail}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Improvement Tips */}
+      {sortedTips.length > 0 && (
+        <div className="space-y-2">
+          <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-500 dark:text-muted-foreground">
+            {lang === 'VI' ? 'Gợi ý cải thiện' : 'Improvement Tips'} · {sortedTips.length}
+          </p>
+          <div className="space-y-2">
+            {sortedTips.map((tip, i) => {
+              const priorityBar = tip.priority === 'High' ? 'bg-rose-500' : tip.priority === 'Medium' ? 'bg-amber-500' : 'bg-slate-400'
+              const priorityBadge = tip.priority === 'High'
+                ? 'bg-rose-100 dark:bg-rose-950/20 text-rose-700 dark:text-rose-400 border-rose-200 dark:border-rose-900/30'
+                : tip.priority === 'Medium'
+                  ? 'bg-amber-100 dark:bg-amber-950/20 text-amber-700 dark:text-amber-400 border-amber-200 dark:border-amber-900/30'
+                  : 'bg-slate-100 dark:bg-slate-900/20 text-slate-700 dark:text-slate-400 border-slate-200 dark:border-slate-700'
+              const priorityLabel = lang === 'VI'
+                ? (tip.priority === 'High' ? 'Cao' : tip.priority === 'Medium' ? 'Trung bình' : 'Thấp')
+                : tip.priority
+              return (
+                <div key={`${tip.area}-${i}`} className="flex gap-3 rounded-lg border border-slate-200 dark:border-border/50 bg-white/90 dark:bg-slate-900/60 p-3.5 shadow-sm">
+                  <div className={cn('mt-0.5 w-1 shrink-0 rounded-full self-stretch min-h-[1.5rem]', priorityBar)} />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-sm font-semibold text-foreground">{tip.area}</span>
+                      <span className={cn('px-1.5 py-0.5 rounded text-[10px] font-semibold border', priorityBadge)}>
+                        {priorityLabel}
+                      </span>
+                    </div>
+                    <p className="mt-1 text-xs leading-relaxed text-slate-600 dark:text-muted-foreground">{tip.suggestion}</p>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
     </div>
   )
 }

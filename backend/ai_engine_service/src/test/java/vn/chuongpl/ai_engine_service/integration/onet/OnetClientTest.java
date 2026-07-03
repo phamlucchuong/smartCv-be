@@ -2,16 +2,11 @@ package vn.chuongpl.ai_engine_service.integration.onet;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 import vn.chuongpl.ai_engine_service.config.OnetProperties;
-
-import java.nio.charset.StandardCharsets;
-import java.util.Base64;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.header;
@@ -32,19 +27,16 @@ class OnetClientTest {
         OnetProperties properties = new OnetProperties();
         properties.setEnabled(true);
         properties.setBaseUrl("https://api-v2.onetcenter.org");
-        properties.setUsername("user");
-        properties.setPassword("pass");
+        properties.setApiKey("test-api-key");
         properties.setSearchLimit(5);
         client = new OnetClient(restTemplate, properties);
     }
 
     @Test
-    void searchOccupations_calls_keyword_search_with_basic_auth() {
-        String auth = "Basic " + Base64.getEncoder()
-                .encodeToString("user:pass".getBytes(StandardCharsets.UTF_8));
+    void searchOccupations_calls_keyword_search_with_api_key_header() {
         server.expect(requestTo("https://api-v2.onetcenter.org/online/search?keyword=backend%20engineer&end=5"))
                 .andExpect(method(HttpMethod.GET))
-                .andExpect(header(HttpHeaders.AUTHORIZATION, auth))
+                .andExpect(header("X-API-Key", "test-api-key"))
                 .andRespond(withSuccess("""
                         {"occupation":[{"code":"15-1252.00","title":"Software Developers","href":"x"}]}
                         """, MediaType.APPLICATION_JSON));

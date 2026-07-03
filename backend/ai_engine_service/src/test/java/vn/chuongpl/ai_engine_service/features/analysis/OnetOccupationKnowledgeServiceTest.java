@@ -40,8 +40,7 @@ class OnetOccupationKnowledgeServiceTest {
         OnetProperties properties = new OnetProperties();
         properties.setEnabled(true);
         properties.setSearchLimit(5);
-        properties.setUsername("user");
-        properties.setPassword("pass");
+        properties.setApiKey("test-api-key");
         service = new OnetOccupationKnowledgeService(onetClient, promptBuilder, modelRouter, properties);
         when(promptBuilder.systemPrompt()).thenReturn("system");
     }

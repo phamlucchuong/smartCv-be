@@ -109,6 +109,8 @@ function MyCVPage() {
   const [isUploadOpen, setIsUploadOpen] = React.useState(false)
   const [userSelected, setUserSelected] = React.useState<string | null>(null)
   const [cvToDelete, setCvToDelete] = React.useState<string | null>(null)
+  const [cvToReanalyze, setCvToReanalyze] = React.useState<string | null>(null)
+  const [reanalyzingCvIds, setReanalyzingCvIds] = React.useState<Set<string>>(new Set())
   const [zoomLevel, setZoomLevel] = React.useState<string>('Fit')
   const fileInputRef = React.useRef<HTMLInputElement>(null)
 
@@ -171,12 +173,23 @@ function MyCVPage() {
 
   const reanalyzeMutation = useReanalyzeCv({
     mutation: {
-      onSuccess: () => {
-        toast.success(t('account_cv_reanalyzing'))
-        queryClient.invalidateQueries({ queryKey: getListCvsQueryKey() })
-        queryClient.invalidateQueries({ queryKey: getGetJobSuggestionsQueryKey() })
+      onMutate: (variables) => {
+        // Immediately mark as reanalyzing so UI clears old results
+        setReanalyzingCvIds((prev) => new Set(prev).add(variables.cvId))
       },
-      onError: () => toast.error(lang === 'VI' ? 'Khởi chạy phân tích thất bại' : 'Failed to start reanalysis'),
+      onSuccess: (_data, variables) => {
+        // reanalyzeCv only resets the status on user-service.
+        // We must also call analyzeCv to actually trigger the AI engine.
+        analyzeCvMutation.mutate({ data: { cvId: variables.cvId } })
+      },
+      onError: (_err, variables) => {
+        toast.error(lang === 'VI' ? 'Khởi chạy phân tích thất bại' : 'Failed to start reanalysis')
+        setReanalyzingCvIds((prev) => {
+          const next = new Set(prev)
+          next.delete(variables.cvId)
+          return next
+        })
+      },
     },
   })
 
@@ -199,16 +212,24 @@ function MyCVPage() {
         setAnalyzingCvIds((prev) => new Set(prev).add(variables.data.cvId))
       },
       onSuccess: (_data, variables) => {
+        const cvId = variables.data.cvId
         toast.success(lang === 'VI' ? 'Phân tích CV hoàn thành!' : 'CV analysis complete!')
         setAnalyzingCvIds((prev) => {
           const next = new Set(prev)
-          next.delete(variables.data.cvId)
+          next.delete(cvId)
+          return next
+        })
+        // Also clear reanalyzingCvIds in case this was triggered from a re-analyze flow
+        setReanalyzingCvIds((prev) => {
+          const next = new Set(prev)
+          next.delete(cvId)
           return next
         })
         queryClient.invalidateQueries({ queryKey: getListCvsQueryKey() })
         queryClient.invalidateQueries({ queryKey: getGetJobSuggestionsQueryKey() })
       },
       onError: (err: any, variables) => {
+        const cvId = variables.data.cvId
         const errCode = err?.response?.data?.code;
         if (errCode === 8012 || errCode === 6008) {
           toast.error(
@@ -221,7 +242,13 @@ function MyCVPage() {
         }
         setAnalyzingCvIds((prev) => {
           const next = new Set(prev)
-          next.delete(variables.data.cvId)
+          next.delete(cvId)
+          return next
+        })
+        // Also clear reanalyzingCvIds on error
+        setReanalyzingCvIds((prev) => {
+          const next = new Set(prev)
+          next.delete(cvId)
           return next
         })
       },
@@ -337,10 +364,47 @@ function MyCVPage() {
     </Dialog>
   )
 
+  const reanalyzeConfirmDialog = (
+    <Dialog open={cvToReanalyze !== null} onOpenChange={(open) => !open && setCvToReanalyze(null)}>
+      <DialogContent className="sm:max-w-[420px]">
+        <DialogHeader>
+          <DialogTitle className="flex items-center gap-2">
+            <RefreshCw className="h-5 w-5 text-[var(--ai)]" />
+            {lang === 'VI' ? 'Xác nhận phân tích lại' : 'Confirm Re-analyze'}
+          </DialogTitle>
+          <DialogDescription>
+            {lang === 'VI'
+              ? 'Kết quả phân tích AI hiện tại sẽ bị xóa và CV sẽ được phân tích lại từ đầu. Bạn có muốn tiếp tục không?'
+              : 'The current AI analysis result will be cleared and the CV will be re-analyzed from scratch. Do you want to continue?'}
+          </DialogDescription>
+        </DialogHeader>
+        <div className="flex justify-end gap-3 mt-4">
+          <Button variant="outline" onClick={() => setCvToReanalyze(null)}>
+            {lang === 'VI' ? 'Hủy' : 'Cancel'}
+          </Button>
+          <Button
+            className="bg-[var(--ai)] hover:bg-[var(--ai)]/90 text-white"
+            onClick={() => {
+              if (!cvToReanalyze) return
+              // Mark as reanalyzing to clear analysis result on UI immediately
+              setReanalyzingCvIds((prev) => new Set(prev).add(cvToReanalyze))
+              reanalyzeMutation.mutate({ cvId: cvToReanalyze })
+              setCvToReanalyze(null)
+            }}
+          >
+            <RefreshCw className="h-4 w-4 mr-1.5" />
+            {lang === 'VI' ? 'Phân tích lại' : 'Re-analyze'}
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  )
+
   return (
     <div className="space-y-6">
       {uploadDialog}
       {deleteDialog}
+      {reanalyzeConfirmDialog}
 
       {cvList.length === 0 ? (
         <>
@@ -433,7 +497,10 @@ function MyCVPage() {
 
             {/* Right: Selected CV Details & Preview */}
             {cv && (() => {
-              const statusStr = String(cv.analysisStatus ?? 'PENDING')
+              const isReanalyzingCurrentCv = Boolean(cv.id && reanalyzingCvIds.has(cv.id))
+              // When re-analyzing, treat the status as PROCESSING to show processing UI
+              const effectiveStatus = isReanalyzingCurrentCv ? 'PROCESSING' : String(cv.analysisStatus ?? 'PENDING')
+              const statusStr = effectiveStatus
               const isAnalyzingCurrentCv = Boolean(cv.id && analyzingCvIds.has(cv.id))
               return (
                 <div className="space-y-6">
@@ -462,23 +529,30 @@ function MyCVPage() {
                         <Button
                           size="sm"
                           variant="outline"
-                          disabled={!cv.id || analyzingCvIds.has(cv.id) || reanalyzeMutation.isPending || cv.analysisStatus === 'PROCESSING'}
+                          disabled={
+                            !cv.id ||
+                            isAnalyzingCurrentCv ||
+                            isReanalyzingCurrentCv ||
+                            reanalyzeMutation.isPending ||
+                            effectiveStatus === 'PROCESSING'
+                          }
                           onClick={() => {
                             if (!cv.id) return
                             if (cv.analysisStatus === 'DONE') {
-                              reanalyzeMutation.mutate({ cvId: cv.id })
+                              // Show confirm popup — do NOT call API yet
+                              setCvToReanalyze(cv.id)
                             } else {
                               analyzeCvMutation.mutate({ data: { cvId: cv.id } })
                             }
                           }}
-                          className={`flex items-center gap-1.5 text-xs h-9 ${cv.analysisStatus !== 'DONE' ? 'text-[var(--ai)] border-[var(--ai)]/30 hover:bg-[var(--ai)]/5' : ''}`}
+                          className={`flex items-center gap-1.5 text-xs h-9 ${effectiveStatus !== 'DONE' ? 'text-[var(--ai)] border-[var(--ai)]/30 hover:bg-[var(--ai)]/5' : ''}`}
                         >
-                          {cv.analysisStatus !== 'DONE' ? (
-                            <Sparkles className={`h-3.5 w-3.5 ${isAnalyzingCurrentCv || cv.analysisStatus === 'PROCESSING' ? 'animate-pulse' : ''}`} />
+                          {effectiveStatus !== 'DONE' ? (
+                            <Sparkles className={`h-3.5 w-3.5 ${isAnalyzingCurrentCv || isReanalyzingCurrentCv || effectiveStatus === 'PROCESSING' ? 'animate-pulse' : ''}`} />
                           ) : (
-                            <RefreshCw className={`h-3.5 w-3.5 ${reanalyzeMutation.isPending ? 'animate-spin' : ''}`} />
+                            <RefreshCw className="h-3.5 w-3.5" />
                           )}
-                          {isAnalyzingCurrentCv || cv.analysisStatus === 'PROCESSING'
+                          {isAnalyzingCurrentCv || isReanalyzingCurrentCv || effectiveStatus === 'PROCESSING'
                             ? (lang === 'VI' ? 'Đang phân tích...' : 'Analyzing...')
                             : cv.analysisStatus === 'DONE'
                               ? (lang === 'VI' ? 'Phân tích lại' : 'Re-analyze')
@@ -566,8 +640,8 @@ function MyCVPage() {
                       </div>
 
                       <CvAnalysisPanel
-                        analysisResultJson={cv.analysisResult}
-                        analysisStatus={cv.analysisStatus}
+                        analysisResultJson={isReanalyzingCurrentCv ? undefined : cv.analysisResult}
+                        analysisStatus={effectiveStatus as any}
                         onRetry={() => cv.id && analyzeCvMutation.mutate({ data: { cvId: cv.id } })}
                       />
                     </div>

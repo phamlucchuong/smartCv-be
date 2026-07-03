@@ -6,6 +6,7 @@ These DBML files are logical ERD views derived from the current codebase.
 - `job-service.erd.dbml`
 - `application-service.erd.dbml`
 - `notification-service.erd.dbml`
+- `payment-service.erd.dbml`
 - `tables/` contains the table-focused DBML variants split by service.
 
 Notes:

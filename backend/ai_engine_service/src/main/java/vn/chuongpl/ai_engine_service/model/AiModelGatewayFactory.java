@@ -2,6 +2,7 @@ package vn.chuongpl.ai_engine_service.model;
 
 import com.azure.ai.openai.OpenAIClientBuilder;
 import com.azure.core.credential.AzureKeyCredential;
+import lombok.RequiredArgsConstructor;
 import org.springframework.ai.anthropic.AnthropicChatModel;
 import org.springframework.ai.anthropic.AnthropicChatOptions;
 import org.springframework.ai.anthropic.api.AnthropicApi;
@@ -12,9 +13,13 @@ import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.stereotype.Component;
 import vn.chuongpl.ai_engine_service.features.admin.AiProviderConfig;
+import vn.chuongpl.ai_engine_service.security.AiCredentialCipher;
 
 @Component
+@RequiredArgsConstructor
 public class AiModelGatewayFactory {
+
+    private final AiCredentialCipher cipher;
 
     public AiModelGateway create(AiProviderConfig config) {
         return switch (config.getProvider()) {
@@ -30,7 +35,7 @@ public class AiModelGatewayFactory {
     private GroqModelGateway buildGroq(AiProviderConfig c) {
         var api = OpenAiApi.builder()
                 .baseUrl(c.getBaseUrl())
-                .apiKey(c.getApiKey())
+                .apiKey(cipher.decrypt(c.getApiKey()))
                 .build();
         var model = OpenAiChatModel.builder()
                 .openAiApi(api)
@@ -45,7 +50,7 @@ public class AiModelGatewayFactory {
     private GeminiModelGateway buildGemini(AiProviderConfig c) {
         var api = OpenAiApi.builder()
                 .baseUrl(c.getBaseUrl())
-                .apiKey(c.getApiKey())
+                .apiKey(cipher.decrypt(c.getApiKey()))
                 .build();
         var model = OpenAiChatModel.builder()
                 .openAiApi(api)
@@ -59,7 +64,7 @@ public class AiModelGatewayFactory {
 
     private AnthropicModelGateway buildAnthropic(AiProviderConfig c) {
         var api = AnthropicApi.builder()
-                .apiKey(c.getApiKey())
+                .apiKey(cipher.decrypt(c.getApiKey()))
                 .build();
         var model = AnthropicChatModel.builder()
                 .anthropicApi(api)
@@ -74,7 +79,7 @@ public class AiModelGatewayFactory {
 
     private AzureOpenAiModelGateway buildAzure(AiProviderConfig c) {
         var openAiClientBuilder = new OpenAIClientBuilder()
-                .credential(new AzureKeyCredential(c.getApiKey()))
+                .credential(new AzureKeyCredential(cipher.decrypt(c.getApiKey())))
                 .endpoint(c.getBaseUrl());
         var model = AzureOpenAiChatModel.builder()
                 .openAIClientBuilder(openAiClientBuilder)
@@ -89,7 +94,7 @@ public class AiModelGatewayFactory {
     private Llama3ModelGateway buildLlama3(AiProviderConfig c) {
         var api = OpenAiApi.builder()
                 .baseUrl(c.getBaseUrl() != null && !c.getBaseUrl().isBlank() ? c.getBaseUrl() : "http://localhost:11434/v1")
-                .apiKey(c.getApiKey() != null ? c.getApiKey() : "no-key")
+                .apiKey(c.getApiKey() != null ? cipher.decrypt(c.getApiKey()) : "no-key")
                 .build();
         var model = OpenAiChatModel.builder()
                 .openAiApi(api)
@@ -103,7 +108,7 @@ public class AiModelGatewayFactory {
 
     private ClaudeAgentSdkModelGateway buildClaudeAgentSdk(AiProviderConfig c) {
         var api = AnthropicApi.builder()
-                .apiKey(c.getOauthToken())
+                .apiKey(cipher.decrypt(c.getOauthToken()))
                 .build();
         var model = AnthropicChatModel.builder()
                 .anthropicApi(api)

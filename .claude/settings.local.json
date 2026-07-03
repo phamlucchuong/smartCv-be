@@ -111,7 +111,25 @@
       "Bash(bash mvnw clean install -DskipTests)",
       "Bash(./mvnw test-compile *)",
       "Bash(rtk docker *)",
-      "Bash(echo \"exit: $?\")"
+      "Bash(echo \"exit: $?\")",
+      "WebFetch(domain:services.onetcenter.org)",
+      "Bash(rtk curl *)",
+      "Bash(rtk ./mvnw test -Dtest=OnetClientTest -q)",
+      "Bash(rtk ./mvnw test -Dtest='OnetClientTest,OnetOccupationKnowledgeServiceTest' -q)",
+      "Bash(rtk ./mvnw test -Dtest=AiModelGatewayRouterTest -q)",
+      "Bash(docker run *)",
+      "Bash(command -v node npm pnpm)",
+      "Bash(node seed_master.mjs)",
+      "Bash(node seed_master.mjs --activate azure_openai)",
+      "Bash(node *)",
+      "Bash(rtk ./mvnw test -Dtest='AiModelGatewayRouterTest,AiAdminServiceTest' -q)",
+      "Bash(xargs ls)",
+      "Bash(rtk ./mvnw test -Dtest=AiCredentialCipherTest -q)",
+      "Bash(rtk ./mvnw test -Dtest=AiAdminServiceTest -q)",
+      "Bash(rtk ./mvnw test -Dtest='AiCredentialCipherTest,AiAdminServiceTest,AiModelGatewayFactoryTest,AiModelGatewayRouterTest' -q)",
+      "Bash(rtk ./mvnw test -Dtest=DeterministicCvScoringServiceTest,AnalysisServiceDeterministicAnalyzeTest,AnalysisServiceCvFullTest -q)",
+      "Bash(rtk ./mvnw test -Dtest=AnalysisServiceCvFullTest -q)",
+      "Bash(echo \"EXIT:$?\")"
     ]
   }
 }

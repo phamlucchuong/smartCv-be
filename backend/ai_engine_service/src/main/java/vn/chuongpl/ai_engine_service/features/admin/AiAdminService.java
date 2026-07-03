@@ -6,9 +6,11 @@ import vn.chuongpl.ai_engine_service.enums.ErrorCode;
 import vn.chuongpl.ai_engine_service.exception.AppException;
 import vn.chuongpl.ai_engine_service.model.AiModelGatewayRouter;
 import vn.chuongpl.ai_engine_service.model.AiProvider;
+import vn.chuongpl.ai_engine_service.security.AiCredentialCipher;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -16,14 +18,18 @@ public class AiAdminService {
 
     private final AiProviderConfigRepository repository;
     private final AiModelGatewayRouter router;
+    private final AiCredentialCipher cipher;
 
     public AiProviderConfigResponse upsert(String providerStr, AiProviderConfigRequest request) {
         AiProvider provider = parseProvider(providerStr);
         AiProviderConfig config = repository.findByProvider(provider)
-                .orElse(AiProviderConfig.builder().provider(provider).build());
+                .orElse(AiProviderConfig.builder()
+                        .id(UUID.randomUUID().toString())
+                        .provider(provider)
+                        .build());
 
-        if (request.getApiKey() != null) config.setApiKey(request.getApiKey());
-        if (request.getOauthToken() != null) config.setOauthToken(request.getOauthToken());
+        if (request.getApiKey() != null) config.setApiKey(cipher.encrypt(request.getApiKey()));
+        if (request.getOauthToken() != null) config.setOauthToken(cipher.encrypt(request.getOauthToken()));
         config.setModel(request.getModel());
         config.setBaseUrl(request.getBaseUrl());
         config.setDeploymentName(request.getDeploymentName());
@@ -75,10 +81,10 @@ public class AiAdminService {
                 .model(c.getModel())
                 .baseUrl(c.getBaseUrl())
                 .deploymentName(c.getDeploymentName())
-                .oauthToken(c.getOauthToken())
                 .apiVersion(c.getApiVersion())
                 .active(c.isActive())
-                .configured((c.getApiKey() != null && !c.getApiKey().isBlank()) || (c.getOauthToken() != null && !c.getOauthToken().isBlank()))
+                .configured(c.getApiKey() != null && !c.getApiKey().isBlank())
+                .oauthConfigured(c.getOauthToken() != null && !c.getOauthToken().isBlank())
                 .updatedAt(c.getUpdatedAt())
                 .build();
     }

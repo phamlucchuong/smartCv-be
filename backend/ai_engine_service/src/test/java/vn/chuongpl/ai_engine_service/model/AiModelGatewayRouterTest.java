@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import vn.chuongpl.ai_engine_service.config.AiProviderProperties;
 import vn.chuongpl.ai_engine_service.enums.ErrorCode;
 import vn.chuongpl.ai_engine_service.exception.AppException;
 import vn.chuongpl.ai_engine_service.features.admin.AiProviderConfig;
@@ -27,14 +26,11 @@ class AiModelGatewayRouterTest {
     @Mock AiModelGateway mockGateway;
     @Mock AiUsageLogRepository usageLogRepository;
 
-    // Unconfigured properties (no env vars) — used by tests that expect no auto-seed
-    AiProviderProperties emptyProps = new AiProviderProperties();
-
     AiModelGatewayRouter router;
 
     @BeforeEach
     void setUp() {
-        router = new AiModelGatewayRouter(repository, factory, emptyProps, usageLogRepository);
+        router = new AiModelGatewayRouter(repository, factory, usageLogRepository);
     }
 
     @Test
@@ -50,7 +46,7 @@ class AiModelGatewayRouterTest {
     }
 
     @Test
-    void init_with_no_active_config_and_no_env_keys_leaves_gateway_null() {
+    void init_with_no_active_config_leaves_gateway_null() {
         when(repository.findByActiveTrue()).thenReturn(Optional.empty());
 
         router.init();
@@ -59,31 +55,7 @@ class AiModelGatewayRouterTest {
     }
 
     @Test
-    void init_with_env_key_seeds_and_activates_provider() {
-        AiProviderProperties props = new AiProviderProperties();
-        props.getGroq().setApiKey("gsk_testkey");
-        props.getGroq().setModel("llama-3.3-70b-versatile");
-        props.getGroq().setBaseUrl("https://api.groq.com/openai/v1");
-        var seededConfig = AiProviderConfig.builder()
-                .provider(AiProvider.GROQ)
-                .apiKey("gsk_testkey")
-                .active(true)
-                .build();
-        when(repository.findByActiveTrue()).thenReturn(Optional.empty());
-        when(repository.findByProvider(AiProvider.GROQ)).thenReturn(Optional.empty());
-        when(repository.save(any())).thenReturn(seededConfig);
-        when(factory.create(any())).thenReturn(mockGateway);
-        when(mockGateway.provider()).thenReturn(AiProvider.GROQ);
-
-        AiModelGatewayRouter seedRouter = new AiModelGatewayRouter(repository, factory, props, usageLogRepository);
-        seedRouter.init();
-
-        assertThat(seedRouter.getActiveProvider()).isEqualTo("groq");
-        verify(repository).save(any());
-    }
-
-    @Test
-    void call_with_null_gateway_throws_PROVIDER_NOT_CONFIGURED() {
+    void call_with_no_active_config_throws_PROVIDER_NOT_CONFIGURED() {
         when(repository.findByActiveTrue()).thenReturn(Optional.empty());
         router.init();
 
@@ -91,6 +63,25 @@ class AiModelGatewayRouterTest {
             .isInstanceOf(AppException.class)
             .extracting(e -> ((AppException) e).getErrorCode())
             .isEqualTo(ErrorCode.PROVIDER_NOT_CONFIGURED);
+    }
+
+    @Test
+    void call_lazily_loads_config_seeded_after_startup() {
+        var config = AiProviderConfig.builder().provider(AiProvider.GROQ).apiKey("key").build();
+        when(repository.findByActiveTrue())
+                .thenReturn(Optional.empty())
+                .thenReturn(Optional.of(config));
+        when(factory.create(config)).thenReturn(mockGateway);
+        when(mockGateway.provider()).thenReturn(AiProvider.GROQ);
+        when(mockGateway.call("sys", "user")).thenReturn("response");
+
+        router.init();
+        assertThat(router.getActiveProvider()).isEqualTo("none");
+
+        String result = router.call("sys", "user");
+
+        assertThat(result).isEqualTo("response");
+        assertThat(router.getActiveProvider()).isEqualTo("groq");
     }
 
     @Test
@@ -106,6 +97,21 @@ class AiModelGatewayRouterTest {
 
         assertThat(result).isEqualTo("response");
         verify(mockGateway).call("sys", "user");
+    }
+
+    @Test
+    void call_saves_usage_log_with_assigned_string_id() {
+        var config = AiProviderConfig.builder().provider(AiProvider.GEMINI).build();
+        when(repository.findByActiveTrue()).thenReturn(Optional.of(config));
+        when(factory.create(config)).thenReturn(mockGateway);
+        when(mockGateway.provider()).thenReturn(AiProvider.GEMINI);
+        when(mockGateway.call("sys", "user")).thenReturn("response");
+        router.init();
+
+        router.call("sys", "user");
+
+        verify(usageLogRepository).save(argThat(logRecord ->
+                logRecord.getId() != null && !logRecord.getId().isBlank()));
     }
 
     @Test
