@@ -15,6 +15,8 @@ import java.time.LocalDateTime;
 public class AssessmentResultResponse {
     String attemptId;
     Double score;
+    Integer correctAnswers;
+    Integer totalQuestions;
     AttemptResult result;
     LocalDateTime submittedAt;
 }

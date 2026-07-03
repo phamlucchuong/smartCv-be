@@ -314,9 +314,13 @@ public class AssessmentService {
         if (attempt.getStatus() != AttemptStatus.SUBMITTED) {
             throw new AppException(ErrorCode.ATTEMPT_NOT_SUBMITTED);
         }
+        Assessment assessment = findAssessmentById(attempt.getAssessmentId());
+        AttemptStats attemptStats = summarizeAttempt(assessment, attempt);
         return AssessmentResultResponse.builder()
                 .attemptId(attempt.getId())
                 .score(attempt.getScore())
+                .correctAnswers(attemptStats.correctAnswers())
+                .totalQuestions(attemptStats.totalQuestions())
                 .result(attempt.getResult())
                 .submittedAt(attempt.getSubmittedAt())
                 .build();
@@ -353,6 +357,8 @@ public class AssessmentService {
     }
 
     private AttemptStateResponse toAttemptStateResponse(AssessmentAttempt a) {
+        Assessment assessment = findAssessmentById(a.getAssessmentId());
+        AttemptStats attemptStats = summarizeAttempt(assessment, a);
         return AttemptStateResponse.builder()
                 .attemptId(a.getId())
                 .assessmentId(a.getAssessmentId())
@@ -360,21 +366,47 @@ public class AssessmentService {
                 .answers(a.getAnswers())
                 .startedAt(a.getStartedAt())
                 .score(a.getScore())
+                .correctAnswers(attemptStats.correctAnswers())
+                .totalQuestions(attemptStats.totalQuestions())
                 .result(a.getResult())
                 .build();
     }
 
     private AttemptSummaryResponse toAttemptSummaryResponse(AssessmentAttempt a) {
+        Assessment assessment = findAssessmentById(a.getAssessmentId());
+        AttemptStats attemptStats = summarizeAttempt(assessment, a);
         return AttemptSummaryResponse.builder()
                 .attemptId(a.getId())
                 .assessmentId(a.getAssessmentId())
                 .candidateId(a.getCandidateId())
                 .status(a.getStatus())
                 .score(a.getScore())
+                .correctAnswers(attemptStats.correctAnswers())
+                .totalQuestions(attemptStats.totalQuestions())
                 .result(a.getResult())
                 .submittedAt(a.getSubmittedAt())
                 .build();
     }
+
+    private AttemptStats summarizeAttempt(Assessment assessment, AssessmentAttempt attempt) {
+        Map<String, Question> questionMap = assessment.getQuestions().stream()
+                .collect(Collectors.toMap(Question::getId, q -> q));
+        int totalQuestions = (int) assessment.getQuestions().stream()
+                .filter(q -> q.getType() == QuestionType.MCQ)
+                .count();
+        int correctAnswers = (int) attempt.getAnswers().stream()
+                .filter(answer -> {
+                    Question question = questionMap.get(answer.getQuestionId());
+                    return question != null
+                            && question.getType() == QuestionType.MCQ
+                            && question.getCorrectOptionIndex() != null
+                            && question.getCorrectOptionIndex().equals(answer.getSelectedOptionIndex());
+                })
+                .count();
+        return new AttemptStats(correctAnswers, totalQuestions);
+    }
+
+    private record AttemptStats(int correctAnswers, int totalQuestions) {}
 
     public List<AssessmentResponse> getAssessmentsByJob(String jobId) {
         return assessmentRepository.findByJobId(jobId).stream()

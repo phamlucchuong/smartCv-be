@@ -255,11 +255,20 @@ class AssessmentServiceTest {
     void getAttemptsByAssessment_shouldReturnAttemptsForOwningRecruiter() {
         when(userClient.resolveRecruiterId("u1")).thenReturn("r1");
         Assessment assessment = Assessment.builder()
-                .id("a1").recruiterId("r1").build();
+                .id("a1").recruiterId("r1")
+                .questions(List.of(
+                        Question.builder().id("q1").type(QuestionType.MCQ).correctOptionIndex(1).build(),
+                        Question.builder().id("q2").type(QuestionType.MCQ).correctOptionIndex(0).build()
+                ))
+                .build();
         when(assessmentRepository.findById("a1")).thenReturn(Optional.of(assessment));
 
         AssessmentAttempt att1 = AssessmentAttempt.builder()
                 .id("att1").assessmentId("a1").candidateId("c1")
+                .answers(List.of(
+                        new AttemptAnswer("q1", 1, null),
+                        new AttemptAnswer("q2", 1, null)
+                ))
                 .status(AttemptStatus.SUBMITTED).score(80.0).result(AttemptResult.PASS).build();
         AssessmentAttempt att2 = AssessmentAttempt.builder()
                 .id("att2").assessmentId("a1").candidateId("c2")
@@ -271,6 +280,8 @@ class AssessmentServiceTest {
         assertEquals(2, result.size());
         assertEquals("att1", result.get(0).getAttemptId());
         assertEquals(80.0, result.get(0).getScore());
+        assertEquals(1, result.get(0).getCorrectAnswers());
+        assertEquals(2, result.get(0).getTotalQuestions());
         assertEquals(AttemptResult.PASS, result.get(0).getResult());
     }
 

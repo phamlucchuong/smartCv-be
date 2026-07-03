@@ -19,6 +19,8 @@ public class AttemptSummaryResponse {
     String candidateId;
     AttemptStatus status;
     Double score;
+    Integer correctAnswers;
+    Integer totalQuestions;
     AttemptResult result;
     LocalDateTime submittedAt;
 }

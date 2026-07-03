@@ -22,6 +22,7 @@ public class AttemptStateResponse {
     List<AttemptAnswer> answers;
     LocalDateTime startedAt;
     Double score;
+    Integer correctAnswers;
+    Integer totalQuestions;
     AttemptResult result;
 }
-

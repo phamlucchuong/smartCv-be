@@ -5,9 +5,18 @@ import org.springframework.stereotype.Service;
 import vn.chuongpl.ai_engine_service.features.analysis.AiUsageLog;
 import vn.chuongpl.ai_engine_service.features.analysis.AiUsageLogRepository;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.IntStream;
 
 @Service
 @RequiredArgsConstructor
@@ -18,27 +27,40 @@ public class AiReportService {
     public List<AiUsageReportItem> getUsageReport(String timeframe) {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime start;
+        LocalDateTime end;
         
         if ("day".equalsIgnoreCase(timeframe)) {
-            start = now.minusDays(1);
+            start = now.toLocalDate().atStartOfDay();
+            end = start.plusDays(1).minusSeconds(1);
         } else if ("week".equalsIgnoreCase(timeframe)) {
-            start = now.minusWeeks(1);
+            start = now.toLocalDate()
+                    .with(DayOfWeek.MONDAY)
+                    .atStartOfDay();
+            end = start.plusDays(6).withHour(23).withMinute(59).withSecond(59);
         } else if ("month".equalsIgnoreCase(timeframe)) {
-            start = now.minusMonths(1);
+            YearMonth currentMonth = YearMonth.from(now);
+            start = currentMonth.atDay(1).atStartOfDay();
+            end = currentMonth.atEndOfMonth().atTime(23, 59, 59);
         } else {
-            start = now.minusYears(1);
+            start = now.toLocalDate()
+                    .withDayOfYear(1)
+                    .atStartOfDay();
+            end = now.toLocalDate()
+                    .withMonth(12)
+                    .withDayOfMonth(31)
+                    .atTime(23, 59, 59);
         }
 
-        List<AiUsageLog> logs = repository.findByCreatedAtBetween(start, now);
+        List<AiUsageLog> logs = repository.findByCreatedAtBetween(start, end);
         
         if ("day".equalsIgnoreCase(timeframe)) {
-            return aggregateByHour(logs, start, now);
+            return aggregateByHour(logs, start, end);
         } else if ("week".equalsIgnoreCase(timeframe)) {
-            return aggregateByDay(logs, start, now);
+            return aggregateByWeekday(logs, start);
         } else if ("month".equalsIgnoreCase(timeframe)) {
-            return aggregateByWeek(logs, start, now);
+            return aggregateByMonthDay(logs, start);
         } else {
-            return aggregateByMonth(logs, start, now);
+            return aggregateByMonth(logs);
         }
     }
 
@@ -68,17 +90,25 @@ public class AiReportService {
         return new ArrayList<>(map.values());
     }
 
-    private List<AiUsageReportItem> aggregateByDay(List<AiUsageLog> logs, LocalDateTime start, LocalDateTime end) {
+    private List<AiUsageReportItem> aggregateByWeekday(List<AiUsageLog> logs, LocalDateTime start) {
         Map<String, AiUsageReportItem> map = new LinkedHashMap<>();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM");
-        
-        for (LocalDateTime time = start; time.isBefore(end.plusDays(1)); time = time.plusDays(1)) {
-            String label = time.format(formatter);
+        List<DayOfWeek> weekdays = List.of(
+                DayOfWeek.MONDAY,
+                DayOfWeek.TUESDAY,
+                DayOfWeek.WEDNESDAY,
+                DayOfWeek.THURSDAY,
+                DayOfWeek.FRIDAY,
+                DayOfWeek.SATURDAY,
+                DayOfWeek.SUNDAY
+        );
+
+        for (DayOfWeek day : weekdays) {
+            String label = formatWeekday(day);
             map.put(label, AiUsageReportItem.builder().date(label).promptTokens(0).completionTokens(0).cost(0.0).build());
         }
 
         for (AiUsageLog log : logs) {
-            String label = log.getCreatedAt().format(formatter);
+            String label = formatWeekday(log.getCreatedAt().getDayOfWeek());
             AiUsageReportItem item = map.get(label);
             if (item != null) {
                 item.setPromptTokens(item.getPromptTokens() + log.getPromptTokens());
@@ -89,26 +119,17 @@ public class AiReportService {
         return new ArrayList<>(map.values());
     }
 
-    private List<AiUsageReportItem> aggregateByWeek(List<AiUsageLog> logs, LocalDateTime start, LocalDateTime end) {
+    private List<AiUsageReportItem> aggregateByMonthDay(List<AiUsageLog> logs, LocalDateTime start) {
         Map<String, AiUsageReportItem> map = new LinkedHashMap<>();
-        
-        map.put("Tuần 1", AiUsageReportItem.builder().date("Tuần 1").promptTokens(0).completionTokens(0).cost(0.0).build());
-        map.put("Tuần 2", AiUsageReportItem.builder().date("Tuần 2").promptTokens(0).completionTokens(0).cost(0.0).build());
-        map.put("Tuần 3", AiUsageReportItem.builder().date("Tuần 3").promptTokens(0).completionTokens(0).cost(0.0).build());
-        map.put("Tuần 4", AiUsageReportItem.builder().date("Tuần 4").promptTokens(0).completionTokens(0).cost(0.0).build());
+
+        YearMonth month = YearMonth.from(start);
+        IntStream.rangeClosed(1, month.lengthOfMonth()).forEach(day -> {
+            String label = String.valueOf(day);
+            map.put(label, AiUsageReportItem.builder().date(label).promptTokens(0).completionTokens(0).cost(0.0).build());
+        });
 
         for (AiUsageLog log : logs) {
-            long daysAgo = java.time.temporal.ChronoUnit.DAYS.between(log.getCreatedAt(), end);
-            String label;
-            if (daysAgo < 7) {
-                label = "Tuần 4";
-            } else if (daysAgo < 14) {
-                label = "Tuần 3";
-            } else if (daysAgo < 21) {
-                label = "Tuần 2";
-            } else {
-                label = "Tuần 1";
-            }
+            String label = String.valueOf(log.getCreatedAt().getDayOfMonth());
             AiUsageReportItem item = map.get(label);
             if (item != null) {
                 item.setPromptTokens(item.getPromptTokens() + log.getPromptTokens());
@@ -119,17 +140,16 @@ public class AiReportService {
         return new ArrayList<>(map.values());
     }
 
-    private List<AiUsageReportItem> aggregateByMonth(List<AiUsageLog> logs, LocalDateTime start, LocalDateTime end) {
+    private List<AiUsageReportItem> aggregateByMonth(List<AiUsageLog> logs) {
         Map<String, AiUsageReportItem> map = new LinkedHashMap<>();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("'T'M");
-        
-        for (LocalDateTime time = start; time.isBefore(end.plusMonths(1)); time = time.plusMonths(1)) {
-            String label = time.format(formatter);
+
+        IntStream.rangeClosed(1, 12).forEach(month -> {
+            String label = "T" + month;
             map.put(label, AiUsageReportItem.builder().date(label).promptTokens(0).completionTokens(0).cost(0.0).build());
-        }
+        });
 
         for (AiUsageLog log : logs) {
-            String label = log.getCreatedAt().format(formatter);
+            String label = "T" + log.getCreatedAt().getMonthValue();
             AiUsageReportItem item = map.get(label);
             if (item != null) {
                 item.setPromptTokens(item.getPromptTokens() + log.getPromptTokens());
@@ -138,5 +158,17 @@ public class AiReportService {
             }
         }
         return new ArrayList<>(map.values());
+    }
+
+    private String formatWeekday(DayOfWeek dayOfWeek) {
+        return switch (dayOfWeek) {
+            case MONDAY -> "Th 2";
+            case TUESDAY -> "Th 3";
+            case WEDNESDAY -> "Th 4";
+            case THURSDAY -> "Th 5";
+            case FRIDAY -> "Th 6";
+            case SATURDAY -> "Th 7";
+            case SUNDAY -> "CN";
+        };
     }
 }
