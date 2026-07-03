@@ -2,6 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router'
 import * as React from 'react'
 import { Badge, Button, Card, CardContent } from '@smart-cv/ui'
 import { useTranslation } from '@smart-cv/i18n'
+import { useAuthStore } from '../../store/useAuthStore'
 import {
   Briefcase,
   Building2,
@@ -325,7 +326,10 @@ function OverviewTab({
   const { data: jobsData } = useGetCompanyJobs(companyId)
   const previewJobs = (jobsData?.data ?? []).slice(0, 3)
 
-  const { data: assessmentsData } = useGetAssessmentsByRecruiter(companyId)
+  const { isAuthenticated } = useAuthStore()
+  const { data: assessmentsData } = useGetAssessmentsByRecruiter(companyId, {
+    query: { enabled: isAuthenticated },
+  })
   const assessments = assessmentsData?.data ?? []
 
   return (

@@ -113,7 +113,9 @@ function JobDetailPage() {
   const { data: jobData, isLoading, isError } = useGetJobById(jobId)
   const job = jobData?.data
 
-  const { data: assessmentsData } = useGetAssessmentsByJob(jobId)
+  const { data: assessmentsData } = useGetAssessmentsByJob(jobId, {
+    query: { enabled: isAuthenticated },
+  })
   const assessments = assessmentsData?.data ?? []
 
   const deadlineDaysLeft = job?.deadline
@@ -190,7 +192,10 @@ function JobDetailPage() {
 
   function handleApplyClick() {
     if (!isCandidate) {
-      navigate({ to: '/signin' })
+      toast.error('Vui lòng đăng nhập tài khoản ứng viên để ứng tuyển công việc này!')
+      setTimeout(() => {
+        navigate({ to: '/signin' })
+      }, 1500)
       return
     }
     setShowApplyModal(true)
@@ -198,7 +203,10 @@ function JobDetailPage() {
 
   function handleSaveClick() {
     if (!isCandidate) {
-      navigate({ to: '/signin' })
+      toast.error('Vui lòng đăng nhập tài khoản ứng viên để lưu công việc này!')
+      setTimeout(() => {
+        navigate({ to: '/signin' })
+      }, 1500)
       return
     }
     if (saved) {
@@ -582,9 +590,9 @@ function JobDetailPage() {
                 <h2 className="text-xl font-semibold text-foreground">Companies in this category</h2>
                 <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
                   {relatedCompanies.map((company) => (
-                    <Link key={company.id} to="/companies/$companyId" params={{ companyId: company.id ?? '' }} className="block">
-                      <Card className="border-border bg-card hover:shadow-md transition-shadow">
-                        <CardContent className="p-4 flex items-center gap-3">
+                    <Link key={company.id} to="/companies/$companyId" params={{ companyId: company.id ?? '' }} className="block h-full">
+                      <Card className="border-border bg-card hover:shadow-md transition-shadow h-full">
+                        <CardContent className="p-4 flex items-center gap-3 h-full">
                           {company.logoUrl ? (
                             <img src={company.logoUrl} alt={company.name ?? ''} className="h-10 w-10 rounded-lg object-cover shrink-0 border border-border" />
                           ) : (
@@ -592,11 +600,12 @@ function JobDetailPage() {
                               <Building2 className="h-5 w-5 text-primary" />
                             </div>
                           )}
-                          <div className="min-w-0">
-                            <p className="text-sm font-semibold text-foreground line-clamp-1">{company.name}</p>
+                          <div className="min-w-0 flex-1">
+                            <p className="text-sm font-semibold text-foreground line-clamp-1" title={company.name}>{company.name}</p>
                             {company.location && (
-                              <p className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5">
-                                <MapPin className="h-3 w-3 shrink-0" />{company.location}
+                              <p className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5 line-clamp-1" title={company.location}>
+                                <MapPin className="h-3 w-3 shrink-0" />
+                                <span className="truncate">{company.location}</span>
                               </p>
                             )}
                           </div>

@@ -208,8 +208,17 @@ function MyCVPage() {
         queryClient.invalidateQueries({ queryKey: getListCvsQueryKey() })
         queryClient.invalidateQueries({ queryKey: getGetJobSuggestionsQueryKey() })
       },
-      onError: (_err, variables) => {
-        toast.error(lang === 'VI' ? 'Phân tích CV thất bại. Vui lòng thử lại.' : 'CV analysis failed. Please try again.')
+      onError: (err: any, variables) => {
+        const errCode = err?.response?.data?.code;
+        if (errCode === 8012 || errCode === 6008) {
+          toast.error(
+            lang === 'VI'
+              ? 'Hết lượt sử dụng AI. Vui lòng nâng cấp gói dịch vụ.'
+              : 'Out of AI credits. Please upgrade your package.'
+          )
+        } else {
+          toast.error(lang === 'VI' ? 'Phân tích CV thất bại. Vui lòng thử lại.' : 'CV analysis failed. Please try again.')
+        }
         setAnalyzingCvIds((prev) => {
           const next = new Set(prev)
           next.delete(variables.data.cvId)

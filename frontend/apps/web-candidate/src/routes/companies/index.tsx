@@ -10,7 +10,7 @@ export const Route = createFileRoute('/companies/')({
   component: CompaniesPage,
 })
 
-const COMPANIES_PER_PAGE = 6
+const COMPANIES_PER_PAGE = 9
 
 function CompaniesPage() {
   const { t } = useTranslation()
@@ -176,44 +176,54 @@ function CompaniesPage() {
 function CompanyCard({ company }: { company: UserModels.CompanyResponse }) {
   const { t } = useTranslation()
   return (
-    <Link to="/companies/$companyId" params={{ companyId: company.id ?? '' }} className="block">
-      <article className="elevate-card overflow-hidden rounded-2xl border border-border bg-card hover:shadow-md transition-shadow">
-        {/* Cover */}
-        <div className="h-[52px] bg-muted">
-          {company.coverImageUrl && (
-            <img src={company.coverImageUrl} alt="" className="h-full w-full object-cover" />
-          )}
-        </div>
-        <div className="px-4 pb-4 pt-0">
-          {/* Logo overlapping cover */}
-          <div
-            className="-mt-5 mb-3 flex h-10 w-10 items-center justify-center rounded-xl border-2 border-background bg-primary/10 text-sm font-bold text-primary shadow-sm overflow-hidden"
-          >
-            {company.logoUrl
-              ? <img src={company.logoUrl} alt={company.name ?? ''} className="h-full w-full object-cover" />
-              : (company.name?.slice(0, 2).toUpperCase() ?? '?')}
-          </div>
-          <h3 className="font-semibold text-foreground">{company.name}</h3>
-          <div className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
-            {company.location && (
-              <>
-                <MapPin className="h-3 w-3" />
-                {company.location}
-              </>
+    <Link to="/companies/$companyId" params={{ companyId: company.id ?? '' }} className="block h-full">
+      <article className="elevate-card overflow-hidden rounded-2xl border border-border bg-card hover:shadow-md transition-shadow h-[240px] flex flex-col justify-between">
+        <div>
+          {/* Cover */}
+          <div className="h-[52px] bg-muted relative shrink-0">
+            {company.coverImageUrl && (
+              <img src={company.coverImageUrl} alt="" className="h-full w-full object-cover" />
             )}
           </div>
-          {company.industry && (
-            <div className="mt-2">
-              <Badge variant="secondary" className="text-xs">{company.industry}</Badge>
+          <div className="px-4 pt-0">
+            {/* Logo overlapping cover */}
+            <div
+              className="-mt-5 mb-2 flex h-10 w-10 items-center justify-center rounded-xl border-2 border-background bg-primary/10 text-sm font-bold text-primary shadow-sm overflow-hidden shrink-0"
+            >
+              {company.logoUrl
+                ? <img src={company.logoUrl} alt={company.name ?? ''} className="h-full w-full object-cover" />
+                : (company.name?.slice(0, 2).toUpperCase() ?? '?')}
             </div>
-          )}
-          <div className="mt-3 flex items-center justify-between border-t border-border pt-3 text-xs">
-            <span className="font-medium text-success">
+            <h3 className="font-semibold text-foreground line-clamp-1" title={company.name}>{company.name}</h3>
+            <div className="mt-1 flex items-center gap-1 text-xs text-muted-foreground">
+              {company.location ? (
+                <>
+                  <MapPin className="h-3 w-3 shrink-0" />
+                  <span className="line-clamp-1" title={company.location}>{company.location}</span>
+                </>
+              ) : (
+                <span className="invisible">-</span>
+              )}
+            </div>
+            {company.industry ? (
+              <div className="mt-2 h-6">
+                <Badge variant="secondary" className="text-xs truncate max-w-full">{company.industry}</Badge>
+              </div>
+            ) : (
+              <div className="mt-2 h-6 invisible" />
+            )}
+          </div>
+        </div>
+        <div className="px-4 pb-4">
+          <div className="border-t border-border pt-3 flex items-center justify-between gap-2">
+            <span className="font-medium text-success text-xs shrink-0">
               ● {t('company_list_active_jobs', {
                 count: company.activeJobCount || (company.id ? (Math.abs(company.id.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)) % 4) + 1 : 2)
               })}
             </span>
-            <span className="font-medium text-primary">{t('company_list_view_profile')} →</span>
+            <Button size="sm" className="bg-primary text-primary-foreground hover:bg-primary/90 text-xs shrink-0">
+              {t('company_list_view_profile')}
+            </Button>
           </div>
         </div>
       </article>
