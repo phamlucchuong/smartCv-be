@@ -29,6 +29,7 @@ function UsersPage() {
   const [keyword, setKeyword] = useState('')
   const [debouncedKeyword, setDebouncedKeyword] = useState('')
   const [role, setRole] = useState<string | undefined>()
+  const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'locked'>('all')
   const [deleteTarget, setDeleteTarget] = useState<{ id: string; name: string } | null>(null)
 
   useEffect(() => {
@@ -44,6 +45,7 @@ function UsersPage() {
     size: 10,
     keyword: debouncedKeyword || undefined,
     role: role || undefined,
+    locked: statusFilter === 'all' ? undefined : statusFilter === 'locked',
   })
   const users = data?.data?.items ?? []
   const totalPages = data?.data?.totalPages ?? 1
@@ -93,12 +95,21 @@ function UsersPage() {
         <select
           value={role ?? ''}
           onChange={(e) => { setPage(1); setRole(e.target.value || undefined) }}
-          className="h-9 rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring/40"
+          className="h-9 rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring/40 font-medium"
         >
           <option value="">{t('admin_filter_role_all')}</option>
           {ROLE_OPTIONS.map((r) => (
             <option key={r} value={r}>{ROLE_LABEL[r] ?? r}</option>
           ))}
+        </select>
+        <select
+          value={statusFilter}
+          onChange={(e) => { setPage(1); setStatusFilter(e.target.value as any) }}
+          className="h-9 rounded-lg border border-input bg-background px-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring/40 font-medium"
+        >
+          <option value="all">Tất cả trạng thái</option>
+          <option value="active">Đang hoạt động</option>
+          <option value="locked">Bị khóa</option>
         </select>
       </div>
 
@@ -132,9 +143,17 @@ function UsersPage() {
                 return (
                   <tr key={user.id} className="border-t border-border">
                     <td className="p-3">
-                      <div className="size-8 rounded-full bg-primary/15 text-primary flex items-center justify-center text-xs font-semibold">
-                        {name[0]?.toUpperCase()}
-                      </div>
+                      {user.avatarUrl ? (
+                        <img
+                          src={user.avatarUrl}
+                          alt={name}
+                          className="size-8 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="size-8 rounded-full bg-primary/15 text-primary flex items-center justify-center text-xs font-semibold">
+                          {name[0]?.toUpperCase()}
+                        </div>
+                      )}
                     </td>
                     <td className="p-3 font-medium">{name}</td>
                     <td className="p-3 text-muted-foreground">{user.email ?? '—'}</td>

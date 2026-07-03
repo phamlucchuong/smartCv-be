@@ -16,6 +16,7 @@ public interface RecruiterMapper {
     @Mapping(target = "fullName",  source = "user.fullName")
     @Mapping(target = "email",     source = "user.email")
     @Mapping(target = "phone",     source = "user.phone")
+    @Mapping(target = "category",  source = "recruiter.category")
     @Mapping(target = "createdAt", source = "recruiter.createdAt")
     @Mapping(target = "updatedAt", source = "recruiter.updatedAt")
     RecruiterResponse toRecruiterResponse(Recruiter recruiter, User user);

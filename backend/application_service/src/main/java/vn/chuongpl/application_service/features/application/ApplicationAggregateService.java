@@ -19,8 +19,16 @@ public class ApplicationAggregateService {
     MongoTemplate mongoTemplate;
 
     public List<TopJobCountDto> getTopJobsByApplicationCount(int limit) {
+        java.time.LocalDateTime startOfMonth = java.time.LocalDateTime.now()
+                .withDayOfMonth(1)
+                .withHour(0)
+                .withMinute(0)
+                .withSecond(0)
+                .withNano(0);
+
         Aggregation agg = Aggregation.newAggregation(
-                Aggregation.match(Criteria.where("deleted").is(false)),
+                Aggregation.match(Criteria.where("deleted").is(false)
+                        .and("appliedAt").gte(startOfMonth)),
                 Aggregation.group("job_id").count().as("count"),
                 Aggregation.project("count").and("_id").as("jobId"),
                 Aggregation.sort(Sort.by(Sort.Direction.DESC, "count")),

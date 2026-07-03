@@ -20,11 +20,18 @@ import {
 } from 'lucide-react'
 import { Button, NotificationPopover } from '@smart-cv/ui'
 import { useTranslation } from '@smart-cv/i18n'
-import { registerSignOutHandler, useGetMe2 } from '@smart-cv/api'
+import {
+  registerSignOutHandler,
+  useGetMe2,
+  useNotificationsList,
+  useMarkNotificationRead,
+  useMarkAllNotificationsRead,
+  useDeleteNotification,
+} from '@smart-cv/api'
+import type { NotificationItem, NotificationFilter } from '@smart-cv/ui'
 import { Toaster } from 'sonner'
 import { hasCandidateRole, useAuthStore } from '../store/useAuthStore'
 import { useCandidatePreferences } from '../store/candidatePreferences'
-import { useNotificationsStore } from '../store/useNotificationsStore'
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -56,13 +63,62 @@ function RootComponent() {
     toggleLanguage,
     isLoading: preferencesLoading,
   } = useCandidatePreferences()
-  const notifications = useNotificationsStore((s) => s.notifications)
-  const filter = useNotificationsStore((s) => s.filter)
-  const setFilter = useNotificationsStore((s) => s.setFilter)
-  const markAsRead = useNotificationsStore((s) => s.markAsRead)
-  const markAllAsRead = useNotificationsStore((s) => s.markAllAsRead)
-  const deleteNotification = useNotificationsStore((s) => s.deleteNotification)
-  const clearAll = useNotificationsStore((s) => s.clearAll)
+  // Load real notifications from backend notification-service
+  const { data: apiNotificationsData } = useNotificationsList(
+    { page: 1, pageSize: 50 },
+    { query: { enabled: isAuthenticated, refetchInterval: 10000 } }
+  )
+
+  const markReadMutation = useMarkNotificationRead()
+  const markAllReadMutation = useMarkAllNotificationsRead()
+  const deleteMutation = useDeleteNotification()
+
+  const [notiFilter, setNotiFilter] = React.useState<NotificationFilter>('all')
+
+  const notifications = React.useMemo<NotificationItem[]>(() => {
+    if (!isAuthenticated) return []
+    const items = apiNotificationsData?.data?.items ?? []
+    return items.map((item) => {
+      let tone: "default" | "success" | "warning" | "danger" | "info" = "default"
+      if (item.type === "SUCCESS" || item.type === "info") tone = "success"
+      else if (item.type === "WARNING") tone = "warning"
+      else if (item.type === "ERROR") tone = "danger"
+      else if (item.type === "INFO" || item.type === "CREDIT_EXHAUSTED") tone = "info"
+
+      return {
+        id: item.id,
+        title: item.title || "Notification",
+        message: item.body || "",
+        createdAt: item.createdAt,
+        read: item.isRead,
+        tone,
+      }
+    })
+  }, [apiNotificationsData, isAuthenticated])
+
+  const unreadCount = React.useMemo(() => {
+    if (!isAuthenticated) return 0
+    return apiNotificationsData?.data?.unreadCount ?? notifications.filter((n) => !n.read).length
+  }, [apiNotificationsData, notifications, isAuthenticated])
+
+  const handleMarkRead = (id: string) => {
+    markReadMutation.mutate(id)
+  }
+
+  const handleMarkAllRead = () => {
+    markAllReadMutation.mutate()
+  }
+
+  const handleDeleteNotification = (id: string) => {
+    deleteMutation.mutate(id)
+  }
+
+  const handleClearAll = () => {
+    const items = apiNotificationsData?.data?.items ?? []
+    items.forEach((item) => {
+      deleteMutation.mutate(item.id)
+    })
+  }
 
   const jobMenuRef = React.useRef<HTMLDivElement>(null)
   const resourceMenuRef = React.useRef<HTMLDivElement>(null)
@@ -71,7 +127,7 @@ function RootComponent() {
 
   const jobOptions = [t('nav_all_jobs'), t('nav_companies'), t('nav_top_companies'), t('nav_remote_jobs'), t('nav_internships')]
   const resourceOptions = [t('nav_career_resources'), t('nav_cv_templates'), t('nav_interview_guides'), t('nav_salary_report')]
-  const unreadCount = notifications.filter((notification) => !notification.read).length
+  
 
   const navigateToJobOption = (item: string) => {
     if (item === t('nav_companies')) {
@@ -237,32 +293,6 @@ function RootComponent() {
           </div>
 
           <div className="flex items-center gap-2">
-            <NotificationPopover
-              notifications={notifications}
-              unreadCount={unreadCount}
-              filter={filter}
-              onFilterChange={setFilter}
-              onMarkRead={markAsRead}
-              onDelete={deleteNotification}
-              onMarkAllRead={markAllAsRead}
-              onClearAll={clearAll}
-              locale={language === 'VI' ? 'vi-VN' : 'en-US'}
-              triggerClassName="text-muted-foreground hover:bg-muted/80"
-              labels={{
-                title: t('account_notifications'),
-                all: t('notifications_filter_all'),
-                unread: t('notifications_filter_unread'),
-                read: t('notifications_filter_read'),
-                markRead: t('notifications_mark_read'),
-                delete: t('notifications_delete'),
-                markAllRead: t('notifications_mark_all_read'),
-                clearAll: t('notifications_clear_all'),
-                empty: t('notifications_empty'),
-                noUnread: t('notifications_no_unread'),
-                unreadCount: t('notifications_unread_count', { count: unreadCount }),
-                openNotifications: t('notifications_popup_aria'),
-              }}
-            />
             <button
               onClick={handleToggleLanguage}
               disabled={preferencesLoading}
@@ -283,6 +313,33 @@ function RootComponent() {
             >
               {theme === 'dark' ? <Sun className="h-4 w-4 transition-transform duration-300 hover:rotate-12" /> : <Moon className="h-4 w-4 transition-transform duration-300 hover:-rotate-12" />}
             </Button>
+
+            <NotificationPopover
+              notifications={notifications}
+              unreadCount={unreadCount}
+              filter={notiFilter}
+              onFilterChange={setNotiFilter}
+              onMarkRead={handleMarkRead}
+              onDelete={handleDeleteNotification}
+              onMarkAllRead={handleMarkAllRead}
+              onClearAll={handleClearAll}
+              locale={language === 'VI' ? 'vi-VN' : 'en-US'}
+              triggerClassName="text-muted-foreground hover:bg-muted/80"
+              labels={{
+                title: t('account_notifications'),
+                all: t('notifications_filter_all'),
+                unread: t('notifications_filter_unread'),
+                read: t('notifications_filter_read'),
+                markRead: t('notifications_mark_read'),
+                delete: t('notifications_delete'),
+                markAllRead: t('notifications_mark_all_read'),
+                clearAll: t('notifications_clear_all'),
+                empty: t('notifications_empty'),
+                noUnread: t('notifications_no_unread'),
+                unreadCount: t('notifications_unread_count', { count: unreadCount }),
+                openNotifications: t('notifications_popup_aria'),
+              }}
+            />
 
             {isAuthenticated ? (
               <div
@@ -305,6 +362,7 @@ function RootComponent() {
 
                 <div
                   className={`absolute right-0 top-full mt-2 min-w-[220px] rounded-xl border border-border bg-card shadow-xl z-50 transition-opacity duration-150 ${accountMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+                  onClick={() => setAccountMenuOpen(false)}
                 >
                   <div className="flex items-center gap-3 px-3 py-3">
                     <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-primary/20 text-primary">

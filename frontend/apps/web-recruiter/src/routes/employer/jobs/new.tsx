@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Stepper } from "@/components/ui-kit/Stepper";
-import { Button } from "@smart-cv/ui";
+import { Button, JOB_CATEGORY_OPTIONS } from "@smart-cv/ui";
 import { AIInsightBox } from "@/components/ui-kit/AIInsightBox";
 import { RecruiterApi, useCreateJob, useSubmitJob, useUpdateJob } from "@smart-cv/api";
 import { toast } from "sonner";
@@ -86,6 +86,7 @@ function NewJob() {
   const [title, setTitle] = useState("");
   const [location, setLocation] = useState("");
   const [jobType, setJobType] = useState("");
+  const [category, setCategory] = useState("");
   const [deadline, setDeadline] = useState("");
   const [salaryMin, setSalaryMin] = useState("");
   const [salaryMax, setSalaryMax] = useState("");
@@ -118,6 +119,7 @@ function NewJob() {
     companyName,
     location,
     jobType,
+    category,
     experienceLevel,
     salaryMin,
     salaryMax,
@@ -218,11 +220,11 @@ function NewJob() {
     const payload = buildCreateJobPayload(formValues);
 
     if (draftJobId) {
-      await updateJobMutation.mutateAsync({ id: draftJobId, data: payload });
+      await updateJobMutation.mutateAsync({ id: draftJobId, data: payload as any });
       return draftJobId;
     }
 
-    const created = await createJobMutation.mutateAsync({ data: payload });
+    const created = await createJobMutation.mutateAsync({ data: payload as any });
     const nextDraftId = created.data?.id;
     if (!nextDraftId) throw new Error("No job id returned");
     setDraftJobId(nextDraftId);
@@ -336,6 +338,13 @@ function NewJob() {
               options={JOB_TYPE_OPTIONS}
               placeholder="Chọn loại hình công việc"
               error={errors.jobType}
+            />
+            <SelectField
+              label="Ngành nghề"
+              value={category}
+              onChange={setCategory}
+              options={JOB_CATEGORY_OPTIONS}
+              placeholder="Chọn ngành nghề"
             />
             <DateField
               label="Hạn nộp hồ sơ"

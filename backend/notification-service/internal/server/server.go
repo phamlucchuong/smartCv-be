@@ -263,6 +263,12 @@ func (s *Server) Start(ctx context.Context) error {
 				s.log.Error("failed to start package expiring soon event consumer", slog.Any("error", err))
 			}
 		}()
+
+		go func() {
+			if err := s.consumer.ListenAiCreditExhaustedEvents(); err != nil {
+				s.log.Error("failed to start AI credit exhausted event consumer", slog.Any("error", err))
+			}
+		}()
 	}
 
 	sc := echo.StartConfig{

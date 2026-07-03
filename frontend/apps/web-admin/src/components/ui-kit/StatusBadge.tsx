@@ -4,9 +4,12 @@ type Status =
   | 'Active'
   | 'Locked'
   | 'Pending'
+  | 'PENDING'
   | 'Verified'
   | 'Rejected'
+  | 'REJECTED'
   | 'Approved'
+  | 'APPROVED'
   | 'Hidden'
   | 'Paid'
   | 'Failed'
@@ -17,9 +20,12 @@ const TONE: Record<Status, string> = {
   Active: 'bg-emerald-50 text-emerald-700 border-emerald-200',
   Locked: 'bg-slate-100 text-slate-700 border-slate-200',
   Pending: 'bg-amber-50 text-amber-700 border-amber-200',
+  PENDING: 'bg-amber-50 text-amber-700 border-amber-200',
   Verified: 'bg-emerald-50 text-emerald-700 border-emerald-200',
   Rejected: 'bg-red-50 text-red-700 border-red-200',
+  REJECTED: 'bg-red-50 text-red-700 border-red-200',
   Approved: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+  APPROVED: 'bg-emerald-50 text-emerald-700 border-emerald-200',
   Hidden: 'bg-slate-100 text-slate-700 border-slate-200',
   Paid: 'bg-emerald-50 text-emerald-700 border-emerald-200',
   Failed: 'bg-red-50 text-red-700 border-red-200',

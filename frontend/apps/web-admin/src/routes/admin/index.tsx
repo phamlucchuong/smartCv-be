@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { Area, AreaChart, CartesianGrid, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import { StatusBadge } from '@/components/ui-kit/StatusBadge'
 import { useTranslation } from '@smart-cv/i18n'
-import { getAllUsers, useGetAllCandidates, useGetAllJobs, useGetAllUsers, RecruiterApi, useGetAdminJobs, type UserModels } from '@smart-cv/api'
+import { getAllUsers, useGetAllCandidates, useGetAllJobs, useGetAllUsers, RecruiterApi, useGetAdminJobs, type UserModels, useGetAdminPaymentOrders, type OrderResponse } from '@smart-cv/api'
 import { useState } from 'react'
 
 export const Route = createFileRoute('/admin/')({
@@ -35,30 +35,43 @@ const USER_GROWTH_YEAR = [
   { m: 'T12', users: 4300 },
 ]
 
-const REVENUE_MONTH = [
-  { m: '01/06', rev: 4 },
-  { m: '05/06', rev: 12 },
-  { m: '10/06', rev: 15 },
-  { m: '15/06', rev: 18 },
-  { m: '20/06', rev: 22 },
-  { m: '25/06', rev: 28 },
-  { m: '30/06', rev: 25 },
-]
+function buildMonthlyRevenue(orders: OrderResponse[]) {
+  const today = startOfDay(new Date())
+  const windowStart = addDays(today, -29)
+  const stepStarts = [0, 5, 10, 15, 20, 25].map((offset) => addDays(windowStart, offset))
+  return stepStarts.map((start, index) => {
+    const end = index === stepStarts.length - 1 ? addDays(today, 1) : stepStarts[index + 1]
+    const paidInPeriod = orders.filter((o) => {
+      if (o.status !== 'PAID' || !o.createdAt) return false
+      const t = new Date(o.createdAt).getTime()
+      return t >= start.getTime() && t < end.getTime()
+    })
+    const revAmount = paidInPeriod.reduce((sum, o) => sum + o.amount, 0)
+    return {
+      m: formatDayLabel(start),
+      rev: revAmount / 1_000_000,
+    }
+  })
+}
 
-const REVENUE_YEAR = [
-  { m: 'T1', rev: 72 },
-  { m: 'T2', rev: 83 },
-  { m: 'T3', rev: 78 },
-  { m: 'T4', rev: 96 },
-  { m: 'T5', rev: 108 },
-  { m: 'T6', rev: 124 },
-  { m: 'T7', rev: 130 },
-  { m: 'T8', rev: 145 },
-  { m: 'T9', rev: 138 },
-  { m: 'T10', rev: 160 },
-  { m: 'T11', rev: 175 },
-  { m: 'T12', rev: 198 },
-]
+function buildYearlyRevenue(orders: OrderResponse[]) {
+  const today = new Date()
+  const currentMonth = new Date(today.getFullYear(), today.getMonth(), 1)
+  const monthStarts = Array.from({ length: 12 }, (_value, index) => addMonths(currentMonth, index - 11))
+  return monthStarts.map((start, index) => {
+    const end = index === monthStarts.length - 1 ? addMonths(currentMonth, 1) : monthStarts[index + 1]
+    const paidInPeriod = orders.filter((o) => {
+      if (o.status !== 'PAID' || !o.createdAt) return false
+      const t = new Date(o.createdAt).getTime()
+      return t >= start.getTime() && t < end.getTime()
+    })
+    const revAmount = paidInPeriod.reduce((sum, o) => sum + o.amount, 0)
+    return {
+      m: formatMonthLabel(start),
+      rev: revAmount / 1_000_000,
+    }
+  })
+}
 
 type GrowthPoint = {
   m: string
@@ -166,9 +179,21 @@ function AdminDashboard() {
   const [userGrowthTimeframe, setUserGrowthTimeframe] = useState<'month' | 'year'>('month')
   const [revenueTimeframe, setRevenueTimeframe] = useState<'month' | 'year'>('month')
 
-  const revenueData = revenueTimeframe === 'year'
-    ? REVENUE_YEAR
-    : REVENUE_MONTH
+  const adminOrdersQuery = useGetAdminPaymentOrders(0, 1000)
+  const allOrders = adminOrdersQuery.data?.data?.content ?? []
+
+  const revenueData = allOrders.length > 0
+    ? revenueTimeframe === 'year'
+      ? buildYearlyRevenue(allOrders)
+      : buildMonthlyRevenue(allOrders)
+    : []
+
+  const currentMonthStr = new Date().toISOString().slice(0, 7)
+  const paidOrdersInMonth = allOrders.filter((o) => o.status === 'PAID' && o.createdAt?.startsWith(currentMonthStr))
+  const totalMonthRevenue = paidOrdersInMonth.reduce((sum, o) => sum + o.amount, 0)
+  const monthlyRevenueFormatted = totalMonthRevenue > 0
+    ? `${(totalMonthRevenue / 1_000_000).toFixed(1)}M₫`
+    : '0₫'
 
   const usersQuery = useGetAllUsers({ page: 1, size: 1 })
   const userGrowthQuery = useQuery({
@@ -206,12 +231,21 @@ function AdminDashboard() {
     ? (absoluteGrowth / firstGrowthPoint.users) * 100
     : 0
 
+  const recentTransactions = [...allOrders]
+    .sort((a, b) => new Date(b.createdAt ?? 0).getTime() - new Date(a.createdAt ?? 0).getTime())
+    .slice(0, 5)
+
+  const formatPrice = (price: number) => {
+    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price)
+  }
+
   const isUsersLoading = usersQuery.isLoading
   const isCandidatesLoading = candidatesQuery.isLoading
   const isRecruitersLoading = recruitersQuery.isLoading
   const isJobsLoading = jobsQuery.isLoading
   const isPendingJobsLoading = pendingJobsQuery.isLoading
   const isUserGrowthLoading = userGrowthQuery.isLoading
+  const isAdminOrdersLoading = adminOrdersQuery.isLoading
 
   return (
     <div className="space-y-6">
@@ -223,7 +257,7 @@ function AdminDashboard() {
           { label: t('admin_kpi_new_candidates'), value: isCandidatesLoading ? '...' : totalCandidates.toLocaleString('vi-VN'), change: 'API', trend: 'up', timeframe: t('admin_kpi_vs_last_week') },
           { label: t('admin_kpi_new_employers'), value: isRecruitersLoading ? '...' : totalRecruiters.toLocaleString('vi-VN'), change: 'API', trend: 'up', timeframe: t('admin_kpi_vs_last_week') },
           { label: t('admin_kpi_jobs_today'), value: isJobsLoading ? '...' : totalJobs.toLocaleString('vi-VN'), change: 'API', trend: 'up', timeframe: t('admin_kpi_vs_yesterday') },
-          { label: t('admin_kpi_monthly_revenue'), value: '124M₫', change: '+18.5%', trend: 'up', timeframe: t('admin_kpi_vs_last_month') },
+          { label: t('admin_kpi_monthly_revenue'), value: isAdminOrdersLoading ? '...' : monthlyRevenueFormatted, change: 'API', trend: 'up', timeframe: t('admin_kpi_vs_last_month') },
           { label: t('admin_kpi_ai_queue'), value: isPendingJobsLoading ? '...' : `${pendingJobs} jobs`, change: 'API', trend: 'down', timeframe: t('admin_kpi_vs_last_hour') },
         ].map((item) => (
           <div key={item.label} className="card-surface p-4 flex flex-col justify-between">
@@ -388,13 +422,18 @@ function AdminDashboard() {
             </Link>
           </div>
           <div className="space-y-3 text-sm">
-            {[
-              ['Users', totalUsers.toLocaleString('vi-VN'), 'Paid' as const],
-              ['Candidates', totalCandidates.toLocaleString('vi-VN'), 'Pending' as const],
-              ['Recruiters', totalRecruiters.toLocaleString('vi-VN'), 'Paid' as const],
-            ].map(([company, amount, status]) => (
-              <div key={company} className="flex items-center justify-between"><span>{company} • {amount}</span><StatusBadge status={status} /></div>
-            ))}
+            {isAdminOrdersLoading ? (
+              <p className="text-muted-foreground">Loading...</p>
+            ) : recentTransactions.length > 0 ? (
+              recentTransactions.map((tx) => (
+                <div key={tx.orderId} className="flex items-center justify-between">
+                  <span>{tx.packageName} • {formatPrice(tx.amount)}</span>
+                  <StatusBadge status={tx.status} />
+                </div>
+              ))
+            ) : (
+              <p className="text-muted-foreground">Không có giao dịch nào.</p>
+            )}
           </div>
         </div>
       </div>

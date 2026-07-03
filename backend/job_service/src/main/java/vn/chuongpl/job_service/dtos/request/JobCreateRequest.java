@@ -4,6 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import vn.chuongpl.job_service.enums.ExperienceLevel;
+import vn.chuongpl.job_service.enums.JobCategory;
 import vn.chuongpl.job_service.enums.JobType;
 
 import java.time.LocalDate;
@@ -32,4 +33,5 @@ public class JobCreateRequest {
     Integer rejectThreshold;
     Boolean autoRejectEnabled;
     String requiredTest;
+    JobCategory category;
 }

@@ -15,5 +15,7 @@ export interface AttemptStateResponse {
   answers?: AttemptAnswer[];
   startedAt?: string;
   score?: number;
+  correctAnswers?: number;
+  totalQuestions?: number;
   result?: AttemptStateResponseResult;
 }

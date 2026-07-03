@@ -231,11 +231,13 @@ function AssessmentModerationPage() {
   const { data: apiResponse, isLoading, isError, refetch } = useGetRecruiterAssessments()
   const assessments = apiResponse?.data ?? []
 
-  // Filter list locally by search keyword
+  // Filter list locally: only ACTIVE (published) assessments, and by search keyword
   const filteredAssessments = useMemo(() => {
     return assessments.filter((a: AssessmentResponse) => {
+      if (a.status !== 'ACTIVE') return false
       const matchKey = debouncedKeyword.toLowerCase()
       return (
+        !matchKey ||
         a.title?.toLowerCase().includes(matchKey) ||
         a.description?.toLowerCase().includes(matchKey)
       )

@@ -39,6 +39,9 @@ export interface CandidateResponse {
   activePackageId?: string;
   packageActivatedAt?: string;
   packageExpiresAt?: string;
+  aiCreditsTotal?: number;
+  aiCreditsUsed?: number;
+  aiCreditsRemaining?: number;
   createdAt?: string;
   updatedAt?: string;
 }

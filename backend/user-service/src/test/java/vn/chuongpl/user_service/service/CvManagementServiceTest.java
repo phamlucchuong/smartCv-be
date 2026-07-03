@@ -27,6 +27,8 @@ class CvManagementServiceTest {
     @Mock CandidateRepository candidateRepository;
     @Mock UserRepository userRepository;
     @Mock CandidateMapper candidateMapper;
+    @Mock vn.chuongpl.user_service.features.servicepackage.ServicePackageRepository servicePackageRepository;
+    @Mock vn.chuongpl.user_service.integration.notification.AiCreditExhaustedPublisher aiCreditExhaustedPublisher;
     @InjectMocks CandidateService candidateService;
 
     @Test

@@ -17,6 +17,7 @@ export interface CvFullAnalysisResponse {
   missingSkills?: string[];
   extraSkills?: string[];
   summary?: string;
+  summaryVi?: string;
   strengths?: StrengthItem[];
   weaknesses?: WeaknessItem[];
   tips?: ImprovementTip[];

@@ -57,6 +57,9 @@ public class CandidateResponse {
     String activePackageId;
     LocalDateTime packageActivatedAt;
     LocalDateTime packageExpiresAt;
+    Integer aiCreditsTotal;
+    Integer aiCreditsUsed;
+    Integer aiCreditsRemaining;
 
     // ── Audit ─────────────────────────────────────────────────────────────────
     LocalDateTime createdAt;

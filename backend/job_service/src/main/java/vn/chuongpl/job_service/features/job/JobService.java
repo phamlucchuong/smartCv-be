@@ -22,6 +22,7 @@ import vn.chuongpl.job_service.dtos.request.JobSearchRequest;
 import vn.chuongpl.job_service.dtos.request.JobUpdateRequest;
 import vn.chuongpl.job_service.dtos.response.JobResponse;
 import vn.chuongpl.job_service.enums.ErrorCode;
+import vn.chuongpl.job_service.enums.JobCategory;
 import vn.chuongpl.job_service.enums.JobModerationStatus;
 import vn.chuongpl.job_service.enums.JobVisibilityStatus;
 import vn.chuongpl.job_service.exception.AppException;
@@ -31,7 +32,9 @@ import vn.chuongpl.job_service.integration.userservice.UserServiceClient;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -92,7 +95,14 @@ public class JobService {
     public PageResponse<JobResponse> getMyJobs(String userId, int page, int size) {
         expireOverduePublishedJobs();
         String recruiterId = userServiceClient.resolveRecruiterId(userId);
-        if (recruiterId == null) {
+
+        // Build search list: Recruiter._id (new jobs) + User._id (jobs created before the
+        // recruiter-id refactoring, where recruiter_id was stored as User._id).
+        List<String> searchIds = new ArrayList<>();
+        if (recruiterId != null) searchIds.add(recruiterId);
+        if (!userId.equals(recruiterId)) searchIds.add(userId);
+
+        if (searchIds.isEmpty()) {
             return PageResponse.<JobResponse>builder()
                     .items(List.of())
                     .total(0)
@@ -102,20 +112,22 @@ public class JobService {
                     .build();
         }
         Pageable pageable = buildPageable(page, size, "createdAt", "desc");
-        Page<Job> jobs = jobRepository.findByRecruiterIdAndDeletedFalse(recruiterId, pageable);
+        Page<Job> jobs = jobRepository.findByRecruiterIdInAndDeletedFalse(searchIds, pageable);
         return toPageResponse(jobs);
     }
 
-    public PageResponse<JobResponse> getAllJobs(String moderationStatus, String keyword, int page, int size) {
+    public PageResponse<JobResponse> getAllJobs(String moderationStatus, String keyword, String category, int page, int size) {
         expireOverduePublishedJobs();
         Pageable pageable = buildPageable(page, size, "createdAt", "desc");
         boolean hasKeyword = keyword != null && !keyword.isBlank();
         boolean hasStatus = moderationStatus != null && !moderationStatus.isBlank();
-        if (!hasKeyword && !hasStatus) {
-            return toPageResponse(jobRepository.findByDeletedFalse(pageable));
-        }
+        boolean hasCategory = category != null && !category.isBlank();
+
         List<Criteria> parts = new ArrayList<>();
         parts.add(Criteria.where("deleted").is(false));
+        // Never show DRAFT jobs to admin — only show submitted (PENDING) or approved (PUBLISHED) jobs
+        parts.add(Criteria.where("moderation_status").ne(JobModerationStatus.DRAFT));
+
         if (hasStatus) {
             JobModerationStatus status;
             try {
@@ -124,6 +136,15 @@ public class JobService {
                 throw new AppException(ErrorCode.JOB_STATUS_INVALID);
             }
             parts.add(Criteria.where("moderation_status").is(status));
+        }
+        if (hasCategory) {
+            JobCategory cat;
+            try {
+                cat = JobCategory.valueOf(category.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                throw new AppException(ErrorCode.JOB_STATUS_INVALID);
+            }
+            parts.add(Criteria.where("category").is(cat));
         }
         if (hasKeyword) {
             parts.add(new Criteria().orOperator(
@@ -305,16 +326,56 @@ public class JobService {
     public List<JobResponse> getRelatedJobs(String id) {
         expireOverduePublishedJobs();
         Job job = findJob(id);
+
+        // Category-first: find up to 5 jobs in the same category
+        List<Job> byCat = java.util.Collections.emptyList();
+        if (job.getCategory() != null) {
+            byCat = jobRepository.findTop5ByCategoryAndModerationStatusAndVisibilityStatusAndIdNotAndDeletedFalse(
+                    job.getCategory(),
+                    JobModerationStatus.PUBLISHED,
+                    JobVisibilityStatus.ACTIVE,
+                    id);
+        }
+        if (byCat.size() >= 5) {
+            return byCat.stream().map(jobMapper::toJobResponse).toList();
+        }
+
+        // Skills fallback: fill remaining slots with skill-matched jobs
         List<String> skills = job.getSkills() != null ? job.getSkills() : List.of();
-        if (skills.isEmpty()) return List.of();
-        return jobRepository
-                .findTop5ByModerationStatusAndVisibilityStatusAndSkillsInAndIdNotAndDeletedFalse(
-                        JobModerationStatus.PUBLISHED,
-                        JobVisibilityStatus.ACTIVE,
-                        skills,
-                        id
-                )
-                .stream().map(jobMapper::toJobResponse).toList();
+        if (skills.isEmpty() && byCat.isEmpty()) return List.of();
+
+        Set<String> seen = new HashSet<>();
+        List<Job> result = new ArrayList<>(byCat);
+        byCat.forEach(j -> seen.add(j.getId()));
+
+        if (!skills.isEmpty() && result.size() < 5) {
+            jobRepository.findTop5ByModerationStatusAndVisibilityStatusAndSkillsInAndIdNotAndDeletedFalse(
+                            JobModerationStatus.PUBLISHED,
+                            JobVisibilityStatus.ACTIVE,
+                            skills,
+                            id)
+                    .stream()
+                    .filter(j -> !seen.contains(j.getId()))
+                    .limit(5 - result.size())
+                    .forEach(result::add);
+        }
+
+        return result.stream().map(jobMapper::toJobResponse).toList();
+    }
+
+    public List<UserServiceClient.CompanyData> getRelatedCompanies(String jobId) {
+        Job job = findJob(jobId);
+        if (job.getCategory() == null) return java.util.Collections.emptyList();
+        return userServiceClient.getCompaniesByCategory(job.getCategory().name(), 5);
+    }
+
+    public int reindexAllJobs() {
+        JobIndexService indexService = jobIndexServiceProvider.getIfAvailable();
+        if (indexService == null) return 0;
+        indexService.recreateIndex();
+        List<Job> allJobs = jobRepository.findByDeletedFalse(Pageable.unpaged()).getContent();
+        allJobs.forEach(indexService::indexJob);
+        return allJobs.size();
     }
 
     public List<JobResponse> getJobsByIds(List<String> ids) {
@@ -338,6 +399,25 @@ public class JobService {
 
     public PageResponse<JobResponse> searchJobs(JobSearchRequest request) {
         expireOverduePublishedJobs();
+        boolean hasKeyword = request.getKeyword() != null && !request.getKeyword().isBlank();
+        boolean hasLocation = request.getLocation() != null && !request.getLocation().isBlank();
+        boolean hasFilters = request.getCategory() != null
+                || request.getJobType() != null
+                || request.getExperienceLevel() != null
+                || (request.getSkills() != null && !request.getSkills().isEmpty())
+                || request.getSalaryMin() != null
+                || request.getSalaryMax() != null;
+        if (!hasKeyword && !hasLocation && !hasFilters) {
+            int page = request.getPage() > 0 ? request.getPage() : 1;
+            int size = request.getSize() > 0 ? request.getSize() : defaultPageSize;
+            Pageable pageable = buildPageable(page, size, "createdAt", "desc");
+            Page<Job> jobs = jobRepository.findByModerationStatusAndVisibilityStatusAndDeletedFalse(
+                    JobModerationStatus.PUBLISHED,
+                    JobVisibilityStatus.ACTIVE,
+                    pageable
+            );
+            return toPageResponse(jobs);
+        }
         JobIndexService jobIndexService = jobIndexServiceProvider.getIfAvailable();
         if (jobIndexService == null) {
             return PageResponse.<JobResponse>builder()
@@ -466,8 +546,11 @@ public class JobService {
 
     private void assertOwner(Job job, String userId, boolean isAdmin) {
         if (isAdmin) return;
+        String jobRecruiterId = job.getRecruiterId();
+        // New jobs store Recruiter._id; old jobs (pre-refactor) stored User._id directly.
+        if (userId.equals(jobRecruiterId)) return;
         String recruiterId = userServiceClient.resolveRecruiterId(userId);
-        if (recruiterId == null || !job.getRecruiterId().equals(recruiterId)) {
+        if (recruiterId == null || !jobRecruiterId.equals(recruiterId)) {
             throw new AppException(ErrorCode.JOB_NOT_OWNER);
         }
     }

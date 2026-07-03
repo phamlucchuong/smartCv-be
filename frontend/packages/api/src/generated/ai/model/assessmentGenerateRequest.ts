@@ -18,4 +18,7 @@ export interface AssessmentGenerateRequest {
    * @maximum 20
    */
   numQuestions?: number;
+  jobDescription?: string;
+  jobSkills?: string;
+  jobRequirements?: string;
 }

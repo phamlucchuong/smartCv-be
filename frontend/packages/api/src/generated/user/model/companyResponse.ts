@@ -4,6 +4,7 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
+import type { CompanyResponseCategory } from './companyResponseCategory';
 
 export interface CompanyResponse {
   id?: string;
@@ -11,6 +12,7 @@ export interface CompanyResponse {
   logoUrl?: string;
   coverImageUrl?: string;
   industry?: string;
+  category?: CompanyResponseCategory;
   size?: string;
   location?: string;
   website?: string;

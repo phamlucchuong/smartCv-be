@@ -77,13 +77,14 @@ public class HomeService {
                 .build();
     }
 
-    @Cacheable(value = "home:categories", unless = "#result == null")
+    @Cacheable(value = "home:categories-v2", unless = "#result == null")
     public List<JobCategoryResponse> getCategories() {
         Aggregation agg = Aggregation.newAggregation(
                 Aggregation.match(Criteria.where("moderationStatus").is(JobModerationStatus.PUBLISHED)
                         .and("visibilityStatus").is(JobVisibilityStatus.ACTIVE)
-                        .and("deleted").is(false)),
-                Aggregation.group("jobType").count().as("jobCount"),
+                        .and("deleted").is(false)
+                        .and("category").ne(null)),
+                Aggregation.group("category").count().as("jobCount"),
                 Aggregation.project("jobCount").and("_id").as("name"),
                 Aggregation.sort(Sort.by(Sort.Direction.DESC, "jobCount"))
         );

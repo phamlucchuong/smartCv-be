@@ -4,6 +4,7 @@ export type CreateJobFormValues = {
   companyName: string
   location: string
   jobType: string
+  category: string
   experienceLevel: string
   salaryMin: string
   salaryMax: string
@@ -29,6 +30,7 @@ export type CreateJobPayload = {
   company: string
   location: string
   jobType?: 'FULL_TIME' | 'PART_TIME' | 'REMOTE' | 'CONTRACT' | 'INTERNSHIP'
+  category?: string
   experienceLevel?: 'INTERN' | 'JUNIOR' | 'MIDDLE' | 'SENIOR' | 'LEAD'
   salaryMin?: number
   salaryMax?: number
@@ -91,6 +93,9 @@ export function buildCreateJobPayload(values: CreateJobFormValues): CreateJobPay
     location: values.location.trim(),
     ...(values.jobType.trim()
       ? { jobType: values.jobType as NonNullable<CreateJobPayload['jobType']> }
+      : {}),
+    ...(values.category.trim()
+      ? { category: values.category }
       : {}),
     ...(values.experienceLevel.trim()
       ? { experienceLevel: values.experienceLevel as NonNullable<CreateJobPayload['experienceLevel']> }

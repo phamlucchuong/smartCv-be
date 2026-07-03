@@ -185,6 +185,13 @@ function BillingPage() {
     return `${hours}:${minutes} ${day}/${month}/${year}`
   }
 
+  const formatAiCredits = (remaining?: number, total?: number, used?: number) => {
+    if (total === undefined || total === null || total === -1) {
+      return lang === 'VI' ? 'Không giới hạn' : 'Unlimited'
+    }
+    return `${Math.max(remaining ?? Math.max(total - (used ?? 0), 0), 0)}/${total}`
+  }
+
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'PAID':
@@ -248,7 +255,7 @@ function BillingPage() {
               <p className="text-sm text-muted-foreground mt-1">{lang === 'VI' ? 'Bạn chưa kích hoạt gói trả phí' : 'You have not activated a paid plan'}</p>
             )}
             {
-              activePackage?.id !== 'free' && (
+              activePackage?.name === 'Free' && (
                 <div className="mt-6 flex gap-3">
                   <a href="#available-packages">
                     <Button className="gap-2">
@@ -266,15 +273,15 @@ function BillingPage() {
                   ? (lang === 'VI' ? 'Vô hạn' : 'Unlimited')
                   : activePackage.cvLimit}
               </div>
-              <div className="text-xs text-muted-foreground mt-1">Lượt lưu CV</div>
+              <div className="text-xs text-muted-foreground mt-1">Lượt tải lên CV</div>
             </div>
             <div className="bg-card border border-border/60 rounded-2xl p-4 text-center shadow-sm">
               <div className="text-3xl font-extrabold text-foreground">
-                {activePackage.aiCredits === -1 || activePackage.aiCredits === null || activePackage.aiCredits === undefined
-                  ? (lang === 'VI' ? 'Vô hạn' : 'Unlimited')
-                  : activePackage.aiCredits}
+                {formatAiCredits(candidate?.aiCreditsRemaining, candidate?.aiCreditsTotal, candidate?.aiCreditsUsed)}
               </div>
-              <div className="text-xs text-muted-foreground mt-1">Lượt AI Credits</div>
+              <div className="text-xs text-muted-foreground mt-1">
+                {lang === 'VI' ? 'AI credit còn lại / tổng gói' : 'AI credits left / total'}
+              </div>
             </div>
           </div>
         </CardContent>
@@ -438,7 +445,6 @@ function BillingPage() {
                     <th className="text-left py-4 px-5">Số tiền</th>
                     <th className="text-left py-4 px-5">Trạng thái</th>
                     <th className="text-left py-4 px-5">Thời gian</th>
-                    <th className="text-right py-4 px-5">Thao tác</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border/60">
@@ -449,31 +455,6 @@ function BillingPage() {
                       <td className="py-3.5 px-5 font-semibold text-foreground">{formatPrice(o.amount)}</td>
                       <td className="py-3.5 px-5">{getStatusBadge(o.status)}</td>
                       <td className="py-3.5 px-5 text-muted-foreground text-xs">{formatDate(o.createdAt)}</td>
-                      <td className="py-3.5 px-5 text-right space-x-2">
-                        {o.status === 'PENDING' && (
-                          <>
-                            <Button
-                              size="sm"
-                              variant="default"
-                              className="h-8 px-3 text-xs bg-primary hover:bg-primary/95"
-                              onClick={() => {
-                                window.location.href = o.paymentUrl
-                              }}
-                            >
-                              Thanh toán
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="h-8 px-3 text-xs border-destructive/20 hover:bg-destructive/5 text-destructive"
-                              onClick={() => handleCancelOrder(o.orderId)}
-                              disabled={cancelOrderMutation.isPending}
-                            >
-                              Hủy
-                            </Button>
-                          </>
-                        )}
-                      </td>
                     </tr>
                   ))}
                 </tbody>

@@ -222,6 +222,13 @@ function RecruiterBillingPage() {
     return `${hours}:${minutes} ${day}/${month}/${year}`;
   };
 
+  const formatAiCredits = (remaining?: number, total?: number, used?: number) => {
+    if (total === undefined || total === null || total === -1) {
+      return "Không giới hạn";
+    }
+    return `${Math.max(remaining ?? Math.max(total - (used ?? 0), 0), 0)}/${total}`;
+  };
+
   const getOrderStatusLabel = (status: string) => {
     switch (status) {
       case "PAID":
@@ -310,7 +317,7 @@ function RecruiterBillingPage() {
         </div>
         <div className="grid grid-cols-2 gap-3">
           <Stat l="Quota Tin tuyển dụng" v={recruiter?.quotaJobPost !== undefined ? `${recruiter.quotaJobPost}` : "0"} />
-          <Stat l="Dịch vụ AI" v={recruiter?.activePackageId ? "Nâng cao" : "Cơ bản"} />
+          <Stat l="AI Credit còn lại" v={formatAiCredits(recruiter?.aiCreditsRemaining, recruiter?.aiCreditsTotal, recruiter?.aiCreditsUsed)} />
         </div>
       </div>
 
@@ -506,7 +513,6 @@ function RecruiterBillingPage() {
                   <th className="text-left py-3 px-4">Số tiền</th>
                   <th className="text-left py-3 px-4">Trạng thái</th>
                   <th className="text-left py-3 px-4">Ngày giao dịch</th>
-                  <th className="text-right py-3 px-4">Thao tác</th>
                 </tr>
               </thead>
               <tbody>
@@ -522,29 +528,6 @@ function RecruiterBillingPage() {
                       <StatusBadge status={getOrderStatusLabel(o.status)} />
                     </td>
                     <td className="py-3 px-4 text-muted-foreground text-xs">{formatDate(o.createdAt)}</td>
-                    <td className="py-3 px-4 text-right space-x-2">
-                      {o.status === "PENDING" && (
-                        <>
-                          <Button
-                            size="sm"
-                            onClick={() => {
-                              window.location.href = o.paymentUrl;
-                            }}
-                          >
-                            Thanh toán
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="text-destructive hover:bg-destructive/5"
-                            onClick={() => handleCancelOrder(o.orderId)}
-                            disabled={cancelOrderMutation.isPending}
-                          >
-                            Hủy
-                          </Button>
-                        </>
-                      )}
-                    </td>
                   </tr>
                 ))}
               </tbody>

@@ -12,4 +12,5 @@ export interface CvAnalysisResponse {
   missingSkills?: string[];
   extraSkills?: string[];
   summary?: string;
+  summaryVi?: string;
 }

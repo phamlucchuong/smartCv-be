@@ -2,6 +2,9 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Button } from '@smart-cv/ui'
 import { useState, useMemo } from 'react'
 import { toast } from 'sonner'
+import { useQuery } from '@tanstack/react-query'
+import { customInstance } from '@smart-cv/api'
+import { AlertTriangle, X } from 'lucide-react'
 import {
   Brain,
   Key,
@@ -54,48 +57,117 @@ const initialModels: AIModel[] = [
   { id: 'claude-agent-sdk', name: 'Claude Agent SDK', oauthToken: 'oauth-token-••••••••••••••••x92a', provider: 'Claude Agent SDK' },
 ]
 
-// Mock data sets for different time ranges
-const mockUsageData = {
-  day: [
-    { date: '08:00', promptTokens: 12000, completionTokens: 4000, cost: 0.18 },
-    { date: '10:00', promptTokens: 25000, completionTokens: 9000, cost: 0.38 },
-    { date: '12:00', promptTokens: 45000, completionTokens: 15000, cost: 0.68 },
-    { date: '14:00', promptTokens: 38000, completionTokens: 12000, cost: 0.56 },
-    { date: '16:00', promptTokens: 60000, completionTokens: 22000, cost: 0.92 },
-    { date: '18:00', promptTokens: 30000, completionTokens: 11000, cost: 0.46 },
-    { date: '20:00', promptTokens: 15000, completionTokens: 5000, cost: 0.22 },
-  ],
-  week: [
-    { date: '13/06', promptTokens: 142000, completionTokens: 48000, cost: 2.15 },
-    { date: '14/06', promptTokens: 185000, completionTokens: 62000, cost: 2.80 },
-    { date: '15/06', promptTokens: 210000, completionTokens: 78000, cost: 3.25 },
-    { date: '16/06', promptTokens: 165000, completionTokens: 55000, cost: 2.48 },
-    { date: '17/06', promptTokens: 295000, completionTokens: 110000, cost: 4.60 },
-    { date: '18/06', promptTokens: 320000, completionTokens: 125000, cost: 5.02 },
-    { date: '19/06', promptTokens: 280000, completionTokens: 98000, cost: 4.22 },
-  ],
-  month: [
-    { date: 'Tuần 1', promptTokens: 850000, completionTokens: 290000, cost: 12.80 },
-    { date: 'Tuần 2', promptTokens: 920000, completionTokens: 310000, cost: 13.90 },
-    { date: 'Tuần 3', promptTokens: 1050000, completionTokens: 380000, cost: 16.20 },
-    { date: 'Tuần 4', promptTokens: 1200000, completionTokens: 420000, cost: 18.15 },
-  ],
-  year: [
-    { date: 'T1', promptTokens: 3200000, completionTokens: 1100000, cost: 48.20 },
-    { date: 'T2', promptTokens: 3500000, completionTokens: 1250000, cost: 53.50 },
-    { date: 'T3', promptTokens: 4100000, completionTokens: 1480000, cost: 62.70 },
-    { date: 'T4', promptTokens: 3900000, completionTokens: 1390000, cost: 59.80 },
-    { date: 'T5', promptTokens: 4500000, completionTokens: 1600000, cost: 68.90 },
-    { date: 'T6', promptTokens: 4800000, completionTokens: 1750000, cost: 73.60 },
-  ],
+const fetchAiUsageReport = async (timeframe: string) => {
+  const res = await customInstance<any>({
+    url: '/ai/api/ai/admin/usage-report',
+    method: 'GET',
+    params: { timeframe },
+  })
+  return res.data ?? []
 }
 
 type TimeRange = 'day' | 'week' | 'month' | 'year'
+
+// Delete Confirmation Dialog Component
+function DeleteConfirmDialog({
+  model,
+  onConfirm,
+  onCancel,
+}: {
+  model: AIModel
+  onConfirm: () => void
+  onCancel: () => void
+}) {
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="delete-dialog-title"
+    >
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onClick={onCancel}
+      />
+
+      {/* Dialog */}
+      <div className="relative z-10 w-full max-w-md mx-4 rounded-2xl border border-border bg-card shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+        {/* Header */}
+        <div className="flex items-start justify-between p-6 pb-4">
+          <div className="flex items-center gap-3">
+            <div className="flex-shrink-0 p-2.5 bg-danger/10 rounded-xl">
+              <AlertTriangle className="size-6 text-danger" />
+            </div>
+            <div>
+              <h3 id="delete-dialog-title" className="text-base font-semibold text-foreground">
+                Xác nhận xóa Model
+              </h3>
+              <p className="text-xs text-muted-foreground mt-0.5">Hành động này không thể hoàn tác</p>
+            </div>
+          </div>
+          <button
+            id="delete-dialog-close-btn"
+            onClick={onCancel}
+            className="p-1.5 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+            aria-label="Đóng"
+          >
+            <X className="size-4" />
+          </button>
+        </div>
+
+        {/* Body */}
+        <div className="px-6 pb-6">
+          <div className="rounded-xl bg-muted/50 border border-border p-4 mb-5">
+            <p className="text-sm text-muted-foreground mb-2">Model sẽ bị xóa:</p>
+            <div className="flex items-center justify-between">
+              <span className="font-semibold text-foreground">{model.name}</span>
+              <span className="text-xs bg-primary/10 text-primary font-medium px-2 py-0.5 rounded-full">
+                {model.provider}
+              </span>
+            </div>
+          </div>
+          <p className="text-sm text-muted-foreground mb-6">
+            Bạn có chắc chắn muốn xóa model{' '}
+            <strong className="text-foreground">{model.name}</strong> không? Tất cả cấu hình liên quan
+            sẽ bị mất vĩnh viễn.
+          </p>
+
+          <div className="flex gap-3">
+            <Button
+              id="delete-dialog-cancel-btn"
+              variant="outline"
+              className="flex-1"
+              onClick={onCancel}
+            >
+              Hủy bỏ
+            </Button>
+            <Button
+              id="delete-dialog-confirm-btn"
+              className="flex-1 bg-danger hover:bg-danger/90 text-white"
+              onClick={onConfirm}
+            >
+              <Trash2 className="size-4 mr-1.5" />
+              Xóa Model
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
 
 function AIConfigPage() {
   const [models, setModels] = useState<AIModel[]>(initialModels)
   const [selectedModelId, setSelectedModelId] = useState<string>('gpt-4o-mini')
   const [timeRange, setTimeRange] = useState<TimeRange>('week')
+  const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null)
+
+  const { data: usageData = [] } = useQuery({
+    queryKey: ['admin-ai-usage', timeRange],
+    queryFn: () => fetchAiUsageReport(timeRange),
+    staleTime: 30 * 1000,
+  })
   
   // Form state for new model
   const [newModelName, setNewModelName] = useState('')
@@ -187,28 +259,37 @@ function AIConfigPage() {
       toast.error('Phải giữ lại ít nhất một model hoạt động')
       return
     }
-    if (!confirm('Bạn có chắc chắn muốn xóa model này không?')) return
+    setDeleteTargetId(id)
+  }
 
-    const updated = models.filter((m) => m.id !== id)
+  const confirmDelete = () => {
+    if (!deleteTargetId) return
+    const updated = models.filter((m) => m.id !== deleteTargetId)
     setModels(updated)
-    if (selectedModelId === id) {
+    if (selectedModelId === deleteTargetId) {
       setSelectedModelId(updated[0].id)
     }
     toast.success('Xóa model thành công')
+    setDeleteTargetId(null)
+  }
+
+  const cancelDelete = () => {
+    setDeleteTargetId(null)
   }
 
   const activeModel = models.find((m) => m.id === selectedModelId) || models[0]
 
   // Get active dataset based on selected time range
-  const currentChartData = useMemo(() => {
-    return mockUsageData[timeRange]
-  }, [timeRange])
+  const currentChartData = usageData
 
   // Calculate summary stats dynamically from active dataset
-  const totalPromptTokens = useMemo(() => currentChartData.reduce((sum, item) => sum + item.promptTokens, 0), [currentChartData])
-  const totalCompletionTokens = useMemo(() => currentChartData.reduce((sum, item) => sum + item.completionTokens, 0), [currentChartData])
+  const totalPromptTokens = useMemo(() => currentChartData.reduce((sum: number, item: any) => sum + item.promptTokens, 0), [currentChartData])
+  const totalCompletionTokens = useMemo(() => currentChartData.reduce((sum: number, item: any) => sum + item.completionTokens, 0), [currentChartData])
   const totalTokens = totalPromptTokens + totalCompletionTokens
-  const totalCost = useMemo(() => currentChartData.reduce((sum, item) => sum + item.cost, 0), [currentChartData])
+  const totalCost = useMemo(() => currentChartData.reduce((sum: number, item: any) => sum + item.cost, 0), [currentChartData])
+  const averageCost = currentChartData.length > 0 ? totalCost / currentChartData.length : 0
+
+  const deleteTarget = deleteTargetId ? models.find((m) => m.id === deleteTargetId) : null
 
   return (
     <div className="space-y-6 w-full pb-10">
@@ -499,7 +580,7 @@ function AIConfigPage() {
           </div>
           <div>
             <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Chi phí trung bình</p>
-            <h3 className="text-2xl font-bold mt-1">${(totalCost / currentChartData.length).toFixed(2)} / kỳ</h3>
+            <h3 className="text-2xl font-bold mt-1">${averageCost.toFixed(2)} / kỳ</h3>
             <p className="text-xs text-muted-foreground mt-0.5">Tính toán theo khoảng thời gian lọc</p>
           </div>
         </div>
@@ -604,6 +685,14 @@ function AIConfigPage() {
           </ResponsiveContainer>
         </div>
       </div>
+      {/* Delete Confirmation Dialog */}
+      {deleteTarget && (
+        <DeleteConfirmDialog
+          model={deleteTarget}
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
+        />
+      )}
     </div>
   )
 }

@@ -13,6 +13,9 @@ export interface AssessmentGenerateRequest {
   level: string;
   difficulty: string;
   numQuestions: number;
+  jobDescription?: string;
+  jobSkills?: string;
+  jobRequirements?: string;
 }
 
 export interface AssessmentGenerateApiResponse {

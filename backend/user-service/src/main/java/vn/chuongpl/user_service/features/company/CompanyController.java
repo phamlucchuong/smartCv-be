@@ -27,9 +27,10 @@ public class CompanyController {
             @RequestParam(required = false) String query,
             @RequestParam(required = false) String industry,
             @RequestParam(required = false) String companySize,
-            @RequestParam(required = false) String location) {
+            @RequestParam(required = false) String location,
+            @RequestParam(required = false) String category) {
         return ApiResponse.<PageResponse<CompanyResponse>>builder()
-                .data(companyService.getAll(page, size, query, industry, companySize, location))
+                .data(companyService.getAll(page, size, query, industry, companySize, location, category))
                 .build();
     }
 

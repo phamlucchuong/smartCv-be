@@ -8,5 +8,6 @@
 export interface ImprovementTip {
   area?: string;
   suggestion?: string;
+  suggestionVi?: string;
   priority?: string;
 }

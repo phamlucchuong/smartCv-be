@@ -37,7 +37,7 @@ class CompanyServiceTest {
         when(mongoTemplate.find(any(Query.class), eq(Recruiter.class))).thenReturn(List.of(r));
         when(mongoTemplate.count(any(Query.class), eq(Recruiter.class))).thenReturn(1L);
 
-        PageResponse<CompanyResponse> result = companyService.getAll(1, 10, null, null, null, null);
+        PageResponse<CompanyResponse> result = companyService.getAll(1, 10, null, null, null, null, null);
 
         assertEquals(1, result.getItems().size());
         assertEquals("ACME", result.getItems().get(0).getName());

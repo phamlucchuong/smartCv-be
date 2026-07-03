@@ -6,6 +6,7 @@ import { Briefcase, Camera, Eye, MapPin, Github, Linkedin, Globe } from 'lucide-
 import { toast } from 'sonner'
 import {
   useGetCandidateProfile, useUpdateCandidate, useUpdateUser, useUploadCandidateAvatar,
+  useGetMyWishlists, useGetMyApplications,
   getCandidateProfileQueryKey, getGetCurrentUserQueryKey,
   UserModels,
 } from '@smart-cv/api'
@@ -296,6 +297,13 @@ function ProfilePage() {
   const { data, isLoading, isError } = useGetCandidateProfile({ query: { enabled: isAuthenticated } })
   const profile = data?.data
   const candidateId = profile?.id
+
+  const { data: wishlistsData } = useGetMyWishlists({ query: { enabled: isAuthenticated } })
+  const { data: applicationsData } = useGetMyApplications(undefined, { query: { enabled: isAuthenticated } })
+  
+  const wishlistsCount = wishlistsData?.data?.length ?? 0
+  const applicationsCount = applicationsData?.data?.items?.length ?? 0
+
 
   const queryClient = useQueryClient()
   const updateCandidateMutation = useUpdateCandidate()
@@ -659,8 +667,8 @@ function ProfilePage() {
             </div>
             <hr className="border-border" />
             <div className="space-y-2 text-sm">
-              <p className="flex items-center justify-between"><span className="inline-flex items-center gap-2 text-muted-foreground"><Briefcase className="h-4 w-4" />{t('profile_applied')}</span><span className="font-semibold text-foreground">0</span></p>
-              <p className="flex items-center justify-between"><span className="inline-flex items-center gap-2 text-muted-foreground">♡ {t('profile_saved')}</span><span className="font-semibold text-foreground">0</span></p>
+              <p className="flex items-center justify-between"><span className="inline-flex items-center gap-2 text-muted-foreground"><Briefcase className="h-4 w-4" />{t('profile_applied')}</span><span className="font-semibold text-foreground">{applicationsCount}</span></p>
+              <p className="flex items-center justify-between"><span className="inline-flex items-center gap-2 text-muted-foreground">♡ {t('profile_saved')}</span><span className="font-semibold text-foreground">{wishlistsCount}</span></p>
               <p className="flex items-center justify-between"><span className="inline-flex items-center gap-2 text-muted-foreground"><Eye className="h-4 w-4" />{t('profile_views')}</span><span className="font-semibold text-foreground">34</span></p>
             </div>
             <hr className="border-border" />

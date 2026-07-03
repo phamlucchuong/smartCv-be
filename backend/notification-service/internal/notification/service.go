@@ -52,6 +52,8 @@ type ServiceInterface interface {
 	HandleRecruiterBillingNotice(ctx context.Context, msg RecruiterBillingEventMessage) error
 	HandlePackageExpiredNotice(ctx context.Context, msg PackageExpiredEventMessage) error
 	HandlePackageExpiringSoonNotice(ctx context.Context, msg PackageExpiringSoonMessage) error
+	HandleAiCreditExhaustedNotice(ctx context.Context, msg AiCreditExhaustedMessage) error
+
 	HandleJobApproved(ctx context.Context, msg JobModerationEventMessage) error
 	HandleJobRejected(ctx context.Context, msg JobModerationEventMessage) error
 
@@ -432,6 +434,35 @@ func (s *Service) HandlePackageExpiredNotice(ctx context.Context, msg PackageExp
 	}
 	return nil
 }
+
+func (s *Service) HandleAiCreditExhaustedNotice(ctx context.Context, msg AiCreditExhaustedMessage) error {
+	recipientRole := "USER"
+	if msg.UserRole == "RECRUITER" {
+		recipientRole = "RECRUITER"
+	}
+	title := "Hết lượt sử dụng AI"
+	body := "Bạn đã dùng hết lượt sử dụng AI trong tháng. Vui lòng nâng cấp gói dịch vụ để tiếp tục sử dụng."
+	billingURL := "/billing"
+	if msg.UserRole == "RECRUITER" {
+		billingURL = "/employer/billing"
+	}
+	if err := s.CreateNotification(ctx, msg.UserID, recipientRole, title, body, "AI_CREDIT_EXHAUSTED", mustJSON(map[string]string{
+		"url": billingURL,
+	})); err != nil {
+		s.logger.ErrorContext(ctx, "failed to persist AI credit exhausted notification", "err", err)
+	}
+	if msg.UserID != "" {
+		s.sendWebpushToUser(ctx, msg.UserID, billingURL, map[string]string{
+			"title": title,
+			"body":  body,
+			"url":   billingURL,
+			"type":  "AI_CREDIT_EXHAUSTED",
+		}, audienceForRecipientRole(recipientRole))
+		s.syncFirestoreUnreadCount(msg.UserID, recipientRole)
+	}
+	return nil
+}
+
 
 func (s *Service) HandlePackageExpiringSoonNotice(ctx context.Context, msg PackageExpiringSoonMessage) error {
 	recipientRole := "CANDIDATE"

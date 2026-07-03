@@ -112,6 +112,8 @@ app:
       path: /job/api/home/**
     - method: GET
       path: /job/api/jobs/*/related
+    - method: GET
+      path: /job/api/jobs/*/related-companies
     - method: POST
       path: /payment/api/webhook/payos
     - method: POST

@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import vn.chuongpl.user_service.dtos.PageResponse;
 import vn.chuongpl.user_service.enums.ErrorCode;
+import vn.chuongpl.user_service.enums.JobCategory;
 import vn.chuongpl.user_service.enums.RecruiterStatus;
 import vn.chuongpl.user_service.exception.AppException;
 import vn.chuongpl.user_service.features.recruiter.Recruiter;
@@ -29,7 +30,8 @@ public class CompanyService {
     JobClient jobClient;
 
     public PageResponse<CompanyResponse> getAll(int page, int size, String query,
-                                                 String industry, String companySize, String location) {
+                                                 String industry, String companySize, String location,
+                                                 String category) {
         int safeSize = size > 0 ? size : 10;
         int pageIdx = page > 0 ? page - 1 : 0;
 
@@ -39,6 +41,13 @@ public class CompanyService {
         if (industry != null && !industry.isBlank()) criteria.and("industry").is(industry);
         if (companySize != null && !companySize.isBlank()) criteria.and("companySize").is(companySize);
         if (location != null && !location.isBlank()) criteria.and("companyAddress").regex(location, "i");
+        if (category != null && !category.isBlank()) {
+            try {
+                criteria.and("category").is(JobCategory.valueOf(category));
+            } catch (IllegalArgumentException ignored) {
+                // invalid category string — ignore filter
+            }
+        }
 
         Query mongoQuery = new Query(criteria)
                 .with(PageRequest.of(pageIdx, safeSize, Sort.by("companyName")));
@@ -92,13 +101,28 @@ public class CompanyService {
         Recruiter current = recruiterRepository.findById(companyId)
                 .filter(r -> !r.isDeleted())
                 .orElseThrow(() -> new AppException(ErrorCode.COMPANY_NOT_FOUND));
-        if (current.getIndustry() == null || current.getIndustry().isBlank()) {
+        if (current.getCategory() == null) {
             return List.of();
         }
-        return recruiterRepository.findTop5ByIndustryAndIdNotAndStatusAndDeletedFalse(
-                        current.getIndustry(), companyId, RecruiterStatus.APPROVED)
+        return recruiterRepository.findTop5ByCategoryAndIdNotAndStatusAndDeletedFalse(
+                        current.getCategory(), companyId, RecruiterStatus.APPROVED)
                 .stream()
                 .map(CompanyResponse::from)
                 .toList();
+    }
+
+    public List<CompanyResponse> getByCategory(String category, int limit) {
+        try {
+            JobCategory cat = JobCategory.valueOf(category);
+            return recruiterRepository.findByCategoryAndStatusAndDeletedFalse(
+                            cat,
+                            RecruiterStatus.APPROVED,
+                            PageRequest.of(0, limit))
+                    .stream()
+                    .map(CompanyResponse::from)
+                    .toList();
+        } catch (IllegalArgumentException e) {
+            throw new AppException(ErrorCode.INVALID_CATEGORY);
+        }
     }
 }

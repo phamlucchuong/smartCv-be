@@ -65,6 +65,9 @@ public class RabbitMQConfig {
     public static final String PACKAGE_EXPIRED_KEY = "package.expired";
     public static final String PACKAGE_EXPIRING_SOON_QUEUE = "package.expiring.soon.queue";
     public static final String PACKAGE_EXPIRING_SOON_KEY = "package.expiring.soon";
+    public static final String AI_CREDIT_EXHAUSTED_QUEUE = "ai.credit.exhausted.queue";
+    public static final String AI_CREDIT_EXHAUSTED_KEY = "ai.credit.exhausted";
+
 
     @Bean
     public Queue jobSuggestionsQueue() {
@@ -145,6 +148,17 @@ public class RabbitMQConfig {
     public Binding packageExpiringSoonBinding() {
         return BindingBuilder.bind(packageExpiringSoonQueue()).to(recruiterExchange()).with(PACKAGE_EXPIRING_SOON_KEY);
     }
+
+    @Bean
+    public Queue aiCreditExhaustedQueue() {
+        return new Queue(AI_CREDIT_EXHAUSTED_QUEUE, true);
+    }
+
+    @Bean
+    public Binding aiCreditExhaustedBinding() {
+        return BindingBuilder.bind(aiCreditExhaustedQueue()).to(recruiterExchange()).with(AI_CREDIT_EXHAUSTED_KEY);
+    }
+
 
     public static final String CV_ANALYSIS_EXCHANGE = "cv.analysis.exchange";
     public static final String CV_ANALYSIS_DONE_QUEUE = "cv.analysis.done.queue";

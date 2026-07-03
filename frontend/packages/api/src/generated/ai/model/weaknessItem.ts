@@ -8,4 +8,5 @@
 export interface WeaknessItem {
   area?: string;
   detail?: string;
+  detailVi?: string;
 }

@@ -10,11 +10,13 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.HttpClientErrorException;
 import vn.chuongpl.application_service.dtos.ApiResponse;
 import vn.chuongpl.application_service.dtos.request.AssessmentGenerateRequest;
 import vn.chuongpl.application_service.dtos.response.AssessmentGenerateResponse;
 import vn.chuongpl.application_service.enums.ErrorCode;
 import vn.chuongpl.application_service.exception.AppException;
+
 
 @Slf4j
 @Component
@@ -58,6 +60,13 @@ public class AiEngineClient {
             return result;
         } catch (AppException e) {
             throw e;
+        } catch (HttpClientErrorException.BadRequest e) {
+            String body = e.getResponseBodyAsString();
+            if (body.contains("\"code\":8012") || body.contains("8012")) {
+                throw new AppException(ErrorCode.AI_CREDIT_EXHAUSTED);
+            }
+            log.error("AI service call failed with BadRequest: {}", e.getMessage());
+            throw new AppException(ErrorCode.AI_SERVICE_UNAVAILABLE);
         } catch (Exception e) {
             log.error("AI service call failed: {}", e.getMessage());
             throw new AppException(ErrorCode.AI_SERVICE_UNAVAILABLE);

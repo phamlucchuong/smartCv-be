@@ -44,6 +44,8 @@ public class JobDocument {
     String moderationStatus;
     @Field(type = FieldType.Keyword)
     String visibilityStatus;
+    @Field(type = FieldType.Keyword)
+    String category;
     @Field(type = FieldType.Date, format = {}, pattern = "uuuu-MM-dd")
     LocalDate deadline;
     @Field(type = FieldType.Integer)

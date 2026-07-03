@@ -10,6 +10,7 @@ import vn.chuongpl.ai_engine_service.enums.ErrorCode;
 import vn.chuongpl.ai_engine_service.exception.AppException;
 import vn.chuongpl.ai_engine_service.features.admin.AiProviderConfig;
 import vn.chuongpl.ai_engine_service.features.admin.AiProviderConfigRepository;
+import vn.chuongpl.ai_engine_service.features.analysis.AiUsageLogRepository;
 
 import java.util.Optional;
 
@@ -24,6 +25,7 @@ class AiModelGatewayRouterTest {
     @Mock AiProviderConfigRepository repository;
     @Mock AiModelGatewayFactory factory;
     @Mock AiModelGateway mockGateway;
+    @Mock AiUsageLogRepository usageLogRepository;
 
     // Unconfigured properties (no env vars) — used by tests that expect no auto-seed
     AiProviderProperties emptyProps = new AiProviderProperties();
@@ -32,7 +34,7 @@ class AiModelGatewayRouterTest {
 
     @BeforeEach
     void setUp() {
-        router = new AiModelGatewayRouter(repository, factory, emptyProps);
+        router = new AiModelGatewayRouter(repository, factory, emptyProps, usageLogRepository);
     }
 
     @Test
@@ -73,7 +75,7 @@ class AiModelGatewayRouterTest {
         when(factory.create(any())).thenReturn(mockGateway);
         when(mockGateway.provider()).thenReturn(AiProvider.GROQ);
 
-        AiModelGatewayRouter seedRouter = new AiModelGatewayRouter(repository, factory, props);
+        AiModelGatewayRouter seedRouter = new AiModelGatewayRouter(repository, factory, props, usageLogRepository);
         seedRouter.init();
 
         assertThat(seedRouter.getActiveProvider()).isEqualTo("groq");

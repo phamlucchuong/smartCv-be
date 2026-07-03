@@ -219,8 +219,20 @@ function AssessmentsManager() {
       toast.error("Vui lòng nhập tên công việc");
       return;
     }
+    const selectedJob = activeJobs.find((j) => j.id === jobId);
+    const jobDescription = selectedJob?.description ?? undefined;
+    const jobSkills = selectedJob?.skills?.join(", ") ?? undefined;
+    const jobRequirements = selectedJob?.requirements?.join("\n") ?? undefined;
     generateMutation.mutate(
-      { jobName: aiJobName, level: aiLevel, difficulty: aiDifficulty, numQuestions: Number(aiNumQuestions) || 5 },
+      {
+        jobName: aiJobName,
+        level: aiLevel,
+        difficulty: aiDifficulty,
+        numQuestions: Number(aiNumQuestions) || 5,
+        jobDescription,
+        jobSkills,
+        jobRequirements,
+      },
       {
         onSuccess: (response) => {
           const questions = response.data?.questions ?? [];
@@ -242,8 +254,13 @@ function AssessmentsManager() {
           setIsFormOpen(true);
           toast.success("Đã tạo câu hỏi bằng AI thành công!");
         },
-        onError: () => {
-          toast.error("Không thể tạo câu hỏi bằng AI. Vui lòng thử lại.");
+        onError: (err: any) => {
+          const errCode = err?.response?.data?.code;
+          if (errCode === 8012 || errCode === 6008) {
+            toast.error("Hết lượt sử dụng AI. Vui lòng nâng cấp gói dịch vụ.");
+          } else {
+            toast.error("Không thể tạo câu hỏi bằng AI. Vui lòng thử lại.");
+          }
         },
       }
     );
@@ -1129,6 +1146,7 @@ function AssessmentsManager() {
                      className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm focus:outline-none"
                    >
                      <option value="Intern">Intern</option>
+                     <option value="Fresher">Fresher</option>
                      <option value="Junior">Junior</option>
                      <option value="Senior">Senior</option>
                      <option value="Lead">Lead</option>

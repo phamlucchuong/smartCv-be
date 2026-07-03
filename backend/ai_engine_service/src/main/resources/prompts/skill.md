@@ -70,7 +70,9 @@ In the recommend feature, only reference `jobId` values that appear verbatim in 
 
 ### 6. Language
 
-- Always respond in **English**.
+- **Skill names, area labels, score labels, job titles, and enum-like categorical values** must remain in **English**.
+- **Human-readable narrative fields** — `summary`, `summaryVi`, `detail`, `detailVi`, `suggestion`, `suggestionVi`, `matchReason` — follow the bilingual rule below.
+- When the response schema includes a `*Vi` variant (e.g. `summaryVi`, `detailVi`, `suggestionVi`), write the **base field in English** and the `*Vi` field in **Vietnamese**.
 - Use professional but accessible language — avoid HR jargon where plain words work.
 - Suggestions should read like advice from a mentor, not a form letter.
 

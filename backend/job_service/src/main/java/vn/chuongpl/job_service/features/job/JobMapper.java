@@ -27,6 +27,7 @@ public interface JobMapper {
     @Mapping(target = "experienceLevel", expression = "java(document.getExperienceLevel() == null ? null : vn.chuongpl.job_service.enums.ExperienceLevel.valueOf(document.getExperienceLevel()))")
     @Mapping(target = "moderationStatus", expression = "java(document.getModerationStatus() == null ? null : vn.chuongpl.job_service.enums.JobModerationStatus.valueOf(document.getModerationStatus()))")
     @Mapping(target = "visibilityStatus", expression = "java(document.getVisibilityStatus() == null ? null : vn.chuongpl.job_service.enums.JobVisibilityStatus.valueOf(document.getVisibilityStatus()))")
+    @Mapping(target = "category", expression = "java(document.getCategory() == null ? null : vn.chuongpl.job_service.enums.JobCategory.valueOf(document.getCategory()))")
     @Mapping(target = "updatedAt", source = "createdAt")
     @Mapping(target = "requirements", ignore = true)
     @Mapping(target = "benefits", ignore = true)
@@ -39,5 +40,6 @@ public interface JobMapper {
     @Mapping(target = "experienceLevel", expression = "java(job.getExperienceLevel() == null ? null : job.getExperienceLevel().name())")
     @Mapping(target = "moderationStatus", expression = "java(job.getModerationStatus() == null ? null : job.getModerationStatus().name())")
     @Mapping(target = "visibilityStatus", expression = "java(job.getVisibilityStatus() == null ? null : job.getVisibilityStatus().name())")
+    @Mapping(target = "category", expression = "java(job.getCategory() == null ? null : job.getCategory().name())")
     JobDocument toDocument(Job job);
 }

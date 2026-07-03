@@ -36,10 +36,11 @@ public class UserController {
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String keyword,
-            @RequestParam(required = false) String role) {
+            @RequestParam(required = false) String role,
+            @RequestParam(required = false) Boolean locked) {
         return ApiResponse.<PageResponse<UserResponse>>builder()
                 .message("Lay danh sach người dùng thành công")
-                .data(userService.getAllUsers(page, size, keyword, role))
+                .data(userService.getAllUsers(page, size, keyword, role, locked))
                 .build();
     }
 

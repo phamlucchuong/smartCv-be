@@ -36,7 +36,10 @@ class PaymentEventConsumerTest {
     @Test
     void handlePaymentCompleted_recruiter_setsActivationFieldsAndQuota() {
         Recruiter recruiter = Recruiter.builder()
-                .userId("u1").quotaJobPost(5).quotaCvViews(3).build();
+                .userId("u1").quotaJobPost(5).quotaCvViews(3)
+                .monthlyAiCreditsUsed(9)
+                .monthlyAiCreditsMonth("2026-06")
+                .build();
         when(recruiterRepository.findByUserIdAndDeletedFalse("u1"))
                 .thenReturn(Optional.of(recruiter));
 
@@ -60,6 +63,8 @@ class PaymentEventConsumerTest {
         assertThat(saved.getPackageExpiresAt()).isEqualTo(LocalDateTime.of(2026, 7, 25, 10, 0));
         assertThat(saved.getQuotaJobPost()).isEqualTo(15);  // 5 existing + 10 package
         assertThat(saved.getQuotaCvViews()).isEqualTo(23);  // 3 existing + 20 package
+        assertThat(saved.getMonthlyAiCreditsUsed()).isZero();
+        assertThat(saved.getMonthlyAiCreditsMonth()).isEqualTo("2026-06");
     }
 
     @Test
@@ -91,7 +96,11 @@ class PaymentEventConsumerTest {
 
     @Test
     void handlePaymentCompleted_candidate_setsActivationFields() {
-        Candidate candidate = Candidate.builder().userId("u3").build();
+        Candidate candidate = Candidate.builder()
+                .userId("u3")
+                .monthlyAiCreditsUsed(5)
+                .monthlyAiCreditsMonth("2026-06")
+                .build();
         when(candidateRepository.findByUserIdAndDeletedFalse("u3"))
                 .thenReturn(Optional.of(candidate));
 
@@ -113,6 +122,8 @@ class PaymentEventConsumerTest {
         assertThat(saved.getActivePackageId()).isEqualTo("plus");
         assertThat(saved.getPackageActivatedAt()).isEqualTo(LocalDateTime.of(2026, 6, 25, 10, 0));
         assertThat(saved.getPackageExpiresAt()).isEqualTo(LocalDateTime.of(2026, 7, 25, 10, 0));
+        assertThat(saved.getMonthlyAiCreditsUsed()).isZero();
+        assertThat(saved.getMonthlyAiCreditsMonth()).isEqualTo("2026-06");
     }
 
     @Test

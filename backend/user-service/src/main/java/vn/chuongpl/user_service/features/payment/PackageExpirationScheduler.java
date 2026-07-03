@@ -45,6 +45,8 @@ public class PackageExpirationScheduler {
                 .set("active_package_id", "free")
                 .unset("package_activated_at")
                 .unset("package_expires_at")
+                .set("monthly_ai_credits_used", 0)
+                .set("monthly_ai_credits_month", java.time.YearMonth.from(now).toString())
                 .set("updated_at", now);
 
         long modified = mongoTemplate.updateMulti(query, update, Candidate.class).getModifiedCount();
@@ -66,6 +68,8 @@ public class PackageExpirationScheduler {
                 .unset("package_expires_at")
                 .set("quota_job_post", resolveFreeJobQuota(freePackage))
                 .set("quota_cv_views", resolveFreeCvQuota(freePackage))
+                .set("monthly_ai_credits_used", 0)
+                .set("monthly_ai_credits_month", java.time.YearMonth.from(now).toString())
                 .set("updated_at", now);
 
         long modified = mongoTemplate.updateMulti(query, update, Recruiter.class).getModifiedCount();

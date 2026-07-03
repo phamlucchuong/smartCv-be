@@ -9,6 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 import vn.chuongpl.job_service.enums.ExperienceLevel;
+import vn.chuongpl.job_service.enums.JobCategory;
 import vn.chuongpl.job_service.enums.JobModerationStatus;
 import vn.chuongpl.job_service.enums.JobType;
 import vn.chuongpl.job_service.enums.JobVisibilityStatus;
@@ -59,6 +60,8 @@ public class Job {
     Integer rejectThreshold;
     Boolean autoRejectEnabled;
     String requiredTest;
+    @Field("category")
+    JobCategory category;
     @Builder.Default
     boolean deleted = false;
     LocalDateTime deletedAt;

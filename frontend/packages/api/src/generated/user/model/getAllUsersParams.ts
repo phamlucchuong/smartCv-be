@@ -10,4 +10,5 @@ page?: number;
 size?: number;
 keyword?: string;
 role?: string;
+locked?: boolean;
 };

@@ -7,6 +7,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import vn.chuongpl.ai_engine_service.dtos.request.CvFullAnalysisRequest;
+import vn.chuongpl.ai_engine_service.dtos.request.AssessmentGenerateRequest;
+import vn.chuongpl.ai_engine_service.dtos.response.AssessmentGenerateResponse;
 import vn.chuongpl.ai_engine_service.dtos.response.CvFullAnalysisResponse;
 import vn.chuongpl.ai_engine_service.enums.ErrorCode;
 import vn.chuongpl.ai_engine_service.exception.AppException;
@@ -222,5 +224,36 @@ class AnalysisServiceCvFullTest {
         assertThat(analysisService.computeScoreLabel(69)).isEqualTo("Fair");
         assertThat(analysisService.computeScoreLabel(50)).isEqualTo("Fair");
         assertThat(analysisService.computeScoreLabel(49)).isEqualTo("Poor");
+    }
+
+    @Test
+    void generateAssessmentQuestions_consumesRecruiterQuotaBeforeCallingAi() {
+        AssessmentGenerateRequest request = new AssessmentGenerateRequest(
+                "Java Developer", "Junior", "Medium", 5, "desc", "Java", "REST");
+        when(promptBuilder.buildAssessmentGeneratePrompt(any())).thenReturn("assessment prompt");
+        when(modelRouter.call(anyString(), eq("assessment prompt")))
+                .thenReturn("{\"questions\":[]}");
+
+        AssessmentGenerateResponse result = analysisService.generateAssessmentQuestions(
+                request, USER_ID, true, false, true);
+
+        assertThat(result.questions()).isEmpty();
+        verify(userClient).consumeRecruiterAiCredit(USER_ID);
+        verify(userClient, never()).consumeCandidateAiCredit(anyString());
+    }
+
+    @Test
+    void generateAssessmentQuestions_consumesCandidateQuotaBeforeCallingAi() {
+        AssessmentGenerateRequest request = new AssessmentGenerateRequest(
+                "Java Developer", "Junior", "Medium", 5, "desc", "Java", "REST");
+        when(promptBuilder.buildAssessmentGeneratePrompt(any())).thenReturn("assessment prompt");
+        when(modelRouter.call(anyString(), eq("assessment prompt")))
+                .thenReturn("{\"questions\":[]}");
+
+        AssessmentGenerateResponse result = analysisService.generateAssessmentQuestions(
+                request, USER_ID, false, true, true);
+
+        assertThat(result.questions()).isEmpty();
+        verify(userClient).consumeCandidateAiCredit(USER_ID);
     }
 }

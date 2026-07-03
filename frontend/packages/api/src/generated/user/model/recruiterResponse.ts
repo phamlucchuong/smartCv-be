@@ -4,6 +4,7 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
+import type { RecruiterResponseCategory } from './recruiterResponseCategory';
 import type { RecruiterResponseStatus } from './recruiterResponseStatus';
 
 export interface RecruiterResponse {
@@ -22,6 +23,7 @@ export interface RecruiterResponse {
   companyType?: string;
   foundedYear?: number;
   industry?: string;
+  category?: RecruiterResponseCategory;
   logoUrl?: string;
   coverImageUrl?: string;
   taxCode?: string;
@@ -38,6 +40,9 @@ export interface RecruiterResponse {
   activePackageId?: string;
   packageActivatedAt?: string;
   packageExpiresAt?: string;
+  aiCreditsTotal?: number;
+  aiCreditsUsed?: number;
+  aiCreditsRemaining?: number;
   platformFeeDueAt?: string;
   platformFeeLastPaidAt?: string;
   platformFeeReminderSentAt?: string;

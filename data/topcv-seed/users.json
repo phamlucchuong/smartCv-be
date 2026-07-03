@@ -1,0 +1,947 @@
+[
+  {
+    "_id": "8270ebb8-bc95-4fe0-b001-b1dbcccec888",
+    "full_name": "Nguyễn An A",
+    "email": "candidate1@smartcv.seed.local",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0911100000",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "CANDIDATE"
+    ]
+  },
+  {
+    "_id": "7f2cd428-a974-45bc-aef0-f8224bd0749a",
+    "full_name": "Trần Bình B",
+    "email": "candidate2@smartcv.seed.local",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0911100001",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "CANDIDATE"
+    ]
+  },
+  {
+    "_id": "0fd74cbe-021c-4fc5-be7c-72d6e0cdce2e",
+    "full_name": "Lê Chi C",
+    "email": "candidate3@smartcv.seed.local",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0911100002",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "CANDIDATE"
+    ]
+  },
+  {
+    "_id": "030b7c9d-97c2-4584-bc83-3332d889d640",
+    "full_name": "Phạm Dũng D",
+    "email": "candidate4@smartcv.seed.local",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0911100003",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "CANDIDATE"
+    ]
+  },
+  {
+    "_id": "6eda0a17-a52d-425c-b4a9-36d092aa03fd",
+    "full_name": "Hoàng Giang E",
+    "email": "candidate5@smartcv.seed.local",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0911100004",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "CANDIDATE"
+    ]
+  },
+  {
+    "_id": "2015a6b3-06c1-4647-aaea-cbafb646e621",
+    "full_name": "Võ Hà F",
+    "email": "candidate6@smartcv.seed.local",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0911100005",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "CANDIDATE"
+    ]
+  },
+  {
+    "_id": "a3ec53fc-ec46-4e5e-aa7a-915ce46ce911",
+    "full_name": "Đặng Khánh G",
+    "email": "candidate7@smartcv.seed.local",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0911100006",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "CANDIDATE"
+    ]
+  },
+  {
+    "_id": "c2b74f9f-5a2c-4821-82a8-e1949e6858d0",
+    "full_name": "Bùi Linh H",
+    "email": "candidate8@smartcv.seed.local",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0911100007",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "CANDIDATE"
+    ]
+  },
+  {
+    "_id": "cda501ad-7bd2-48f7-b1b9-5d8a1df56f8e",
+    "full_name": "Đỗ Minh I",
+    "email": "candidate9@smartcv.seed.local",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0911100008",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "CANDIDATE"
+    ]
+  },
+  {
+    "_id": "b2eaa471-1233-4f25-b634-c9b2fcb46dca",
+    "full_name": "Phan Ngọc J",
+    "email": "candidate10@smartcv.seed.local",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0911100009",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "CANDIDATE"
+    ]
+  },
+  {
+    "_id": "529ac95a-e98f-4b38-82b1-9f358010c375",
+    "full_name": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM Talent Acquisition",
+    "email": "talent+248732-html@topcv.vn",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100001",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  },
+  {
+    "_id": "9ec91289-c66d-4e86-b015-fb681055a1ce",
+    "full_name": "CENNEXT Talent Acquisition",
+    "email": "talent+5338@cennext.com",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100002",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  },
+  {
+    "_id": "f9a96b7c-f701-4528-bf2f-7168fe2c4a42",
+    "full_name": "Công ty TNHH Công nghiệp Brother Việt Nam Talent Acquisition",
+    "email": "talent+156858@bivn.brother.com.vn",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100003",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  },
+  {
+    "_id": "0ab3e6fb-f707-4b8d-a092-7da1a4421c6d",
+    "full_name": "CÔNG TY CỔ PHẦN ĐÁ GRANITE & MARBLE TỰ NHIÊN THIÊN SƠN Talent Acquisition",
+    "email": "talent+234525@thiensonstone.vn",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100004",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  },
+  {
+    "_id": "082df3dc-8a0c-483f-8fc8-bbeed918952d",
+    "full_name": "MSB Talent Acquisition",
+    "email": "talent+198976@jobs.msb.com.vn",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100005",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  },
+  {
+    "_id": "53abb226-06af-4a7a-9a3b-10963fb283bd",
+    "full_name": "CÔNG TY CỔ PHẦN MỤC TIÊU VIỆT Talent Acquisition",
+    "email": "talent+118572@topcv.vn",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100006",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  },
+  {
+    "_id": "f9138a99-eee5-468a-8deb-0ec7c38561f7",
+    "full_name": "CÔNG TY CỔ PHẦN BPO MẮT BÃO Talent Acquisition",
+    "email": "talent+49696@matbaobpo.com",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100007",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  },
+  {
+    "_id": "4b5f694f-494e-4b11-a6c1-570c9a634337",
+    "full_name": "CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ ĐỨC HƯNG GROUP Talent Acquisition",
+    "email": "talent+152840@duchunggroup.com.vn",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100008",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  },
+  {
+    "_id": "c35a6db1-3811-44a8-9378-ddfb20fcbf34",
+    "full_name": "CÔNG TY TNHH ĐIỆN KHÍ QUỐC QUANG (VIỆT NAM) Talent Acquisition",
+    "email": "talent+29993@ggec.com.cn",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100009",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  },
+  {
+    "_id": "a47fb01a-e631-4952-879f-bee58425719e",
+    "full_name": "Công Ty Cổ phần Công Nghệ Phúc Bình Talent Acquisition",
+    "email": "talent+96275@phucbinh.com.vn",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100010",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  },
+  {
+    "_id": "b05f409f-6134-4ca1-b84d-aeec31928888",
+    "full_name": "CÔNG TY CỔ PHẦN DỊCH VỤ THƯƠNG MẠI TỔNG HỢP WINCOMMERCE Talent Acquisition",
+    "email": "talent+86664@winmart.vn",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100011",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  },
+  {
+    "_id": "fe245b61-3e57-4362-b0b9-c24cc3dc11e8",
+    "full_name": "CÔNG TY CP ĐẦU TƯ VÀ THƯƠNG MẠI QUỐC TẾ PHAN NGUYỄN Talent Acquisition",
+    "email": "talent+195753@pncom.vn",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100012",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  },
+  {
+    "_id": "3f7170aa-8502-4e5c-bea4-350efdb63065",
+    "full_name": "Woori Talent Acquisition",
+    "email": "talent+52137@woori.com.vn",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100013",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  },
+  {
+    "_id": "114f78ad-6e0e-442d-9215-3efaa47eee90",
+    "full_name": "Ngân hàng TMCP Phát triển TP. HCM (HDBank) Talent Acquisition",
+    "email": "talent+198812@hdbankcareer.com",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100014",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  },
+  {
+    "_id": "1f07faaa-888b-46e0-a1e8-891bf15b072a",
+    "full_name": "CÔNG TY CỔ PHẦN DREAM VIET EDUCATION Talent Acquisition",
+    "email": "talent+36121@kynaforkids.vn",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100015",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  },
+  {
+    "_id": "029c0450-a83c-4fa9-ac9d-88b3d5e4981e",
+    "full_name": "CÔNG TY TNHH QUẢNG CÁO HYPER MEDIA Talent Acquisition",
+    "email": "talent+220861@topcv.vn",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100016",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  },
+  {
+    "_id": "0517d23c-e206-4814-b085-a79bd0e160d2",
+    "full_name": "Công ty Cổ phần METUB Việt Nam Talent Acquisition",
+    "email": "talent+68303@metub.net",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100017",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  },
+  {
+    "_id": "bb8f52d5-224b-49e5-9006-750a8373045a",
+    "full_name": "CÔNG TY CỔ PHẦN BAO BÌ THÔNG MINH INTBOX Talent Acquisition",
+    "email": "talent+182085@intbox.vn",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100018",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  },
+  {
+    "_id": "9ad9f3dc-5b6d-4504-a971-34829852db19",
+    "full_name": "CÔNG TY CỔ PHẦN TẦM NHÌN QUỐC TẾ ALADDIN Talent Acquisition",
+    "email": "talent+22918@facebook.com",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100019",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  },
+  {
+    "_id": "3cd045e4-081e-40cc-af61-0bfb7bae8b99",
+    "full_name": "Công ty Cổ phần BPO Mắt Bão Talent Acquisition",
+    "email": "talent+1932@matbaobpo.com",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100020",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  },
+  {
+    "_id": "00e11503-5fca-406f-882f-16c3fe74759f",
+    "full_name": "CÔNG TY CỔ PHẦN VẬN TẢI BIỂN CONTAINER THÁI BÌNH DƯƠNG Talent Acquisition",
+    "email": "talent+94159@pacificcontainer.com.vn",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100021",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  },
+  {
+    "_id": "86d3deee-5f33-4b42-b8d2-246fa8ad9f46",
+    "full_name": "CÔNG TY CỔ PHẦN KINH DOANH VÀ ĐẦU TƯ ĐẤT XANH MIỀN TRUNG Talent Acquisition",
+    "email": "talent+93224@datxanhmientrung.com",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100022",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  },
+  {
+    "_id": "2e4dcc9f-4280-4723-9291-d4bb5b12781e",
+    "full_name": "Ngân hàng Á Châu - ACB Talent Acquisition",
+    "email": "talent+198502@acb.com.vn",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100023",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  },
+  {
+    "_id": "ad9aa3a5-f57d-4b1d-ad55-be12a9206953",
+    "full_name": "Công ty Cổ phần Giáo dục và Công nghệ TIW Talent Acquisition",
+    "email": "talent+26496@onthiielts.com.vn",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100024",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  },
+  {
+    "_id": "f4134d69-ac07-4b14-ad29-4465d80882b7",
+    "full_name": "Công Ty TNHH LG CNS VIỆT NAM Talent Acquisition",
+    "email": "talent+139535@careers.lgcnsvn.com",
+    "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+    "auth_provider": "LOCAL",
+    "google_subject": null,
+    "phone": "0908100025",
+    "avt_image_id": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted_at": null,
+    "verified": true,
+    "deleted": false,
+    "locked": false,
+    "preferences": {
+      "language": "VI",
+      "theme": "LIGHT"
+    },
+    "roles": [
+      "RECRUITER"
+    ]
+  }
+]

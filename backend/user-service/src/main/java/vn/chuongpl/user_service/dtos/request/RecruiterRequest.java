@@ -2,6 +2,7 @@ package vn.chuongpl.user_service.dtos.request;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import vn.chuongpl.user_service.enums.JobCategory;
 import vn.chuongpl.user_service.enums.RecruiterStatus;
 
 @Data
@@ -28,6 +29,7 @@ public class RecruiterRequest {
 
     Integer foundedYear;
     String industry;
+    JobCategory category;
     java.util.List<String> benefits;
     Double rating;
     Integer reviewCount;

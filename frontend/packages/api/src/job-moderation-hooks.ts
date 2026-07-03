@@ -4,10 +4,11 @@ import { customInstance } from './axios-instance';
 import type { ApiResponsePageResponseJobResponse } from './generated/job/model';
 
 export type AdminJobsParams = {
-  moderationStatus?: 'DRAFT' | 'PENDING' | 'PUBLISHED';
+  moderationStatus?: 'PENDING' | 'PUBLISHED';
   page?: number;
   size?: number;
   keyword?: string;
+  category?: string;
 };
 
 export const getAdminJobs = (

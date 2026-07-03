@@ -229,6 +229,13 @@ docker build -t smartcv/ai-engine-service:latest .
 docker tag smartcv/ai-engine-service:latest $ECR_REGISTRY/smartcv/ai-engine-service:latest
 docker push $ECR_REGISTRY/smartcv/ai-engine-service:latest
 cd ..
+
+# Payment Engine Service
+cd payment_service
+docker build -t smartcv/payment-service:latest .
+docker tag smartcv/payment-service:latest $ECR_REGISTRY/smartcv/payment-service:latest
+docker push $ECR_REGISTRY/smartcv/payment-service:latest
+cd ..
 ```
 
 > Mỗi service mất 3–10 phút để build. Tổng cộng khoảng 40–60 phút lần đầu (6 services).

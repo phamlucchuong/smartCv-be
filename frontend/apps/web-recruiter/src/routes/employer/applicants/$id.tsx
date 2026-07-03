@@ -165,6 +165,7 @@ function CandidateDetail() {
   const score = application.aiScore ?? 0;
   const aiStatus = application.aiStatus as string | undefined;
   const isPending = updateStatusMutation.isPending;
+  const previewCvUrl = candidate?.cvUrl ?? application.cvUrl;
 
   return (
     <>
@@ -197,14 +198,14 @@ function CandidateDetail() {
     </Dialog>
 
     <div className="space-y-5">
-      <div className="card-surface p-6 flex flex-wrap items-center gap-5">
+      <div className="card-surface p-6 flex flex-col gap-5 md:flex-row md:items-center">
         <div className="size-16 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xl font-bold">
           {candidate?.fullName?.split(" ").pop()?.[0] ?? "?"}
         </div>
         <div className="flex-1 min-w-0">
           <h1 className="text-2xl font-bold">{candidate?.fullName ?? "—"}</h1>
           <div className="text-muted-foreground">{candidate?.title ?? "—"}</div>
-          <div className="mt-2 flex items-center gap-3">
+          <div className="mt-2 flex flex-nowrap items-center gap-3 overflow-x-auto whitespace-nowrap">
             <StatusBadge status={STATUS_LABELS[status] ?? status} />
           </div>
         </div>
@@ -249,12 +250,11 @@ function CandidateDetail() {
       </div>
 
       <Tabs defaultValue="overview" className="w-full">
-        <TabsList className="grid w-full grid-cols-5 max-w-2xl">
+        <TabsList className="grid w-full grid-cols-4 max-w-2xl">
           <TabsTrigger value="overview">Tổng quan</TabsTrigger>
           <TabsTrigger value="cv">CV</TabsTrigger>
           <TabsTrigger value="ai">Phân tích AI</TabsTrigger>
           <TabsTrigger value="test">Bài test</TabsTrigger>
-          <TabsTrigger value="interview">Phỏng vấn</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="mt-5 grid lg:grid-cols-3 gap-4">
@@ -307,9 +307,9 @@ function CandidateDetail() {
         <TabsContent value="cv" className="mt-5 card-surface p-6">
           <div className="flex items-center justify-between mb-3">
             <h3 className="font-semibold">CV ứng viên</h3>
-            {application.cvUrl ? (
+            {previewCvUrl ? (
               <a
-                href={application.cvUrl}
+                href={previewCvUrl}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -323,10 +323,10 @@ function CandidateDetail() {
               </Button>
             )}
           </div>
-          {application.cvUrl ? (
+          {previewCvUrl ? (
             <div className="w-full h-[700px] border border-border rounded-lg overflow-hidden bg-muted">
               <iframe
-                src={application.cvUrl}
+                src={previewCvUrl}
                 className="w-full h-full"
                 title="CV Preview"
               />
@@ -429,7 +429,11 @@ function CandidateDetail() {
                           {assessment?.title ?? a.assessmentId ?? "Bài test không rõ"}
                         </td>
                         <td className="py-3.5 px-4 text-center font-bold">
-                          {a.result === 'OVERTIME' ? '—' : a.score != null ? `${a.score.toFixed(0)}%` : '—'}
+                          {a.result === 'OVERTIME'
+                            ? '—'
+                            : a.correctAnswers != null && a.totalQuestions != null && a.totalQuestions > 0
+                              ? `${a.correctAnswers}/${a.totalQuestions}`
+                              : '—'}
                         </td>
                         <td className="py-3.5 px-4 text-center">
                           <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold border ${a.result === 'PASS' ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20' :

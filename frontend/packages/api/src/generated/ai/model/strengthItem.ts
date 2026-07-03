@@ -8,4 +8,5 @@
 export interface StrengthItem {
   area?: string;
   detail?: string;
+  detailVi?: string;
 }

@@ -6,6 +6,7 @@
  */
 import type { JobCreateRequestJobType } from './jobCreateRequestJobType';
 import type { JobCreateRequestExperienceLevel } from './jobCreateRequestExperienceLevel';
+import type { JobCreateRequestCategory } from './jobCreateRequestCategory';
 
 export interface JobCreateRequest {
   title: string;
@@ -25,4 +26,5 @@ export interface JobCreateRequest {
   rejectThreshold?: number;
   autoRejectEnabled?: boolean;
   requiredTest?: string;
+  category?: JobCreateRequestCategory;
 }

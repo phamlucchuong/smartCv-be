@@ -3,7 +3,6 @@ import * as React from 'react'
 import { Badge, Button, Card, CardContent, cn } from '@smart-cv/ui'
 import { useTranslation } from '@smart-cv/i18n'
 import {
-  AlertTriangle,
   Banknote,
   Briefcase,
   Building2,
@@ -22,6 +21,7 @@ import {
 import {
   useGetJobById,
   useGetRelatedJobs,
+  useGetJobRelatedCompanies,
   useGetMyApplicationForJob,
   getGetMyApplicationForJobQueryKey,
   useSubmit,
@@ -113,7 +113,9 @@ function JobDetailPage() {
   const { data: jobData, isLoading, isError } = useGetJobById(jobId)
   const job = jobData?.data
 
-  const { data: assessmentsData } = useGetAssessmentsByJob(jobId)
+  const { data: assessmentsData } = useGetAssessmentsByJob(jobId, {
+    query: { enabled: isAuthenticated },
+  })
   const assessments = assessmentsData?.data ?? []
 
   const deadlineDaysLeft = job?.deadline
@@ -142,6 +144,9 @@ function JobDetailPage() {
 
   const { data: relatedData } = useGetRelatedJobs(jobId)
   const relatedJobs = relatedData?.data ?? []
+
+  const { data: relatedCompaniesData } = useGetJobRelatedCompanies(jobId)
+  const relatedCompanies = relatedCompaniesData?.data ?? []
 
   const { data: appliedData } = useGetMyApplicationForJob(jobId, {
     query: { enabled: isCandidate, retry: false },
@@ -187,7 +192,10 @@ function JobDetailPage() {
 
   function handleApplyClick() {
     if (!isCandidate) {
-      navigate({ to: '/signin' })
+      toast.error('Vui lòng đăng nhập tài khoản ứng viên để ứng tuyển công việc này!')
+      setTimeout(() => {
+        navigate({ to: '/signin' })
+      }, 1500)
       return
     }
     setShowApplyModal(true)
@@ -195,7 +203,10 @@ function JobDetailPage() {
 
   function handleSaveClick() {
     if (!isCandidate) {
-      navigate({ to: '/signin' })
+      toast.error('Vui lòng đăng nhập tài khoản ứng viên để lưu công việc này!')
+      setTimeout(() => {
+        navigate({ to: '/signin' })
+      }, 1500)
       return
     }
     if (saved) {
@@ -371,7 +382,14 @@ function JobDetailPage() {
                           ? "bg-destructive/10 text-destructive"
                           : "bg-emerald-50 dark:bg-emerald-950/20 text-emerald-600 dark:text-emerald-400"
                       )}>
-                        <Calendar className="h-3.5 w-3.5" />{t('job_days_left', { days: deadlineDaysLeft })}
+                        <Calendar className="h-3.5 w-3.5" />
+                        {t('job_deadline_warning', { date: formatDate(job.deadline) })} ({t('job_days_left', { days: deadlineDaysLeft })})
+                      </span>
+                    )}
+                    {job.openings != null && job.openings > 0 && (
+                      <span className="rounded-full bg-secondary px-3 py-1 text-sm text-secondary-foreground inline-flex items-center gap-1">
+                        <Users className="h-3.5 w-3.5 text-primary" />
+                        {t('job_overview_headcount')}: {job.openings}
                       </span>
                     )}
                     {job.experienceLevel && (
@@ -415,17 +433,7 @@ function JobDetailPage() {
                     </Button>
                   </div>
 
-                  {job.deadline && (
-                    <p className={cn(
-                      "mt-3 text-sm flex items-center gap-1",
-                      (deadlineDaysLeft !== null && deadlineDaysLeft < 30)
-                        ? "text-destructive"
-                        : "text-emerald-600 dark:text-emerald-400"
-                    )}>
-                      <AlertTriangle className="h-3.5 w-3.5" />
-                      {t('job_deadline_warning', { date: formatDate(job.deadline) })}
-                    </p>
-                  )}
+
                 </CardContent>
               </Card>
             </div>
@@ -534,22 +542,79 @@ function JobDetailPage() {
                 </CardContent>
               </Card>
             )}
+            {/* Related Jobs — inside main panel bottom */}
+            <div className="mt-8 mb-4 space-y-4 border-t border-border pt-6">
+              <h2 className="text-xl font-semibold text-foreground">{t('job_related')}</h2>
+              {relatedJobs.length > 0 ? (
+                <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
+                  {relatedJobs.map((rJob) => (
+                    <Link key={rJob.id} to="/jobs/$jobId" params={{ jobId: rJob.id ?? '' }} className="block">
+                      <Card className="border-border bg-card hover:shadow-md transition-shadow h-full">
+                        <CardContent className="p-5 space-y-3">
+                          <div>
+                            <h3 className="text-base font-semibold text-foreground line-clamp-1">{rJob.title}</h3>
+                            <p className="text-sm text-muted-foreground line-clamp-1">{rJob.company}</p>
+                          </div>
+                          <div className="flex flex-wrap gap-2 text-xs">
+                            {(rJob.salaryMin != null || rJob.salaryMax != null) && (
+                              <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-primary font-medium">
+                                <Banknote className="h-3 w-3" />
+                                {rJob.salaryMin != null && rJob.salaryMax != null
+                                  ? `${formatVnd(rJob.salaryMin)} - ${formatVnd(rJob.salaryMax)}`
+                                  : rJob.salaryMin != null
+                                    ? `From ${formatVnd(rJob.salaryMin)}`
+                                    : `Up to ${formatVnd(rJob.salaryMax!)}`}
+                              </span>
+                            )}
+                            {rJob.location && (
+                              <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2.5 py-1 text-muted-foreground">
+                                <MapPin className="h-3 w-3" />{rJob.location}
+                              </span>
+                            )}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-muted-foreground py-6 text-center border border-dashed border-border rounded-2xl bg-muted/10">
+                  {t('job_no_related')}
+                </p>
+              )}
+            </div>
 
-            {/* Working Location */}
-            {job.location && (
-              <Card className="border-border bg-card">
-                <CardContent className="p-6 space-y-4">
-                  <h2 className="text-lg font-semibold text-foreground border-l-4 border-primary pl-3">{t('job_location')}</h2>
-                  <hr className="border-border" />
-                  <p className="text-sm text-foreground flex items-center gap-2">
-                    <MapPin className="h-4 w-4 text-muted-foreground shrink-0" />
-                    {job.location}
-                  </p>
-                  <div className="rounded-xl bg-muted h-48 flex items-center justify-center text-muted-foreground text-sm">
-                    {t('job_map_placeholder')}
-                  </div>
-                </CardContent>
-              </Card>
+            {/* Companies in this category */}
+            {relatedCompanies.length > 0 && (
+              <div className="mt-6 mb-4 space-y-4 border-t border-border pt-6">
+                <h2 className="text-xl font-semibold text-foreground">Companies in this category</h2>
+                <div className="grid gap-3 grid-cols-1 sm:grid-cols-2">
+                  {relatedCompanies.map((company) => (
+                    <Link key={company.id} to="/companies/$companyId" params={{ companyId: company.id ?? '' }} className="block h-full">
+                      <Card className="border-border bg-card hover:shadow-md transition-shadow h-full">
+                        <CardContent className="p-4 flex items-center gap-3 h-full">
+                          {company.logoUrl ? (
+                            <img src={company.logoUrl} alt={company.name ?? ''} className="h-10 w-10 rounded-lg object-cover shrink-0 border border-border" />
+                          ) : (
+                            <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
+                              <Building2 className="h-5 w-5 text-primary" />
+                            </div>
+                          )}
+                          <div className="min-w-0 flex-1">
+                            <p className="text-sm font-semibold text-foreground line-clamp-1" title={company.name}>{company.name}</p>
+                            {company.location && (
+                              <p className="text-xs text-muted-foreground flex items-center gap-1 mt-0.5 line-clamp-1" title={company.location}>
+                                <MapPin className="h-3 w-3 shrink-0" />
+                                <span className="truncate">{company.location}</span>
+                              </p>
+                            )}
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  ))}
+                </div>
+              </div>
             )}
           </div>
 
@@ -577,6 +642,13 @@ function JobDetailPage() {
                           )
                         }
                       : null,
+                    job.createdAt
+                      ? {
+                          icon: Clock,
+                          label: t('job_overview_posted'),
+                          value: formatDate(job.createdAt)
+                        }
+                      : null,
                     salaryDisplay ? { icon: Banknote, label: t('job_overview_salary'), value: salaryDisplay } : null,
                     job.experienceLevel ? { icon: Briefcase, label: t('job_overview_experience'), value: job.experienceLevel } : null,
                     job.jobType ? { icon: Briefcase, label: t('job_overview_type'), value: job.jobType } : null,
@@ -588,7 +660,7 @@ function JobDetailPage() {
                           <Icon className="h-4 w-4 text-primary shrink-0" />
                           {label}
                         </span>
-                        <span className="font-medium text-foreground text-right max-w-[55%]">{value}</span>
+                        <span className="font-medium text-foreground text-right max-w-[70%] whitespace-nowrap">{value}</span>
                       </div>
                     ))}
                 </div>
@@ -677,44 +749,34 @@ function JobDetailPage() {
                 </CardContent>
               </Card>
             )}
+
+            {/* Working Location in Sidebar */}
+            {job.location && (
+              <Card className="border-border bg-card">
+                <CardContent className="p-5 space-y-3">
+                  <h3 className="text-base font-semibold text-foreground mb-2">{t('job_location')}</h3>
+                  <hr className="border-border" />
+                  <p className="text-xs text-foreground flex items-center gap-2">
+                    <MapPin className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
+                    {job.location}
+                  </p>
+                  <div className="rounded-xl overflow-hidden h-48 border border-border">
+                    <iframe
+                      title="Working Location Map"
+                      width="100%"
+                      height="100%"
+                      style={{ border: 0 }}
+                      src={`https://maps.google.com/maps?q=${encodeURIComponent(job.location)}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+                      allowFullScreen
+                      loading="lazy"
+                    />
+                  </div>
+                </CardContent>
+              </Card>
+            )}
           </div>
         </div>
 
-        {/* Related Jobs — full-width below two-column layout */}
-        <div className="mt-10 mb-6 space-y-4">
-          <h2 className="text-2xl font-semibold text-foreground">{t('job_related')}</h2>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {relatedJobs.map((rJob) => (
-              <Link key={rJob.id} to="/jobs/$jobId" params={{ jobId: rJob.id ?? '' }} className="block">
-                <Card className="border-border bg-card hover:shadow-md transition-shadow h-full">
-                  <CardContent className="p-5 space-y-3">
-                    <div>
-                      <h3 className="text-base font-semibold text-foreground">{rJob.title}</h3>
-                      <p className="text-sm text-muted-foreground">{rJob.company}</p>
-                    </div>
-                    <div className="flex flex-wrap gap-2 text-xs">
-                      {(rJob.salaryMin != null || rJob.salaryMax != null) && (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-primary/10 px-2.5 py-1 text-primary font-medium">
-                          <Banknote className="h-3 w-3" />
-                          {rJob.salaryMin != null && rJob.salaryMax != null
-                            ? `${formatVnd(rJob.salaryMin)} - ${formatVnd(rJob.salaryMax)}`
-                            : rJob.salaryMin != null
-                              ? `From ${formatVnd(rJob.salaryMin)}`
-                              : `Up to ${formatVnd(rJob.salaryMax!)}`}
-                        </span>
-                      )}
-                      {rJob.location && (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2.5 py-1 text-muted-foreground">
-                          <MapPin className="h-3 w-3" />{rJob.location}
-                        </span>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            ))}
-          </div>
-        </div>
       </div>
 
       {/* Mobile sticky apply bar — hidden on desktop */}

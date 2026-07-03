@@ -1,0 +1,673 @@
+[
+  {
+    "_id": "9a5e5826-6c16-4f84-a886-9db1f3b4733d",
+    "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+    "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "description": "<h2>Mô tả công việc</h2> <ul><li>Hỗ trợ nhà bán hàng hiện tại:<ul><li>Hỗ trợ nhà bán hàng cải thiện về tình trạng bán hàng trên các gian hàng.</li><li>Hỗ trợ nhà bán hàng để không bị vi phạm các vấn đề liên quan: Thông qua việc hướng dẫn nhà bán hàng về các chính sách bán hàng, hướng dẫn những khiếu nại thực thi và cảnh báo các thông tin (nếu có).</li></ul></li><li>Hỗ trợ nhà bán hàng mới:<ul><li>Chủ động tiếp cận các nhà bán hàng tiềm năng dựa trên dữ liệu cung cấp, hỗ trợ hoàn tất quy trình xác minh hồ sơ, hướng dẫn đăng tải sản phẩm tuân thủ quy định và đồng hành nhà bán hàng trong giai đoạn khởi tạo nhằm thúc đẩy phát sinh doanh số</li><li>Quản lý danh mục nhà bán hàng chiến lược, xây dựng kế hoạch tăng trưởng GMV(Gross Merchandise Value), tối ưu hiệu quả nội dung và phân phối, đồng thời tư vấn các giải pháp đầu tư tăng trưởng phù hợp nhằm thúc đẩy hiệu quả kinh doanh dài hạn.</li></ul></li><li><strong>LÀM VIỆC TẠI:</strong><br>Toà nhà Pico - 20 Cộng Hòa, Phường Bảy Hiền, TPHCM</li><li><strong>THỜI GIAN LÀM VIỆC:</strong><br>Thời gian làm việc: Thứ 2 - Thứ 6 (9:00 – 18h00), nghỉ cố định Thứ 7 & Chủ nhật và lễ, Tết</li></ul> <h2>Yêu cầu ứng viên</h2> <ul><li>Tốt nghiệp THPT trở lên (còn giữ bằng).</li><li>Tuổi 19 – 30.</li><li>Ứng viên có kinh nghiệm từ 3 tháng hỗ trợ khách hàng như: Chăm sóc khách hàng, Telesales, Tổng đài,...là một lợi thế.</li><li>Tiếng anh đọc hiểu cơ bản</li><li>Tin học văn phòng cơ bản.</li></ul> <h2>Quyền lợi được hưởng</h2> <ul><li data-list-item-id=\"e138de48bd15733255397e9a3c0d22a66\">Thu nhập lên đến 9.000.000đ/tháng (Lương gộp 7.000.000đ + thưởng hiệu suất &nbsp;2.000.000 VND).</li><li data-list-item-id=\"e45029d60001a952f75dd4a2185983162\">Lương tháng 13, xét tăng lương 1 lần/năm, lộ trình thăng tiến rõ ràng.</li><li data-list-item-id=\"e3c469d1ea73193eedf29256b0b1393ee\">Tham gia đầy đủ chế độ bảo hiểm: BHXH, BHYT, BHTN.</li><li data-list-item-id=\"e5fc5911d76ba03a01070bc90e5137505\">Quà cho nhân viên vào các dịp Lễ, Tết.</li><li data-list-item-id=\"e408bd1e318ac4e415e6340d431998474\">Các hoạt động team building hàng năm.</li><li data-list-item-id=\"e804e75ae0b849544a557e260dbf9c954\">Trang bị đầy đủ trang thiết bị làm việc (máy tính/ điện thoại).</li><li data-list-item-id=\"e227c8ffd8ec89f5bb625be7470608448\">Đào tạo nghiệp vụ và kỹ năng trước khi bắt đầu công việc.</li></ul>",
+    "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "location": "Toà nhà Pico - 20 Cộng Hòa, Phường Bảy Hiền, Hồ Chí Minh",
+    "salary_min": 7000000,
+    "salary_max": 9000000,
+    "jobType": "FULL_TIME",
+    "experienceLevel": "INTERN",
+    "skills": [
+      "Telesales",
+      "Tin học văn phòng",
+      "Chăm Sóc Khách Hàng"
+    ],
+    "requirements": [],
+    "benefits": [],
+    "moderation_status": "PUBLISHED",
+    "visibility_status": "ACTIVE",
+    "moderationNote": null,
+    "reviewedBy": "seed-admin",
+    "reviewedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deadline": {
+      "$date": "2026-07-17T00:00:00.000Z"
+    },
+    "openings": 10,
+    "qualifiedThreshold": 70,
+    "rejectThreshold": 40,
+    "autoRejectEnabled": false,
+    "requiredTest": null,
+    "category": "RETAIL",
+    "deleted": false,
+    "deletedAt": null,
+    "createdAt": {
+      "$date": "2026-06-17T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    }
+  },
+  {
+    "_id": "04014de1-6c1d-414d-ac30-d9e7692f7ce5",
+    "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+    "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "description": "<h2>Mô tả công việc</h2> <ul><li data-list-item-id=\"e6babf249d68b606d052dc7a33a33aa91\">Thực hiện cuộc gọi dựa trên data có sẵn phía công ty cung cấp để tư vấn &amp; giới thiệu sản phẩm FMCG ( tiêu dùng nhanh ) đến cho Khách hàng.</li><li data-list-item-id=\"ec587452ce0cbbbf215f36409714b59f6\">Tìm hiểu nhu cầu, giải đáp thắc mắc và đưa ra giải pháp tốt nhất để hỗ trợ Khách hàng.</li><li data-list-item-id=\"ecd4a4227efbe36782bcd15455a0c0c02\">Thuyết phục Khách đặt hàng và hỗ trợ lên đơn.</li><li data-list-item-id=\"eb623850eb8621d08136ad2feaf259c5c\">Cập nhật các thông tin, báo cáo liên quan lên hệ thống.</li></ul> <h2>Yêu cầu ứng viên</h2> <ul><li class=\"ck-list-marker-bold\" data-list-item-id=\"ef7cd0b7e4f9db858fe0a5dcec0089085\"><strong>Tốt nghiệp Cao Đẳng trở lên và còn giữ bằng.</strong></li><li data-list-item-id=\"e9d658f64f5b2f47044675a60c255d3dd\"><strong>Tối thiểu 1 năm kinh nghiệm trong lĩnh vực Telesales</strong> (ưu tiên các ứng viên có kinh nghiệm telesales trong lĩnh vực FMCG).</li><li data-list-item-id=\"e99eb125de108572e185aac6e3b9d1d50\">Có thể làm toàn thời gian (không vướng bận lịch học).</li><li data-list-item-id=\"e874e04b680951ba87e2f8366973bbb3f\">Giọng nói rõ ràng, lưu loát.</li><li data-list-item-id=\"e012a645b55704f7e6e906c3c9c63d86f\">Giao tiếp tốt, có khả năng tư vấn và thuyết phục khách hàng.</li><li data-list-item-id=\"ed7ef5e104d47d160d88c0bc84f328069\">Thành thạo kỹ năng sử dụng máy tính và tin học văn phòng cơ bản (Excel, Word...)</li></ul> <h2>Quyền lợi được hưởng</h2> <ul><li data-list-item-id=\"e8fc5f617f723288e32d9882d2085c974\"><b>Thời gian làm việc từ thứ 2 đến thứ 6 =&gt; Thứ 7 làm ở nhà</b></li><li data-list-item-id=\"e8fc5f617f723288e32d9882d2085c974\"><b>Thu nhập lên đến hơn 15.000.000 VND/ tháng - Đến KHÔNG GIỚI HẠN TÙY THEO NĂNG LỰC&nbsp;&nbsp;</b></li><li data-list-item-id=\"e8fc5f617f723288e32d9882d2085c974\"><b>(Lương cứng 8.500.000 VND + Thưởng KPIs KHÔNG GIỚI HẠN )</b></li><li data-list-item-id=\"e8c401cb77d877615201482e7cf09ff45\"><b>Lương tháng 13.</b></li><li data-list-item-id=\"e98867c2046ef6466958b22ff691349be\">Xét tăng lương 1 lần/năm, lộ trình thăng tiến rõ ràng.</li><li data-list-item-id=\"eaa322b7aa222e92f87190f1250c5f3fe\">Tham gia đầy đủ chế độ bảo hiểm: BHXH, BHYT, BHTN.</li><li data-list-item-id=\"e77d1d14ea2d0827b8b9744e0bc8df7a6\">Quà cho nhân viên vào các dịp Lễ, Tết.</li><li data-list-item-id=\"eed55aa90b09b8ec31bd2c183a9e7b574\">Các hoạt động team building hàng năm.</li><li data-list-item-id=\"e427e6e8410a3ae72ae9f865a87c20474\">Trang bị đầy đủ trang thiết bị làm việc (máy tính/ điện thoại).</li><li data-list-item-id=\"e559cbb086abdfab2de1b7279c18f55fb\">Đào tạo nghiệp vụ và kỹ năng trước khi bắt đầu công việc.</li></ul>",
+    "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "location": "Số 156 Nguyễn Lương Bằng, Quận 7, Phường Tân Mỹ, Hồ Chí Minh",
+    "salary_min": 9000000,
+    "salary_max": 15000000,
+    "jobType": "FULL_TIME",
+    "experienceLevel": "JUNIOR",
+    "skills": [
+      "Telesales",
+      "Tin học văn phòng",
+      "Tư vấn",
+      "Giao tiếp",
+      "Thuyết Phục Khách Hàng",
+      "FMCG"
+    ],
+    "requirements": [],
+    "benefits": [],
+    "moderation_status": "PUBLISHED",
+    "visibility_status": "ACTIVE",
+    "moderationNote": null,
+    "reviewedBy": "seed-admin",
+    "reviewedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deadline": {
+      "$date": "2026-06-29T00:00:00.000Z"
+    },
+    "openings": 5,
+    "qualifiedThreshold": 70,
+    "rejectThreshold": 40,
+    "autoRejectEnabled": false,
+    "requiredTest": null,
+    "category": "RETAIL",
+    "deleted": false,
+    "deletedAt": null,
+    "createdAt": {
+      "$date": "2026-05-29T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    }
+  },
+  {
+    "_id": "51062656-e244-46e8-8aa5-22953c2ddaaa",
+    "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+    "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "description": "<h2>Mô tả công việc</h2> <p>- Tiếp nhận phản hồi của khách hàng và giải đáp các thắc mắc liên quan đến sản phẩm, dịch vụ tài chính - ngân hàng qua các kênh: hotline, chat, email.</p><p>- Xử lý các công việc nghiệp vụ chăm sóc khách hàng khác (nếu có) theo yêu cầu của quản lý.</p><p>- Thời gian làm việc: xoay ca 8h/ngày, 6 ngày/tuần.&nbsp;</p><p>- Địa chỉ: Tòa nhà MB, 21 Cát Linh, phường Ô Chợ Dừa, Hà Nội.</p> <h2>Yêu cầu ứng viên</h2> <p>- Tốt nghiệp Trung cấp trở lên (chấp nhận sinh viên đang chờ bằng).</p><p>- Không nói ngọng, không nói lắp, không giọng địa phương.</p><p>- Có kỹ năng về Word/Excel, tin học văn phòng.</p><p>- Có kinh nghiệm CSKH, tổng đài viên, tư vấn bán hàng, telesales,... là một điểm cộng (không có sẽ được đào tạo).</p> <h2>Quyền lợi được hưởng</h2> <p>- Thu nhập 7.000.000 - 9.000.000 đồng/tháng.</p><p>- Xét thăng tiến 2 lần/năm, xét tăng lương 1 lần/năm.</p><p>- Lương tháng thứ 13.</p><p>- Bảo hiểm đầy đủ ngay sau 1 tháng đào tạo.</p><p>- Quy trình đào tạo bài bản, rõ ràng.</p><p>- Tặng quà vào các dịp lễ, Tết trong năm.</p><p>- Trợ cấp hiếu hỉ, sinh con, ốm đau.</p><p>- Khám sức khỏe miễn phí thường niên.</p><p>- Teambuilding, các hoạt động gắn kết nhân viên toàn công ty.</p>",
+    "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "location": "Tòa nhà MB, 21 Cát Linh, Phường Ô Chợ Dừa, Hà Nội",
+    "salary_min": 7000000,
+    "salary_max": 9000000,
+    "jobType": "FULL_TIME",
+    "experienceLevel": "INTERN",
+    "skills": [],
+    "requirements": [],
+    "benefits": [],
+    "moderation_status": "PUBLISHED",
+    "visibility_status": "ACTIVE",
+    "moderationNote": null,
+    "reviewedBy": "seed-admin",
+    "reviewedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deadline": {
+      "$date": "2026-07-27T00:00:00.000Z"
+    },
+    "openings": 10,
+    "qualifiedThreshold": 70,
+    "rejectThreshold": 40,
+    "autoRejectEnabled": false,
+    "requiredTest": null,
+    "category": "RETAIL",
+    "deleted": false,
+    "deletedAt": null,
+    "createdAt": {
+      "$date": "2026-06-27T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    }
+  },
+  {
+    "_id": "2818b1ee-dba7-496c-bd06-56d382657f4f",
+    "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+    "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "description": "<h2>Mô tả công việc</h2> <p><i><strong>Seeding &amp; Quản lý bài đăng seeding</strong></i></p><ul><li data-list-item-id=\"ec5b0e8d51d9ea6924d33791a4e97eb03\">Xây dựng nội dung seeding, viết bài seeding dựa theo định hướng nội dung seeding có sẵn</li><li data-list-item-id=\"e11826863090540c14c201a77d2c9035c\">Quản lý tài khoản seeding, duy trì và vận hành tài khoản, bình luận seeding để tạo tương tác.</li><li data-list-item-id=\"e46ba9d9fe41dca68f01b110d25b0bd74\">Hỗ trợ kiểm tra nội dung comment và bài viết, thông báo ngay khi phát hiện khủng hoảng</li></ul><p><i><strong>Admin quản lý nhóm &amp; hoạt động tương tác trong nhóm</strong></i></p><ul><li data-list-item-id=\"e36e5dc2052930b12cc655b2165177540\">Kiểm tra, duyệt hoặc từ chối bài đăng và thành viên mới trong fanpage.</li><li data-list-item-id=\"e38a2cfe7e53d07bd1eedd56098eb800e\">Trả lời bình luận, tin nhắn của thành viên trên trên group</li><li data-list-item-id=\"e9960604215feadbbda8acced9fbea8e4\">Theo dõi, kiểm tra bình luận, kịp thời báo cáo khi phát hiện bình luận tiêu cực và phối hợp giải quyết.</li><li data-list-item-id=\"ef6a17605bc3a992c52274e94a6e14f56\">Đăng bài với vai trò quản trị viên theo yêu cầu của nhóm (Nội dung có sẵn)</li><li data-list-item-id=\"efcfd92d3ea166c2f6c75a33e8b424664\">Lựa chọn và duy trì nhóm thành viên tích cực, thúc đẩy hoạt động cho group</li><li data-list-item-id=\"eeffa2b0577c51a9d270b10625f98b800\">Hỗ trợ tổng hợp và báo cáo tình hình hoạt động theo định kỳ.</li></ul><p><i><strong>Content Writer: (hỗ trợ nội dung Livestream)</strong></i></p><ul><li data-list-item-id=\"ecdb4e88a444e51c1dcb4e5f5969966c4\">Viết kịch bản cho các buổi livestream nội bộ, đảm bảo nội dung hấp dẫn, bám sát mục tiêu truyền thông.</li><li data-list-item-id=\"efff9986590e11081318c5f94f1f989d4\">Tìm kiếm và book KOL/PR theo yêu cầu và thỏa thuận của chiến dịch.</li><li data-list-item-id=\"e9a42ce5902d89662c86e8f70208653db\">Thực hiện các báo cáo theo yêu cầu.</li></ul> <h2>Yêu cầu ứng viên</h2> <ul><li data-list-item-id=\"ea5966a2d9ddd54dbf4bf8537b539f1e5\">Có kinh nghiệm seeding, quản lý cộng đồng hoặc vận hành mạng xã hội là một lợi thế.</li><li data-list-item-id=\"e48a1ccc0a69ede204be6709e69bbdd46\">Kỹ năng viết nội dung tốt, sáng tạo, linh hoạt theo từng định hướng nội dung.</li><li data-list-item-id=\"ef9cfc99e604bee58228145034909ad7e\">Chủ động, có tinh thần trách nhiệm, xử lý tình huống nhanh nhạy.</li><li data-list-item-id=\"e2666aaa03f44d824b092c84757703c50\">Hiểu biết về quản lý fanpage, nhóm cộng đồng trên các nền tảng mạng xã hội.</li></ul> <h2>Quyền lợi được hưởng</h2> <ul><li data-list-item-id=\"ee83cbe5a5a04ef84f48bd9ea9f6dfee3\">Thu nhập: <strong>9.000.000 – 10.000.000 VNĐ/tháng (gồm lương cứng + KPI)</strong></li><li data-list-item-id=\"e31618e10e18093150c791f76b33a7af9\">Lương tháng 13.</li><li data-list-item-id=\"e635be5d490d106a31e7dd879831a1efa\">Xét thăng chức 2 lần/năm, xét tăng lương 1 lần/năm.</li><li data-list-item-id=\"eed7c8c253dfbca131c307be2157f173a\">Cơ hội huấn luyện: được tham gia khóa học đào tạo bài bản, chuyên nghiệp về nghiệp vụ và kỹ năng chăm sóc khách hàng.</li><li data-list-item-id=\"ea80b40d722bb90d54e4f86b90c66ea49\">Chế độ BHXH, BHYT, BHTN… theo quy định của luật Việt Nam.</li><li data-list-item-id=\"e4518034800812acd5522b59785c20973\">Môi trường làm việc chuẩn văn hóa Nhật Bản.</li><li data-list-item-id=\"efc39f8a794b5b83b03093e5d7da11cac\">Văn phòng làm việc hiện tại, nằm tại quận trung tâm của TP Hà Nội.</li><li data-list-item-id=\"e70b3f130e4e6e2f110b803b32e62a368\">Lộ trình thăng tiến rõ ràng.</li><li data-list-item-id=\"efbb903e9dc73d8d4368fea14d441be08\">Quà tặng/tiền mặt vào các dịp lễ Tết trong năm, trợ cấp hiếu, hỉ, sinh con, ốm đau.</li><li data-list-item-id=\"e746ca96346b256f5fc8031282f4037a1\">Khám sức khỏe thường niên</li><li data-list-item-id=\"e989b3996325b4f4cb710ec21493abb04\">Team building &amp; các hoạt động gắn kết nhân viên toàn công ty</li></ul>",
+    "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "location": "Tòa Charmvit, 117 Trần Duy Hưng, Phường Cầu Giấy, Hà Nội",
+    "salary_min": 9000000,
+    "salary_max": 10000000,
+    "jobType": "FULL_TIME",
+    "experienceLevel": "INTERN",
+    "skills": [],
+    "requirements": [],
+    "benefits": [],
+    "moderation_status": "PUBLISHED",
+    "visibility_status": "ACTIVE",
+    "moderationNote": null,
+    "reviewedBy": "seed-admin",
+    "reviewedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deadline": {
+      "$date": "2026-07-07T00:00:00.000Z"
+    },
+    "openings": 1,
+    "qualifiedThreshold": 70,
+    "rejectThreshold": 40,
+    "autoRejectEnabled": false,
+    "requiredTest": null,
+    "category": "MARKETING",
+    "deleted": false,
+    "deletedAt": null,
+    "createdAt": {
+      "$date": "2026-06-06T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    }
+  },
+  {
+    "_id": "40315fc6-52b8-48c0-9468-5a7f8c2e7bad",
+    "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+    "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "description": "<h2>Mô tả công việc</h2> <ul><li>Tiếp nhận danh sách khách hàng có sẵn từ Công ty.</li><li>Thực hiện cuộc gọi ra theo kịch bản Công ty: tư vấn, giải đáp và thuyết phục KH sử dụng sản phẩm Gói Chăm Sóc Sức Khỏe.</li><li>Cập nhật và báo cáo công việc hằng ngày lên hệ thống.</li></ul> <h2>Yêu cầu ứng viên</h2> <ul><li class=\"ck-list-marker-bold\" data-list-item-id=\"e391c373bfcdf3178a250e519621dd2f6\"><strong>Không yêu cầu kinh nghiệm. Sẽ được đào tạo khi làm việc.</strong></li><li data-list-item-id=\"e7d487c8f6c160f03c1d99a7b70e7a51e\">Đã tốt nghiệp (còn giữ bằng).</li><li data-list-item-id=\"e4f5cc0f758c745940def656657ba3910\">Yêu thích công việc tư vấn Bảo Hiểm: ưu tiên có kinh nghiệm tư vấn bán hàng, CSKH, telesales,... và các công việc liên quan.</li><li data-list-item-id=\"e5b3d812cc2b249402123778a8f2f569d\">Khả năng giao tiếp tốt, lưu loát.</li></ul> <h2>Quyền lợi được hưởng</h2> <ul><li data-list-item-id=\"e89b0764669ab845ea911dca7c5c29651\">Thu nhập: 8.000.000-15.000.000 vnđ/tháng (lương cứng: 7.000.000 vnđ/tháng).</li><li data-list-item-id=\"e867b1a363ca801f8acdd7a17ef7debad\">Được đào tạo chuyên nghiệp bài bản từ đầu, phát triển và định hướng nghề nghiệp.</li><li data-list-item-id=\"e48e79894883acf9febb84cdfdeeba96c\">Trang thiết bị làm việc do Công ty cung cấp.</li><li data-list-item-id=\"e4a202982b8b8bc27a1850b17fca5ebbd\">Ký HĐLĐ, tham gia đầy đủ BHXH, BHYT, BHTN.</li><li data-list-item-id=\"ec4de05e712f0562cb55193ad74b14d53\">Được hưởng 12 ngày phép/năm.</li><li data-list-item-id=\"e9a967f31efa384fd55c34495fddb808a\">Lương tháng 13 hằng năm, tăng lương định kỳ 1 năm/lần, thăng tiến&nbsp;</li><li data-list-item-id=\"ebc74df350502508b26f411a6be4674c8\">Khám sức khỏe định kỳ 1 lần/năm miễn phí.</li><li data-list-item-id=\"e3f95ef6432a05011d5452bda297027d9\">Tham gia Công đoàn, thưởng và quà tặng đầy đủ lễ, tết, sinh nhật, hỷ sự, party, du lịch...</li></ul>",
+    "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "location": "19A Cộng Hòa, Phường Bảy Hiền, Hồ Chí Minh",
+    "salary_min": 8000000,
+    "salary_max": 15000000,
+    "jobType": "FULL_TIME",
+    "experienceLevel": "INTERN",
+    "skills": [
+      "Telesales",
+      "Tư vấn",
+      "Giao tiếp",
+      "Chăm Sóc Khách Hàng"
+    ],
+    "requirements": [],
+    "benefits": [],
+    "moderation_status": "PUBLISHED",
+    "visibility_status": "ACTIVE",
+    "moderationNote": null,
+    "reviewedBy": "seed-admin",
+    "reviewedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deadline": {
+      "$date": "2026-06-29T00:00:00.000Z"
+    },
+    "openings": 1,
+    "qualifiedThreshold": 70,
+    "rejectThreshold": 40,
+    "autoRejectEnabled": false,
+    "requiredTest": null,
+    "category": "RETAIL",
+    "deleted": false,
+    "deletedAt": null,
+    "createdAt": {
+      "$date": "2026-05-11T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    }
+  },
+  {
+    "_id": "3afe0018-1356-40b2-b4c1-200cc16ab270",
+    "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+    "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "description": "<h2>Mô tả công việc</h2> <p>- Tiếp nhận phản hồi của khách hàng và giải đáp các thắc mắc liên quan đến sản phẩm, dịch vụ tài chính - ngân hàng qua các kênh: hotline, chat, email.</p><p>- Xử lý các công việc nghiệp vụ chăm sóc khách hàng khác (nếu có) theo yêu cầu của quản lý.</p> <h2>Yêu cầu ứng viên</h2> <p>- Tốt nghiệp Trung cấp trở lên (chấp nhận sinh viên đang chờ bằng).</p><p>- Không nói ngọng, không nói lắp, không giọng địa phương.</p><p>- Có kỹ năng về Word/Excel, tin học văn phòng.</p><p>- Có kinh nghiệm CSKH, tổng đài viên, tư vấn bán hàng, telesales,... là một điểm cộng (không có sẽ được đào tạo).</p> <h2>Quyền lợi được hưởng</h2> <p>- Thu nhập 7.000.000 - 9.000.000 đồng/tháng.</p><p>- Xét thăng tiến 2 lần/năm, xét tăng lương 1 lần/năm.</p><p>- Lương tháng thứ 13.</p><p>- Bảo hiểm đầy đủ ngay sau 1 tháng đào tạo.</p><p>- Quy trình đào tạo bài bản, rõ ràng.</p><p>- Tặng quà vào các dịp lễ, Tết trong năm.</p><p>- Trợ cấp hiếu hỉ, sinh con, ốm đau.</p><p>- Khám sức khỏe miễn phí thường niên.</p><p>- Teambuilding, các hoạt động gắn kết nhân viên toàn công ty.</p>",
+    "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "location": "Tòa MB, 21 Cát Linh, Phường Ô Chợ Dừa, Hà Nội",
+    "salary_min": 7000000,
+    "salary_max": 9000000,
+    "jobType": "FULL_TIME",
+    "experienceLevel": "INTERN",
+    "skills": [],
+    "requirements": [],
+    "benefits": [],
+    "moderation_status": "PUBLISHED",
+    "visibility_status": "ACTIVE",
+    "moderationNote": null,
+    "reviewedBy": "seed-admin",
+    "reviewedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deadline": {
+      "$date": "2026-06-29T00:00:00.000Z"
+    },
+    "openings": 10,
+    "qualifiedThreshold": 70,
+    "rejectThreshold": 40,
+    "autoRejectEnabled": false,
+    "requiredTest": null,
+    "category": "RETAIL",
+    "deleted": false,
+    "deletedAt": null,
+    "createdAt": {
+      "$date": "2026-05-14T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    }
+  },
+  {
+    "_id": "73da2d80-d91b-452c-a28e-920671c2d5e5",
+    "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+    "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "description": "<h2>Mô tả công việc</h2> <p><i><strong>- Seeding &amp; Quản lý bài đăng seeding</strong></i></p><p><i><strong>- Admin quản lý nhóm &amp; hoạt động tương tác trong nhóm</strong></i></p><p>&nbsp;Kiểm tra, duyệt hoặc từ chối bài đăng và thành viên mới trong fanpage.</p><p>Trả lời bình luận, tin nhắn của thành viên trên trên group</p><p><i><strong>- Content Writer: (hỗ trợ nội dung Livestream)</strong></i></p><p>&nbsp;</p><p>&nbsp;<strong>ĐỊA ĐIỂM LÀM VIỆC:</strong></p><p>Tòa nhà Charmvit Tower, Số 117 đường Trần Duy Hưng, Hà Nội.<br><br><strong>THỜI GIAN LÀM VIỆC:</strong></p><p>Từ 8:00 – 17:30, từ thứ 2 đến thứ 6 hàng tuần và thứ 7 nếu có yêu cầu.</p> <h2>Yêu cầu ứng viên</h2> <ul><li data-list-item-id=\"e101484d6ca39a58bd94a84e0171da6c0\">Tốt nghiệp Cao đẳng hoặc Đại học&nbsp;</li><li data-list-item-id=\"e9690e1f3e441c2ddc1ba0398f1b553bf\">Có kinh nghiệm seeding, quản lý cộng đồng hoặc vận hành mạng xã hội là một lợi thế.</li><li data-list-item-id=\"e8f50e35894a8e9c936343633c23e675b\">Kỹ năng viết nội dung tốt, sáng tạo, linh hoạt theo từng định hướng nội dung.</li><li data-list-item-id=\"e661a476ecb5246b9cbd9ac8e7649c2d8\">Chủ động, có tinh thần trách nhiệm, xử lý tình huống nhanh nhạy.</li><li data-list-item-id=\"ebf02570dd52df7924658f310b68a8122\">Hiểu biết về quản lý fanpage, nhóm cộng đồng trên các nền tảng mạng xã hội.</li></ul> <h2>Quyền lợi được hưởng</h2> <p>-&nbsp;&nbsp; Thu nhập: 8.500 - 10.000.000 VNĐ/tháng (Có KPI tháng)</p><p>-&nbsp;&nbsp;&nbsp;&nbsp; Lương tháng 13</p><p>-&nbsp;&nbsp;&nbsp;&nbsp; Xét thăng chức 2 lần/năm, xét tăng lương 1 lần/năm.</p><p>-&nbsp;&nbsp;&nbsp;&nbsp; Cơ hội huấn luyện: được tham gia khóa học đào tạo bài bản, chuyên nghiệp về nghiệp vụ và kỹ năng chăm sóc khách hàng.</p><p>-&nbsp;&nbsp;&nbsp; Chế độ BHXH, BHYT, BHTN… theo quy định của luật Việt Nam.</p><p>- &nbsp; &nbsp;Nghỉ phép năm.</p><p>-&nbsp;&nbsp;&nbsp;&nbsp; Môi trường làm việc chuẩn văn hóa Nhật Bản.</p><p>-&nbsp;&nbsp;&nbsp;&nbsp; Văn phòng làm việc hiện tại, nằm tại quận trung tâm của TP Hà Nội.</p><p>-&nbsp;&nbsp;&nbsp;&nbsp; Lộ trình thăng tiến rõ ràng.</p><p>-&nbsp;&nbsp;&nbsp;&nbsp; Quà tặng/tiền mặt vào các dịp lễ Tết trong năm, trợ cấp hiếu, hỉ, sinh con, ốm đau.</p><p>-&nbsp;&nbsp;&nbsp;&nbsp; Khám sức khỏe thường niên</p><p>-&nbsp;&nbsp;&nbsp;&nbsp; Team building &amp; các hoạt động gắn kết nhân viên toàn công ty</p>",
+    "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "location": "Tòa nhà Charmvit Tower, 117 Trần Duy Hưng, Phường Cầu Giấy, Hà Nội",
+    "salary_min": 8500000,
+    "salary_max": 10000000,
+    "jobType": "FULL_TIME",
+    "experienceLevel": "JUNIOR",
+    "skills": [],
+    "requirements": [],
+    "benefits": [],
+    "moderation_status": "PUBLISHED",
+    "visibility_status": "ACTIVE",
+    "moderationNote": null,
+    "reviewedBy": "seed-admin",
+    "reviewedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deadline": {
+      "$date": "2026-06-29T00:00:00.000Z"
+    },
+    "openings": 1,
+    "qualifiedThreshold": 70,
+    "rejectThreshold": 40,
+    "autoRejectEnabled": false,
+    "requiredTest": null,
+    "category": "RETAIL",
+    "deleted": false,
+    "deletedAt": null,
+    "createdAt": {
+      "$date": "2026-05-06T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    }
+  },
+  {
+    "_id": "5d960428-1fc6-42cb-bed2-8210ca42c17f",
+    "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+    "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "description": "<h2>Mô tả công việc</h2> <p>- Tiếp nhận và giải đáp thắc mắc của khách hàng về các sản phẩm, dịch vụ tài chính – ngân hàng qua hotline, chat và email.</p><p>-&nbsp; Xử lý các công việc nghiệp vụ chăm sóc khách hàng khác (nếu có) theo yêu cầu của quản lý.</p><p>- Làm việc : Toà nhà MB, 21 Cát Linh, Phường Ô Chợ Dừa, Hà Nội</p> <h2>Yêu cầu ứng viên</h2> <p>- Tốt nghiệp Trung cấp trở lên (chấp nhận sinh viên đang chờ bằng).</p><p>- Không nói ngọng, không nói lắp, không giọng địa phương.</p><p>- Có kỹ năng về Word/Excel, tin học văn phòng.</p><p>- Có kinh nghiệm CSKH, tổng đài viên, tư vấn bán hàng, telesales,... là một điểm cộng (không có sẽ được đào tạo).</p> <h2>Quyền lợi được hưởng</h2> <p>- Thu nhập 7.000.000 - 9.000.000 đồng/tháng.</p><p>- Xét thăng tiến 2 lần/năm, xét tăng lương 1 lần/năm.</p><p>- Lương tháng thứ 13.</p><p>- Bảo hiểm đầy đủ ngay sau 1 tháng đào tạo.</p><p>- Quy trình đào tạo bài bản, rõ ràng.</p><p>- Được cung cấp sẵn thiết bị làm việc.</p><p>- Tặng quà vào các dịp lễ, Tết trong năm.</p><p>- Trợ cấp hiếu hỉ, sinh con, ốm đau.</p><p>- Khám sức khỏe miễn phí thường niên.</p><p>- Teambuilding, các hoạt động gắn kết nhân viên toàn công ty.</p>",
+    "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "location": "Toà nhà MB, 21 Cát Linh, Phường Ô Chợ Dừa, Hà Nội",
+    "salary_min": 7000000,
+    "salary_max": 9000000,
+    "jobType": "FULL_TIME",
+    "experienceLevel": "INTERN",
+    "skills": [],
+    "requirements": [],
+    "benefits": [],
+    "moderation_status": "PUBLISHED",
+    "visibility_status": "ACTIVE",
+    "moderationNote": null,
+    "reviewedBy": "seed-admin",
+    "reviewedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deadline": {
+      "$date": "2026-07-12T00:00:00.000Z"
+    },
+    "openings": 10,
+    "qualifiedThreshold": 70,
+    "rejectThreshold": 40,
+    "autoRejectEnabled": false,
+    "requiredTest": null,
+    "category": "RETAIL",
+    "deleted": false,
+    "deletedAt": null,
+    "createdAt": {
+      "$date": "2026-06-12T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    }
+  },
+  {
+    "_id": "feaa8cd8-ebc9-4bd8-863f-c53c0b8689a6",
+    "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+    "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "description": "<h2>Mô tả công việc</h2> <p><strong>WE NEED YOU:</strong></p><p><strong>General:</strong></p><ul><li>Ensure Quality Monitoring is performed to improve overall quality performance per project standards.</li></ul><p><strong>Specific:</strong></p><ul><li>Conduct QA audits to ensure accuracy, compliance, and service quality.</li><li>Provide feedback &amp; coaching based on audit results, complaints, and satisfaction metrics.</li><li>Support training on soft skills, communication, and new processes.</li><li>Analyze quality trends; report results and ensure correct tagging/category usage.</li><li>Update SOPs/guidelines and ensure recovery actions are completed.</li><li>Join calibrations to keep scoring and requirements aligned.</li><li>Perform root-cause analysis and recommend improvement actions.</li><li>Track quality concerns and propose process/training changes.</li><li>Test new features/processes to validate accuracy and usability.</li><li>Support KPI goals including Productivity, CSAT, and CQM.</li><li>Other duties as assigned...</li></ul> <h2>Yêu cầu ứng viên</h2> <p><strong>REQUIREMENTS:&nbsp;</strong></p><ul><li>≥ 1 years of experience developing &amp; implementing QA programs in a call center.</li><li>Proven ability to deliver feedback, drive quality improvements, and lead calibration alignment.</li><li>E-commerce or online platform experience preferred.</li><li>Proficient in MS Office/Google Workspace.</li><li>Strong reporting, data analysis, and presentation skills.</li><li>Good English communication.</li><li>Strong soft skills: communication, listening, time management, multitasking, adaptability, and prioritization.</li></ul> <h2>Quyền lợi được hưởng</h2> <p><strong>BENEFITS:</strong></p><ul><li>Salary: Negotiable&nbsp;</li><li>13th month salary.</li><li>Insurances per Vietnamese Labor Law.</li><li>Promotion opportunities, salary increase once/year.</li><li>Periodical bonus: twice/year.</li><li>Bonuses, gifts for Holidays.</li><li>Activities: Birthday party, Town Hall, Employee engagement activities.</li><li>Meal allowance, transport allowance &amp; parking fee...</li></ul>",
+    "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "location": "20 Cộng Hòa, Phường Bảy Hiền, Hồ Chí Minh",
+    "salary_min": 14000000,
+    "salary_max": 16000000,
+    "jobType": "FULL_TIME",
+    "experienceLevel": "JUNIOR",
+    "skills": [],
+    "requirements": [],
+    "benefits": [],
+    "moderation_status": "PUBLISHED",
+    "visibility_status": "ACTIVE",
+    "moderationNote": null,
+    "reviewedBy": "seed-admin",
+    "reviewedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deadline": {
+      "$date": "2026-07-26T00:00:00.000Z"
+    },
+    "openings": 1,
+    "qualifiedThreshold": 70,
+    "rejectThreshold": 40,
+    "autoRejectEnabled": false,
+    "requiredTest": null,
+    "category": "IT_SOFTWARE",
+    "deleted": false,
+    "deletedAt": null,
+    "createdAt": {
+      "$date": "2026-06-26T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    }
+  },
+  {
+    "_id": "10fa808f-90ae-4686-8b03-c1f4691b325c",
+    "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+    "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "description": "<h2>Mô tả công việc</h2> <ul><li data-list-item-id=\"ea9f513235d1503fce3c2a475325b1469\">Lead and manage a team of agents to achieve project targets.&nbsp;</li><li data-list-item-id=\"e2e0cdcd2bbd3db2147cde8bec3c143ba\">Monitor team performance, productivity and attendance&nbsp;</li><li data-list-item-id=\"e8166cbd179165f842cd3c4bd47bbd758\">Coach agents to support sellers in driving sales, GMV growth, and platform adoption&nbsp;</li><li data-list-item-id=\"eb8e0458501ca97e00f5a2f6677d33467\">Handle escalations and support agents for issue resolution.&nbsp;</li><li data-list-item-id=\"ed090202504ddb319424e48ae66ddbfe5\">Identify performance gaps and provide coaching and development plans.&nbsp;</li><li data-list-item-id=\"ed0df40b7e927a311e107d7821b8e4c6a\">Prepare and submit daily, weekly, and monthly performance reports to management.&nbsp;</li><li data-list-item-id=\"ea934696b5a4a72f7764d9a4e6ef8a2d8\">Manage recurring meetings with team(s) to review performance &nbsp;</li></ul> <h2>Yêu cầu ứng viên</h2> <ul><li>Graduated from College or above.&nbsp;</li><li>Fluent in English both written and spoken (TOEIC 650) or the same level</li><li>Minimum 1 years of experience in Teamleader role (specialized in BPO industry) team size at least 15 HC&nbsp;</li><li>Good skill in reading, understanding and handling the issue of customer</li><li>Plus if has knowledge about trust and safety, experience about logistic or Ecommerce operation</li><li>Experience in Content Moderation and Contact Center is a plus.&nbsp;</li></ul> <h2>Quyền lợi được hưởng</h2> <ul><li>13th-month salary.</li><li>Insurances followed Vietnamese Labor Law.</li><li>Promotion opportunities, salary increase once/year.</li><li>Bonuses, gifts for Holidays.</li><li>Activities: Birthday party, Town Hall, Employee engagement activities.</li><li>Meal allowance, transport allowance &amp; parking fee.</li></ul>",
+    "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "location": "10th floor Scetpa Building, 19A Cong Hoa Street, Bay Hien Ward, Phường Bảy Hiền, Hồ Chí Minh",
+    "salary_min": 12000000,
+    "salary_max": 15000000,
+    "jobType": "FULL_TIME",
+    "experienceLevel": "JUNIOR",
+    "skills": [
+      "Quản lý nhóm",
+      "Phân tích dữ liệu",
+      "Thương Mại Điện Tử",
+      "Xây dựng quy trình",
+      "Kiểm Duyệt Nội Dung"
+    ],
+    "requirements": [],
+    "benefits": [],
+    "moderation_status": "PUBLISHED",
+    "visibility_status": "ACTIVE",
+    "moderationNote": null,
+    "reviewedBy": "seed-admin",
+    "reviewedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deadline": {
+      "$date": "2026-07-26T00:00:00.000Z"
+    },
+    "openings": 1,
+    "qualifiedThreshold": 70,
+    "rejectThreshold": 40,
+    "autoRejectEnabled": false,
+    "requiredTest": null,
+    "category": "RETAIL",
+    "deleted": false,
+    "deletedAt": null,
+    "createdAt": {
+      "$date": "2026-06-26T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    }
+  },
+  {
+    "_id": "8e46d8ac-176f-410a-a814-1caaa694ee40",
+    "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+    "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "description": "<h2>Mô tả công việc</h2> <ul><li data-list-item-id=\"ea02942bfe06760111da3a03a400c67e7\">Chuẩn bị toàn bộ chứng từ liên quan đến chương trình hỗ trợ khuyến mãi cho đại lý (in/ ký/ scan/ gửi email... cho đại lý)</li><li data-list-item-id=\"e8a210ecd2114486111c6faf303adeae4\">Thực hiện quy trình thanh toán cho đại lý trên hệ thống</li><li data-list-item-id=\"eb78465b309c99262ac3a8372e1a4c3da\">Đối chiếu số tiền thanh toán với đại lý/ nhân viên bán hàng</li><li data-list-item-id=\"ef4b6c194b51546e2f011c57055b72d97\">Tổng hợp số dư ngân sách và báo cáo tình hình công nợ cho Quản lý trực tiếp</li><li data-list-item-id=\"ef7930baaceaed77396e97a938c68944c\">Các công việc khác theo sự phân công của Quản lý</li><li data-list-item-id=\"ed624ad7ee9b18e16c4fa2939fe0fd1d7\">Thời gian làm việc: Thứ 2 - Thứ 6: 8h00 – 17h30</li></ul> <h2>Yêu cầu ứng viên</h2> <ul><li data-list-item-id=\"e68d88007ef71d2bae2b729df0110f4ba\">Tốt nghiệp Cao đẳng trở lên</li><li data-list-item-id=\"e30ee8669ef3f5f1d88ba69be8a6a6651\">Có từ 1 năm kinh nghiệm làm việc ở vị trí Sales Admin/Sales Support</li><li data-list-item-id=\"eaec41a397926c3e128f04d6540f6baf1\">Tiếng Anh đọc hiểu (chủ yếu biên dịch hợp đồng, tài liệu nội bộ/email)</li><li data-list-item-id=\"e4395a3a4ccc851b168e8c64e736cab42\">Kỹ năng vi tính: Excel, Word cơ bản</li><li data-list-item-id=\"e9559ff2875496079cfe33aa659058c02\">Tính cách: cẩn thận, tỉ mỉ, chính xác và đúng giờ</li></ul> <h2>Quyền lợi được hưởng</h2> <ul><li class=\"ck-list-marker-bold\" data-list-item-id=\"eebbdcb0b982b829f37ff14103967f9dd\"><strong>Lương gross 8.500.000 - 11.000.000</strong></li><li data-list-item-id=\"ebd08cb14be54781083f672037d506e3c\">Xét tăng lương 1 lần/năm, lộ trình thăng tiến rõ ràng</li><li data-list-item-id=\"ed74eb0d281bb75fd44f1d801b2d17a3d\">Đảm bảo đầy đủ chế độ phúc lợi: BHYT, BHXH, ngày nghỉ phép, lương tháng 13, thưởng lễ tết, hoạt động ngoại khóa, quà sinh nhật, …</li><li data-list-item-id=\"e27af8eae6faf2255caaef1a455025e12\">Môi trường chuyên nghiệp, đầy đủ tiện nghi (phòng ăn, tủ lạnh, tủ cá nhân để đồ, ...)</li><li data-list-item-id=\"e66c1c2b2ffc47ec1a137dffe60282cfa\">Được đào tạo kỹ năng nghiệp vụ; cung cấp thiết bị làm việc: máy tính, điện thoại, ...</li><li data-list-item-id=\"e52bff107b3cf58ed2b62b2592329cf64\">Nghỉ phép 12 ngày/ năm</li><li data-list-item-id=\"e6e3398aa79858bcfd8845080f446ea3d\">Khám sức khỏe định kỳ</li></ul>",
+    "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "location": "Toà nhà Charmvit, 117 Trần Duy Hưng, Phường Yên Hòa, Hà Nội",
+    "salary_min": 8500000,
+    "salary_max": 11000000,
+    "jobType": "FULL_TIME",
+    "experienceLevel": "JUNIOR",
+    "skills": [],
+    "requirements": [],
+    "benefits": [],
+    "moderation_status": "PUBLISHED",
+    "visibility_status": "ACTIVE",
+    "moderationNote": null,
+    "reviewedBy": "seed-admin",
+    "reviewedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deadline": {
+      "$date": "2026-07-26T00:00:00.000Z"
+    },
+    "openings": 1,
+    "qualifiedThreshold": 70,
+    "rejectThreshold": 40,
+    "autoRejectEnabled": false,
+    "requiredTest": null,
+    "category": "RETAIL",
+    "deleted": false,
+    "deletedAt": null,
+    "createdAt": {
+      "$date": "2026-06-26T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    }
+  },
+  {
+    "_id": "8327f3ac-44fd-4bf2-9852-238e5446c988",
+    "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+    "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "description": "<h2>Mô tả công việc</h2> <p>- Thực hiện gọi ra (outbound) theo danh sách khách hàng được phân bổ để tư vấn, thuyết phục khách hàng sử dụng các sản phẩm: thẻ tín dụng, vay tín chấp, bảo hiểm, dịch vụ ngân hàng số...</p><p>- Giải đáp thắc mắc, ghi nhận phản hồi, cập nhật thông tin khách hàng lên hệ thống.</p><p>- Các công việc dịch vụ khách hàng khác theo yêu cầu của quản lý.</p> <h2>Yêu cầu ứng viên</h2> <p>- Tốt nghiệp Trung cấp trở lên.</p><p>- Giọng nói rõ ràng, dễ nghe, kỹ năng giao tiếp tốt.</p><p>- Ưu tiên có kinh nghiệm telesales, CSKH, tài chính – ngân hàng,... (không có kinh nghiệm sẽ được đào tạo).</p><p>- Chủ động, kiên trì, chịu áp lực tốt.</p> <h2>Quyền lợi được hưởng</h2> <p>- Thu nhập 8 - 11 triệu đồng/tháng (lương cứng 6,6 triệu + thưởng theo hiệu quả).</p><p>- Xét thăng chức 2 lần/năm, tăng lương 1 lần/năm.</p><p>- Quà tặng/tiền mặt vào các dịp lễ Tết trong năm, trợ cấp hiếu, hỉ, sinh con, ốm đau.</p><p>- Chế độ BHXH, BHYT, BHTN... theo quy định của luật Việt Nam.</p><p>- Được cung cấp thiết bị làm việc.</p><p>- Khám sức khỏe miễn phí hàng năm.</p><p>- Cơ hội phát triển: được tham gia khóa học đào tạo nâng cao kỹ năng nghiệp vụ và kỹ năng mềm.</p><p>- Văn phòng làm việc hiện đại, chuyên nghiệp.</p><p>- Các hoạt động gắn kết nhân viên toàn công ty.</p>",
+    "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "location": "Tòa MB, 21 Cát Linh, Phường Ô Chợ Dừa, Hà Nội",
+    "salary_min": 8000000,
+    "salary_max": 11000000,
+    "jobType": "FULL_TIME",
+    "experienceLevel": "INTERN",
+    "skills": [],
+    "requirements": [],
+    "benefits": [],
+    "moderation_status": "PUBLISHED",
+    "visibility_status": "ACTIVE",
+    "moderationNote": null,
+    "reviewedBy": "seed-admin",
+    "reviewedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deadline": {
+      "$date": "2026-06-27T00:00:00.000Z"
+    },
+    "openings": 5,
+    "qualifiedThreshold": 70,
+    "rejectThreshold": 40,
+    "autoRejectEnabled": false,
+    "requiredTest": null,
+    "category": "RETAIL",
+    "deleted": false,
+    "deletedAt": null,
+    "createdAt": {
+      "$date": "2026-05-28T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    }
+  },
+  {
+    "_id": "1fb30478-c15a-44d0-8e74-4db297b00da0",
+    "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+    "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "description": "<h2>Mô tả công việc</h2> <p>- Tiếp nhận danh sách khách hàng tiềm năng và tư vấn cho họ về sản phẩm bảo hiểm sức khỏe của thương hiệu Bảo Việt (Sản phẩm bảo hiểm phi nhân thọ, chi phí thấp, từ 1.500.000đ/ năm)</p><p>- Hỗ trợ và giải đáp các thắc mắc của khách hàng về sản phẩm.</p><p>- Tư vấn để khách hàng chọn được gói sản phẩm phù hợp, hướng dẫn khách hàng các thủ tục để hoàn tất việc mua sản phẩm.</p><p>- Cập nhật các thông tin, báo cáo liên quan lên hệ thống</p><p>&nbsp;</p> <h2>Yêu cầu ứng viên</h2> <p>- Không yêu cầu học vấn cao.</p><p>- Có thể làm toàn thời gian (không vướng bận lịch học)</p><p>- Giọng nói rõ ràng, lưu loát.</p><p>- Giao tiếp tốt, nhanh nhẹn.</p><p>- Tin học văn phòng cơ bản</p><p>- Ứng viên chưa có kinh nghiệm sẽ được đào tạo nghiệp vụ trước khi bắt đầu công việc.</p> <h2>Quyền lợi được hưởng</h2> <p>- Thu nhập không giới hạn: hoa hồng từ 10 - 20%/ Hợp đồng (Lương cứng cố định 7.000.000 VND, có tăng lương đều đặn hàng năm)</p><p>- Thưởng nóng, thưởng quý, thưởng theo chiến dịch.</p><p>- Lương tháng 13.</p><p>- Tham gia đầy đủ chế độ bảo hiểm: BHXH, BHYT, BHTN</p><p>- Thưởng vào các dịp Lễ, Tết.</p><p>- Thưởng từ Công đoàn công ty.</p><p>- Nghỉ phép năm.</p><p>- Hoạt động gắn kết riêng của dự án và công ty.</p><p>- Trang bị đầy đủ trang thiết bị làm việc (máy tính/ điện thoại)</p><p>- Đào tạo nghiệp vụ và kỹ năng trước khi bắt đầu công việc</p>",
+    "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "location": "Toà nhà VTC Online Building – 18 Tam Trinh, Phường Hai Bà Trưng, Hà Nội",
+    "salary_min": 8000000,
+    "salary_max": 20000000,
+    "jobType": "FULL_TIME",
+    "experienceLevel": "INTERN",
+    "skills": [
+      "Giao tiếp tốt",
+      "Tin học văn phòng cơ bản",
+      "Kỹ Năng Thuyết Phục Khách Hàng",
+      "Telesales",
+      "Tư vấn",
+      "Chăm Sóc Khách Hàng",
+      "Bán Hàng",
+      "Tổng đài"
+    ],
+    "requirements": [],
+    "benefits": [],
+    "moderation_status": "PUBLISHED",
+    "visibility_status": "ACTIVE",
+    "moderationNote": null,
+    "reviewedBy": "seed-admin",
+    "reviewedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deadline": {
+      "$date": "2026-06-27T00:00:00.000Z"
+    },
+    "openings": 5,
+    "qualifiedThreshold": 70,
+    "rejectThreshold": 40,
+    "autoRejectEnabled": false,
+    "requiredTest": null,
+    "category": "RETAIL",
+    "deleted": false,
+    "deletedAt": null,
+    "createdAt": {
+      "$date": "2026-05-28T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    }
+  },
+  {
+    "_id": "061004ed-81ed-4bfc-9629-c71d21ce88a2",
+    "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+    "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "description": "<h2>Mô tả công việc</h2> <p>- Tiếp nhận phản hồi của khách hàng và giải đáp các thắc mắc liên quan đến sản phẩm, dịch vụ tài chính - ngân hàng qua các kênh: hotline, chat, email.</p><p>- Xử lý các công việc nghiệp vụ chăm sóc khách hàng khác (nếu có) theo yêu cầu của quản lý.</p> <h2>Yêu cầu ứng viên</h2> <p>- Tốt nghiệp Trung cấp trở lên (chấp nhận sinh viên đang chờ bằng).</p><p>- Không nói ngọng, không nói lắp, không giọng địa phương.</p><p>- Có kỹ năng về Word/Excel, tin học văn phòng.</p><p>- Có kinh nghiệm CSKH, tổng đài viên, tư vấn bán hàng, telesales,... là một điểm cộng (không có sẽ được đào tạo).</p> <h2>Quyền lợi được hưởng</h2> <p>- Thu nhập 7.000.000 - 9.000.000 đồng/tháng.</p><p>- Xét thăng tiến 2 lần/năm, xét tăng lương 1 lần/năm.</p><p>- Lương tháng thứ 13.</p><p>- Bảo hiểm đầy đủ ngay sau 1 tháng đào tạo.</p><p>- Quy trình đào tạo bài bản, rõ ràng.</p><p>- Tặng quà vào các dịp lễ, Tết trong năm.</p><p>- Trợ cấp hiếu hỉ, sinh con, ốm đau.</p><p>- Khám sức khỏe miễn phí thường niên.</p><p>- Teambuilding, các hoạt động gắn kết nhân viên toàn công ty.</p>",
+    "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "location": "Tòa MB, 21 Cát Linh, Phường Ô Chợ Dừa, Hà Nội",
+    "salary_min": 7000000,
+    "salary_max": 9000000,
+    "jobType": "FULL_TIME",
+    "experienceLevel": "INTERN",
+    "skills": [],
+    "requirements": [],
+    "benefits": [],
+    "moderation_status": "PUBLISHED",
+    "visibility_status": "ACTIVE",
+    "moderationNote": null,
+    "reviewedBy": "seed-admin",
+    "reviewedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deadline": {
+      "$date": "2026-06-27T00:00:00.000Z"
+    },
+    "openings": 10,
+    "qualifiedThreshold": 70,
+    "rejectThreshold": 40,
+    "autoRejectEnabled": false,
+    "requiredTest": null,
+    "category": "RETAIL",
+    "deleted": false,
+    "deletedAt": null,
+    "createdAt": {
+      "$date": "2026-05-28T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    }
+  },
+  {
+    "_id": "900f7412-5c60-446e-a094-af602d017068",
+    "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+    "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "description": "<h2>Mô tả công việc</h2> <ul><li data-list-item-id=\"ec1b5ffebd5e3d918c3aa0d6b701e2955\">Làm việc tại văn phòng, tiếp nhận và phản hồi các yêu cầu của khách hàng tại Úc liên quan đến tài khoản quảng cáo, chiến dịch marketing và các dịch vụ trên nền tảng mạng xã hội. &nbsp;</li><li data-list-item-id=\"e410741665bfb5c754ff8df60099b8f22\">Hỗ trợ giải đáp thắc mắc, hướng dẫn khách hàng xử lý các vấn đề phát sinh qua Email và Chat.&nbsp;</li><li data-list-item-id=\"e85f997482a2d9e02a8badb07da1bec9b\">Phối hợp với các bộ phận liên quan để theo dõi và xử lý yêu cầu của khách hàng.&nbsp;</li></ul> <h2>Yêu cầu ứng viên</h2> <ul><li data-list-item-id=\"ee1233b7352d47eddd99e1c6a9fe84f3a\">Trình độ tiếng Anh C1 trở lên (có khả năng đọc hiểu và giao tiếp tiếng anh tốt phục vụ cho công việc.)&nbsp;</li><li data-list-item-id=\"e030dfc0ca8182bbba268e5877e637404\">Nhanh nhẹn, tư duy tốt, có thể làm việc độc lập.&nbsp;</li><li data-list-item-id=\"e21f16be6d495e11b7c5e7ed65eb18d29\">Ưu tiên ứng viên có kinh nghiệm về mảng digital marketing, chạy quảng cáo trên các nền tảng mạng xã hội.&nbsp;</li><li data-list-item-id=\"e2fd4469371e6b8b1894bdc4e86892a2c\">Kỹ năng đánh máy tốt, sử dụng máy tính cơ bản.&nbsp;</li><li data-list-item-id=\"e2ee602a299c0525ae0afe5819e37f65a\">Trong trường hợp làm ngày lễ, Tết, ứng viên sẽ nhận được mức lương làm ngày lễ theo quy định của pháp luật (x300%).&nbsp;</li></ul> <h2>Quyền lợi được hưởng</h2> <ul><li data-list-item-id=\"e3f9efe8f1b053add2e6100e7650413c0\">Thu nhập: 12.000.000 – 15.000.000 VNĐ/tháng.</li><li data-list-item-id=\"e883830ee5383195f7e369a6df9678b7b\">Lương tháng 13.</li><li data-list-item-id=\"eae1cf480d2ea25a32bf305fa2586777b\">Xét thăng chức 2 lần/năm, xét tăng lương 1 lần/năm.</li><li data-list-item-id=\"e91a0b444ade91ff77e8120b29ce3343d\">Được đào tạo về sản phẩm, quy trình hỗ trợ khách hàng và kiến thức phục vụ cho công việc.&nbsp;</li><li data-list-item-id=\"e8e4576dccc3d2fe083ef6d37c4dac3a9\">Được cung cấp sẫn thiết bị làm việc.</li><li data-list-item-id=\"e2d53cd554c130984db8c360f31c55aad\">Chế độ BHXH, BHYT, BHTN... theo quy định của luật Việt Nam.</li><li data-list-item-id=\"e597f1e8dd71961707d9473c0773b3431\">Môi trường làm việc chuyên nghiệp, hiện đại.</li><li data-list-item-id=\"ec119733595927a886b38b4a24eba2197\">Lộ trình thăng tiến rõ ràng.</li><li data-list-item-id=\"e1c51312148a48aa30cafda4557b5a615\">Quà tặng/tiền mặt vào các dịp lễ Tết trong năm, trợ cấp hiếu, hỉ, sinh con, ốm đau.</li><li data-list-item-id=\"ec8057218bf81dd6c7a55803a2f53de77\">Khám sức khỏe thường niên</li><li data-list-item-id=\"ec39dc51869968efbd230258b2b1927fc\">Du lịch, teambuilding &amp; các hoạt động gắn kết nhân viên toàn công ty.</li></ul>",
+    "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "location": "Tòa VTC Online, 18 Tam Trinh, Phường Tương Mai, Hà Nội",
+    "salary_min": 12000000,
+    "salary_max": 15000000,
+    "jobType": "FULL_TIME",
+    "experienceLevel": "INTERN",
+    "skills": [],
+    "requirements": [],
+    "benefits": [],
+    "moderation_status": "PUBLISHED",
+    "visibility_status": "ACTIVE",
+    "moderationNote": null,
+    "reviewedBy": "seed-admin",
+    "reviewedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deadline": {
+      "$date": "2026-07-24T00:00:00.000Z"
+    },
+    "openings": 1,
+    "qualifiedThreshold": 70,
+    "rejectThreshold": 40,
+    "autoRejectEnabled": false,
+    "requiredTest": null,
+    "category": "IT_SOFTWARE",
+    "deleted": false,
+    "deletedAt": null,
+    "createdAt": {
+      "$date": "2026-06-24T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    }
+  },
+  {
+    "_id": "29c258c7-de63-4f89-b45a-62d3f7cf37b0",
+    "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+    "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "description": "<h2>Mô tả công việc</h2> <p>- Tiếp nhận và giải đáp thắc mắc của khách hàng về các sản phẩm, dịch vụ tài chính – ngân hàng qua hotline, chat và email.</p><p>-&nbsp; Xử lý các công việc nghiệp vụ chăm sóc khách hàng khác (nếu có) theo yêu cầu của quản lý.</p><p>- Làm việc : Toà nhà MB, 21 Cát Linh, Phường Ô Chợ Dừa, Hà Nội</p> <h2>Yêu cầu ứng viên</h2> <p>- Tốt nghiệp Trung cấp trở lên (chấp nhận sinh viên đang chờ bằng).</p><p>- Không nói ngọng, không nói lắp, không giọng địa phương.</p><p>- Có kỹ năng về Word/Excel, tin học văn phòng.</p><p>- Có kinh nghiệm CSKH, tổng đài viên, tư vấn bán hàng, telesales,... là một điểm cộng (không có sẽ được đào tạo).</p> <h2>Quyền lợi được hưởng</h2> <p>- Thu nhập 7.000.000 - 9.000.000 đồng/tháng.</p><p>- Xét thăng tiến 2 lần/năm, xét tăng lương 1 lần/năm.</p><p>- Lương tháng thứ 13.</p><p>- Bảo hiểm đầy đủ ngay sau 1 tháng đào tạo.</p><p>- Quy trình đào tạo bài bản, rõ ràng.</p><p>- Được cung cấp sẵn thiết bị làm việc.</p><p>- Tặng quà vào các dịp lễ, Tết trong năm.</p><p>- Trợ cấp hiếu hỉ, sinh con, ốm đau.</p><p>- Khám sức khỏe miễn phí thường niên.</p><p>- Teambuilding, các hoạt động gắn kết nhân viên toàn công ty.</p>",
+    "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+    "location": "Toà nhà MB, 21 Cát Linh, Phường Ô Chợ Dừa, Hà Nội",
+    "salary_min": 7000000,
+    "salary_max": 9000000,
+    "jobType": "FULL_TIME",
+    "experienceLevel": "INTERN",
+    "skills": [],
+    "requirements": [],
+    "benefits": [],
+    "moderation_status": "PUBLISHED",
+    "visibility_status": "ACTIVE",
+    "moderationNote": null,
+    "reviewedBy": "seed-admin",
+    "reviewedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deadline": {
+      "$date": "2026-07-24T00:00:00.000Z"
+    },
+    "openings": 10,
+    "qualifiedThreshold": 70,
+    "rejectThreshold": 40,
+    "autoRejectEnabled": false,
+    "requiredTest": null,
+    "category": "HUMAN_RESOURCES",
+    "deleted": false,
+    "deletedAt": null,
+    "createdAt": {
+      "$date": "2026-06-24T00:00:00.000Z"
+    },
+    "updatedAt": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    }
+  }
+]

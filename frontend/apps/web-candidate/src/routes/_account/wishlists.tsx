@@ -1,42 +1,36 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import * as React from 'react'
-import { Badge, Button, Input } from '@smart-cv/ui'
+import { Button, Input } from '@smart-cv/ui'
 import { useTranslation } from '@smart-cv/i18n'
-import { Clock3, DollarSign, Heart, MapPin, Users } from 'lucide-react'
+import { Heart } from 'lucide-react'
 import { toast } from 'sonner'
-import { useGetMyWishlists, useRemove } from '@smart-cv/api'
-import { useAuthStore } from '../../store/useAuthStore'
+import { getGetMyWishlistsQueryKey, useGetMyWishlists, useListCvs, useRemove, useSubmit } from '@smart-cv/api'
+import { useQueryClient } from '@tanstack/react-query'
+import { JobCard } from '../../components/jobs/JobCard'
+import { hasCandidateRole, useAuthStore } from '../../store/useAuthStore'
 
 export const Route = createFileRoute('/_account/wishlists')({
   component: WishlistsPage,
 })
 
-function formatSalary(min?: number, max?: number): string {
-  if (!min && !max) return 'Negotiable'
-  if (min && max) return `${(min / 1_000_000).toFixed(0)}–${(max / 1_000_000).toFixed(0)}M`
-  if (min) return `${(min / 1_000_000).toFixed(0)}M+`
-  return `Up to ${((max ?? 0) / 1_000_000).toFixed(0)}M`
-}
-
-function formatDate(dateStr?: string): string {
-  if (!dateStr) return ''
-  try {
-    const d = new Date(dateStr)
-    return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`
-  } catch {
-    return dateStr
-  }
-}
-
 function WishlistsPage() {
   const { t } = useTranslation()
-  const { isAuthenticated } = useAuthStore()
-  const { data, isLoading, isError, refetch } = useGetMyWishlists({ query: { enabled: isAuthenticated } })
+  const queryClient = useQueryClient()
+  const navigate = Route.useNavigate()
+  const { isAuthenticated, role } = useAuthStore()
+  const isCandidate = isAuthenticated && hasCandidateRole(role)
+  const { data, isLoading, isError } = useGetMyWishlists({ query: { enabled: isAuthenticated } })
   const jobs = data?.data ?? []
   const { mutate: removeWishlist } = useRemove()
+  const { data: cvsData } = useListCvs({
+    query: { enabled: isCandidate },
+  })
+  const cvList = cvsData?.data ?? []
+  const submitMutation = useSubmit()
 
   const [selectedChip, setSelectedChip] = React.useState('all')
   const [query, setQuery] = React.useState('')
+  const [page, setPage] = React.useState(1)
 
   React.useEffect(() => {
     document.title = t('page_title_wishlists')
@@ -53,6 +47,76 @@ function WishlistsPage() {
     const matchExpiring = selectedChip === 'all' || ((job as { deadline?: string }).deadline ? new Date((job as { deadline?: string }).deadline!) > new Date() : false)
     return matchText && matchExpiring
   })
+
+  const pageSize = 9
+  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize))
+  const safePage = Math.min(page, totalPages)
+  const paginatedJobs = React.useMemo(() => {
+    return filtered.slice((safePage - 1) * pageSize, safePage * pageSize)
+  }, [filtered, pageSize, safePage])
+
+  React.useEffect(() => {
+    setPage(1)
+  }, [query, selectedChip])
+
+  React.useEffect(() => {
+    if (page > totalPages) {
+      setPage(totalPages)
+    }
+  }, [page, totalPages])
+
+  function handleRemoveWishlist(e: React.MouseEvent<HTMLButtonElement>, jobId: string) {
+    e.preventDefault()
+    e.stopPropagation()
+
+    removeWishlist(
+      { jobId },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries({ queryKey: getGetMyWishlistsQueryKey() })
+          toast.success(t('account_removed_from_wishlist'))
+        },
+        onError: () => {
+          toast.error('Failed to remove from wishlist')
+        },
+      }
+    )
+  }
+
+  function handleQuickApply(e: React.MouseEvent, jobId: string) {
+    e.preventDefault()
+    e.stopPropagation()
+
+    if (!isCandidate) {
+      navigate({ to: '/signin' })
+      return
+    }
+
+    if (cvList.length === 0) {
+      toast.error('Bạn chưa có CV nào. Vui lòng tải lên CV trước khi ứng tuyển.')
+      navigate({ to: '/cv' })
+      return
+    }
+
+    const defaultCv = cvList.find((c) => c.default) ?? cvList[0]
+    if (!defaultCv?.url) {
+      toast.error('CV của bạn không hợp lệ. Vui lòng kiểm tra lại.')
+      navigate({ to: '/cv' })
+      return
+    }
+
+    submitMutation.mutate(
+      { data: { jobId, cvUrl: defaultCv.url } },
+      {
+        onSuccess: () => {
+          toast.success('Ứng tuyển nhanh thành công!')
+        },
+        onError: () => {
+          toast.error('Có lỗi xảy ra khi ứng tuyển. Vui lòng thử lại.')
+        },
+      }
+    )
+  }
 
   if (isLoading) return <div className="p-8 text-center text-muted-foreground">Loading wishlists...</div>
   if (isError) return <div className="p-8 text-center text-destructive">Failed to load wishlists.</div>
@@ -86,59 +150,51 @@ function WishlistsPage() {
           <Link to="/"><Button variant="outline">{t('job_find_jobs')}</Button></Link>
         </div>
       ) : (
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((job) => {
-            const initials = (job.company ?? '').slice(0, 2).toUpperCase()
-            const salary = formatSalary(job.salaryMin, job.salaryMax)
-            return (
-              <article key={job.jobId} className="elevate-card card-surface rounded-2xl p-5">
-                <div className="mb-3 flex items-start justify-between gap-4">
-                  <div className="flex gap-3">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-border bg-muted text-xs font-bold text-muted-foreground">{initials}</div>
-                    <div>
-                      <h3 className="text-base font-semibold">{job.title}</h3>
-                      <p className="text-sm text-muted-foreground">{job.company}</p>
-                    </div>
-                  </div>
-                </div>
+        <>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {paginatedJobs.map((job) => (
+              <JobCard
+                key={job.jobId}
+                jobId={job.jobId}
+                title={job.title}
+                company={job.company}
+                salaryMin={job.salaryMin}
+                salaryMax={job.salaryMax}
+                location={job.location}
+                openings={(job as { openings?: number }).openings}
+                skills={job.skills}
+                deadline={(job as { deadline?: string }).deadline}
+                activityDate={job.savedAt}
+                daysLeftLabel={(days) => t('job_days_left', { days })}
+                isWishlisted
+                onWishlistClick={handleRemoveWishlist}
+                footerAction={<Button size="sm" onClick={(e) => handleQuickApply(e, job.jobId ?? '')} disabled={submitMutation.isPending}>Quick Apply</Button>}
+              />
+            ))}
+          </div>
 
-                <div className="mb-3 flex flex-wrap gap-2 text-xs">
-                  <span className="inline-flex items-center gap-1 rounded-full bg-primary/20 px-2.5 py-1"><DollarSign className="h-3.5 w-3.5" />{salary}</span>
-                  <span className="inline-flex items-center gap-1 rounded-full bg-muted/60 px-2.5 py-1"><MapPin className="h-3.5 w-3.5" />{job.location}</span>
-                  {(job as { openings?: number }).openings != null && (job as { openings?: number }).openings! > 0 && (
-                    <span className="inline-flex items-center gap-1 rounded-full bg-muted/60 px-2.5 py-1"><Users className="h-3.5 w-3.5" />{(job as { openings?: number }).openings} vị trí</span>
-                  )}
-                </div>
-
-                <div className="mb-4 flex flex-wrap gap-2">
-                  {(job.skills ?? []).map((skill) => <Badge key={skill} variant="outline" className="border-border bg-secondary/70 text-xs text-secondary-foreground">{skill}</Badge>)}
-                </div>
-
-                <div className="flex items-center justify-between border-t border-border pt-3 text-xs text-muted-foreground">
-                  <span className="inline-flex items-center gap-1"><Clock3 className="h-3.5 w-3.5" />{formatDate(job.savedAt)}</span>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    className="h-8 w-8 rounded-full border border-border hover:bg-danger-soft"
-                    onClick={() => {
-                      removeWishlist({ jobId: job.jobId ?? '' }, {
-                        onSuccess: () => {
-                          toast.success(t('account_removed_from_wishlist'))
-                          refetch()
-                        },
-                        onError: () => {
-                          toast.error('Failed to remove from wishlist')
-                        },
-                      })
-                    }}
-                  >
-                    <Heart className="h-4 w-4 fill-current text-primary" />
-                  </Button>
-                </div>
-              </article>
-            )
-          })}
-        </div>
+          {totalPages > 1 && (
+            <div className="flex items-center justify-center gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={safePage <= 1}
+                onClick={() => setPage((current) => Math.max(1, current - 1))}
+              >
+                Prev
+              </Button>
+              <span className="text-sm text-muted-foreground">Page {safePage} of {totalPages}</span>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={safePage >= totalPages}
+                onClick={() => setPage((current) => Math.min(totalPages, current + 1))}
+              >
+                Next
+              </Button>
+            </div>
+          )}
+        </>
       )}
     </div>
   )

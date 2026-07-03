@@ -88,9 +88,16 @@ public class AnalysisController {
     @PostMapping("/generate-assessment")
     @PreAuthorize("hasAnyAuthority('ROLE_RECRUITER','ROLE_CANDIDATE','ROLE_ADMIN')")
     public ApiResponse<AssessmentGenerateResponse> generateAssessment(
-            @RequestBody @Valid AssessmentGenerateRequest request) {
+            @RequestBody @Valid AssessmentGenerateRequest request,
+            @AuthenticationPrincipal String userId,
+            Authentication authentication) {
         return ApiResponse.<AssessmentGenerateResponse>builder()
-                .data(analysisService.generateAssessmentQuestions(request))
+                .data(analysisService.generateAssessmentQuestions(
+                        request,
+                        userId,
+                        hasRole(authentication, "ROLE_RECRUITER"),
+                        hasRole(authentication, "ROLE_CANDIDATE"),
+                        !isAdmin(authentication)))
                 .message("Assessment questions generated successfully")
                 .build();
     }
@@ -110,5 +117,10 @@ public class AnalysisController {
     private boolean isAdmin(Authentication authentication) {
         return authentication != null && authentication.getAuthorities().stream()
                 .anyMatch(authority -> "ROLE_ADMIN".equals(authority.getAuthority()));
+    }
+
+    private boolean hasRole(Authentication authentication, String role) {
+        return authentication != null && authentication.getAuthorities().stream()
+                .anyMatch(authority -> role.equals(authority.getAuthority()));
     }
 }

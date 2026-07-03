@@ -8,6 +8,11 @@ export * from './generated/users/users';
 export * from './generated/user/candidate-controller/candidate-controller';
 export * from './generated/user/wishlist-controller/wishlist-controller';
 export * from './generated/user/company-controller/company-controller';
+// Explicitly resolve ambiguity: company-controller's versions take the unqualified names
+export { getRelatedCompanies, getGetRelatedCompaniesQueryKey, getGetRelatedCompaniesQueryOptions, useGetRelatedCompanies } from './generated/user/company-controller/company-controller';
+export type { GetRelatedCompaniesQueryError, GetRelatedCompaniesQueryResult } from './generated/user/company-controller/company-controller';
+// Job-specific variant (endpoint: /api/jobs/{id}/related-companies)
+export { useGetRelatedCompanies as useGetJobRelatedCompanies } from './generated/job/job-controller/job-controller';
 export * from './generated/user/role-controller/role-controller';
 export * from './generated/user/permission-controller/permission-controller';
 export * as RecruiterApi from './generated/user/recruiter-controller/recruiter-controller';

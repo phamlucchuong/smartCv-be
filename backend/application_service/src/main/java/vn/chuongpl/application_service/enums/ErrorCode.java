@@ -22,7 +22,8 @@ public enum ErrorCode {
     ATTEMPT_ALREADY_IN_PROGRESS(8003, "An attempt is already in progress for this assessment"),
     ATTEMPT_ALREADY_SUBMITTED(8004, "This attempt has already been submitted"),
     ATTEMPT_NOT_SUBMITTED(8005, "Attempt has not been submitted yet"),
-    AI_SERVICE_UNAVAILABLE(8006, "AI service is currently unavailable");
+    AI_SERVICE_UNAVAILABLE(8006, "AI service is currently unavailable"),
+    AI_CREDIT_EXHAUSTED(8012, "Insufficient AI credit quota");
 
     private final int code;
     private final String message;

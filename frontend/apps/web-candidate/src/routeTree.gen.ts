@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
 import { Route as SigninRouteImport } from './routes/signin'
+import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AccountRouteRouteImport } from './routes/_account/route'
 import { Route as IndexRouteImport } from './routes/index'
@@ -38,6 +39,11 @@ const SignupRoute = SignupRouteImport.update({
 const SigninRoute = SigninRouteImport.update({
   id: '/signin',
   path: '/signin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CategoriesRoute = CategoriesRouteImport.update({
+  id: '/categories',
+  path: '/categories',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -133,6 +139,7 @@ const AccountApplicationsRoute = AccountApplicationsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/categories': typeof CategoriesRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
   '/applications': typeof AccountApplicationsRoute
@@ -154,6 +161,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/categories': typeof CategoriesRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
   '/applications': typeof AccountApplicationsRoute
@@ -177,6 +185,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/_account': typeof AccountRouteRouteWithChildren
   '/about': typeof AboutRoute
+  '/categories': typeof CategoriesRoute
   '/signin': typeof SigninRoute
   '/signup': typeof SignupRoute
   '/_account/applications': typeof AccountApplicationsRoute
@@ -200,6 +209,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
+    | '/categories'
     | '/signin'
     | '/signup'
     | '/applications'
@@ -221,6 +231,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/categories'
     | '/signin'
     | '/signup'
     | '/applications'
@@ -243,6 +254,7 @@ export interface FileRouteTypes {
     | '/'
     | '/_account'
     | '/about'
+    | '/categories'
     | '/signin'
     | '/signup'
     | '/_account/applications'
@@ -266,6 +278,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccountRouteRoute: typeof AccountRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
+  CategoriesRoute: typeof CategoriesRoute
   SigninRoute: typeof SigninRoute
   SignupRoute: typeof SignupRoute
   CompaniesCompanyIdRoute: typeof CompaniesCompanyIdRoute
@@ -290,6 +303,13 @@ declare module '@tanstack/react-router' {
       path: '/signin'
       fullPath: '/signin'
       preLoaderRoute: typeof SigninRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/categories': {
+      id: '/categories'
+      path: '/categories'
+      fullPath: '/categories'
+      preLoaderRoute: typeof CategoriesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -453,6 +473,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccountRouteRoute: AccountRouteRouteWithChildren,
   AboutRoute: AboutRoute,
+  CategoriesRoute: CategoriesRoute,
   SigninRoute: SigninRoute,
   SignupRoute: SignupRoute,
   CompaniesCompanyIdRoute: CompaniesCompanyIdRoute,

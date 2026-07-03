@@ -110,17 +110,17 @@ File `index.html` không nên cache vì nó thay đổi mỗi lần deploy:
 ```bash
 # Upload index.html riêng với no-cache
 aws s3 cp frontend/apps/web-candidate/dist/index.html \
-  s3://smartcv-frontend/web-candidate/index.html \
+  s3://smartcv-storage-dev/web-candidate/index.html \
   --cache-control "no-cache, no-store, must-revalidate" \
   --content-type "text/html"
 
 aws s3 cp frontend/apps/web-recruiter/dist/index.html \
-  s3://smartcv-frontend/web-recruiter/index.html \
+  s3://smartcv-storage-dev/web-recruiter/index.html \
   --cache-control "no-cache, no-store, must-revalidate" \
   --content-type "text/html"
 
 aws s3 cp frontend/apps/web-admin/dist/index.html \
-  s3://smartcv-frontend/web-admin/index.html \
+  s3://smartcv-storage-dev/web-admin/index.html \
   --cache-control "no-cache, no-store, must-revalidate" \
   --content-type "text/html"
 ```

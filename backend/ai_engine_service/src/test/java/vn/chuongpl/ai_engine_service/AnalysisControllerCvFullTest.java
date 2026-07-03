@@ -43,9 +43,9 @@ class AnalysisControllerCvFullTest {
         CvFullAnalysisResponse response = new CvFullAnalysisResponse(
                 78, "Good", "Backend Engineer", 78,
                 List.of("Java"), List.of("Kubernetes"), List.of("PHP"),
-                "Good match.",
-                List.of(new StrengthItem("Tech", "Java expert")),
-                List.of(new WeaknessItem("Cloud", "No K8s")),
+                "Good match.", "Phù hợp tốt.",
+                List.of(new StrengthItem("Tech", "Java expert", "Chuyên gia Java")),
+                List.of(new WeaknessItem("Cloud", "No K8s", "Thiếu Kubernetes")),
                 List.of(),
                 List.of("Java", "PHP")
         );

@@ -6,6 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
+import vn.chuongpl.user_service.enums.JobCategory;
 import vn.chuongpl.user_service.enums.RecruiterStatus;
 
 import java.time.LocalDateTime;
@@ -53,6 +54,9 @@ public class Recruiter {
     Integer foundedYear;
 
     String industry;
+
+    @Field("category")
+    JobCategory category;
 
     // ── Enrichment ────────────────────────────────────────────────────────────
     @Builder.Default

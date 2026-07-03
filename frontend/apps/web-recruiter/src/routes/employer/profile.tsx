@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { Button } from "@smart-cv/ui";
+import { Button, JOB_CATEGORY_LABELS, JOB_CATEGORY_OPTIONS } from "@smart-cv/ui";
 import { RecruiterApi } from "@smart-cv/api";
 import {
   Building2,
@@ -107,6 +107,7 @@ function CompanyProfilePage() {
   const [companyType, setCompanyType] = useState("");
   const [foundedYear, setFoundedYear] = useState<number>(2000);
   const [industry, setIndustry] = useState("");
+  const [category, setCategory] = useState("");
   const [logoUrl, setLogoUrl] = useState("");
   const [coverImageUrl, setCoverImageUrl] = useState("");
   const [contactName, setContactName] = useState("");
@@ -126,6 +127,7 @@ function CompanyProfilePage() {
       setCompanyType(recruiter.companyType || "");
       setFoundedYear(recruiter.foundedYear || 2000);
       setIndustry(recruiter.industry || "");
+      setCategory((recruiter as unknown as { category?: string }).category || "");
       setLogoUrl(recruiter.logoUrl || "");
       setCoverImageUrl(recruiter.coverImageUrl || "");
       setContactName(recruiter.contactName || "");
@@ -149,6 +151,7 @@ function CompanyProfilePage() {
       companyType,
       foundedYear,
       industry,
+      category: (category as any) || undefined,
       logoUrl,
       coverImageUrl,
       contactName,
@@ -416,6 +419,27 @@ function CompanyProfilePage() {
                 </div>
 
                 <div className="space-y-2">
+                  <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Danh mục ngành nghề</label>
+                  <div className="relative">
+                    <Briefcase className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground pointer-events-none" />
+                    <select
+                      disabled={!isEditing}
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                      className="flex h-10 w-full rounded-lg border border-input bg-background pl-10 pr-3.5 py-2 text-sm shadow-sm transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:opacity-85 disabled:bg-muted/10 cursor-pointer"
+                    >
+                      <option value="">Chọn danh mục...</option>
+                      {JOB_CATEGORY_OPTIONS.map((opt) => (
+                        <option key={opt.value} value={opt.value}>{opt.label}</option>
+                      ))}
+                    </select>
+                  </div>
+                  {category && (
+                    <p className="text-xs text-muted-foreground">Đang chọn: {JOB_CATEGORY_LABELS[category]}</p>
+                  )}
+                </div>
+
+                <div className="space-y-2">
                   <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Quy mô nhân sự</label>
                   <div className="relative">
                     <Users className="absolute left-3.5 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
@@ -472,7 +496,7 @@ function CompanyProfilePage() {
                       disabled={!isEditing}
                       value={companyAddress}
                       onChange={(e) => setCompanyAddress(e.target.value)}
-                      placeholder="Nhập địa chỉ đầy đủ của công ty..."
+                      placeholder="Nhập địa chỉ đầy đủ hoặc tọa độ (Ví dụ: 10.776, 106.701) của công ty..."
                       className="flex h-10 w-full rounded-lg border border-input bg-background pl-10 pr-3.5 py-2 text-sm shadow-sm transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:opacity-85 disabled:bg-muted/10"
                     />
                   </div>
@@ -573,6 +597,24 @@ function CompanyProfilePage() {
                 Tài khoản được duyệt mới có thể hiển thị thông tin tuyển dụng công khai đến ứng viên.
               </p>
             </div>
+
+            {/* Map Preview at the bottom of the right panel */}
+            {companyAddress && (
+              <div className="card-surface p-6 border border-border/50 shadow-sm rounded-2xl space-y-4">
+                <h3 className="text-xs font-bold text-foreground uppercase tracking-wider">Bản đồ vị trí</h3>
+                <div className="rounded-xl overflow-hidden h-48 border border-border">
+                  <iframe
+                    title="Company Live Setup Location Map"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    src={`https://maps.google.com/maps?q=${encodeURIComponent(companyAddress)}&t=&z=15&ie=UTF8&iwloc=&output=embed`}
+                    allowFullScreen
+                    loading="lazy"
+                  />
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -595,6 +637,7 @@ function CompanyProfilePage() {
                   setCompanyType(recruiter.companyType || "");
                   setFoundedYear(recruiter.foundedYear || 2000);
                   setIndustry(recruiter.industry || "");
+                  setCategory((recruiter as unknown as { category?: string }).category || "");
                   setLogoUrl(recruiter.logoUrl || "");
                   setCoverImageUrl(recruiter.coverImageUrl || "");
                   setContactName(recruiter.contactName || "");

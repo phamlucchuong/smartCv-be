@@ -3,6 +3,7 @@ package vn.chuongpl.job_service.dtos.response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import vn.chuongpl.job_service.enums.ExperienceLevel;
+import vn.chuongpl.job_service.enums.JobCategory;
 import vn.chuongpl.job_service.enums.JobModerationStatus;
 import vn.chuongpl.job_service.enums.JobType;
 import vn.chuongpl.job_service.enums.JobVisibilityStatus;
@@ -43,6 +44,7 @@ public class JobResponse implements Serializable {
     Integer rejectThreshold;
     Boolean autoRejectEnabled;
     String requiredTest;
+    JobCategory category;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
 }

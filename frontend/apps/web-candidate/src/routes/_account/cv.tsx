@@ -2,12 +2,13 @@ import { createFileRoute } from '@tanstack/react-router'
 import * as React from 'react'
 import { Button, Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@smart-cv/ui'
 import { useTranslation } from '@smart-cv/i18n'
-import { Upload, FileText, Star, Trash2, RefreshCw, Sparkles } from 'lucide-react'
+import { Upload, FileText, Star, Trash2, RefreshCw, Sparkles, Briefcase, MapPin, DollarSign, TrendingUp } from 'lucide-react'
 import { toast } from 'sonner'
 import {
   useListCvs, useSetDefaultCv, useDeleteCv, useReanalyzeCv, useAnalyzeCv,
   getListCvsQueryKey, AXIOS_INSTANCE,
   useGetMe2, useGetServicePackages,
+  useGetJobSuggestions, getGetJobSuggestionsQueryKey,
 } from '@smart-cv/api'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { onMessage } from 'firebase/messaging'
@@ -76,6 +77,11 @@ function MyCVPage() {
 
   const { data: packagesData } = useGetServicePackages()
   const packages = packagesData?.data ?? []
+
+  const { data: jobSuggestionsData } = useGetJobSuggestions({
+    query: { enabled: isAuthenticated },
+  })
+  const jobSuggestions = jobSuggestionsData?.data ?? []
 
   const activePackage = packages.find((p) => p.id === candidate?.activePackageId) || {
     id: 'free',
@@ -168,6 +174,7 @@ function MyCVPage() {
       onSuccess: () => {
         toast.success(t('account_cv_reanalyzing'))
         queryClient.invalidateQueries({ queryKey: getListCvsQueryKey() })
+        queryClient.invalidateQueries({ queryKey: getGetJobSuggestionsQueryKey() })
       },
       onError: () => toast.error(lang === 'VI' ? 'Khởi chạy phân tích thất bại' : 'Failed to start reanalysis'),
     },
@@ -199,9 +206,19 @@ function MyCVPage() {
           return next
         })
         queryClient.invalidateQueries({ queryKey: getListCvsQueryKey() })
+        queryClient.invalidateQueries({ queryKey: getGetJobSuggestionsQueryKey() })
       },
-      onError: (_err, variables) => {
-        toast.error(lang === 'VI' ? 'Phân tích CV thất bại. Vui lòng thử lại.' : 'CV analysis failed. Please try again.')
+      onError: (err: any, variables) => {
+        const errCode = err?.response?.data?.code;
+        if (errCode === 8012 || errCode === 6008) {
+          toast.error(
+            lang === 'VI'
+              ? 'Hết lượt sử dụng AI. Vui lòng nâng cấp gói dịch vụ.'
+              : 'Out of AI credits. Please upgrade your package.'
+          )
+        } else {
+          toast.error(lang === 'VI' ? 'Phân tích CV thất bại. Vui lòng thử lại.' : 'CV analysis failed. Please try again.')
+        }
         setAnalyzingCvIds((prev) => {
           const next = new Set(prev)
           next.delete(variables.data.cvId)
@@ -555,6 +572,74 @@ function MyCVPage() {
                       />
                     </div>
                   </div>
+
+                  {/* Job Suggestions */}
+                  {jobSuggestions.length > 0 && (
+                    <div className="card-surface space-y-4 border-emerald-100 dark:border-emerald-900/30 bg-gradient-to-br from-emerald-50/40 via-white to-teal-50/30 dark:from-emerald-950/10 dark:via-slate-900/50 dark:to-teal-950/10 p-5 shadow-sm">
+                      <div className="flex items-center gap-2 text-sm font-bold text-emerald-700 dark:text-emerald-400">
+                        <TrendingUp className="h-4 w-4" />
+                        {lang === 'VI' ? 'Gợi ý việc làm phù hợp' : 'Matched Job Suggestions'}
+                        <span className="ml-auto text-xs font-normal text-muted-foreground">
+                          {lang === 'VI' ? `${jobSuggestions.length} việc làm` : `${jobSuggestions.length} jobs`}
+                        </span>
+                      </div>
+                      <div className="space-y-3">
+                        {jobSuggestions.slice(0, 3).map((s) => {
+                          const score = s.matchScore ?? 0
+                          const scoreColor = score >= 70 ? 'text-emerald-600 dark:text-emerald-400' : score >= 50 ? 'text-amber-600 dark:text-amber-400' : 'text-muted-foreground'
+                          const scoreBg = score >= 70 ? 'bg-emerald-100 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-900/40' : score >= 50 ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-200 dark:border-amber-900/40' : 'bg-muted/40 border-border'
+                          return (
+                            <a
+                              key={s.jobId}
+                              href={`/jobs/${s.jobId}`}
+                              className="block rounded-xl border border-border/60 bg-white/80 dark:bg-background/50 p-4 hover:border-emerald-300 dark:hover:border-emerald-700 hover:shadow-sm transition-all"
+                            >
+                              <div className="flex items-start justify-between gap-3">
+                                <div className="min-w-0 flex-1">
+                                  <p className="font-semibold text-sm text-foreground truncate">{s.job?.title ?? '—'}</p>
+                                  <p className="text-xs text-muted-foreground mt-0.5 flex items-center gap-1">
+                                    <Briefcase className="h-3 w-3 shrink-0" />
+                                    {s.job?.company ?? '—'}
+                                  </p>
+                                  {s.job?.location && (
+                                    <p className="text-xs text-muted-foreground mt-0.5 flex items-center gap-1">
+                                      <MapPin className="h-3 w-3 shrink-0" />
+                                      {s.job.location}
+                                    </p>
+                                  )}
+                                  {(s.job?.salaryMin != null || s.job?.salaryMax != null) && (
+                                    <p className="text-xs text-muted-foreground mt-0.5 flex items-center gap-1">
+                                      <DollarSign className="h-3 w-3 shrink-0" />
+                                      {s.job?.salaryMin != null && s.job?.salaryMax != null
+                                        ? `$${s.job.salaryMin.toLocaleString()} – $${s.job.salaryMax.toLocaleString()}`
+                                        : s.job?.salaryMin != null
+                                          ? `From $${s.job.salaryMin.toLocaleString()}`
+                                          : `Up to $${s.job?.salaryMax?.toLocaleString()}`}
+                                    </p>
+                                  )}
+                                </div>
+                                <span className={`shrink-0 inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-bold border ${scoreBg} ${scoreColor}`}>
+                                  {score}%
+                                </span>
+                              </div>
+                              {s.matchReason && (
+                                <p className="mt-2 text-xs text-muted-foreground line-clamp-2">{s.matchReason}</p>
+                              )}
+                              {s.alignedSkills && s.alignedSkills.length > 0 && (
+                                <div className="mt-2 flex flex-wrap gap-1">
+                                  {s.alignedSkills.slice(0, 4).map((skill) => (
+                                    <span key={skill} className="rounded-full bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-900/40 px-2 py-0.5 text-[10px] text-emerald-700 dark:text-emerald-400 font-medium">
+                                      {skill}
+                                    </span>
+                                  ))}
+                                </div>
+                              )}
+                            </a>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  )}
                 </div>
               )
             })()}

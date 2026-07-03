@@ -13,6 +13,8 @@ import vn.chuongpl.ai_engine_service.features.admin.AiProviderConfigRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
+import vn.chuongpl.ai_engine_service.features.analysis.AiUsageLog;
+import vn.chuongpl.ai_engine_service.features.analysis.AiUsageLogRepository;
 
 @Component
 @RequiredArgsConstructor
@@ -22,6 +24,7 @@ public class AiModelGatewayRouter {
     private final AiProviderConfigRepository repository;
     private final AiModelGatewayFactory factory;
     private final AiProviderProperties providerProperties;
+    private final AiUsageLogRepository usageLogRepository;
 
     private volatile AiModelGateway activeGateway;
 
@@ -79,7 +82,53 @@ public class AiModelGatewayRouter {
     public String call(String systemPrompt, String userPrompt) {
         AiModelGateway gateway = activeGateway;
         if (gateway == null) throw new AppException(ErrorCode.PROVIDER_NOT_CONFIGURED);
-        return gateway.call(systemPrompt, userPrompt);
+        String response = gateway.call(systemPrompt, userPrompt);
+
+        try {
+            String providerName = gateway.provider().name();
+            int promptTokens = (systemPrompt == null ? 0 : systemPrompt.length()) / 4 
+                             + (userPrompt == null ? 0 : userPrompt.length()) / 4;
+            int completionTokens = (response == null ? 0 : response.length()) / 4;
+            
+            double promptCost = promptTokens * getPromptPricePerToken(providerName);
+            double completionCost = completionTokens * getCompletionPricePerToken(providerName);
+            double totalCost = promptCost + completionCost;
+
+            AiUsageLog logRecord = AiUsageLog.builder()
+                    .provider(providerName)
+                    .promptTokens(promptTokens)
+                    .completionTokens(completionTokens)
+                    .cost(totalCost)
+                    .createdAt(LocalDateTime.now())
+                    .build();
+            usageLogRepository.save(logRecord);
+        } catch (Exception e) {
+            log.error("Failed to save AI usage log", e);
+        }
+
+        return response;
+    }
+
+    private double getPromptPricePerToken(String provider) {
+        if (provider == null) return 0.0000025;
+        return switch (provider.toLowerCase()) {
+            case "groq" -> 0.05 / 1_000_000.0;
+            case "gemini" -> 0.075 / 1_000_000.0;
+            case "anthropic" -> 3.0 / 1_000_000.0;
+            case "azure_openai", "openai" -> 2.5 / 1_000_000.0;
+            default -> 0.0000025;
+        };
+    }
+
+    private double getCompletionPricePerToken(String provider) {
+        if (provider == null) return 0.000010;
+        return switch (provider.toLowerCase()) {
+            case "groq" -> 0.10 / 1_000_000.0;
+            case "gemini" -> 0.30 / 1_000_000.0;
+            case "anthropic" -> 15.0 / 1_000_000.0;
+            case "azure_openai", "openai" -> 10.0 / 1_000_000.0;
+            default -> 0.000010;
+        };
     }
 
     public void activate(AiProviderConfig config) {

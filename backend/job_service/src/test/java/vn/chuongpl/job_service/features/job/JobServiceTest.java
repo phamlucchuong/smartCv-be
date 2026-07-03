@@ -410,7 +410,7 @@ class JobServiceTest {
         when(mongoTemplate.count(any(Query.class), eq(Job.class))).thenReturn(1L);
         when(jobMapper.toJobResponse(pendingJob)).thenReturn(response);
 
-        PageResponse<JobResponse> actual = jobService.getAllJobs("PENDING", null, 1, 10);
+        PageResponse<JobResponse> actual = jobService.getAllJobs("PENDING", null, null, 1, 10);
 
         assertEquals(1, actual.getItems().size());
         assertEquals("job-pending", actual.getItems().get(0).getId());
@@ -421,7 +421,7 @@ class JobServiceTest {
     @Test
     void getAllJobs_shouldThrowAppException_whenModerationStatusIsInvalid() {
         AppException ex = assertThrows(AppException.class,
-                () -> jobService.getAllJobs("INVALID_STATUS", null, 1, 10));
+                () -> jobService.getAllJobs("INVALID_STATUS", null, null, 1, 10));
         assertEquals(ErrorCode.JOB_STATUS_INVALID, ex.getErrorCode());
         verify(jobRepository, never()).findByDeletedFalse(any());
         verify(jobRepository, never()).findByModerationStatusAndDeletedFalse(any(), any());
@@ -437,7 +437,7 @@ class JobServiceTest {
                 .thenReturn(new PageImpl<>(List.of(job), expectedPage, 1));
         when(jobMapper.toJobResponse(job)).thenReturn(response);
 
-        PageResponse<JobResponse> actual = jobService.getAllJobs(null, null, 1, 10);
+        PageResponse<JobResponse> actual = jobService.getAllJobs(null, null, null, 1, 10);
 
         assertEquals(1, actual.getItems().size());
         verify(jobRepository).findByDeletedFalse(any(Pageable.class));

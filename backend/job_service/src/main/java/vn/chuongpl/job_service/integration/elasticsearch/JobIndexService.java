@@ -44,6 +44,19 @@ public class JobIndexService {
         }
     }
 
+    /**
+     * Drops and recreates the index from the {@link JobDocument} annotations.
+     * Needed because an existing index keeps its old (possibly dynamic) mapping,
+     * which breaks the exact term filters used in {@link #search}.
+     */
+    public void recreateIndex() {
+        var indexOps = elasticsearchTemplate.indexOps(JobDocument.class);
+        if (indexOps.exists()) {
+            indexOps.delete();
+        }
+        indexOps.createWithMapping();
+    }
+
     public void removeFromIndex(String jobId) {
         try {
             esRepository.deleteById(jobId);
@@ -72,6 +85,9 @@ public class JobIndexService {
         }
         if (request.getSkills() != null) {
             request.getSkills().forEach(skill -> filters.add(TermQuery.of(t -> t.field("skills").value(skill))._toQuery()));
+        }
+        if (request.getCategory() != null) {
+            filters.add(TermQuery.of(t -> t.field("category").value(request.getCategory().name()))._toQuery());
         }
         if (request.getSalaryMin() != null) {
             filters.add(Query.of(q -> q.range(r -> r.number(n -> n.field("salaryMin").gte(request.getSalaryMin())))));

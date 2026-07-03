@@ -8,6 +8,7 @@ import type { JobResponseJobType } from './jobResponseJobType';
 import type { JobResponseExperienceLevel } from './jobResponseExperienceLevel';
 import type { JobResponseModerationStatus } from './jobResponseModerationStatus';
 import type { JobResponseVisibilityStatus } from './jobResponseVisibilityStatus';
+import type { JobResponseCategory } from './jobResponseCategory';
 
 export interface JobResponse {
   id?: string;
@@ -34,6 +35,7 @@ export interface JobResponse {
   rejectThreshold?: number;
   autoRejectEnabled?: boolean;
   requiredTest?: string;
+  category?: JobResponseCategory;
   createdAt?: string;
   updatedAt?: string;
 }

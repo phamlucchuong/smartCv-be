@@ -1,0 +1,3667 @@
+{
+  "meta": {
+    "generated_at": "2026-06-27T06:41:07.136Z",
+    "companies_total": 25,
+    "companies_approved": 20,
+    "companies_pending": 5,
+    "candidate_users": 10,
+    "recruiter_users": 25,
+    "jobs_total": 16
+  },
+  "role": [
+    {
+      "_id": "ADMIN",
+      "description": "Administrator",
+      "permissions": []
+    },
+    {
+      "_id": "RECRUITER",
+      "description": "Recruiter",
+      "permissions": []
+    },
+    {
+      "_id": "CANDIDATE",
+      "description": "Candidate",
+      "permissions": []
+    }
+  ],
+  "users": [
+    {
+      "_id": "8270ebb8-bc95-4fe0-b001-b1dbcccec888",
+      "full_name": "Nguyễn An A",
+      "email": "candidate1@smartcv.seed.local",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0911100000",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "CANDIDATE"
+      ]
+    },
+    {
+      "_id": "7f2cd428-a974-45bc-aef0-f8224bd0749a",
+      "full_name": "Trần Bình B",
+      "email": "candidate2@smartcv.seed.local",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0911100001",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "CANDIDATE"
+      ]
+    },
+    {
+      "_id": "0fd74cbe-021c-4fc5-be7c-72d6e0cdce2e",
+      "full_name": "Lê Chi C",
+      "email": "candidate3@smartcv.seed.local",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0911100002",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "CANDIDATE"
+      ]
+    },
+    {
+      "_id": "030b7c9d-97c2-4584-bc83-3332d889d640",
+      "full_name": "Phạm Dũng D",
+      "email": "candidate4@smartcv.seed.local",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0911100003",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "CANDIDATE"
+      ]
+    },
+    {
+      "_id": "6eda0a17-a52d-425c-b4a9-36d092aa03fd",
+      "full_name": "Hoàng Giang E",
+      "email": "candidate5@smartcv.seed.local",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0911100004",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "CANDIDATE"
+      ]
+    },
+    {
+      "_id": "2015a6b3-06c1-4647-aaea-cbafb646e621",
+      "full_name": "Võ Hà F",
+      "email": "candidate6@smartcv.seed.local",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0911100005",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "CANDIDATE"
+      ]
+    },
+    {
+      "_id": "a3ec53fc-ec46-4e5e-aa7a-915ce46ce911",
+      "full_name": "Đặng Khánh G",
+      "email": "candidate7@smartcv.seed.local",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0911100006",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "CANDIDATE"
+      ]
+    },
+    {
+      "_id": "c2b74f9f-5a2c-4821-82a8-e1949e6858d0",
+      "full_name": "Bùi Linh H",
+      "email": "candidate8@smartcv.seed.local",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0911100007",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "CANDIDATE"
+      ]
+    },
+    {
+      "_id": "cda501ad-7bd2-48f7-b1b9-5d8a1df56f8e",
+      "full_name": "Đỗ Minh I",
+      "email": "candidate9@smartcv.seed.local",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0911100008",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "CANDIDATE"
+      ]
+    },
+    {
+      "_id": "b2eaa471-1233-4f25-b634-c9b2fcb46dca",
+      "full_name": "Phan Ngọc J",
+      "email": "candidate10@smartcv.seed.local",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0911100009",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "CANDIDATE"
+      ]
+    },
+    {
+      "_id": "529ac95a-e98f-4b38-82b1-9f358010c375",
+      "full_name": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM Talent Acquisition",
+      "email": "talent+248732-html@topcv.vn",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100001",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "_id": "9ec91289-c66d-4e86-b015-fb681055a1ce",
+      "full_name": "CENNEXT Talent Acquisition",
+      "email": "talent+5338@cennext.com",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100002",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "_id": "f9a96b7c-f701-4528-bf2f-7168fe2c4a42",
+      "full_name": "Công ty TNHH Công nghiệp Brother Việt Nam Talent Acquisition",
+      "email": "talent+156858@bivn.brother.com.vn",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100003",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "_id": "0ab3e6fb-f707-4b8d-a092-7da1a4421c6d",
+      "full_name": "CÔNG TY CỔ PHẦN ĐÁ GRANITE & MARBLE TỰ NHIÊN THIÊN SƠN Talent Acquisition",
+      "email": "talent+234525@thiensonstone.vn",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100004",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "_id": "082df3dc-8a0c-483f-8fc8-bbeed918952d",
+      "full_name": "MSB Talent Acquisition",
+      "email": "talent+198976@jobs.msb.com.vn",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100005",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "_id": "53abb226-06af-4a7a-9a3b-10963fb283bd",
+      "full_name": "CÔNG TY CỔ PHẦN MỤC TIÊU VIỆT Talent Acquisition",
+      "email": "talent+118572@topcv.vn",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100006",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "_id": "f9138a99-eee5-468a-8deb-0ec7c38561f7",
+      "full_name": "CÔNG TY CỔ PHẦN BPO MẮT BÃO Talent Acquisition",
+      "email": "talent+49696@matbaobpo.com",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100007",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "_id": "4b5f694f-494e-4b11-a6c1-570c9a634337",
+      "full_name": "CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ ĐỨC HƯNG GROUP Talent Acquisition",
+      "email": "talent+152840@duchunggroup.com.vn",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100008",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "_id": "c35a6db1-3811-44a8-9378-ddfb20fcbf34",
+      "full_name": "CÔNG TY TNHH ĐIỆN KHÍ QUỐC QUANG (VIỆT NAM) Talent Acquisition",
+      "email": "talent+29993@ggec.com.cn",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100009",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "_id": "a47fb01a-e631-4952-879f-bee58425719e",
+      "full_name": "Công Ty Cổ phần Công Nghệ Phúc Bình Talent Acquisition",
+      "email": "talent+96275@phucbinh.com.vn",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100010",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "_id": "b05f409f-6134-4ca1-b84d-aeec31928888",
+      "full_name": "CÔNG TY CỔ PHẦN DỊCH VỤ THƯƠNG MẠI TỔNG HỢP WINCOMMERCE Talent Acquisition",
+      "email": "talent+86664@winmart.vn",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100011",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "_id": "fe245b61-3e57-4362-b0b9-c24cc3dc11e8",
+      "full_name": "CÔNG TY CP ĐẦU TƯ VÀ THƯƠNG MẠI QUỐC TẾ PHAN NGUYỄN Talent Acquisition",
+      "email": "talent+195753@pncom.vn",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100012",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "_id": "3f7170aa-8502-4e5c-bea4-350efdb63065",
+      "full_name": "Woori Talent Acquisition",
+      "email": "talent+52137@woori.com.vn",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100013",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "_id": "114f78ad-6e0e-442d-9215-3efaa47eee90",
+      "full_name": "Ngân hàng TMCP Phát triển TP. HCM (HDBank) Talent Acquisition",
+      "email": "talent+198812@hdbankcareer.com",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100014",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "_id": "1f07faaa-888b-46e0-a1e8-891bf15b072a",
+      "full_name": "CÔNG TY CỔ PHẦN DREAM VIET EDUCATION Talent Acquisition",
+      "email": "talent+36121@kynaforkids.vn",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100015",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "_id": "029c0450-a83c-4fa9-ac9d-88b3d5e4981e",
+      "full_name": "CÔNG TY TNHH QUẢNG CÁO HYPER MEDIA Talent Acquisition",
+      "email": "talent+220861@topcv.vn",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100016",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "_id": "0517d23c-e206-4814-b085-a79bd0e160d2",
+      "full_name": "Công ty Cổ phần METUB Việt Nam Talent Acquisition",
+      "email": "talent+68303@metub.net",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100017",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "_id": "bb8f52d5-224b-49e5-9006-750a8373045a",
+      "full_name": "CÔNG TY CỔ PHẦN BAO BÌ THÔNG MINH INTBOX Talent Acquisition",
+      "email": "talent+182085@intbox.vn",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100018",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "_id": "9ad9f3dc-5b6d-4504-a971-34829852db19",
+      "full_name": "CÔNG TY CỔ PHẦN TẦM NHÌN QUỐC TẾ ALADDIN Talent Acquisition",
+      "email": "talent+22918@facebook.com",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100019",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "_id": "3cd045e4-081e-40cc-af61-0bfb7bae8b99",
+      "full_name": "Công ty Cổ phần BPO Mắt Bão Talent Acquisition",
+      "email": "talent+1932@matbaobpo.com",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100020",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "_id": "00e11503-5fca-406f-882f-16c3fe74759f",
+      "full_name": "CÔNG TY CỔ PHẦN VẬN TẢI BIỂN CONTAINER THÁI BÌNH DƯƠNG Talent Acquisition",
+      "email": "talent+94159@pacificcontainer.com.vn",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100021",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "_id": "86d3deee-5f33-4b42-b8d2-246fa8ad9f46",
+      "full_name": "CÔNG TY CỔ PHẦN KINH DOANH VÀ ĐẦU TƯ ĐẤT XANH MIỀN TRUNG Talent Acquisition",
+      "email": "talent+93224@datxanhmientrung.com",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100022",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "_id": "2e4dcc9f-4280-4723-9291-d4bb5b12781e",
+      "full_name": "Ngân hàng Á Châu - ACB Talent Acquisition",
+      "email": "talent+198502@acb.com.vn",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100023",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "_id": "ad9aa3a5-f57d-4b1d-ad55-be12a9206953",
+      "full_name": "Công ty Cổ phần Giáo dục và Công nghệ TIW Talent Acquisition",
+      "email": "talent+26496@onthiielts.com.vn",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100024",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "_id": "f4134d69-ac07-4b14-ad29-4465d80882b7",
+      "full_name": "Công Ty TNHH LG CNS VIỆT NAM Talent Acquisition",
+      "email": "talent+139535@careers.lgcnsvn.com",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "auth_provider": "LOCAL",
+      "google_subject": null,
+      "phone": "0908100025",
+      "avt_image_id": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      },
+      "roles": [
+        "RECRUITER"
+      ]
+    }
+  ],
+  "recruiters": [
+    {
+      "_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+      "user_id": "529ac95a-e98f-4b38-82b1-9f358010c375",
+      "company_name": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "company_website": "https://www.topcv.vn/cong-ty/cong-ty-tnhh-transcosmos-viet-nam/248732.html",
+      "company_address": "Tòa nhà VTC Online, tầng 8 và tầng 20 số 18 Tam Trinh, phương Minh Khai, quận Hai Bà Trưng, Hà Nội",
+      "company_city": "Hà Nội",
+      "company_description": "Chuyên trang tuyển dụng cao cấp CÔNG TY TNHH TRANSCOSMOS VIỆT NAM. Thông tin, sản phẩm, dự án CÔNG TY TNHH TRANSCOSMOS VIỆT NAM, các việc làm phù hợp từ CÔNG TY TNHH TRANSCOSMOS VIỆT NAM.",
+      "company_phone": "0908100101",
+      "company_size": "100-500 nhân viên",
+      "company_type": "ENTERPRISE",
+      "founded_year": null,
+      "industry": "Chuyên trang tuyển dụng cao cấp CÔNG TY TNHH TRANSCOSMOS VIỆT NAM. Thông tin, sản phẩm, dự án CÔNG TY TNHH TRANSCOSMOS VIỆT NAM, các việc làm phù hợp từ CÔNG TY TNHH TRANSCOSMOS VIỆT NAM.",
+      "category": "IT_SOFTWARE",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-tnhh-transcosmos-viet-nam/logo.jpg",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-tnhh-transcosmos-viet-nam/cover.jpg",
+      "tax_code": null,
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM Talent Acquisition",
+      "contact_email": "talent+248732-html@topcv.vn",
+      "contact_phone": "0908100001",
+      "status": "APPROVED",
+      "rejection_note": null,
+      "quota_job_post": 50,
+      "quota_cv_views": 200,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "a3eafa33-41da-486b-b23b-976380efd7c9",
+      "user_id": "9ec91289-c66d-4e86-b015-fb681055a1ce",
+      "company_name": "CENNEXT",
+      "company_website": "https://cennext.com/",
+      "company_address": "Tầng 3, Nhà D, số 22 Thành Công, Ba Đình, Hà Nội",
+      "company_city": "Hà Nội",
+      "company_description": "Chuyên trang tuyển dụng chính thức của CENNEXT trên TopCV. Khám phá thông tin doanh nghiệp, lĩnh vực hoạt động, môi trường làm việc và văn hóa công ty.",
+      "company_phone": "0908100102",
+      "company_size": "100-500 nhân viên",
+      "company_type": "DISTRIBUTOR",
+      "founded_year": 2013,
+      "industry": "Thương mại điện tử",
+      "category": "IT_SOFTWARE",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cennext/logo.png",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cennext/cover.png",
+      "tax_code": "0106173820",
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "CENNEXT Talent Acquisition",
+      "contact_email": "talent+5338@cennext.com",
+      "contact_phone": "0908100002",
+      "status": "APPROVED",
+      "rejection_note": null,
+      "quota_job_post": 50,
+      "quota_cv_views": 200,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "a8ae10d0-be44-4de1-b50e-ed0b549b92c5",
+      "user_id": "f9a96b7c-f701-4528-bf2f-7168fe2c4a42",
+      "company_name": "Công ty TNHH Công nghiệp Brother Việt Nam",
+      "company_website": "http://bivn.brother.com.vn/",
+      "company_address": "Khu công nghiệp Phúc Điền - Cẩm Phúc - Cẩm Giàng - Hải Dương",
+      "company_city": "Khu công nghiệp Phúc Điền - Cẩm Phúc - Cẩm Giàng - Hải Dương",
+      "company_description": "Chuyên trang tuyển dụng chính thức của Công ty TNHH Công nghiệp Brother Việt Nam (BIVN) trên TopCV. Khám phá thông tin doanh nghiệp, lĩnh vực hoạt động, môi trường làm việc và văn hóa công ty.",
+      "company_phone": "0908100103",
+      "company_size": "100-500 nhân viên",
+      "company_type": "ENTERPRISE",
+      "founded_year": null,
+      "industry": "Điện tử / Điện lạnh",
+      "category": "IT_SOFTWARE",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-tnhh-cong-nghiep-brother-viet-nam/logo.png",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-tnhh-cong-nghiep-brother-viet-nam/cover.png",
+      "tax_code": "0800304173",
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "Công ty TNHH Công nghiệp Brother Việt Nam Talent Acquisition",
+      "contact_email": "talent+156858@bivn.brother.com.vn",
+      "contact_phone": "0908100003",
+      "status": "APPROVED",
+      "rejection_note": null,
+      "quota_job_post": 50,
+      "quota_cv_views": 200,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "414e10b6-a7dc-4f4c-bb36-947b54c2350c",
+      "user_id": "0ab3e6fb-f707-4b8d-a092-7da1a4421c6d",
+      "company_name": "CÔNG TY CỔ PHẦN ĐÁ GRANITE &amp; MARBLE TỰ NHIÊN THIÊN SƠN",
+      "company_website": "https://thiensonstone.vn/",
+      "company_address": "Lô 22 C2, Khu đô thị Nam Trung Yên, Cầu Giấy, Hà Nội",
+      "company_city": "Hà Nội",
+      "company_description": "Chuyên trang tuyển dụng chính thức của CÔNG TY CỔ PHẦN ĐÁ GRANITE &amp; MARBLE TỰ NHIÊN THIÊN SƠN trên TopCV. Khám phá thông tin doanh nghiệp, lĩnh vực hoạt động, môi trường làm việc và văn hóa công ty.",
+      "company_phone": "0908100104",
+      "company_size": "100-499 nhân viên",
+      "company_type": "ENTERPRISE",
+      "founded_year": null,
+      "industry": "Xây dựng",
+      "category": "IT_SOFTWARE",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-a-granite-marble-tu-nhien-thien-son/logo.jpg",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-a-granite-marble-tu-nhien-thien-son/cover.png",
+      "tax_code": "0101325156",
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "CÔNG TY CỔ PHẦN ĐÁ GRANITE & MARBLE TỰ NHIÊN THIÊN SƠN Talent Acquisition",
+      "contact_email": "talent+234525@thiensonstone.vn",
+      "contact_phone": "0908100004",
+      "status": "APPROVED",
+      "rejection_note": null,
+      "quota_job_post": 50,
+      "quota_cv_views": 200,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "41d01873-2a93-41a7-92fb-42861991f8dd",
+      "user_id": "082df3dc-8a0c-483f-8fc8-bbeed918952d",
+      "company_name": "Ngân hàng TMCP Hàng Hải Việt Nam (MSB)",
+      "company_website": "https://jobs.msb.com.vn/",
+      "company_address": "ROX Tower, 54A Nguyễn Chí Thanh, phường Láng, TP. Hà Nội",
+      "company_city": "Hà Nội",
+      "company_description": "Chuyên trang tuyển dụng chính thức của Ngân hàng TMCP Hàng Hải Việt Nam (MSB) trên TopCV. Khám phá thông tin doanh nghiệp, lĩnh vực hoạt động, môi trường làm việc và văn hóa công ty.",
+      "company_phone": "0908100105",
+      "company_size": "100-500 nhân viên",
+      "company_type": "FINTECH",
+      "founded_year": 1991,
+      "industry": "Ngân hàng, IT - Phần mềm, Tài chính",
+      "category": "IT_SOFTWARE",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/msb/logo.jpg",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/msb/cover.png",
+      "tax_code": "0200124891",
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "MSB Talent Acquisition",
+      "contact_email": "talent+198976@jobs.msb.com.vn",
+      "contact_phone": "0908100005",
+      "status": "APPROVED",
+      "rejection_note": null,
+      "quota_job_post": 50,
+      "quota_cv_views": 200,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "185f3345-4004-4f36-af17-54d5ec9fb034",
+      "user_id": "53abb226-06af-4a7a-9a3b-10963fb283bd",
+      "company_name": "CÔNG TY CỔ PHẦN MỤC TIÊU VIỆT",
+      "company_website": "https://www.topcv.vn/cong-ty/cong-ty-co-phan-muc-tieu-viet/118572.html",
+      "company_address": "Tầng 2 CT1AB, Khu đô thị VOV Mễ Trì, đường Lương Thế Vinh, Phường Mễ Trì, Quận Nam Từ Liêm, Thành phố Hà Nội, Việt Nam",
+      "company_city": "Hà Nội",
+      "company_description": "Chuyên trang tuyển dụng chính thức của CÔNG TY CỔ PHẦN MỤC TIÊU VIỆT trên TopCV. Khám phá thông tin doanh nghiệp, lĩnh vực hoạt động, môi trường làm việc và văn hóa công ty.",
+      "company_phone": "0908100106",
+      "company_size": "100-499 nhân viên",
+      "company_type": "ENTERPRISE",
+      "founded_year": 2012,
+      "industry": "Giáo dục / Đào tạo",
+      "category": "EDUCATION",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-muc-tieu-viet/logo.jpg",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-muc-tieu-viet/cover.png",
+      "tax_code": "0109685954",
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "CÔNG TY CỔ PHẦN MỤC TIÊU VIỆT Talent Acquisition",
+      "contact_email": "talent+118572@topcv.vn",
+      "contact_phone": "0908100006",
+      "status": "APPROVED",
+      "rejection_note": null,
+      "quota_job_post": 50,
+      "quota_cv_views": 200,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "1fe69bc6-3ce2-47a9-935c-78ec96d1c146",
+      "user_id": "f9138a99-eee5-468a-8deb-0ec7c38561f7",
+      "company_name": "CÔNG TY CỔ PHẦN BPO MẮT BÃO",
+      "company_website": "https://matbaobpo.com/",
+      "company_address": "12A Núi Thành, Phường 13, Quận Tân Bình, Tp. Hồ Chí Minh",
+      "company_city": "Hồ Chí Minh",
+      "company_description": "Chuyên trang tuyển dụng chính thức của CÔNG TY CỔ PHẦN BPO MẮT BÃO trên TopCV. Khám phá thông tin doanh nghiệp, lĩnh vực hoạt động, môi trường làm việc và văn hóa công ty.",
+      "company_phone": "0908100107",
+      "company_size": "100-500 nhân viên",
+      "company_type": "ENTERPRISE",
+      "founded_year": 2014,
+      "industry": "Nhân sự",
+      "category": "HUMAN_RESOURCES",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-bpo-mat-bao/logo.jpg",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-bpo-mat-bao/cover.png",
+      "tax_code": "0312722025",
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "CÔNG TY CỔ PHẦN BPO MẮT BÃO Talent Acquisition",
+      "contact_email": "talent+49696@matbaobpo.com",
+      "contact_phone": "0908100007",
+      "status": "APPROVED",
+      "rejection_note": null,
+      "quota_job_post": 50,
+      "quota_cv_views": 200,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "31143dec-648f-404f-9c5f-df86477aab62",
+      "user_id": "4b5f694f-494e-4b11-a6c1-570c9a634337",
+      "company_name": "CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ ĐỨC HƯNG GROUP",
+      "company_website": "https://duchunggroup.com.vn/",
+      "company_address": "Toà nhà Lavita Charm Shophouse TM21, Phường Trường Thọ, Thủ Đức..",
+      "company_city": "Thủ Đức..",
+      "company_description": "Chuyên trang tuyển dụng chính thức của CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ ĐỨC HƯNG GROUP trên TopCV. Khám phá thông tin doanh nghiệp, lĩnh vực hoạt động, môi trường làm việc và văn hóa công ty.",
+      "company_phone": "0908100108",
+      "company_size": "25-99 nhân viên",
+      "company_type": "ENTERPRISE",
+      "founded_year": 2018,
+      "industry": "Khác",
+      "category": "IT_SOFTWARE",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-tnhh-thuong-mai-dich-vu-uc-hung-group/logo.jpg",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-tnhh-thuong-mai-dich-vu-uc-hung-group/cover.png",
+      "tax_code": "3401243573",
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ ĐỨC HƯNG GROUP Talent Acquisition",
+      "contact_email": "talent+152840@duchunggroup.com.vn",
+      "contact_phone": "0908100008",
+      "status": "APPROVED",
+      "rejection_note": null,
+      "quota_job_post": 50,
+      "quota_cv_views": 200,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "4c7e0f26-c837-4150-bfbc-34868d593ad6",
+      "user_id": "c35a6db1-3811-44a8-9378-ddfb20fcbf34",
+      "company_name": "CÔNG TY TNHH ĐIỆN KHÍ QUỐC QUANG (VIỆT NAM)",
+      "company_website": "https://www.ggec.com.cn",
+      "company_address": "Lô 12 khu công nghiệp Điện Nam – Điện Ngọc, Điện Nam Bắc",
+      "company_city": "Điện Nam Bắc",
+      "company_description": "Chuyên trang tuyển dụng chính thức của CÔNG TY TNHH ĐIỆN KHÍ QUỐC QUANG (VIỆT NAM) trên TopCV. Khám phá thông tin doanh nghiệp, lĩnh vực hoạt động, môi trường làm việc và văn hóa công ty.",
+      "company_phone": "0908100109",
+      "company_size": "100-500 nhân viên",
+      "company_type": "MANUFACTURING",
+      "founded_year": null,
+      "industry": "Sản xuất",
+      "category": "MANUFACTURING",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-tnhh-ien-khi-quoc-quang-viet-nam/logo.jpg",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-tnhh-ien-khi-quoc-quang-viet-nam/cover.png",
+      "tax_code": "4001168524",
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "CÔNG TY TNHH ĐIỆN KHÍ QUỐC QUANG (VIỆT NAM) Talent Acquisition",
+      "contact_email": "talent+29993@ggec.com.cn",
+      "contact_phone": "0908100009",
+      "status": "APPROVED",
+      "rejection_note": null,
+      "quota_job_post": 50,
+      "quota_cv_views": 200,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "80117fd4-32e4-4689-8567-863748da9673",
+      "user_id": "a47fb01a-e631-4952-879f-bee58425719e",
+      "company_name": "Công Ty Cổ phần Công Nghệ Phúc Bình",
+      "company_website": "https://phucbinh.com.vn/",
+      "company_address": "Tòa nhà Phúc Bình, Lô số A44 Khu đấu giá 3ha, Đường Đức Diễn, Phường Phúc Diễn",
+      "company_city": "Phường Phúc Diễn",
+      "company_description": "Chuyên trang tuyển dụng chính thức của Công Ty Cổ phần Công Nghệ Phúc Bình trên TopCV. Khám phá thông tin doanh nghiệp, lĩnh vực hoạt động, môi trường làm việc và văn hóa công ty.",
+      "company_phone": "0908100110",
+      "company_size": "100-499 nhân viên",
+      "company_type": "ENTERPRISE",
+      "founded_year": null,
+      "industry": "Khác",
+      "category": "IT_SOFTWARE",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-cong-nghe-phuc-binh/logo.jpg",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-cong-nghe-phuc-binh/cover.png",
+      "tax_code": "0104999587",
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "Công Ty Cổ phần Công Nghệ Phúc Bình Talent Acquisition",
+      "contact_email": "talent+96275@phucbinh.com.vn",
+      "contact_phone": "0908100010",
+      "status": "APPROVED",
+      "rejection_note": null,
+      "quota_job_post": 50,
+      "quota_cv_views": 200,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "0a6b9c08-141b-4f32-b532-265a4f5141c9",
+      "user_id": "b05f409f-6134-4ca1-b84d-aeec31928888",
+      "company_name": "CÔNG TY CỔ PHẦN DỊCH VỤ THƯƠNG MẠI TỔNG HỢP WINCOMMERCE",
+      "company_website": "https://winmart.vn/",
+      "company_address": "- VP Miền Bắc: Tầng 5 Tòa nhà trung tâm quốc tế, 17 Ngô Quyền, Phường Tràng Tiền, Quận Hoàn Kiếm, Thành phố Hà Nội",
+      "company_city": "Hà Nội",
+      "company_description": "Chuyên trang tuyển dụng chính thức của CÔNG TY CỔ PHẦN DỊCH VỤ THƯƠNG MẠI TỔNG HỢP WINCOMMERCE trên TopCV. Khám phá thông tin doanh nghiệp, lĩnh vực hoạt động, môi trường làm việc và văn hóa công ty.",
+      "company_phone": "0908100111",
+      "company_size": "100-500 nhân viên",
+      "company_type": "DISTRIBUTOR",
+      "founded_year": 2015,
+      "industry": "Bán lẻ - Hàng tiêu dùng - FMCG",
+      "category": "RETAIL",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-dich-vu-thuong-mai-tong-hop-wincommerce/logo.png",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-dich-vu-thuong-mai-tong-hop-wincommerce/cover.png",
+      "tax_code": "0104918404",
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "CÔNG TY CỔ PHẦN DỊCH VỤ THƯƠNG MẠI TỔNG HỢP WINCOMMERCE Talent Acquisition",
+      "contact_email": "talent+86664@winmart.vn",
+      "contact_phone": "0908100011",
+      "status": "APPROVED",
+      "rejection_note": null,
+      "quota_job_post": 50,
+      "quota_cv_views": 200,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "1a41c71c-4bac-41f3-a77f-e097c2da2de3",
+      "user_id": "fe245b61-3e57-4362-b0b9-c24cc3dc11e8",
+      "company_name": "CÔNG TY CP ĐẦU TƯ VÀ THƯƠNG MẠI QUỐC TẾ PHAN NGUYỄN",
+      "company_website": "https://pncom.vn/",
+      "company_address": "Tầng 1, Tháp A chung cư Hà Nội Paragon, 86 DuyTân, Cầu Giấy, Hà Nội",
+      "company_city": "Hà Nội",
+      "company_description": "Chuyên trang tuyển dụng chính thức của CÔNG TY CP ĐẦU TƯ VÀ THƯƠNG MẠI QUỐC TẾ PHAN NGUYỄN trên TopCV. Khám phá thông tin doanh nghiệp, lĩnh vực hoạt động, môi trường làm việc và văn hóa công ty.",
+      "company_phone": "0908100112",
+      "company_size": "100-499 nhân viên",
+      "company_type": "DISTRIBUTOR",
+      "founded_year": null,
+      "industry": "Bán lẻ - Hàng tiêu dùng - FMCG",
+      "category": "RETAIL",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-cp-au-tu-va-thuong-mai-quoc-te-phan-nguyen/logo.jpg",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-cp-au-tu-va-thuong-mai-quoc-te-phan-nguyen/cover.png",
+      "tax_code": "0106913401",
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "CÔNG TY CP ĐẦU TƯ VÀ THƯƠNG MẠI QUỐC TẾ PHAN NGUYỄN Talent Acquisition",
+      "contact_email": "talent+195753@pncom.vn",
+      "contact_phone": "0908100012",
+      "status": "APPROVED",
+      "rejection_note": null,
+      "quota_job_post": 50,
+      "quota_cv_views": 200,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "ca0a0927-8ece-4611-a82a-dadf57196dc9",
+      "user_id": "3f7170aa-8502-4e5c-bea4-350efdb63065",
+      "company_name": "Woori Bank Vietnam",
+      "company_website": "https://woori.com.vn/",
+      "company_address": "34F Keangnam Landmark 72, E6 Phạm Hùng, Me Tri, Tu Liem, Ha Noi",
+      "company_city": "Ha Noi",
+      "company_description": "Chuyên trang tuyển dụng chính thức của Ngân hàng Trách nhiệm hữu hạn Một thành viên Woori Việt Nam (Woori Bank Vietnam) trên TopCV. Khám phá thông tin doanh nghiệp, lĩnh vực hoạt động, môi trường làm việc và văn hóa công ty.",
+      "company_phone": "0908100113",
+      "company_size": "500-1000 nhân viên",
+      "company_type": "FINTECH",
+      "founded_year": 1997,
+      "industry": "Ngân hàng, Tài chính",
+      "category": "FINANCE_BANKING",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/woori/logo.jpg",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/woori/cover.png",
+      "tax_code": "0107619360",
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "Woori Talent Acquisition",
+      "contact_email": "talent+52137@woori.com.vn",
+      "contact_phone": "0908100013",
+      "status": "APPROVED",
+      "rejection_note": null,
+      "quota_job_post": 50,
+      "quota_cv_views": 200,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "509b7815-c280-43a8-ab27-a4f24d3d0183",
+      "user_id": "114f78ad-6e0e-442d-9215-3efaa47eee90",
+      "company_name": "Ngân hàng TMCP Phát triển TP. HCM (HDBank)",
+      "company_website": "https://hdbankcareer.com/",
+      "company_address": "25bis Nguyễn Thị Minh Khai, P.Bến Nghé, Q.1, TP. HCM",
+      "company_city": "TP. HCM",
+      "company_description": "Chuyên trang tuyển dụng chính thức của Ngân hàng TMCP Phát triển TP.HCM (HDBank) trên TopCV. Khám phá thông tin doanh nghiệp, lĩnh vực hoạt động, môi trường làm việc và văn hóa công ty.",
+      "company_phone": "0908100114",
+      "company_size": "100-500 nhân viên",
+      "company_type": "FINTECH",
+      "founded_year": null,
+      "industry": "Ngân hàng",
+      "category": "FINANCE_BANKING",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/ngan-hang-tmcp-phat-trien-tp-hcm-hdbank/logo.jpg",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/ngan-hang-tmcp-phat-trien-tp-hcm-hdbank/cover.png",
+      "tax_code": "0300608092",
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "Ngân hàng TMCP Phát triển TP. HCM (HDBank) Talent Acquisition",
+      "contact_email": "talent+198812@hdbankcareer.com",
+      "contact_phone": "0908100014",
+      "status": "APPROVED",
+      "rejection_note": null,
+      "quota_job_post": 50,
+      "quota_cv_views": 200,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "43d1ed80-b447-442c-9ebf-f24d534e93e7",
+      "user_id": "1f07faaa-888b-46e0-a1e8-891bf15b072a",
+      "company_name": "CÔNG TY CỔ PHẦN DREAM VIET EDUCATION",
+      "company_website": "https://kynaforkids.vn/",
+      "company_address": "Bcons Tower, 4A/167A Nguyễn Văn Thương, Phường 25, Quận Bình Thạnh, TP.HCM",
+      "company_city": "TP.HCM",
+      "company_description": "Chuyên trang tuyển dụng chính thức của CÔNG TY CỔ PHẦN DREAM VIET EDUCATION trên TopCV. Khám phá thông tin doanh nghiệp, lĩnh vực hoạt động, môi trường làm việc và văn hóa công ty.",
+      "company_phone": "0908100115",
+      "company_size": "100-499 nhân viên",
+      "company_type": "ENTERPRISE",
+      "founded_year": null,
+      "industry": "Giáo dục / Đào tạo",
+      "category": "EDUCATION",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-dream-viet-education/logo.png",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-dream-viet-education/cover.png",
+      "tax_code": "0313589030",
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "CÔNG TY CỔ PHẦN DREAM VIET EDUCATION Talent Acquisition",
+      "contact_email": "talent+36121@kynaforkids.vn",
+      "contact_phone": "0908100015",
+      "status": "APPROVED",
+      "rejection_note": null,
+      "quota_job_post": 50,
+      "quota_cv_views": 200,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "a85e61af-a51f-466e-85f6-4a5dd2d83655",
+      "user_id": "029c0450-a83c-4fa9-ac9d-88b3d5e4981e",
+      "company_name": "CÔNG TY TNHH QUẢNG CÁO HYPER MEDIA",
+      "company_website": "https://www.topcv.vn/cong-ty/cong-ty-tnhh-quang-cao-hyper-media/220861.html",
+      "company_address": "Số 78 đường 65, Phường Tân Phong, Quận 7, Thành phố Hồ Chí Minh, Việt Nam",
+      "company_city": "Hồ Chí Minh",
+      "company_description": "Chuyên trang tuyển dụng chính thức của CÔNG TY TNHH QUẢNG CÁO HYPER MEDIA trên TopCV. Khám phá thông tin doanh nghiệp, lĩnh vực hoạt động, môi trường làm việc và văn hóa công ty.",
+      "company_phone": "0908100116",
+      "company_size": "25-99 nhân viên",
+      "company_type": "AGENCY",
+      "founded_year": null,
+      "industry": "Marketing / Truyền thông / Quảng cáo, Xuất nhập khẩu",
+      "category": "MARKETING",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-tnhh-quang-cao-hyper-media/logo.jpg",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-tnhh-quang-cao-hyper-media/cover.png",
+      "tax_code": "0318904053",
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "CÔNG TY TNHH QUẢNG CÁO HYPER MEDIA Talent Acquisition",
+      "contact_email": "talent+220861@topcv.vn",
+      "contact_phone": "0908100016",
+      "status": "APPROVED",
+      "rejection_note": null,
+      "quota_job_post": 50,
+      "quota_cv_views": 200,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "3d0cec2d-d850-4557-8591-f7bdfb7c9197",
+      "user_id": "0517d23c-e206-4814-b085-a79bd0e160d2",
+      "company_name": "Công ty Cổ phần METUB Việt Nam",
+      "company_website": "https://metub.net/",
+      "company_address": "HCM: METUB Tower, 40 Nguyễn Văn Hưởng , P. Thảo Điền, Q.2, TPHCM (TP Thủ Đức) / HN: Tầng 8, Tòa nhà Central Point, 219 Trung Kính, P Yên Hòa, Cầu Giấy, HN",
+      "company_city": "HN",
+      "company_description": "Chuyên trang tuyển dụng chính thức của Công ty Cổ phần METUB Việt Nam trên TopCV. Khám phá thông tin doanh nghiệp, lĩnh vực hoạt động, môi trường làm việc và văn hóa công ty.",
+      "company_phone": "0908100117",
+      "company_size": "500-1000 nhân viên",
+      "company_type": "AGENCY",
+      "founded_year": 2016,
+      "industry": "Agency (Marketing/Advertising)",
+      "category": "MARKETING",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-metub-viet-nam/logo.jpg",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-metub-viet-nam/cover.png",
+      "tax_code": "0313658809",
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "Công ty Cổ phần METUB Việt Nam Talent Acquisition",
+      "contact_email": "talent+68303@metub.net",
+      "contact_phone": "0908100017",
+      "status": "APPROVED",
+      "rejection_note": null,
+      "quota_job_post": 50,
+      "quota_cv_views": 200,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "05166dca-e3cb-4de3-b4ba-f602fe0eb4a1",
+      "user_id": "bb8f52d5-224b-49e5-9006-750a8373045a",
+      "company_name": "CÔNG TY CỔ PHẦN BAO BÌ THÔNG MINH INTBOX",
+      "company_website": "https://www.intbox.vn/trang-chu",
+      "company_address": "D20/532 P, Đường Nguyễn Văn Linh, Xã Phong Phú, Huyện Bình Chánh, Thành phố Hồ Chí Minh, Việt Nam",
+      "company_city": "Hồ Chí Minh",
+      "company_description": "Chuyên trang tuyển dụng chính thức của CÔNG TY CỔ PHẦN BAO BÌ THÔNG MINH INTBOX trên TopCV. Khám phá thông tin doanh nghiệp, lĩnh vực hoạt động, môi trường làm việc và văn hóa công ty.",
+      "company_phone": "0908100118",
+      "company_size": "100-499 nhân viên",
+      "company_type": "MANUFACTURING",
+      "founded_year": null,
+      "industry": "Sản xuất",
+      "category": "MANUFACTURING",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-bao-bi-thong-minh-intbox/logo.jpg",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-bao-bi-thong-minh-intbox/cover.png",
+      "tax_code": "0302860354",
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "CÔNG TY CỔ PHẦN BAO BÌ THÔNG MINH INTBOX Talent Acquisition",
+      "contact_email": "talent+182085@intbox.vn",
+      "contact_phone": "0908100018",
+      "status": "APPROVED",
+      "rejection_note": null,
+      "quota_job_post": 50,
+      "quota_cv_views": 200,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "6f9640be-7d17-460a-bc5c-877f6a3aaff4",
+      "user_id": "9ad9f3dc-5b6d-4504-a971-34829852db19",
+      "company_name": "CÔNG TY CỔ PHẦN TẦM NHÌN QUỐC TẾ ALADDIN",
+      "company_website": "https://www.facebook.com/BoToQuanMoc.Aladdin",
+      "company_address": "88 Tố Hữu, Vạn Phúc, Hà Đông, Hà Nội",
+      "company_city": "Hà Nội",
+      "company_description": "Chuyên trang tuyển dụng chính thức của CÔNG TY CỔ PHẦN TẦM NHÌN QUỐC TẾ ALADDIN trên TopCV. Khám phá thông tin doanh nghiệp, lĩnh vực hoạt động, môi trường làm việc và văn hóa công ty.",
+      "company_phone": "0908100119",
+      "company_size": "100-500 nhân viên",
+      "company_type": "ENTERPRISE",
+      "founded_year": 2017,
+      "industry": "Nhà hàng / Khách sạn",
+      "category": "HOSPITALITY_TOURISM",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-tam-nhin-quoc-te-aladdin/logo.jpg",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-tam-nhin-quoc-te-aladdin/cover.png",
+      "tax_code": "0107742477",
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "CÔNG TY CỔ PHẦN TẦM NHÌN QUỐC TẾ ALADDIN Talent Acquisition",
+      "contact_email": "talent+22918@facebook.com",
+      "contact_phone": "0908100019",
+      "status": "APPROVED",
+      "rejection_note": null,
+      "quota_job_post": 50,
+      "quota_cv_views": 200,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "79e0f278-d469-4634-986a-b05990d8b776",
+      "user_id": "3cd045e4-081e-40cc-af61-0bfb7bae8b99",
+      "company_name": "Công ty Cổ phần BPO Mắt Bão",
+      "company_website": "http://matbaobpo.com",
+      "company_address": "12A Núi Thành, Phường 13, Quận Tân Bình, Tp.Hồ Chí Minh",
+      "company_city": "Hồ Chí Minh",
+      "company_description": "Chuyên trang tuyển dụng chính thức của Công ty Cổ phần BPO Mắt Bão trên TopCV. Khám phá thông tin doanh nghiệp, lĩnh vực hoạt động, môi trường làm việc và văn hóa công ty.",
+      "company_phone": "0908100120",
+      "company_size": "100-500 nhân viên",
+      "company_type": "ENTERPRISE",
+      "founded_year": 2014,
+      "industry": "Tư vấn",
+      "category": "IT_SOFTWARE",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-bpo-mat-bao/logo.jpg",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-bpo-mat-bao/cover.png",
+      "tax_code": "0312722025",
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "Công ty Cổ phần BPO Mắt Bão Talent Acquisition",
+      "contact_email": "talent+1932@matbaobpo.com",
+      "contact_phone": "0908100020",
+      "status": "APPROVED",
+      "rejection_note": null,
+      "quota_job_post": 50,
+      "quota_cv_views": 200,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "c80763ea-a873-4e29-99f2-a2dc57c5fbc6",
+      "user_id": "00e11503-5fca-406f-882f-16c3fe74759f",
+      "company_name": "CÔNG TY CỔ PHẦN VẬN TẢI BIỂN CONTAINER THÁI BÌNH DƯƠNG",
+      "company_website": "https://pacificcontainer.com.vn/",
+      "company_address": "Hà Nội",
+      "company_city": "Hà Nội",
+      "company_description": "Chuyên trang tuyển dụng chính thức của CÔNG TY CỔ PHẦN VẬN TẢI BIỂN CONTAINER THÁI BÌNH DƯƠNG trên TopCV. Khám phá thông tin doanh nghiệp, lĩnh vực hoạt động, môi trường làm việc và văn hóa công ty.",
+      "company_phone": "0908100121",
+      "company_size": "25-99 nhân viên",
+      "company_type": "ENTERPRISE",
+      "founded_year": null,
+      "industry": "Logistics - Vận tải, Xuất nhập khẩu, Khác",
+      "category": "TRANSPORTATION",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-van-tai-bien-container-thai-binh-duong/logo.jpg",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-van-tai-bien-container-thai-binh-duong/cover.png",
+      "tax_code": "0106812107",
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "CÔNG TY CỔ PHẦN VẬN TẢI BIỂN CONTAINER THÁI BÌNH DƯƠNG Talent Acquisition",
+      "contact_email": "talent+94159@pacificcontainer.com.vn",
+      "contact_phone": "0908100021",
+      "status": "PENDING",
+      "rejection_note": "Chờ admin phê duyệt hồ sơ doanh nghiệp seed.",
+      "quota_job_post": 5,
+      "quota_cv_views": 20,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "46dd1630-9ce1-40dd-aa65-5a538043cc07",
+      "user_id": "86d3deee-5f33-4b42-b8d2-246fa8ad9f46",
+      "company_name": "CÔNG TY CỔ PHẦN KINH DOANH VÀ ĐẦU TƯ ĐẤT XANH MIỀN TRUNG",
+      "company_website": "https://datxanhmientrung.com/",
+      "company_address": "386 Điện Biên Phủ, Phường Thanh Khê, Thành Phố Đà Nẵng",
+      "company_city": "Đà Nẵng",
+      "company_description": "Chuyên trang tuyển dụng chính thức của CÔNG TY CỔ PHẦN KINH DOANH VÀ ĐẦU TƯ ĐẤT XANH MIỀN TRUNG trên TopCV. Khám phá thông tin doanh nghiệp, lĩnh vực hoạt động, môi trường làm việc và văn hóa công ty.",
+      "company_phone": "0908100122",
+      "company_size": "100-499 nhân viên",
+      "company_type": "ENTERPRISE",
+      "founded_year": 2017,
+      "industry": "Bất động sản",
+      "category": "RETAIL",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-kinh-doanh-va-au-tu-at-xanh-mien-trung/logo.png",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-kinh-doanh-va-au-tu-at-xanh-mien-trung/cover.png",
+      "tax_code": "0401844762",
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "CÔNG TY CỔ PHẦN KINH DOANH VÀ ĐẦU TƯ ĐẤT XANH MIỀN TRUNG Talent Acquisition",
+      "contact_email": "talent+93224@datxanhmientrung.com",
+      "contact_phone": "0908100022",
+      "status": "PENDING",
+      "rejection_note": "Chờ admin phê duyệt hồ sơ doanh nghiệp seed.",
+      "quota_job_post": 5,
+      "quota_cv_views": 20,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "779ec717-f615-4925-8a2b-8a8b1a7d246a",
+      "user_id": "2e4dcc9f-4280-4723-9291-d4bb5b12781e",
+      "company_name": "Ngân hàng Á Châu - ACB",
+      "company_website": "https://acb.com.vn/",
+      "company_address": "442 Nguyễn Thị Minh Khai, phường 5, quận 3, tp. Hồ Chí Minh",
+      "company_city": "Hồ Chí Minh",
+      "company_description": "Chuyên trang tuyển dụng chính thức của Ngân hàng TMCP Á Châu (Ngân hàng ACB) trên TopCV. Khám phá thông tin doanh nghiệp, lĩnh vực hoạt động, môi trường làm việc và văn hóa công ty.",
+      "company_phone": "0908100123",
+      "company_size": "100-500 nhân viên",
+      "company_type": "FINTECH",
+      "founded_year": null,
+      "industry": "Ngân hàng",
+      "category": "FINANCE_BANKING",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/ngan-hang-a-chau-acb/logo.jpg",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/ngan-hang-a-chau-acb/cover.png",
+      "tax_code": "0301452948",
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "Ngân hàng Á Châu - ACB Talent Acquisition",
+      "contact_email": "talent+198502@acb.com.vn",
+      "contact_phone": "0908100023",
+      "status": "PENDING",
+      "rejection_note": "Chờ admin phê duyệt hồ sơ doanh nghiệp seed.",
+      "quota_job_post": 5,
+      "quota_cv_views": 20,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "fc276fdd-11d3-4a1b-9bf2-41a79375284e",
+      "user_id": "ad9aa3a5-f57d-4b1d-ad55-be12a9206953",
+      "company_name": "Công ty Cổ phần Giáo dục và Công nghệ TIW",
+      "company_website": "https://onthiielts.com.vn/",
+      "company_address": "20/56 Võ Văn Dũng, Đống Đa, Hà Nội",
+      "company_city": "Hà Nội",
+      "company_description": "Chuyên trang tuyển dụng chính thức của Công ty Cổ phần Giáo dục và Công nghệ TIW trên TopCV. Khám phá thông tin doanh nghiệp, lĩnh vực hoạt động, môi trường làm việc và văn hóa công ty.",
+      "company_phone": "0908100124",
+      "company_size": "100-499 nhân viên",
+      "company_type": "ENTERPRISE",
+      "founded_year": 2016,
+      "industry": "Giáo dục / Đào tạo",
+      "category": "EDUCATION",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-giao-duc-va-cong-nghe-tiw/logo.jpg",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-co-phan-giao-duc-va-cong-nghe-tiw/cover.png",
+      "tax_code": "0107829858",
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "Công ty Cổ phần Giáo dục và Công nghệ TIW Talent Acquisition",
+      "contact_email": "talent+26496@onthiielts.com.vn",
+      "contact_phone": "0908100024",
+      "status": "PENDING",
+      "rejection_note": "Chờ admin phê duyệt hồ sơ doanh nghiệp seed.",
+      "quota_job_post": 5,
+      "quota_cv_views": 20,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "7842d00e-c1f2-4720-a78f-f30933e92dec",
+      "user_id": "f4134d69-ac07-4b14-ad29-4465d80882b7",
+      "company_name": "Công Ty TNHH LG CNS VIỆT NAM",
+      "company_website": "https://careers.lgcnsvn.com/",
+      "company_address": "toà nhà Youngjin E&amp;C Hải Phòng, Hồng Phong, An Dương, Hải Phòng, Việt Nam",
+      "company_city": "Hải Phòng",
+      "company_description": "Chuyên trang tuyển dụng chính thức của Công Ty TNHH LG CNS VIỆT NAM trên TopCV. Khám phá thông tin doanh nghiệp, lĩnh vực hoạt động, môi trường làm việc và văn hóa công ty.",
+      "company_phone": "0908100125",
+      "company_size": "100-499 nhân viên",
+      "company_type": "PRODUCT_COMPANY",
+      "founded_year": 2017,
+      "industry": "IT - Phần mềm, Xuất nhập khẩu, IT - Phần cứng",
+      "category": "IT_SOFTWARE",
+      "benefits": [],
+      "rating": null,
+      "review_count": null,
+      "logo_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-tnhh-lg-cns-viet-nam/logo.jpg",
+      "cover_image_url": "https://smartcv-storage-dev.s3.ap-southeast-1.amazonaws.com/seed/topcv/cong-ty-tnhh-lg-cns-viet-nam/cover.png",
+      "tax_code": "0201762551",
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "Công Ty TNHH LG CNS VIỆT NAM Talent Acquisition",
+      "contact_email": "talent+139535@careers.lgcnsvn.com",
+      "contact_phone": "0908100025",
+      "status": "PENDING",
+      "rejection_note": "Chờ admin phê duyệt hồ sơ doanh nghiệp seed.",
+      "quota_job_post": 5,
+      "quota_cv_views": 20,
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "platform_fee_due_at": null,
+      "platform_fee_last_paid_at": null,
+      "platform_fee_reminder_sent_at": null,
+      "platform_fee_overdue_sent_at": null,
+      "platform_fee_locked_at": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    }
+  ],
+  "candidates": [
+    {
+      "_id": "c159927b-bd35-40b3-8702-47cb0d533602",
+      "user_id": "8270ebb8-bc95-4fe0-b001-b1dbcccec888",
+      "dob": {
+        "$date": "1995-01-01T00:00:00.000Z"
+      },
+      "gender": "MALE",
+      "address": "Hà Nội, Việt Nam",
+      "bio": "Backend Developer đang tìm kiếm cơ hội phát triển trong môi trường sản phẩm và tăng trưởng.",
+      "title": "Backend Developer",
+      "avatar_url": null,
+      "skills": [
+        "Java",
+        "Spring Boot",
+        "REST API",
+        "MySQL"
+      ],
+      "years_of_experience": 1,
+      "experiences": [],
+      "educations": [],
+      "certifications": [],
+      "languages": [],
+      "job_type": "FULL_TIME",
+      "preferred_location": "Hà Nội",
+      "expected_salary_min": 10000000,
+      "expected_salary_max": 16000000,
+      "portfolio_url": null,
+      "github_url": "https://github.com/seed-candidate-1",
+      "linkedin_url": "https://www.linkedin.com/in/seed-candidate-1/",
+      "cv_url": null,
+      "cvs": [],
+      "settings": {
+        "notifications": {
+          "emailApplicationUpdates": true,
+          "emailJobSuggestions": true,
+          "pushNotifications": true,
+          "marketingEmails": false
+        },
+        "privacy": {
+          "profileVisibility": "RECRUITERS_ONLY",
+          "showCvToRecruiters": true,
+          "showContactInfo": false
+        },
+        "preferences": {
+          "language": "VI",
+          "theme": "LIGHT"
+        }
+      },
+      "job_suggestions": [],
+      "suggestions_updated_at": null,
+      "followed_company_ids": [],
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "c7343ba5-b215-4af1-bba5-576994584b08",
+      "user_id": "7f2cd428-a974-45bc-aef0-f8224bd0749a",
+      "dob": {
+        "$date": "1996-02-03T00:00:00.000Z"
+      },
+      "gender": "FEMALE",
+      "address": "Hồ Chí Minh, Việt Nam",
+      "bio": "Frontend Developer đang tìm kiếm cơ hội phát triển trong môi trường sản phẩm và tăng trưởng.",
+      "title": "Frontend Developer",
+      "avatar_url": null,
+      "skills": [
+        "React",
+        "TypeScript",
+        "HTML",
+        "CSS"
+      ],
+      "years_of_experience": 2,
+      "experiences": [],
+      "educations": [],
+      "certifications": [],
+      "languages": [],
+      "job_type": "FULL_TIME",
+      "preferred_location": "Hồ Chí Minh",
+      "expected_salary_min": 11000000,
+      "expected_salary_max": 17200000,
+      "portfolio_url": null,
+      "github_url": null,
+      "linkedin_url": "https://www.linkedin.com/in/seed-candidate-2/",
+      "cv_url": null,
+      "cvs": [],
+      "settings": {
+        "notifications": {
+          "emailApplicationUpdates": true,
+          "emailJobSuggestions": true,
+          "pushNotifications": true,
+          "marketingEmails": false
+        },
+        "privacy": {
+          "profileVisibility": "RECRUITERS_ONLY",
+          "showCvToRecruiters": true,
+          "showContactInfo": false
+        },
+        "preferences": {
+          "language": "VI",
+          "theme": "LIGHT"
+        }
+      },
+      "job_suggestions": [],
+      "suggestions_updated_at": null,
+      "followed_company_ids": [],
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "60c49402-6462-4255-9893-d073ddde55b7",
+      "user_id": "0fd74cbe-021c-4fc5-be7c-72d6e0cdce2e",
+      "dob": {
+        "$date": "1997-03-05T00:00:00.000Z"
+      },
+      "gender": "MALE",
+      "address": "Đà Nẵng, Việt Nam",
+      "bio": "Business Analyst đang tìm kiếm cơ hội phát triển trong môi trường sản phẩm và tăng trưởng.",
+      "title": "Business Analyst",
+      "avatar_url": null,
+      "skills": [
+        "SQL",
+        "Documentation",
+        "Agile",
+        "Stakeholder Management"
+      ],
+      "years_of_experience": 3,
+      "experiences": [],
+      "educations": [],
+      "certifications": [],
+      "languages": [],
+      "job_type": "FULL_TIME",
+      "preferred_location": "Đà Nẵng",
+      "expected_salary_min": 12000000,
+      "expected_salary_max": 18400000,
+      "portfolio_url": null,
+      "github_url": null,
+      "linkedin_url": "https://www.linkedin.com/in/seed-candidate-3/",
+      "cv_url": null,
+      "cvs": [],
+      "settings": {
+        "notifications": {
+          "emailApplicationUpdates": true,
+          "emailJobSuggestions": true,
+          "pushNotifications": true,
+          "marketingEmails": false
+        },
+        "privacy": {
+          "profileVisibility": "RECRUITERS_ONLY",
+          "showCvToRecruiters": true,
+          "showContactInfo": false
+        },
+        "preferences": {
+          "language": "VI",
+          "theme": "LIGHT"
+        }
+      },
+      "job_suggestions": [],
+      "suggestions_updated_at": null,
+      "followed_company_ids": [],
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "307bd179-8ef8-40b9-9d3f-73eccb99df86",
+      "user_id": "030b7c9d-97c2-4584-bc83-3332d889d640",
+      "dob": {
+        "$date": "1998-04-07T00:00:00.000Z"
+      },
+      "gender": "FEMALE",
+      "address": "Hải Phòng, Việt Nam",
+      "bio": "QA Engineer đang tìm kiếm cơ hội phát triển trong môi trường sản phẩm và tăng trưởng.",
+      "title": "QA Engineer",
+      "avatar_url": null,
+      "skills": [
+        "Automation Testing",
+        "Selenium",
+        "Postman",
+        "API Testing"
+      ],
+      "years_of_experience": 4,
+      "experiences": [],
+      "educations": [],
+      "certifications": [],
+      "languages": [],
+      "job_type": "FULL_TIME",
+      "preferred_location": "Hải Phòng",
+      "expected_salary_min": 13000000,
+      "expected_salary_max": 19600000,
+      "portfolio_url": null,
+      "github_url": "https://github.com/seed-candidate-4",
+      "linkedin_url": "https://www.linkedin.com/in/seed-candidate-4/",
+      "cv_url": null,
+      "cvs": [],
+      "settings": {
+        "notifications": {
+          "emailApplicationUpdates": true,
+          "emailJobSuggestions": true,
+          "pushNotifications": true,
+          "marketingEmails": false
+        },
+        "privacy": {
+          "profileVisibility": "RECRUITERS_ONLY",
+          "showCvToRecruiters": true,
+          "showContactInfo": false
+        },
+        "preferences": {
+          "language": "VI",
+          "theme": "LIGHT"
+        }
+      },
+      "job_suggestions": [],
+      "suggestions_updated_at": null,
+      "followed_company_ids": [],
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "0cdd6648-4197-4364-9d8a-bb4ebc08c0e6",
+      "user_id": "6eda0a17-a52d-425c-b4a9-36d092aa03fd",
+      "dob": {
+        "$date": "1999-05-09T00:00:00.000Z"
+      },
+      "gender": "MALE",
+      "address": "Cần Thơ, Việt Nam",
+      "bio": "Product Designer đang tìm kiếm cơ hội phát triển trong môi trường sản phẩm và tăng trưởng.",
+      "title": "Product Designer",
+      "avatar_url": null,
+      "skills": [
+        "Figma",
+        "Design System",
+        "UX Research",
+        "Prototype"
+      ],
+      "years_of_experience": 5,
+      "experiences": [],
+      "educations": [],
+      "certifications": [],
+      "languages": [],
+      "job_type": "FULL_TIME",
+      "preferred_location": "Cần Thơ",
+      "expected_salary_min": 14000000,
+      "expected_salary_max": 20800000,
+      "portfolio_url": null,
+      "github_url": null,
+      "linkedin_url": "https://www.linkedin.com/in/seed-candidate-5/",
+      "cv_url": null,
+      "cvs": [],
+      "settings": {
+        "notifications": {
+          "emailApplicationUpdates": true,
+          "emailJobSuggestions": true,
+          "pushNotifications": true,
+          "marketingEmails": false
+        },
+        "privacy": {
+          "profileVisibility": "RECRUITERS_ONLY",
+          "showCvToRecruiters": true,
+          "showContactInfo": false
+        },
+        "preferences": {
+          "language": "VI",
+          "theme": "LIGHT"
+        }
+      },
+      "job_suggestions": [],
+      "suggestions_updated_at": null,
+      "followed_company_ids": [],
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "ed7f3aa0-2b3d-4fee-936a-d38d54ffa842",
+      "user_id": "2015a6b3-06c1-4647-aaea-cbafb646e621",
+      "dob": {
+        "$date": "2000-06-11T00:00:00.000Z"
+      },
+      "gender": "FEMALE",
+      "address": "Hà Nội, Việt Nam",
+      "bio": "Data Analyst đang tìm kiếm cơ hội phát triển trong môi trường sản phẩm và tăng trưởng.",
+      "title": "Data Analyst",
+      "avatar_url": null,
+      "skills": [
+        "Java",
+        "Spring Boot",
+        "REST API",
+        "MySQL"
+      ],
+      "years_of_experience": 1,
+      "experiences": [],
+      "educations": [],
+      "certifications": [],
+      "languages": [],
+      "job_type": "FULL_TIME",
+      "preferred_location": "Hà Nội",
+      "expected_salary_min": 15000000,
+      "expected_salary_max": 22000000,
+      "portfolio_url": null,
+      "github_url": null,
+      "linkedin_url": "https://www.linkedin.com/in/seed-candidate-6/",
+      "cv_url": null,
+      "cvs": [],
+      "settings": {
+        "notifications": {
+          "emailApplicationUpdates": true,
+          "emailJobSuggestions": true,
+          "pushNotifications": true,
+          "marketingEmails": false
+        },
+        "privacy": {
+          "profileVisibility": "RECRUITERS_ONLY",
+          "showCvToRecruiters": true,
+          "showContactInfo": false
+        },
+        "preferences": {
+          "language": "VI",
+          "theme": "LIGHT"
+        }
+      },
+      "job_suggestions": [],
+      "suggestions_updated_at": null,
+      "followed_company_ids": [],
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "20ab51f8-4e05-4a40-b3d2-89d249ded272",
+      "user_id": "a3ec53fc-ec46-4e5e-aa7a-915ce46ce911",
+      "dob": {
+        "$date": "2001-07-13T00:00:00.000Z"
+      },
+      "gender": "MALE",
+      "address": "Hồ Chí Minh, Việt Nam",
+      "bio": "Mobile Developer đang tìm kiếm cơ hội phát triển trong môi trường sản phẩm và tăng trưởng.",
+      "title": "Mobile Developer",
+      "avatar_url": null,
+      "skills": [
+        "React",
+        "TypeScript",
+        "HTML",
+        "CSS"
+      ],
+      "years_of_experience": 2,
+      "experiences": [],
+      "educations": [],
+      "certifications": [],
+      "languages": [],
+      "job_type": "FULL_TIME",
+      "preferred_location": "Hồ Chí Minh",
+      "expected_salary_min": 16000000,
+      "expected_salary_max": 23200000,
+      "portfolio_url": null,
+      "github_url": "https://github.com/seed-candidate-7",
+      "linkedin_url": "https://www.linkedin.com/in/seed-candidate-7/",
+      "cv_url": null,
+      "cvs": [],
+      "settings": {
+        "notifications": {
+          "emailApplicationUpdates": true,
+          "emailJobSuggestions": true,
+          "pushNotifications": true,
+          "marketingEmails": false
+        },
+        "privacy": {
+          "profileVisibility": "RECRUITERS_ONLY",
+          "showCvToRecruiters": true,
+          "showContactInfo": false
+        },
+        "preferences": {
+          "language": "VI",
+          "theme": "LIGHT"
+        }
+      },
+      "job_suggestions": [],
+      "suggestions_updated_at": null,
+      "followed_company_ids": [],
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "d4d638c1-fe29-46f7-af8f-291e5bd3f400",
+      "user_id": "c2b74f9f-5a2c-4821-82a8-e1949e6858d0",
+      "dob": {
+        "$date": "2002-08-15T00:00:00.000Z"
+      },
+      "gender": "FEMALE",
+      "address": "Đà Nẵng, Việt Nam",
+      "bio": "DevOps Engineer đang tìm kiếm cơ hội phát triển trong môi trường sản phẩm và tăng trưởng.",
+      "title": "DevOps Engineer",
+      "avatar_url": null,
+      "skills": [
+        "SQL",
+        "Documentation",
+        "Agile",
+        "Stakeholder Management"
+      ],
+      "years_of_experience": 3,
+      "experiences": [],
+      "educations": [],
+      "certifications": [],
+      "languages": [],
+      "job_type": "FULL_TIME",
+      "preferred_location": "Đà Nẵng",
+      "expected_salary_min": 17000000,
+      "expected_salary_max": 24400000,
+      "portfolio_url": null,
+      "github_url": null,
+      "linkedin_url": "https://www.linkedin.com/in/seed-candidate-8/",
+      "cv_url": null,
+      "cvs": [],
+      "settings": {
+        "notifications": {
+          "emailApplicationUpdates": true,
+          "emailJobSuggestions": true,
+          "pushNotifications": true,
+          "marketingEmails": false
+        },
+        "privacy": {
+          "profileVisibility": "RECRUITERS_ONLY",
+          "showCvToRecruiters": true,
+          "showContactInfo": false
+        },
+        "preferences": {
+          "language": "VI",
+          "theme": "LIGHT"
+        }
+      },
+      "job_suggestions": [],
+      "suggestions_updated_at": null,
+      "followed_company_ids": [],
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "43dbd323-e836-4a3a-91bb-af1c98f59057",
+      "user_id": "cda501ad-7bd2-48f7-b1b9-5d8a1df56f8e",
+      "dob": {
+        "$date": "1995-09-17T00:00:00.000Z"
+      },
+      "gender": "MALE",
+      "address": "Hải Phòng, Việt Nam",
+      "bio": "Technical Recruiter đang tìm kiếm cơ hội phát triển trong môi trường sản phẩm và tăng trưởng.",
+      "title": "Technical Recruiter",
+      "avatar_url": null,
+      "skills": [
+        "Automation Testing",
+        "Selenium",
+        "Postman",
+        "API Testing"
+      ],
+      "years_of_experience": 4,
+      "experiences": [],
+      "educations": [],
+      "certifications": [],
+      "languages": [],
+      "job_type": "FULL_TIME",
+      "preferred_location": "Hải Phòng",
+      "expected_salary_min": 18000000,
+      "expected_salary_max": 25600000,
+      "portfolio_url": null,
+      "github_url": null,
+      "linkedin_url": "https://www.linkedin.com/in/seed-candidate-9/",
+      "cv_url": null,
+      "cvs": [],
+      "settings": {
+        "notifications": {
+          "emailApplicationUpdates": true,
+          "emailJobSuggestions": true,
+          "pushNotifications": true,
+          "marketingEmails": false
+        },
+        "privacy": {
+          "profileVisibility": "RECRUITERS_ONLY",
+          "showCvToRecruiters": true,
+          "showContactInfo": false
+        },
+        "preferences": {
+          "language": "VI",
+          "theme": "LIGHT"
+        }
+      },
+      "job_suggestions": [],
+      "suggestions_updated_at": null,
+      "followed_company_ids": [],
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    },
+    {
+      "_id": "735302e4-3664-43da-9289-d44109ea7da1",
+      "user_id": "b2eaa471-1233-4f25-b634-c9b2fcb46dca",
+      "dob": {
+        "$date": "1996-10-19T00:00:00.000Z"
+      },
+      "gender": "FEMALE",
+      "address": "Cần Thơ, Việt Nam",
+      "bio": "Project Coordinator đang tìm kiếm cơ hội phát triển trong môi trường sản phẩm và tăng trưởng.",
+      "title": "Project Coordinator",
+      "avatar_url": null,
+      "skills": [
+        "Figma",
+        "Design System",
+        "UX Research",
+        "Prototype"
+      ],
+      "years_of_experience": 5,
+      "experiences": [],
+      "educations": [],
+      "certifications": [],
+      "languages": [],
+      "job_type": "FULL_TIME",
+      "preferred_location": "Cần Thơ",
+      "expected_salary_min": 19000000,
+      "expected_salary_max": 26800000,
+      "portfolio_url": null,
+      "github_url": "https://github.com/seed-candidate-10",
+      "linkedin_url": "https://www.linkedin.com/in/seed-candidate-10/",
+      "cv_url": null,
+      "cvs": [],
+      "settings": {
+        "notifications": {
+          "emailApplicationUpdates": true,
+          "emailJobSuggestions": true,
+          "pushNotifications": true,
+          "marketingEmails": false
+        },
+        "privacy": {
+          "profileVisibility": "RECRUITERS_ONLY",
+          "showCvToRecruiters": true,
+          "showContactInfo": false
+        },
+        "preferences": {
+          "language": "VI",
+          "theme": "LIGHT"
+        }
+      },
+      "job_suggestions": [],
+      "suggestions_updated_at": null,
+      "followed_company_ids": [],
+      "active_package_id": null,
+      "package_activated_at": null,
+      "package_expires_at": null,
+      "last_payment_order_id": null,
+      "package_expiry_warning_sent_at": null,
+      "package_downgraded_at": null,
+      "post_expiry_cleanup_at": null,
+      "monthly_ai_credits_used": 0,
+      "monthly_ai_credits_month": null,
+      "created_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "updated_at": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deleted": false,
+      "deleted_at": null
+    }
+  ],
+  "jobs": [
+    {
+      "_id": "9a5e5826-6c16-4f84-a886-9db1f3b4733d",
+      "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+      "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "description": "<h2>Mô tả công việc</h2> <ul><li>Hỗ trợ nhà bán hàng hiện tại:<ul><li>Hỗ trợ nhà bán hàng cải thiện về tình trạng bán hàng trên các gian hàng.</li><li>Hỗ trợ nhà bán hàng để không bị vi phạm các vấn đề liên quan: Thông qua việc hướng dẫn nhà bán hàng về các chính sách bán hàng, hướng dẫn những khiếu nại thực thi và cảnh báo các thông tin (nếu có).</li></ul></li><li>Hỗ trợ nhà bán hàng mới:<ul><li>Chủ động tiếp cận các nhà bán hàng tiềm năng dựa trên dữ liệu cung cấp, hỗ trợ hoàn tất quy trình xác minh hồ sơ, hướng dẫn đăng tải sản phẩm tuân thủ quy định và đồng hành nhà bán hàng trong giai đoạn khởi tạo nhằm thúc đẩy phát sinh doanh số</li><li>Quản lý danh mục nhà bán hàng chiến lược, xây dựng kế hoạch tăng trưởng GMV(Gross Merchandise Value), tối ưu hiệu quả nội dung và phân phối, đồng thời tư vấn các giải pháp đầu tư tăng trưởng phù hợp nhằm thúc đẩy hiệu quả kinh doanh dài hạn.</li></ul></li><li><strong>LÀM VIỆC TẠI:</strong><br>Toà nhà Pico - 20 Cộng Hòa, Phường Bảy Hiền, TPHCM</li><li><strong>THỜI GIAN LÀM VIỆC:</strong><br>Thời gian làm việc: Thứ 2 - Thứ 6 (9:00 – 18h00), nghỉ cố định Thứ 7 & Chủ nhật và lễ, Tết</li></ul> <h2>Yêu cầu ứng viên</h2> <ul><li>Tốt nghiệp THPT trở lên (còn giữ bằng).</li><li>Tuổi 19 – 30.</li><li>Ứng viên có kinh nghiệm từ 3 tháng hỗ trợ khách hàng như: Chăm sóc khách hàng, Telesales, Tổng đài,...là một lợi thế.</li><li>Tiếng anh đọc hiểu cơ bản</li><li>Tin học văn phòng cơ bản.</li></ul> <h2>Quyền lợi được hưởng</h2> <ul><li data-list-item-id=\"e138de48bd15733255397e9a3c0d22a66\">Thu nhập lên đến 9.000.000đ/tháng (Lương gộp 7.000.000đ + thưởng hiệu suất &nbsp;2.000.000 VND).</li><li data-list-item-id=\"e45029d60001a952f75dd4a2185983162\">Lương tháng 13, xét tăng lương 1 lần/năm, lộ trình thăng tiến rõ ràng.</li><li data-list-item-id=\"e3c469d1ea73193eedf29256b0b1393ee\">Tham gia đầy đủ chế độ bảo hiểm: BHXH, BHYT, BHTN.</li><li data-list-item-id=\"e5fc5911d76ba03a01070bc90e5137505\">Quà cho nhân viên vào các dịp Lễ, Tết.</li><li data-list-item-id=\"e408bd1e318ac4e415e6340d431998474\">Các hoạt động team building hàng năm.</li><li data-list-item-id=\"e804e75ae0b849544a557e260dbf9c954\">Trang bị đầy đủ trang thiết bị làm việc (máy tính/ điện thoại).</li><li data-list-item-id=\"e227c8ffd8ec89f5bb625be7470608448\">Đào tạo nghiệp vụ và kỹ năng trước khi bắt đầu công việc.</li></ul>",
+      "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "location": "Toà nhà Pico - 20 Cộng Hòa, Phường Bảy Hiền, Hồ Chí Minh",
+      "salary_min": 7000000,
+      "salary_max": 9000000,
+      "jobType": "FULL_TIME",
+      "experienceLevel": "INTERN",
+      "skills": [
+        "Telesales",
+        "Tin học văn phòng",
+        "Chăm Sóc Khách Hàng"
+      ],
+      "requirements": [],
+      "benefits": [],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderationNote": null,
+      "reviewedBy": "seed-admin",
+      "reviewedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deadline": {
+        "$date": "2026-07-17T00:00:00.000Z"
+      },
+      "openings": 10,
+      "qualifiedThreshold": 70,
+      "rejectThreshold": 40,
+      "autoRejectEnabled": false,
+      "requiredTest": null,
+      "category": "RETAIL",
+      "deleted": false,
+      "deletedAt": null,
+      "createdAt": {
+        "$date": "2026-06-17T00:00:00.000Z"
+      },
+      "updatedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      }
+    },
+    {
+      "_id": "04014de1-6c1d-414d-ac30-d9e7692f7ce5",
+      "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+      "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "description": "<h2>Mô tả công việc</h2> <ul><li data-list-item-id=\"e6babf249d68b606d052dc7a33a33aa91\">Thực hiện cuộc gọi dựa trên data có sẵn phía công ty cung cấp để tư vấn &amp; giới thiệu sản phẩm FMCG ( tiêu dùng nhanh ) đến cho Khách hàng.</li><li data-list-item-id=\"ec587452ce0cbbbf215f36409714b59f6\">Tìm hiểu nhu cầu, giải đáp thắc mắc và đưa ra giải pháp tốt nhất để hỗ trợ Khách hàng.</li><li data-list-item-id=\"ecd4a4227efbe36782bcd15455a0c0c02\">Thuyết phục Khách đặt hàng và hỗ trợ lên đơn.</li><li data-list-item-id=\"eb623850eb8621d08136ad2feaf259c5c\">Cập nhật các thông tin, báo cáo liên quan lên hệ thống.</li></ul> <h2>Yêu cầu ứng viên</h2> <ul><li class=\"ck-list-marker-bold\" data-list-item-id=\"ef7cd0b7e4f9db858fe0a5dcec0089085\"><strong>Tốt nghiệp Cao Đẳng trở lên và còn giữ bằng.</strong></li><li data-list-item-id=\"e9d658f64f5b2f47044675a60c255d3dd\"><strong>Tối thiểu 1 năm kinh nghiệm trong lĩnh vực Telesales</strong> (ưu tiên các ứng viên có kinh nghiệm telesales trong lĩnh vực FMCG).</li><li data-list-item-id=\"e99eb125de108572e185aac6e3b9d1d50\">Có thể làm toàn thời gian (không vướng bận lịch học).</li><li data-list-item-id=\"e874e04b680951ba87e2f8366973bbb3f\">Giọng nói rõ ràng, lưu loát.</li><li data-list-item-id=\"e012a645b55704f7e6e906c3c9c63d86f\">Giao tiếp tốt, có khả năng tư vấn và thuyết phục khách hàng.</li><li data-list-item-id=\"ed7ef5e104d47d160d88c0bc84f328069\">Thành thạo kỹ năng sử dụng máy tính và tin học văn phòng cơ bản (Excel, Word...)</li></ul> <h2>Quyền lợi được hưởng</h2> <ul><li data-list-item-id=\"e8fc5f617f723288e32d9882d2085c974\"><b>Thời gian làm việc từ thứ 2 đến thứ 6 =&gt; Thứ 7 làm ở nhà</b></li><li data-list-item-id=\"e8fc5f617f723288e32d9882d2085c974\"><b>Thu nhập lên đến hơn 15.000.000 VND/ tháng - Đến KHÔNG GIỚI HẠN TÙY THEO NĂNG LỰC&nbsp;&nbsp;</b></li><li data-list-item-id=\"e8fc5f617f723288e32d9882d2085c974\"><b>(Lương cứng 8.500.000 VND + Thưởng KPIs KHÔNG GIỚI HẠN )</b></li><li data-list-item-id=\"e8c401cb77d877615201482e7cf09ff45\"><b>Lương tháng 13.</b></li><li data-list-item-id=\"e98867c2046ef6466958b22ff691349be\">Xét tăng lương 1 lần/năm, lộ trình thăng tiến rõ ràng.</li><li data-list-item-id=\"eaa322b7aa222e92f87190f1250c5f3fe\">Tham gia đầy đủ chế độ bảo hiểm: BHXH, BHYT, BHTN.</li><li data-list-item-id=\"e77d1d14ea2d0827b8b9744e0bc8df7a6\">Quà cho nhân viên vào các dịp Lễ, Tết.</li><li data-list-item-id=\"eed55aa90b09b8ec31bd2c183a9e7b574\">Các hoạt động team building hàng năm.</li><li data-list-item-id=\"e427e6e8410a3ae72ae9f865a87c20474\">Trang bị đầy đủ trang thiết bị làm việc (máy tính/ điện thoại).</li><li data-list-item-id=\"e559cbb086abdfab2de1b7279c18f55fb\">Đào tạo nghiệp vụ và kỹ năng trước khi bắt đầu công việc.</li></ul>",
+      "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "location": "Số 156 Nguyễn Lương Bằng, Quận 7, Phường Tân Mỹ, Hồ Chí Minh",
+      "salary_min": 9000000,
+      "salary_max": 15000000,
+      "jobType": "FULL_TIME",
+      "experienceLevel": "JUNIOR",
+      "skills": [
+        "Telesales",
+        "Tin học văn phòng",
+        "Tư vấn",
+        "Giao tiếp",
+        "Thuyết Phục Khách Hàng",
+        "FMCG"
+      ],
+      "requirements": [],
+      "benefits": [],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderationNote": null,
+      "reviewedBy": "seed-admin",
+      "reviewedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deadline": {
+        "$date": "2026-06-29T00:00:00.000Z"
+      },
+      "openings": 5,
+      "qualifiedThreshold": 70,
+      "rejectThreshold": 40,
+      "autoRejectEnabled": false,
+      "requiredTest": null,
+      "category": "RETAIL",
+      "deleted": false,
+      "deletedAt": null,
+      "createdAt": {
+        "$date": "2026-05-29T00:00:00.000Z"
+      },
+      "updatedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      }
+    },
+    {
+      "_id": "51062656-e244-46e8-8aa5-22953c2ddaaa",
+      "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+      "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "description": "<h2>Mô tả công việc</h2> <p>- Tiếp nhận phản hồi của khách hàng và giải đáp các thắc mắc liên quan đến sản phẩm, dịch vụ tài chính - ngân hàng qua các kênh: hotline, chat, email.</p><p>- Xử lý các công việc nghiệp vụ chăm sóc khách hàng khác (nếu có) theo yêu cầu của quản lý.</p><p>- Thời gian làm việc: xoay ca 8h/ngày, 6 ngày/tuần.&nbsp;</p><p>- Địa chỉ: Tòa nhà MB, 21 Cát Linh, phường Ô Chợ Dừa, Hà Nội.</p> <h2>Yêu cầu ứng viên</h2> <p>- Tốt nghiệp Trung cấp trở lên (chấp nhận sinh viên đang chờ bằng).</p><p>- Không nói ngọng, không nói lắp, không giọng địa phương.</p><p>- Có kỹ năng về Word/Excel, tin học văn phòng.</p><p>- Có kinh nghiệm CSKH, tổng đài viên, tư vấn bán hàng, telesales,... là một điểm cộng (không có sẽ được đào tạo).</p> <h2>Quyền lợi được hưởng</h2> <p>- Thu nhập 7.000.000 - 9.000.000 đồng/tháng.</p><p>- Xét thăng tiến 2 lần/năm, xét tăng lương 1 lần/năm.</p><p>- Lương tháng thứ 13.</p><p>- Bảo hiểm đầy đủ ngay sau 1 tháng đào tạo.</p><p>- Quy trình đào tạo bài bản, rõ ràng.</p><p>- Tặng quà vào các dịp lễ, Tết trong năm.</p><p>- Trợ cấp hiếu hỉ, sinh con, ốm đau.</p><p>- Khám sức khỏe miễn phí thường niên.</p><p>- Teambuilding, các hoạt động gắn kết nhân viên toàn công ty.</p>",
+      "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "location": "Tòa nhà MB, 21 Cát Linh, Phường Ô Chợ Dừa, Hà Nội",
+      "salary_min": 7000000,
+      "salary_max": 9000000,
+      "jobType": "FULL_TIME",
+      "experienceLevel": "INTERN",
+      "skills": [],
+      "requirements": [],
+      "benefits": [],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderationNote": null,
+      "reviewedBy": "seed-admin",
+      "reviewedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deadline": {
+        "$date": "2026-07-27T00:00:00.000Z"
+      },
+      "openings": 10,
+      "qualifiedThreshold": 70,
+      "rejectThreshold": 40,
+      "autoRejectEnabled": false,
+      "requiredTest": null,
+      "category": "RETAIL",
+      "deleted": false,
+      "deletedAt": null,
+      "createdAt": {
+        "$date": "2026-06-27T00:00:00.000Z"
+      },
+      "updatedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      }
+    },
+    {
+      "_id": "2818b1ee-dba7-496c-bd06-56d382657f4f",
+      "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+      "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "description": "<h2>Mô tả công việc</h2> <p><i><strong>Seeding &amp; Quản lý bài đăng seeding</strong></i></p><ul><li data-list-item-id=\"ec5b0e8d51d9ea6924d33791a4e97eb03\">Xây dựng nội dung seeding, viết bài seeding dựa theo định hướng nội dung seeding có sẵn</li><li data-list-item-id=\"e11826863090540c14c201a77d2c9035c\">Quản lý tài khoản seeding, duy trì và vận hành tài khoản, bình luận seeding để tạo tương tác.</li><li data-list-item-id=\"e46ba9d9fe41dca68f01b110d25b0bd74\">Hỗ trợ kiểm tra nội dung comment và bài viết, thông báo ngay khi phát hiện khủng hoảng</li></ul><p><i><strong>Admin quản lý nhóm &amp; hoạt động tương tác trong nhóm</strong></i></p><ul><li data-list-item-id=\"e36e5dc2052930b12cc655b2165177540\">Kiểm tra, duyệt hoặc từ chối bài đăng và thành viên mới trong fanpage.</li><li data-list-item-id=\"e38a2cfe7e53d07bd1eedd56098eb800e\">Trả lời bình luận, tin nhắn của thành viên trên trên group</li><li data-list-item-id=\"e9960604215feadbbda8acced9fbea8e4\">Theo dõi, kiểm tra bình luận, kịp thời báo cáo khi phát hiện bình luận tiêu cực và phối hợp giải quyết.</li><li data-list-item-id=\"ef6a17605bc3a992c52274e94a6e14f56\">Đăng bài với vai trò quản trị viên theo yêu cầu của nhóm (Nội dung có sẵn)</li><li data-list-item-id=\"efcfd92d3ea166c2f6c75a33e8b424664\">Lựa chọn và duy trì nhóm thành viên tích cực, thúc đẩy hoạt động cho group</li><li data-list-item-id=\"eeffa2b0577c51a9d270b10625f98b800\">Hỗ trợ tổng hợp và báo cáo tình hình hoạt động theo định kỳ.</li></ul><p><i><strong>Content Writer: (hỗ trợ nội dung Livestream)</strong></i></p><ul><li data-list-item-id=\"ecdb4e88a444e51c1dcb4e5f5969966c4\">Viết kịch bản cho các buổi livestream nội bộ, đảm bảo nội dung hấp dẫn, bám sát mục tiêu truyền thông.</li><li data-list-item-id=\"efff9986590e11081318c5f94f1f989d4\">Tìm kiếm và book KOL/PR theo yêu cầu và thỏa thuận của chiến dịch.</li><li data-list-item-id=\"e9a42ce5902d89662c86e8f70208653db\">Thực hiện các báo cáo theo yêu cầu.</li></ul> <h2>Yêu cầu ứng viên</h2> <ul><li data-list-item-id=\"ea5966a2d9ddd54dbf4bf8537b539f1e5\">Có kinh nghiệm seeding, quản lý cộng đồng hoặc vận hành mạng xã hội là một lợi thế.</li><li data-list-item-id=\"e48a1ccc0a69ede204be6709e69bbdd46\">Kỹ năng viết nội dung tốt, sáng tạo, linh hoạt theo từng định hướng nội dung.</li><li data-list-item-id=\"ef9cfc99e604bee58228145034909ad7e\">Chủ động, có tinh thần trách nhiệm, xử lý tình huống nhanh nhạy.</li><li data-list-item-id=\"e2666aaa03f44d824b092c84757703c50\">Hiểu biết về quản lý fanpage, nhóm cộng đồng trên các nền tảng mạng xã hội.</li></ul> <h2>Quyền lợi được hưởng</h2> <ul><li data-list-item-id=\"ee83cbe5a5a04ef84f48bd9ea9f6dfee3\">Thu nhập: <strong>9.000.000 – 10.000.000 VNĐ/tháng (gồm lương cứng + KPI)</strong></li><li data-list-item-id=\"e31618e10e18093150c791f76b33a7af9\">Lương tháng 13.</li><li data-list-item-id=\"e635be5d490d106a31e7dd879831a1efa\">Xét thăng chức 2 lần/năm, xét tăng lương 1 lần/năm.</li><li data-list-item-id=\"eed7c8c253dfbca131c307be2157f173a\">Cơ hội huấn luyện: được tham gia khóa học đào tạo bài bản, chuyên nghiệp về nghiệp vụ và kỹ năng chăm sóc khách hàng.</li><li data-list-item-id=\"ea80b40d722bb90d54e4f86b90c66ea49\">Chế độ BHXH, BHYT, BHTN… theo quy định của luật Việt Nam.</li><li data-list-item-id=\"e4518034800812acd5522b59785c20973\">Môi trường làm việc chuẩn văn hóa Nhật Bản.</li><li data-list-item-id=\"efc39f8a794b5b83b03093e5d7da11cac\">Văn phòng làm việc hiện tại, nằm tại quận trung tâm của TP Hà Nội.</li><li data-list-item-id=\"e70b3f130e4e6e2f110b803b32e62a368\">Lộ trình thăng tiến rõ ràng.</li><li data-list-item-id=\"efbb903e9dc73d8d4368fea14d441be08\">Quà tặng/tiền mặt vào các dịp lễ Tết trong năm, trợ cấp hiếu, hỉ, sinh con, ốm đau.</li><li data-list-item-id=\"e746ca96346b256f5fc8031282f4037a1\">Khám sức khỏe thường niên</li><li data-list-item-id=\"e989b3996325b4f4cb710ec21493abb04\">Team building &amp; các hoạt động gắn kết nhân viên toàn công ty</li></ul>",
+      "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "location": "Tòa Charmvit, 117 Trần Duy Hưng, Phường Cầu Giấy, Hà Nội",
+      "salary_min": 9000000,
+      "salary_max": 10000000,
+      "jobType": "FULL_TIME",
+      "experienceLevel": "INTERN",
+      "skills": [],
+      "requirements": [],
+      "benefits": [],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderationNote": null,
+      "reviewedBy": "seed-admin",
+      "reviewedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deadline": {
+        "$date": "2026-07-07T00:00:00.000Z"
+      },
+      "openings": 1,
+      "qualifiedThreshold": 70,
+      "rejectThreshold": 40,
+      "autoRejectEnabled": false,
+      "requiredTest": null,
+      "category": "MARKETING",
+      "deleted": false,
+      "deletedAt": null,
+      "createdAt": {
+        "$date": "2026-06-06T00:00:00.000Z"
+      },
+      "updatedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      }
+    },
+    {
+      "_id": "40315fc6-52b8-48c0-9468-5a7f8c2e7bad",
+      "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+      "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "description": "<h2>Mô tả công việc</h2> <ul><li>Tiếp nhận danh sách khách hàng có sẵn từ Công ty.</li><li>Thực hiện cuộc gọi ra theo kịch bản Công ty: tư vấn, giải đáp và thuyết phục KH sử dụng sản phẩm Gói Chăm Sóc Sức Khỏe.</li><li>Cập nhật và báo cáo công việc hằng ngày lên hệ thống.</li></ul> <h2>Yêu cầu ứng viên</h2> <ul><li class=\"ck-list-marker-bold\" data-list-item-id=\"e391c373bfcdf3178a250e519621dd2f6\"><strong>Không yêu cầu kinh nghiệm. Sẽ được đào tạo khi làm việc.</strong></li><li data-list-item-id=\"e7d487c8f6c160f03c1d99a7b70e7a51e\">Đã tốt nghiệp (còn giữ bằng).</li><li data-list-item-id=\"e4f5cc0f758c745940def656657ba3910\">Yêu thích công việc tư vấn Bảo Hiểm: ưu tiên có kinh nghiệm tư vấn bán hàng, CSKH, telesales,... và các công việc liên quan.</li><li data-list-item-id=\"e5b3d812cc2b249402123778a8f2f569d\">Khả năng giao tiếp tốt, lưu loát.</li></ul> <h2>Quyền lợi được hưởng</h2> <ul><li data-list-item-id=\"e89b0764669ab845ea911dca7c5c29651\">Thu nhập: 8.000.000-15.000.000 vnđ/tháng (lương cứng: 7.000.000 vnđ/tháng).</li><li data-list-item-id=\"e867b1a363ca801f8acdd7a17ef7debad\">Được đào tạo chuyên nghiệp bài bản từ đầu, phát triển và định hướng nghề nghiệp.</li><li data-list-item-id=\"e48e79894883acf9febb84cdfdeeba96c\">Trang thiết bị làm việc do Công ty cung cấp.</li><li data-list-item-id=\"e4a202982b8b8bc27a1850b17fca5ebbd\">Ký HĐLĐ, tham gia đầy đủ BHXH, BHYT, BHTN.</li><li data-list-item-id=\"ec4de05e712f0562cb55193ad74b14d53\">Được hưởng 12 ngày phép/năm.</li><li data-list-item-id=\"e9a967f31efa384fd55c34495fddb808a\">Lương tháng 13 hằng năm, tăng lương định kỳ 1 năm/lần, thăng tiến&nbsp;</li><li data-list-item-id=\"ebc74df350502508b26f411a6be4674c8\">Khám sức khỏe định kỳ 1 lần/năm miễn phí.</li><li data-list-item-id=\"e3f95ef6432a05011d5452bda297027d9\">Tham gia Công đoàn, thưởng và quà tặng đầy đủ lễ, tết, sinh nhật, hỷ sự, party, du lịch...</li></ul>",
+      "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "location": "19A Cộng Hòa, Phường Bảy Hiền, Hồ Chí Minh",
+      "salary_min": 8000000,
+      "salary_max": 15000000,
+      "jobType": "FULL_TIME",
+      "experienceLevel": "INTERN",
+      "skills": [
+        "Telesales",
+        "Tư vấn",
+        "Giao tiếp",
+        "Chăm Sóc Khách Hàng"
+      ],
+      "requirements": [],
+      "benefits": [],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderationNote": null,
+      "reviewedBy": "seed-admin",
+      "reviewedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deadline": {
+        "$date": "2026-06-29T00:00:00.000Z"
+      },
+      "openings": 1,
+      "qualifiedThreshold": 70,
+      "rejectThreshold": 40,
+      "autoRejectEnabled": false,
+      "requiredTest": null,
+      "category": "RETAIL",
+      "deleted": false,
+      "deletedAt": null,
+      "createdAt": {
+        "$date": "2026-05-11T00:00:00.000Z"
+      },
+      "updatedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      }
+    },
+    {
+      "_id": "3afe0018-1356-40b2-b4c1-200cc16ab270",
+      "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+      "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "description": "<h2>Mô tả công việc</h2> <p>- Tiếp nhận phản hồi của khách hàng và giải đáp các thắc mắc liên quan đến sản phẩm, dịch vụ tài chính - ngân hàng qua các kênh: hotline, chat, email.</p><p>- Xử lý các công việc nghiệp vụ chăm sóc khách hàng khác (nếu có) theo yêu cầu của quản lý.</p> <h2>Yêu cầu ứng viên</h2> <p>- Tốt nghiệp Trung cấp trở lên (chấp nhận sinh viên đang chờ bằng).</p><p>- Không nói ngọng, không nói lắp, không giọng địa phương.</p><p>- Có kỹ năng về Word/Excel, tin học văn phòng.</p><p>- Có kinh nghiệm CSKH, tổng đài viên, tư vấn bán hàng, telesales,... là một điểm cộng (không có sẽ được đào tạo).</p> <h2>Quyền lợi được hưởng</h2> <p>- Thu nhập 7.000.000 - 9.000.000 đồng/tháng.</p><p>- Xét thăng tiến 2 lần/năm, xét tăng lương 1 lần/năm.</p><p>- Lương tháng thứ 13.</p><p>- Bảo hiểm đầy đủ ngay sau 1 tháng đào tạo.</p><p>- Quy trình đào tạo bài bản, rõ ràng.</p><p>- Tặng quà vào các dịp lễ, Tết trong năm.</p><p>- Trợ cấp hiếu hỉ, sinh con, ốm đau.</p><p>- Khám sức khỏe miễn phí thường niên.</p><p>- Teambuilding, các hoạt động gắn kết nhân viên toàn công ty.</p>",
+      "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "location": "Tòa MB, 21 Cát Linh, Phường Ô Chợ Dừa, Hà Nội",
+      "salary_min": 7000000,
+      "salary_max": 9000000,
+      "jobType": "FULL_TIME",
+      "experienceLevel": "INTERN",
+      "skills": [],
+      "requirements": [],
+      "benefits": [],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderationNote": null,
+      "reviewedBy": "seed-admin",
+      "reviewedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deadline": {
+        "$date": "2026-06-29T00:00:00.000Z"
+      },
+      "openings": 10,
+      "qualifiedThreshold": 70,
+      "rejectThreshold": 40,
+      "autoRejectEnabled": false,
+      "requiredTest": null,
+      "category": "RETAIL",
+      "deleted": false,
+      "deletedAt": null,
+      "createdAt": {
+        "$date": "2026-05-14T00:00:00.000Z"
+      },
+      "updatedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      }
+    },
+    {
+      "_id": "73da2d80-d91b-452c-a28e-920671c2d5e5",
+      "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+      "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "description": "<h2>Mô tả công việc</h2> <p><i><strong>- Seeding &amp; Quản lý bài đăng seeding</strong></i></p><p><i><strong>- Admin quản lý nhóm &amp; hoạt động tương tác trong nhóm</strong></i></p><p>&nbsp;Kiểm tra, duyệt hoặc từ chối bài đăng và thành viên mới trong fanpage.</p><p>Trả lời bình luận, tin nhắn của thành viên trên trên group</p><p><i><strong>- Content Writer: (hỗ trợ nội dung Livestream)</strong></i></p><p>&nbsp;</p><p>&nbsp;<strong>ĐỊA ĐIỂM LÀM VIỆC:</strong></p><p>Tòa nhà Charmvit Tower, Số 117 đường Trần Duy Hưng, Hà Nội.<br><br><strong>THỜI GIAN LÀM VIỆC:</strong></p><p>Từ 8:00 – 17:30, từ thứ 2 đến thứ 6 hàng tuần và thứ 7 nếu có yêu cầu.</p> <h2>Yêu cầu ứng viên</h2> <ul><li data-list-item-id=\"e101484d6ca39a58bd94a84e0171da6c0\">Tốt nghiệp Cao đẳng hoặc Đại học&nbsp;</li><li data-list-item-id=\"e9690e1f3e441c2ddc1ba0398f1b553bf\">Có kinh nghiệm seeding, quản lý cộng đồng hoặc vận hành mạng xã hội là một lợi thế.</li><li data-list-item-id=\"e8f50e35894a8e9c936343633c23e675b\">Kỹ năng viết nội dung tốt, sáng tạo, linh hoạt theo từng định hướng nội dung.</li><li data-list-item-id=\"e661a476ecb5246b9cbd9ac8e7649c2d8\">Chủ động, có tinh thần trách nhiệm, xử lý tình huống nhanh nhạy.</li><li data-list-item-id=\"ebf02570dd52df7924658f310b68a8122\">Hiểu biết về quản lý fanpage, nhóm cộng đồng trên các nền tảng mạng xã hội.</li></ul> <h2>Quyền lợi được hưởng</h2> <p>-&nbsp;&nbsp; Thu nhập: 8.500 - 10.000.000 VNĐ/tháng (Có KPI tháng)</p><p>-&nbsp;&nbsp;&nbsp;&nbsp; Lương tháng 13</p><p>-&nbsp;&nbsp;&nbsp;&nbsp; Xét thăng chức 2 lần/năm, xét tăng lương 1 lần/năm.</p><p>-&nbsp;&nbsp;&nbsp;&nbsp; Cơ hội huấn luyện: được tham gia khóa học đào tạo bài bản, chuyên nghiệp về nghiệp vụ và kỹ năng chăm sóc khách hàng.</p><p>-&nbsp;&nbsp;&nbsp; Chế độ BHXH, BHYT, BHTN… theo quy định của luật Việt Nam.</p><p>- &nbsp; &nbsp;Nghỉ phép năm.</p><p>-&nbsp;&nbsp;&nbsp;&nbsp; Môi trường làm việc chuẩn văn hóa Nhật Bản.</p><p>-&nbsp;&nbsp;&nbsp;&nbsp; Văn phòng làm việc hiện tại, nằm tại quận trung tâm của TP Hà Nội.</p><p>-&nbsp;&nbsp;&nbsp;&nbsp; Lộ trình thăng tiến rõ ràng.</p><p>-&nbsp;&nbsp;&nbsp;&nbsp; Quà tặng/tiền mặt vào các dịp lễ Tết trong năm, trợ cấp hiếu, hỉ, sinh con, ốm đau.</p><p>-&nbsp;&nbsp;&nbsp;&nbsp; Khám sức khỏe thường niên</p><p>-&nbsp;&nbsp;&nbsp;&nbsp; Team building &amp; các hoạt động gắn kết nhân viên toàn công ty</p>",
+      "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "location": "Tòa nhà Charmvit Tower, 117 Trần Duy Hưng, Phường Cầu Giấy, Hà Nội",
+      "salary_min": 8500000,
+      "salary_max": 10000000,
+      "jobType": "FULL_TIME",
+      "experienceLevel": "JUNIOR",
+      "skills": [],
+      "requirements": [],
+      "benefits": [],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderationNote": null,
+      "reviewedBy": "seed-admin",
+      "reviewedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deadline": {
+        "$date": "2026-06-29T00:00:00.000Z"
+      },
+      "openings": 1,
+      "qualifiedThreshold": 70,
+      "rejectThreshold": 40,
+      "autoRejectEnabled": false,
+      "requiredTest": null,
+      "category": "RETAIL",
+      "deleted": false,
+      "deletedAt": null,
+      "createdAt": {
+        "$date": "2026-05-06T00:00:00.000Z"
+      },
+      "updatedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      }
+    },
+    {
+      "_id": "5d960428-1fc6-42cb-bed2-8210ca42c17f",
+      "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+      "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "description": "<h2>Mô tả công việc</h2> <p>- Tiếp nhận và giải đáp thắc mắc của khách hàng về các sản phẩm, dịch vụ tài chính – ngân hàng qua hotline, chat và email.</p><p>-&nbsp; Xử lý các công việc nghiệp vụ chăm sóc khách hàng khác (nếu có) theo yêu cầu của quản lý.</p><p>- Làm việc : Toà nhà MB, 21 Cát Linh, Phường Ô Chợ Dừa, Hà Nội</p> <h2>Yêu cầu ứng viên</h2> <p>- Tốt nghiệp Trung cấp trở lên (chấp nhận sinh viên đang chờ bằng).</p><p>- Không nói ngọng, không nói lắp, không giọng địa phương.</p><p>- Có kỹ năng về Word/Excel, tin học văn phòng.</p><p>- Có kinh nghiệm CSKH, tổng đài viên, tư vấn bán hàng, telesales,... là một điểm cộng (không có sẽ được đào tạo).</p> <h2>Quyền lợi được hưởng</h2> <p>- Thu nhập 7.000.000 - 9.000.000 đồng/tháng.</p><p>- Xét thăng tiến 2 lần/năm, xét tăng lương 1 lần/năm.</p><p>- Lương tháng thứ 13.</p><p>- Bảo hiểm đầy đủ ngay sau 1 tháng đào tạo.</p><p>- Quy trình đào tạo bài bản, rõ ràng.</p><p>- Được cung cấp sẵn thiết bị làm việc.</p><p>- Tặng quà vào các dịp lễ, Tết trong năm.</p><p>- Trợ cấp hiếu hỉ, sinh con, ốm đau.</p><p>- Khám sức khỏe miễn phí thường niên.</p><p>- Teambuilding, các hoạt động gắn kết nhân viên toàn công ty.</p>",
+      "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "location": "Toà nhà MB, 21 Cát Linh, Phường Ô Chợ Dừa, Hà Nội",
+      "salary_min": 7000000,
+      "salary_max": 9000000,
+      "jobType": "FULL_TIME",
+      "experienceLevel": "INTERN",
+      "skills": [],
+      "requirements": [],
+      "benefits": [],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderationNote": null,
+      "reviewedBy": "seed-admin",
+      "reviewedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deadline": {
+        "$date": "2026-07-12T00:00:00.000Z"
+      },
+      "openings": 10,
+      "qualifiedThreshold": 70,
+      "rejectThreshold": 40,
+      "autoRejectEnabled": false,
+      "requiredTest": null,
+      "category": "RETAIL",
+      "deleted": false,
+      "deletedAt": null,
+      "createdAt": {
+        "$date": "2026-06-12T00:00:00.000Z"
+      },
+      "updatedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      }
+    },
+    {
+      "_id": "feaa8cd8-ebc9-4bd8-863f-c53c0b8689a6",
+      "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+      "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "description": "<h2>Mô tả công việc</h2> <p><strong>WE NEED YOU:</strong></p><p><strong>General:</strong></p><ul><li>Ensure Quality Monitoring is performed to improve overall quality performance per project standards.</li></ul><p><strong>Specific:</strong></p><ul><li>Conduct QA audits to ensure accuracy, compliance, and service quality.</li><li>Provide feedback &amp; coaching based on audit results, complaints, and satisfaction metrics.</li><li>Support training on soft skills, communication, and new processes.</li><li>Analyze quality trends; report results and ensure correct tagging/category usage.</li><li>Update SOPs/guidelines and ensure recovery actions are completed.</li><li>Join calibrations to keep scoring and requirements aligned.</li><li>Perform root-cause analysis and recommend improvement actions.</li><li>Track quality concerns and propose process/training changes.</li><li>Test new features/processes to validate accuracy and usability.</li><li>Support KPI goals including Productivity, CSAT, and CQM.</li><li>Other duties as assigned...</li></ul> <h2>Yêu cầu ứng viên</h2> <p><strong>REQUIREMENTS:&nbsp;</strong></p><ul><li>≥ 1 years of experience developing &amp; implementing QA programs in a call center.</li><li>Proven ability to deliver feedback, drive quality improvements, and lead calibration alignment.</li><li>E-commerce or online platform experience preferred.</li><li>Proficient in MS Office/Google Workspace.</li><li>Strong reporting, data analysis, and presentation skills.</li><li>Good English communication.</li><li>Strong soft skills: communication, listening, time management, multitasking, adaptability, and prioritization.</li></ul> <h2>Quyền lợi được hưởng</h2> <p><strong>BENEFITS:</strong></p><ul><li>Salary: Negotiable&nbsp;</li><li>13th month salary.</li><li>Insurances per Vietnamese Labor Law.</li><li>Promotion opportunities, salary increase once/year.</li><li>Periodical bonus: twice/year.</li><li>Bonuses, gifts for Holidays.</li><li>Activities: Birthday party, Town Hall, Employee engagement activities.</li><li>Meal allowance, transport allowance &amp; parking fee...</li></ul>",
+      "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "location": "20 Cộng Hòa, Phường Bảy Hiền, Hồ Chí Minh",
+      "salary_min": 14000000,
+      "salary_max": 16000000,
+      "jobType": "FULL_TIME",
+      "experienceLevel": "JUNIOR",
+      "skills": [],
+      "requirements": [],
+      "benefits": [],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderationNote": null,
+      "reviewedBy": "seed-admin",
+      "reviewedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deadline": {
+        "$date": "2026-07-26T00:00:00.000Z"
+      },
+      "openings": 1,
+      "qualifiedThreshold": 70,
+      "rejectThreshold": 40,
+      "autoRejectEnabled": false,
+      "requiredTest": null,
+      "category": "IT_SOFTWARE",
+      "deleted": false,
+      "deletedAt": null,
+      "createdAt": {
+        "$date": "2026-06-26T00:00:00.000Z"
+      },
+      "updatedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      }
+    },
+    {
+      "_id": "10fa808f-90ae-4686-8b03-c1f4691b325c",
+      "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+      "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "description": "<h2>Mô tả công việc</h2> <ul><li data-list-item-id=\"ea9f513235d1503fce3c2a475325b1469\">Lead and manage a team of agents to achieve project targets.&nbsp;</li><li data-list-item-id=\"e2e0cdcd2bbd3db2147cde8bec3c143ba\">Monitor team performance, productivity and attendance&nbsp;</li><li data-list-item-id=\"e8166cbd179165f842cd3c4bd47bbd758\">Coach agents to support sellers in driving sales, GMV growth, and platform adoption&nbsp;</li><li data-list-item-id=\"eb8e0458501ca97e00f5a2f6677d33467\">Handle escalations and support agents for issue resolution.&nbsp;</li><li data-list-item-id=\"ed090202504ddb319424e48ae66ddbfe5\">Identify performance gaps and provide coaching and development plans.&nbsp;</li><li data-list-item-id=\"ed0df40b7e927a311e107d7821b8e4c6a\">Prepare and submit daily, weekly, and monthly performance reports to management.&nbsp;</li><li data-list-item-id=\"ea934696b5a4a72f7764d9a4e6ef8a2d8\">Manage recurring meetings with team(s) to review performance &nbsp;</li></ul> <h2>Yêu cầu ứng viên</h2> <ul><li>Graduated from College or above.&nbsp;</li><li>Fluent in English both written and spoken (TOEIC 650) or the same level</li><li>Minimum 1 years of experience in Teamleader role (specialized in BPO industry) team size at least 15 HC&nbsp;</li><li>Good skill in reading, understanding and handling the issue of customer</li><li>Plus if has knowledge about trust and safety, experience about logistic or Ecommerce operation</li><li>Experience in Content Moderation and Contact Center is a plus.&nbsp;</li></ul> <h2>Quyền lợi được hưởng</h2> <ul><li>13th-month salary.</li><li>Insurances followed Vietnamese Labor Law.</li><li>Promotion opportunities, salary increase once/year.</li><li>Bonuses, gifts for Holidays.</li><li>Activities: Birthday party, Town Hall, Employee engagement activities.</li><li>Meal allowance, transport allowance &amp; parking fee.</li></ul>",
+      "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "location": "10th floor Scetpa Building, 19A Cong Hoa Street, Bay Hien Ward, Phường Bảy Hiền, Hồ Chí Minh",
+      "salary_min": 12000000,
+      "salary_max": 15000000,
+      "jobType": "FULL_TIME",
+      "experienceLevel": "JUNIOR",
+      "skills": [
+        "Quản lý nhóm",
+        "Phân tích dữ liệu",
+        "Thương Mại Điện Tử",
+        "Xây dựng quy trình",
+        "Kiểm Duyệt Nội Dung"
+      ],
+      "requirements": [],
+      "benefits": [],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderationNote": null,
+      "reviewedBy": "seed-admin",
+      "reviewedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deadline": {
+        "$date": "2026-07-26T00:00:00.000Z"
+      },
+      "openings": 1,
+      "qualifiedThreshold": 70,
+      "rejectThreshold": 40,
+      "autoRejectEnabled": false,
+      "requiredTest": null,
+      "category": "RETAIL",
+      "deleted": false,
+      "deletedAt": null,
+      "createdAt": {
+        "$date": "2026-06-26T00:00:00.000Z"
+      },
+      "updatedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      }
+    },
+    {
+      "_id": "8e46d8ac-176f-410a-a814-1caaa694ee40",
+      "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+      "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "description": "<h2>Mô tả công việc</h2> <ul><li data-list-item-id=\"ea02942bfe06760111da3a03a400c67e7\">Chuẩn bị toàn bộ chứng từ liên quan đến chương trình hỗ trợ khuyến mãi cho đại lý (in/ ký/ scan/ gửi email... cho đại lý)</li><li data-list-item-id=\"e8a210ecd2114486111c6faf303adeae4\">Thực hiện quy trình thanh toán cho đại lý trên hệ thống</li><li data-list-item-id=\"eb78465b309c99262ac3a8372e1a4c3da\">Đối chiếu số tiền thanh toán với đại lý/ nhân viên bán hàng</li><li data-list-item-id=\"ef4b6c194b51546e2f011c57055b72d97\">Tổng hợp số dư ngân sách và báo cáo tình hình công nợ cho Quản lý trực tiếp</li><li data-list-item-id=\"ef7930baaceaed77396e97a938c68944c\">Các công việc khác theo sự phân công của Quản lý</li><li data-list-item-id=\"ed624ad7ee9b18e16c4fa2939fe0fd1d7\">Thời gian làm việc: Thứ 2 - Thứ 6: 8h00 – 17h30</li></ul> <h2>Yêu cầu ứng viên</h2> <ul><li data-list-item-id=\"e68d88007ef71d2bae2b729df0110f4ba\">Tốt nghiệp Cao đẳng trở lên</li><li data-list-item-id=\"e30ee8669ef3f5f1d88ba69be8a6a6651\">Có từ 1 năm kinh nghiệm làm việc ở vị trí Sales Admin/Sales Support</li><li data-list-item-id=\"eaec41a397926c3e128f04d6540f6baf1\">Tiếng Anh đọc hiểu (chủ yếu biên dịch hợp đồng, tài liệu nội bộ/email)</li><li data-list-item-id=\"e4395a3a4ccc851b168e8c64e736cab42\">Kỹ năng vi tính: Excel, Word cơ bản</li><li data-list-item-id=\"e9559ff2875496079cfe33aa659058c02\">Tính cách: cẩn thận, tỉ mỉ, chính xác và đúng giờ</li></ul> <h2>Quyền lợi được hưởng</h2> <ul><li class=\"ck-list-marker-bold\" data-list-item-id=\"eebbdcb0b982b829f37ff14103967f9dd\"><strong>Lương gross 8.500.000 - 11.000.000</strong></li><li data-list-item-id=\"ebd08cb14be54781083f672037d506e3c\">Xét tăng lương 1 lần/năm, lộ trình thăng tiến rõ ràng</li><li data-list-item-id=\"ed74eb0d281bb75fd44f1d801b2d17a3d\">Đảm bảo đầy đủ chế độ phúc lợi: BHYT, BHXH, ngày nghỉ phép, lương tháng 13, thưởng lễ tết, hoạt động ngoại khóa, quà sinh nhật, …</li><li data-list-item-id=\"e27af8eae6faf2255caaef1a455025e12\">Môi trường chuyên nghiệp, đầy đủ tiện nghi (phòng ăn, tủ lạnh, tủ cá nhân để đồ, ...)</li><li data-list-item-id=\"e66c1c2b2ffc47ec1a137dffe60282cfa\">Được đào tạo kỹ năng nghiệp vụ; cung cấp thiết bị làm việc: máy tính, điện thoại, ...</li><li data-list-item-id=\"e52bff107b3cf58ed2b62b2592329cf64\">Nghỉ phép 12 ngày/ năm</li><li data-list-item-id=\"e6e3398aa79858bcfd8845080f446ea3d\">Khám sức khỏe định kỳ</li></ul>",
+      "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "location": "Toà nhà Charmvit, 117 Trần Duy Hưng, Phường Yên Hòa, Hà Nội",
+      "salary_min": 8500000,
+      "salary_max": 11000000,
+      "jobType": "FULL_TIME",
+      "experienceLevel": "JUNIOR",
+      "skills": [],
+      "requirements": [],
+      "benefits": [],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderationNote": null,
+      "reviewedBy": "seed-admin",
+      "reviewedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deadline": {
+        "$date": "2026-07-26T00:00:00.000Z"
+      },
+      "openings": 1,
+      "qualifiedThreshold": 70,
+      "rejectThreshold": 40,
+      "autoRejectEnabled": false,
+      "requiredTest": null,
+      "category": "RETAIL",
+      "deleted": false,
+      "deletedAt": null,
+      "createdAt": {
+        "$date": "2026-06-26T00:00:00.000Z"
+      },
+      "updatedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      }
+    },
+    {
+      "_id": "8327f3ac-44fd-4bf2-9852-238e5446c988",
+      "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+      "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "description": "<h2>Mô tả công việc</h2> <p>- Thực hiện gọi ra (outbound) theo danh sách khách hàng được phân bổ để tư vấn, thuyết phục khách hàng sử dụng các sản phẩm: thẻ tín dụng, vay tín chấp, bảo hiểm, dịch vụ ngân hàng số...</p><p>- Giải đáp thắc mắc, ghi nhận phản hồi, cập nhật thông tin khách hàng lên hệ thống.</p><p>- Các công việc dịch vụ khách hàng khác theo yêu cầu của quản lý.</p> <h2>Yêu cầu ứng viên</h2> <p>- Tốt nghiệp Trung cấp trở lên.</p><p>- Giọng nói rõ ràng, dễ nghe, kỹ năng giao tiếp tốt.</p><p>- Ưu tiên có kinh nghiệm telesales, CSKH, tài chính – ngân hàng,... (không có kinh nghiệm sẽ được đào tạo).</p><p>- Chủ động, kiên trì, chịu áp lực tốt.</p> <h2>Quyền lợi được hưởng</h2> <p>- Thu nhập 8 - 11 triệu đồng/tháng (lương cứng 6,6 triệu + thưởng theo hiệu quả).</p><p>- Xét thăng chức 2 lần/năm, tăng lương 1 lần/năm.</p><p>- Quà tặng/tiền mặt vào các dịp lễ Tết trong năm, trợ cấp hiếu, hỉ, sinh con, ốm đau.</p><p>- Chế độ BHXH, BHYT, BHTN... theo quy định của luật Việt Nam.</p><p>- Được cung cấp thiết bị làm việc.</p><p>- Khám sức khỏe miễn phí hàng năm.</p><p>- Cơ hội phát triển: được tham gia khóa học đào tạo nâng cao kỹ năng nghiệp vụ và kỹ năng mềm.</p><p>- Văn phòng làm việc hiện đại, chuyên nghiệp.</p><p>- Các hoạt động gắn kết nhân viên toàn công ty.</p>",
+      "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "location": "Tòa MB, 21 Cát Linh, Phường Ô Chợ Dừa, Hà Nội",
+      "salary_min": 8000000,
+      "salary_max": 11000000,
+      "jobType": "FULL_TIME",
+      "experienceLevel": "INTERN",
+      "skills": [],
+      "requirements": [],
+      "benefits": [],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderationNote": null,
+      "reviewedBy": "seed-admin",
+      "reviewedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deadline": {
+        "$date": "2026-06-27T00:00:00.000Z"
+      },
+      "openings": 5,
+      "qualifiedThreshold": 70,
+      "rejectThreshold": 40,
+      "autoRejectEnabled": false,
+      "requiredTest": null,
+      "category": "RETAIL",
+      "deleted": false,
+      "deletedAt": null,
+      "createdAt": {
+        "$date": "2026-05-28T00:00:00.000Z"
+      },
+      "updatedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      }
+    },
+    {
+      "_id": "1fb30478-c15a-44d0-8e74-4db297b00da0",
+      "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+      "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "description": "<h2>Mô tả công việc</h2> <p>- Tiếp nhận danh sách khách hàng tiềm năng và tư vấn cho họ về sản phẩm bảo hiểm sức khỏe của thương hiệu Bảo Việt (Sản phẩm bảo hiểm phi nhân thọ, chi phí thấp, từ 1.500.000đ/ năm)</p><p>- Hỗ trợ và giải đáp các thắc mắc của khách hàng về sản phẩm.</p><p>- Tư vấn để khách hàng chọn được gói sản phẩm phù hợp, hướng dẫn khách hàng các thủ tục để hoàn tất việc mua sản phẩm.</p><p>- Cập nhật các thông tin, báo cáo liên quan lên hệ thống</p><p>&nbsp;</p> <h2>Yêu cầu ứng viên</h2> <p>- Không yêu cầu học vấn cao.</p><p>- Có thể làm toàn thời gian (không vướng bận lịch học)</p><p>- Giọng nói rõ ràng, lưu loát.</p><p>- Giao tiếp tốt, nhanh nhẹn.</p><p>- Tin học văn phòng cơ bản</p><p>- Ứng viên chưa có kinh nghiệm sẽ được đào tạo nghiệp vụ trước khi bắt đầu công việc.</p> <h2>Quyền lợi được hưởng</h2> <p>- Thu nhập không giới hạn: hoa hồng từ 10 - 20%/ Hợp đồng (Lương cứng cố định 7.000.000 VND, có tăng lương đều đặn hàng năm)</p><p>- Thưởng nóng, thưởng quý, thưởng theo chiến dịch.</p><p>- Lương tháng 13.</p><p>- Tham gia đầy đủ chế độ bảo hiểm: BHXH, BHYT, BHTN</p><p>- Thưởng vào các dịp Lễ, Tết.</p><p>- Thưởng từ Công đoàn công ty.</p><p>- Nghỉ phép năm.</p><p>- Hoạt động gắn kết riêng của dự án và công ty.</p><p>- Trang bị đầy đủ trang thiết bị làm việc (máy tính/ điện thoại)</p><p>- Đào tạo nghiệp vụ và kỹ năng trước khi bắt đầu công việc</p>",
+      "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "location": "Toà nhà VTC Online Building – 18 Tam Trinh, Phường Hai Bà Trưng, Hà Nội",
+      "salary_min": 8000000,
+      "salary_max": 20000000,
+      "jobType": "FULL_TIME",
+      "experienceLevel": "INTERN",
+      "skills": [
+        "Giao tiếp tốt",
+        "Tin học văn phòng cơ bản",
+        "Kỹ Năng Thuyết Phục Khách Hàng",
+        "Telesales",
+        "Tư vấn",
+        "Chăm Sóc Khách Hàng",
+        "Bán Hàng",
+        "Tổng đài"
+      ],
+      "requirements": [],
+      "benefits": [],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderationNote": null,
+      "reviewedBy": "seed-admin",
+      "reviewedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deadline": {
+        "$date": "2026-06-27T00:00:00.000Z"
+      },
+      "openings": 5,
+      "qualifiedThreshold": 70,
+      "rejectThreshold": 40,
+      "autoRejectEnabled": false,
+      "requiredTest": null,
+      "category": "RETAIL",
+      "deleted": false,
+      "deletedAt": null,
+      "createdAt": {
+        "$date": "2026-05-28T00:00:00.000Z"
+      },
+      "updatedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      }
+    },
+    {
+      "_id": "061004ed-81ed-4bfc-9629-c71d21ce88a2",
+      "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+      "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "description": "<h2>Mô tả công việc</h2> <p>- Tiếp nhận phản hồi của khách hàng và giải đáp các thắc mắc liên quan đến sản phẩm, dịch vụ tài chính - ngân hàng qua các kênh: hotline, chat, email.</p><p>- Xử lý các công việc nghiệp vụ chăm sóc khách hàng khác (nếu có) theo yêu cầu của quản lý.</p> <h2>Yêu cầu ứng viên</h2> <p>- Tốt nghiệp Trung cấp trở lên (chấp nhận sinh viên đang chờ bằng).</p><p>- Không nói ngọng, không nói lắp, không giọng địa phương.</p><p>- Có kỹ năng về Word/Excel, tin học văn phòng.</p><p>- Có kinh nghiệm CSKH, tổng đài viên, tư vấn bán hàng, telesales,... là một điểm cộng (không có sẽ được đào tạo).</p> <h2>Quyền lợi được hưởng</h2> <p>- Thu nhập 7.000.000 - 9.000.000 đồng/tháng.</p><p>- Xét thăng tiến 2 lần/năm, xét tăng lương 1 lần/năm.</p><p>- Lương tháng thứ 13.</p><p>- Bảo hiểm đầy đủ ngay sau 1 tháng đào tạo.</p><p>- Quy trình đào tạo bài bản, rõ ràng.</p><p>- Tặng quà vào các dịp lễ, Tết trong năm.</p><p>- Trợ cấp hiếu hỉ, sinh con, ốm đau.</p><p>- Khám sức khỏe miễn phí thường niên.</p><p>- Teambuilding, các hoạt động gắn kết nhân viên toàn công ty.</p>",
+      "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "location": "Tòa MB, 21 Cát Linh, Phường Ô Chợ Dừa, Hà Nội",
+      "salary_min": 7000000,
+      "salary_max": 9000000,
+      "jobType": "FULL_TIME",
+      "experienceLevel": "INTERN",
+      "skills": [],
+      "requirements": [],
+      "benefits": [],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderationNote": null,
+      "reviewedBy": "seed-admin",
+      "reviewedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deadline": {
+        "$date": "2026-06-27T00:00:00.000Z"
+      },
+      "openings": 10,
+      "qualifiedThreshold": 70,
+      "rejectThreshold": 40,
+      "autoRejectEnabled": false,
+      "requiredTest": null,
+      "category": "RETAIL",
+      "deleted": false,
+      "deletedAt": null,
+      "createdAt": {
+        "$date": "2026-05-28T00:00:00.000Z"
+      },
+      "updatedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      }
+    },
+    {
+      "_id": "900f7412-5c60-446e-a094-af602d017068",
+      "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+      "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "description": "<h2>Mô tả công việc</h2> <ul><li data-list-item-id=\"ec1b5ffebd5e3d918c3aa0d6b701e2955\">Làm việc tại văn phòng, tiếp nhận và phản hồi các yêu cầu của khách hàng tại Úc liên quan đến tài khoản quảng cáo, chiến dịch marketing và các dịch vụ trên nền tảng mạng xã hội. &nbsp;</li><li data-list-item-id=\"e410741665bfb5c754ff8df60099b8f22\">Hỗ trợ giải đáp thắc mắc, hướng dẫn khách hàng xử lý các vấn đề phát sinh qua Email và Chat.&nbsp;</li><li data-list-item-id=\"e85f997482a2d9e02a8badb07da1bec9b\">Phối hợp với các bộ phận liên quan để theo dõi và xử lý yêu cầu của khách hàng.&nbsp;</li></ul> <h2>Yêu cầu ứng viên</h2> <ul><li data-list-item-id=\"ee1233b7352d47eddd99e1c6a9fe84f3a\">Trình độ tiếng Anh C1 trở lên (có khả năng đọc hiểu và giao tiếp tiếng anh tốt phục vụ cho công việc.)&nbsp;</li><li data-list-item-id=\"e030dfc0ca8182bbba268e5877e637404\">Nhanh nhẹn, tư duy tốt, có thể làm việc độc lập.&nbsp;</li><li data-list-item-id=\"e21f16be6d495e11b7c5e7ed65eb18d29\">Ưu tiên ứng viên có kinh nghiệm về mảng digital marketing, chạy quảng cáo trên các nền tảng mạng xã hội.&nbsp;</li><li data-list-item-id=\"e2fd4469371e6b8b1894bdc4e86892a2c\">Kỹ năng đánh máy tốt, sử dụng máy tính cơ bản.&nbsp;</li><li data-list-item-id=\"e2ee602a299c0525ae0afe5819e37f65a\">Trong trường hợp làm ngày lễ, Tết, ứng viên sẽ nhận được mức lương làm ngày lễ theo quy định của pháp luật (x300%).&nbsp;</li></ul> <h2>Quyền lợi được hưởng</h2> <ul><li data-list-item-id=\"e3f9efe8f1b053add2e6100e7650413c0\">Thu nhập: 12.000.000 – 15.000.000 VNĐ/tháng.</li><li data-list-item-id=\"e883830ee5383195f7e369a6df9678b7b\">Lương tháng 13.</li><li data-list-item-id=\"eae1cf480d2ea25a32bf305fa2586777b\">Xét thăng chức 2 lần/năm, xét tăng lương 1 lần/năm.</li><li data-list-item-id=\"e91a0b444ade91ff77e8120b29ce3343d\">Được đào tạo về sản phẩm, quy trình hỗ trợ khách hàng và kiến thức phục vụ cho công việc.&nbsp;</li><li data-list-item-id=\"e8e4576dccc3d2fe083ef6d37c4dac3a9\">Được cung cấp sẫn thiết bị làm việc.</li><li data-list-item-id=\"e2d53cd554c130984db8c360f31c55aad\">Chế độ BHXH, BHYT, BHTN... theo quy định của luật Việt Nam.</li><li data-list-item-id=\"e597f1e8dd71961707d9473c0773b3431\">Môi trường làm việc chuyên nghiệp, hiện đại.</li><li data-list-item-id=\"ec119733595927a886b38b4a24eba2197\">Lộ trình thăng tiến rõ ràng.</li><li data-list-item-id=\"e1c51312148a48aa30cafda4557b5a615\">Quà tặng/tiền mặt vào các dịp lễ Tết trong năm, trợ cấp hiếu, hỉ, sinh con, ốm đau.</li><li data-list-item-id=\"ec8057218bf81dd6c7a55803a2f53de77\">Khám sức khỏe thường niên</li><li data-list-item-id=\"ec39dc51869968efbd230258b2b1927fc\">Du lịch, teambuilding &amp; các hoạt động gắn kết nhân viên toàn công ty.</li></ul>",
+      "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "location": "Tòa VTC Online, 18 Tam Trinh, Phường Tương Mai, Hà Nội",
+      "salary_min": 12000000,
+      "salary_max": 15000000,
+      "jobType": "FULL_TIME",
+      "experienceLevel": "INTERN",
+      "skills": [],
+      "requirements": [],
+      "benefits": [],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderationNote": null,
+      "reviewedBy": "seed-admin",
+      "reviewedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deadline": {
+        "$date": "2026-07-24T00:00:00.000Z"
+      },
+      "openings": 1,
+      "qualifiedThreshold": 70,
+      "rejectThreshold": 40,
+      "autoRejectEnabled": false,
+      "requiredTest": null,
+      "category": "IT_SOFTWARE",
+      "deleted": false,
+      "deletedAt": null,
+      "createdAt": {
+        "$date": "2026-06-24T00:00:00.000Z"
+      },
+      "updatedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      }
+    },
+    {
+      "_id": "29c258c7-de63-4f89-b45a-62d3f7cf37b0",
+      "recruiter_id": "6bae0738-2d16-43d9-8294-8bbe6b448564",
+      "title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "normalized_title": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "description": "<h2>Mô tả công việc</h2> <p>- Tiếp nhận và giải đáp thắc mắc của khách hàng về các sản phẩm, dịch vụ tài chính – ngân hàng qua hotline, chat và email.</p><p>-&nbsp; Xử lý các công việc nghiệp vụ chăm sóc khách hàng khác (nếu có) theo yêu cầu của quản lý.</p><p>- Làm việc : Toà nhà MB, 21 Cát Linh, Phường Ô Chợ Dừa, Hà Nội</p> <h2>Yêu cầu ứng viên</h2> <p>- Tốt nghiệp Trung cấp trở lên (chấp nhận sinh viên đang chờ bằng).</p><p>- Không nói ngọng, không nói lắp, không giọng địa phương.</p><p>- Có kỹ năng về Word/Excel, tin học văn phòng.</p><p>- Có kinh nghiệm CSKH, tổng đài viên, tư vấn bán hàng, telesales,... là một điểm cộng (không có sẽ được đào tạo).</p> <h2>Quyền lợi được hưởng</h2> <p>- Thu nhập 7.000.000 - 9.000.000 đồng/tháng.</p><p>- Xét thăng tiến 2 lần/năm, xét tăng lương 1 lần/năm.</p><p>- Lương tháng thứ 13.</p><p>- Bảo hiểm đầy đủ ngay sau 1 tháng đào tạo.</p><p>- Quy trình đào tạo bài bản, rõ ràng.</p><p>- Được cung cấp sẵn thiết bị làm việc.</p><p>- Tặng quà vào các dịp lễ, Tết trong năm.</p><p>- Trợ cấp hiếu hỉ, sinh con, ốm đau.</p><p>- Khám sức khỏe miễn phí thường niên.</p><p>- Teambuilding, các hoạt động gắn kết nhân viên toàn công ty.</p>",
+      "company": "CÔNG TY TNHH TRANSCOSMOS VIỆT NAM",
+      "location": "Toà nhà MB, 21 Cát Linh, Phường Ô Chợ Dừa, Hà Nội",
+      "salary_min": 7000000,
+      "salary_max": 9000000,
+      "jobType": "FULL_TIME",
+      "experienceLevel": "INTERN",
+      "skills": [],
+      "requirements": [],
+      "benefits": [],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderationNote": null,
+      "reviewedBy": "seed-admin",
+      "reviewedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      },
+      "deadline": {
+        "$date": "2026-07-24T00:00:00.000Z"
+      },
+      "openings": 10,
+      "qualifiedThreshold": 70,
+      "rejectThreshold": 40,
+      "autoRejectEnabled": false,
+      "requiredTest": null,
+      "category": "HUMAN_RESOURCES",
+      "deleted": false,
+      "deletedAt": null,
+      "createdAt": {
+        "$date": "2026-06-24T00:00:00.000Z"
+      },
+      "updatedAt": {
+        "$date": "2026-06-27T03:00:00.000Z"
+      }
+    }
+  ]
+}

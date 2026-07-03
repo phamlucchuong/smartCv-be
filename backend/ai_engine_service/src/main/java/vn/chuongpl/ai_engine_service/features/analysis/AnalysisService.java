@@ -226,10 +226,29 @@ public class AnalysisService {
                 "JOB_NAME", request.jobName(),
                 "LEVEL", nvl(request.level()),
                 "DIFFICULTY", nvl(request.difficulty()),
-                "NUM_QUESTIONS", String.valueOf(request.numQuestions())
+                "NUM_QUESTIONS", String.valueOf(request.numQuestions()),
+                "JOB_DESCRIPTION", nvl(request.jobDescription()),
+                "JOB_SKILLS", nvl(request.jobSkills()),
+                "JOB_REQUIREMENTS", nvl(request.jobRequirements())
         ));
         String aiContent = callAi(prompt);
         return parse(aiContent, AssessmentGenerateResponse.class);
+    }
+
+    public AssessmentGenerateResponse generateAssessmentQuestions(
+            AssessmentGenerateRequest request,
+            String userId,
+            boolean recruiterRole,
+            boolean candidateRole,
+            boolean consumeQuota) {
+        if (consumeQuota && userId != null && !userId.isBlank()) {
+            if (recruiterRole) {
+                userClient.consumeRecruiterAiCredit(userId);
+            } else if (candidateRole) {
+                userClient.consumeCandidateAiCredit(userId);
+            }
+        }
+        return generateAssessmentQuestions(request);
     }
 
     private String callAi(String prompt) {
@@ -384,6 +403,7 @@ public class AnalysisService {
                 safeList(matchAnalysis.missingSkills()),
                 safeList(matchAnalysis.extraSkills()),
                 matchAnalysis.summary(),
+                matchAnalysis.summaryVi(),
                 safeList(improvement.strengths()),
                 safeList(improvement.weaknesses()),
                 safeList(improvement.tips()),
@@ -395,6 +415,16 @@ public class AnalysisService {
         } catch (Exception e) {
             log.warn("Failed to persist CV analysis for cvId={}: {}", request.cvId(), e.getMessage());
         }
+
+        final String cvUrl = cvInfo.cvUrl();
+        final String candidateId = userId;
+        CompletableFuture.runAsync(() -> {
+            try {
+                recommend(new JobRecommendRequest(null, cvUrl, 3), candidateId, false);
+            } catch (Exception e) {
+                log.warn("Job recommendation failed for userId={}: {}", candidateId, e.getMessage());
+            }
+        });
 
         return response;
     }

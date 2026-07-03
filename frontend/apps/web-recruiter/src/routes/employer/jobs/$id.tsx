@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Stepper } from "@/components/ui-kit/Stepper";
-import { Button } from "@smart-cv/ui";
+import { Button, JOB_CATEGORY_OPTIONS } from "@smart-cv/ui";
 import { AIInsightBox } from "@/components/ui-kit/AIInsightBox";
 import {
   RecruiterApi,
@@ -57,6 +57,7 @@ type FormFields = {
   title: string;
   location: string;
   jobType: string;
+  category: string;
   experienceLevel: string;
   deadline: string;
   salaryMin: string;
@@ -149,6 +150,7 @@ function initFormFromJob(job: NonNullable<JobData>): FormFields {
     title: job.title ?? "",
     location: job.location ?? "",
     jobType: job.jobType ?? "",
+    category: (job as unknown as { category?: string }).category ?? "",
     experienceLevel: job.experienceLevel ?? "",
     deadline: job.deadline ?? "",
     salaryMin: job.salaryMin != null ? String(job.salaryMin) : "",
@@ -206,6 +208,7 @@ function EditJobForm({
     companyName,
     location: form.location,
     jobType: form.jobType,
+    category: form.category,
     experienceLevel: form.experienceLevel,
     salaryMin: form.salaryMin,
     salaryMax: form.salaryMax,
@@ -364,6 +367,14 @@ function EditJobForm({
               options={JOB_TYPE_OPTIONS}
               placeholder="Chọn loại hình công việc"
               error={errors.jobType}
+              disabled={isReadOnly}
+            />
+            <SelectField
+              label="Ngành nghề"
+              value={form.category}
+              onChange={(v) => setField("category", v)}
+              options={JOB_CATEGORY_OPTIONS}
+              placeholder="Chọn ngành nghề"
               disabled={isReadOnly}
             />
             <DateField

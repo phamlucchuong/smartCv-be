@@ -21,6 +21,7 @@ import vn.chuongpl.user_service.features.recruiter.Recruiter;
 import vn.chuongpl.user_service.features.recruiter.RecruiterMapper;
 import vn.chuongpl.user_service.features.recruiter.RecruiterRepository;
 import vn.chuongpl.user_service.features.recruiter.RecruiterService;
+import vn.chuongpl.user_service.features.servicepackage.ServicePackage;
 import vn.chuongpl.user_service.features.servicepackage.ServicePackageRepository;
 import vn.chuongpl.user_service.features.user.User;
 import vn.chuongpl.user_service.features.user.UserRepository;
@@ -41,6 +42,7 @@ class RecruiterServiceTest {
     @Mock RecruiterMapper recruiterMapper;
     @Mock RabbitTemplate rabbitTemplate;
     @Mock ServicePackageRepository servicePackageRepository;
+    @Mock vn.chuongpl.user_service.integration.notification.AiCreditExhaustedPublisher aiCreditExhaustedPublisher;
 
     @InjectMocks
     RecruiterService recruiterService;
@@ -324,6 +326,27 @@ class RecruiterServiceTest {
         when(recruiterMapper.toRecruiterResponse(any(), any())).thenReturn(new vn.chuongpl.user_service.dtos.response.RecruiterResponse());
 
         assertDoesNotThrow(() -> recruiterService.update("r1", new RecruiterRequest(), "admin", true));
+    }
+
+    @Test
+    void getProfile_shouldExposeAiCreditSummaryForBilling() {
+        Recruiter recruiter = Recruiter.builder()
+                .id("r1")
+                .userId("u1")
+                .activePackageId("pro")
+                .monthlyAiCreditsUsed(12)
+                .monthlyAiCreditsMonth(java.time.YearMonth.now().toString())
+                .build();
+        ServicePackage activePackage = ServicePackage.builder().id("pro").aiCredits(30).build();
+
+        when(recruiterRepository.findByUserIdAndDeletedFalse("u1")).thenReturn(Optional.of(recruiter));
+        when(servicePackageRepository.findById("pro")).thenReturn(Optional.of(activePackage));
+
+        var response = recruiterService.getProfile("u1");
+
+        assertEquals(30, response.getAiCreditsTotal());
+        assertEquals(12, response.getAiCreditsUsed());
+        assertEquals(18, response.getAiCreditsRemaining());
     }
 
     // ── helpers ───────────────────────────────────────────────────────────────

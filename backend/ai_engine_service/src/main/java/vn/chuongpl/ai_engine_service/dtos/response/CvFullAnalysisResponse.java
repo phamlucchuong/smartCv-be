@@ -12,6 +12,7 @@ public record CvFullAnalysisResponse(
         List<String> missingSkills,
         List<String> extraSkills,
         String summary,
+        String summaryVi,
         List<StrengthItem> strengths,
         List<WeaknessItem> weaknesses,
         List<ImprovementTip> tips,

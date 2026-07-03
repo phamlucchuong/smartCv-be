@@ -2,6 +2,7 @@ package vn.chuongpl.user_service.dtos.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import vn.chuongpl.user_service.enums.JobCategory;
 import vn.chuongpl.user_service.enums.RecruiterStatus;
 
 import java.time.LocalDateTime;
@@ -31,6 +32,7 @@ public class RecruiterResponse {
     String companyType;
     Integer foundedYear;
     String industry;
+    JobCategory category;
 
     // ── Media ─────────────────────────────────────────────────────────────────
     String logoUrl;
@@ -59,6 +61,9 @@ public class RecruiterResponse {
     String activePackageId;
     LocalDateTime packageActivatedAt;
     LocalDateTime packageExpiresAt;
+    Integer aiCreditsTotal;
+    Integer aiCreditsUsed;
+    Integer aiCreditsRemaining;
     LocalDateTime platformFeeDueAt;
     LocalDateTime platformFeeLastPaidAt;
     LocalDateTime platformFeeReminderSentAt;

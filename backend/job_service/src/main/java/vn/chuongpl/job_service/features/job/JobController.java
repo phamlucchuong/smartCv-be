@@ -14,6 +14,7 @@ import vn.chuongpl.job_service.dtos.request.JobRejectRequest;
 import vn.chuongpl.job_service.dtos.request.JobSearchRequest;
 import vn.chuongpl.job_service.dtos.request.JobUpdateRequest;
 import vn.chuongpl.job_service.dtos.response.JobResponse;
+import vn.chuongpl.job_service.integration.userservice.UserServiceClient;
 
 import java.util.Arrays;
 import java.util.List;
@@ -66,9 +67,10 @@ public class JobController {
     public ApiResponse<PageResponse<JobResponse>> getAllJobs(@RequestParam(defaultValue = "1") int page,
                                                              @RequestParam(defaultValue = "10") int size,
                                                              @RequestParam(required = false) String moderationStatus,
-                                                             @RequestParam(required = false) String keyword) {
+                                                             @RequestParam(required = false) String keyword,
+                                                             @RequestParam(required = false) String category) {
         return ApiResponse.<PageResponse<JobResponse>>builder()
-                .data(jobService.getAllJobs(moderationStatus, keyword, page, size))
+                .data(jobService.getAllJobs(moderationStatus, keyword, category, page, size))
                 .build();
     }
 
@@ -80,6 +82,23 @@ public class JobController {
     @GetMapping("/{id}/related")
     public ApiResponse<java.util.List<JobResponse>> getRelatedJobs(@PathVariable String id) {
         return ApiResponse.<java.util.List<JobResponse>>builder().data(jobService.getRelatedJobs(id)).build();
+    }
+
+    @GetMapping("/{id}/related-companies")
+    public ApiResponse<java.util.List<UserServiceClient.CompanyData>> getRelatedCompanies(@PathVariable String id) {
+        return ApiResponse.<java.util.List<UserServiceClient.CompanyData>>builder()
+                .data(jobService.getRelatedCompanies(id))
+                .build();
+    }
+
+    @PostMapping("/admin/reindex")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ApiResponse<Integer> reindexJobs() {
+        int count = jobService.reindexAllJobs();
+        return ApiResponse.<Integer>builder()
+                .data(count)
+                .message("Re-indexed " + count + " jobs")
+                .build();
     }
 
     @GetMapping("/batch")

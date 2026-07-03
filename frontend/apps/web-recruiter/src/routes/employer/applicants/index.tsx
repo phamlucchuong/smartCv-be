@@ -12,7 +12,7 @@ import type { ApplicationModels } from "@smart-cv/api";
 import { AIScoreRing } from "@/components/ui-kit/AIScoreRing";
 import { StatusBadge } from "@/components/ui-kit/StatusBadge";
 import { Button } from "@smart-cv/ui";
-import { Search, Download, List, Kanban, Briefcase, Mail, Phone, MapPin, Calendar, Award } from "lucide-react";
+import { Search, Download, List, Kanban, Briefcase, Mail, Phone, Calendar, Award, Eye } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useAuthStore } from "../../../store/useAuthStore";
@@ -61,9 +61,8 @@ function ApplicationKanbanCard({
     <div
       draggable
       onDragStart={(e) => onDragStart(e, application.id ?? "", effectiveStatus)}
-      className="card-surface p-4 cursor-grab active:cursor-grabbing hover:shadow-xl transition-all duration-300 border border-border/50 hover:border-primary/40 space-y-3 group rounded-xl bg-card"
+      className="card-surface group flex h-[196px] cursor-grab flex-col rounded-xl border border-border/50 bg-card p-3.5 transition-all duration-300 hover:border-primary/40 hover:shadow-xl active:cursor-grabbing"
     >
-      {/* Header with Name & AI Score */}
       <div className="flex items-start justify-between gap-2">
         <div className="space-y-0.5 flex-1 min-w-0">
           <Link
@@ -80,16 +79,17 @@ function ApplicationKanbanCard({
         <AIScoreRing score={application.aiScore ?? 0} size={32} thickness={3} />
       </div>
 
-      {/* Applied Job Info */}
-      {application.jobTitle && (
-        <div className="flex items-center gap-1.5 text-xs text-primary/90 bg-primary/5 border border-primary/10 px-2 py-1 rounded-md">
-          <Briefcase className="size-3.5 flex-shrink-0" />
-          <span className="font-medium line-clamp-1">{application.jobTitle}</span>
-        </div>
-      )}
+      <div className="mt-3 flex items-center justify-between gap-2">
+        {application.jobTitle ? (
+          <div className="flex min-w-0 flex-1 items-center gap-1.5 rounded-md border border-primary/10 bg-primary/5 px-2 py-1 text-xs text-primary/90">
+            <Briefcase className="size-3.5 flex-shrink-0" />
+            <span className="font-medium line-clamp-1">{application.jobTitle}</span>
+          </div>
+        ) : <div className="flex-1" />}
+        <StatusBadge className="shrink-0" status={STATUS_LABELS[effectiveStatus as ApplicationStatus] ?? effectiveStatus} />
+      </div>
 
-      {/* Contact & Location Info */}
-      <div className="space-y-1.5 text-[11px] text-muted-foreground border-t border-border/30 pt-2">
+      <div className="mt-3 space-y-1.5 border-t border-border/30 pt-2 text-[11px] text-muted-foreground">
         {candidate?.email && (
           <div className="flex items-center gap-1.5">
             <Mail className="size-3 flex-shrink-0" />
@@ -102,12 +102,6 @@ function ApplicationKanbanCard({
             <span>{candidate.phone}</span>
           </div>
         )}
-        {candidate?.address && (
-          <div className="flex items-center gap-1.5">
-            <MapPin className="size-3 flex-shrink-0" />
-            <span className="truncate">{candidate.address}</span>
-          </div>
-        )}
         {candidate?.yearsOfExperience != null && (
           <div className="flex items-center gap-1.5">
             <Award className="size-3 flex-shrink-0" />
@@ -116,38 +110,18 @@ function ApplicationKanbanCard({
         )}
       </div>
 
-      {/* Skills */}
-      {(candidate?.skills ?? []).length > 0 && (
-        <div className="flex flex-wrap gap-1 pt-1">
-          {(candidate?.skills ?? []).slice(0, 4).map((s) => (
-            <span
-              key={s}
-              className="text-[10px] bg-secondary text-secondary-foreground px-2 py-0.5 rounded-md font-medium"
-            >
-              {s}
-            </span>
-          ))}
-          {(candidate?.skills ?? []).length > 4 && (
-            <span className="text-[10px] bg-secondary/50 text-muted-foreground px-1.5 py-0.5 rounded-md font-medium">
-              +{(candidate?.skills ?? []).length - 4}
-            </span>
-          )}
-        </div>
-      )}
-
-      {/* Footer Info */}
-      <div className="pt-2 flex items-center justify-between border-t border-border/30 text-[10px] text-muted-foreground">
-        <span className="flex items-center gap-1">
+      <div className="mt-auto flex items-center justify-between border-t border-border/30 pt-2 text-[10px] text-muted-foreground">
+        <span className="flex items-center gap-1 min-w-0">
           <Calendar className="size-3" />
           {application.appliedAt
             ? new Date(application.appliedAt).toLocaleDateString("vi-VN")
             : "—"}
         </span>
-        {application.aiScore != null && (
-          <span className="font-semibold bg-success/10 text-success border border-success/20 px-1.5 py-0.5 rounded">
-            Match: {application.aiScore}%
-          </span>
-        )}
+        <Link to="/employer/applicants/$id" params={{ id: application.id ?? "" }}>
+          <Button size="icon" variant="outline" className="h-7 w-7">
+            <Eye className="size-3.5" />
+          </Button>
+        </Link>
       </div>
     </div>
   );

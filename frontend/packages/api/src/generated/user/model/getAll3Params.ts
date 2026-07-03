@@ -12,4 +12,5 @@ query?: string;
 industry?: string;
 companySize?: string;
 location?: string;
+category?: string;
 };

@@ -13,6 +13,7 @@ import vn.chuongpl.user_service.features.recruiter.RecruiterRepository;
 import vn.chuongpl.user_service.features.recruiter.RecruiterService;
 
 import java.time.LocalDateTime;
+import java.time.YearMonth;
 
 @Slf4j
 @Component
@@ -87,12 +88,14 @@ public class PaymentEventConsumer {
         recruiter.setActivePackageId(event.getPackageId());
         recruiter.setPackageActivatedAt(event.getPaidAt());
         recruiter.setPackageExpiresAt(computeExpiry(event));
+        resetAiCreditBucket(recruiter, event.getPaidAt());
     }
 
     private void setActivationFields(Candidate candidate, PaymentCompletedEvent event) {
         candidate.setActivePackageId(event.getPackageId());
         candidate.setPackageActivatedAt(event.getPaidAt());
         candidate.setPackageExpiresAt(computeExpiry(event));
+        resetAiCreditBucket(candidate, event.getPaidAt());
     }
 
     private void applyRecruiterQuota(Recruiter recruiter, PaymentCompletedEvent event) {
@@ -123,5 +126,20 @@ public class PaymentEventConsumer {
             return null;
         }
         return event.getPaidAt().plusDays(event.getPackageDurationDays());
+    }
+
+    private void resetAiCreditBucket(Recruiter recruiter, LocalDateTime referenceTime) {
+        recruiter.setMonthlyAiCreditsUsed(0);
+        recruiter.setMonthlyAiCreditsMonth(resolveMonthKey(referenceTime));
+    }
+
+    private void resetAiCreditBucket(Candidate candidate, LocalDateTime referenceTime) {
+        candidate.setMonthlyAiCreditsUsed(0);
+        candidate.setMonthlyAiCreditsMonth(resolveMonthKey(referenceTime));
+    }
+
+    private String resolveMonthKey(LocalDateTime referenceTime) {
+        LocalDateTime effectiveTime = referenceTime != null ? referenceTime : LocalDateTime.now();
+        return YearMonth.from(effectiveTime).toString();
     }
 }

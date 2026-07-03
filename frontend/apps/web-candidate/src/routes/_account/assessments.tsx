@@ -74,6 +74,7 @@ function formatDate(dateInput?: string | Date): string {
 }
 
 type AssessmentStatusFilter = 'all' | 'NOT_STARTED' | 'IN_PROGRESS' | 'SUBMITTED' | 'EXPIRED'
+type AssessmentSourceFilter = 'all' | 'self' | 'recruiter'
 
 const statusStyle: Record<string, string> = {
   NOT_STARTED: 'bg-muted text-muted-foreground border border-border',
@@ -100,6 +101,22 @@ function getFilterLabel(t: (k: string) => string, key: AssessmentStatusFilter) {
     case 'SUBMITTED': return t('assessments_filter_submitted')
     case 'EXPIRED': return t('assessments_filter_expired')
   }
+}
+
+function getSourceFilterLabel(t: (k: string) => string, key: AssessmentSourceFilter) {
+  switch (key) {
+    case 'all': return t('assessments_source_filter_all')
+    case 'self': return t('assessments_source_filter_self')
+    case 'recruiter': return t('assessments_source_filter_recruiter')
+  }
+}
+
+function formatAttemptScore(attempt: AttemptStateResponse): string {
+  if (attempt.result === 'PENDING') return 'Chờ chấm'
+  if (attempt.correctAnswers != null && attempt.totalQuestions != null && attempt.totalQuestions > 0) {
+    return `${attempt.correctAnswers}/${attempt.totalQuestions}`
+  }
+  return '—'
 }
 
 function getErrorMessage(error: unknown, fallback: string): string {
@@ -204,7 +221,7 @@ function AssessmentCard({
                       ? 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20'
                       : 'bg-red-500/10 text-red-600 border border-red-500/20'
                 }`}>
-                  {latestAttempt.result === 'PENDING' ? 'Chờ chấm' : latestAttempt.score != null ? `${latestAttempt.score.toFixed(0)}%` : '—'}
+                  {formatAttemptScore(latestAttempt)}
                 </span>
               )}
               <span className={`inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium ${statusStyle[itemStatus] ?? statusStyle['NOT_STARTED']}`}>
@@ -411,8 +428,13 @@ function AssessmentsPage() {
           setIsFormOpen(true)
           toast.success('Đã tạo câu hỏi bằng AI thành công!')
         },
-        onError: () => {
-          toast.error('Không thể tạo câu hỏi bằng AI. Vui lòng thử lại.')
+        onError: (err: any) => {
+          const errCode = err?.response?.data?.code;
+          if (errCode === 8012 || errCode === 6008) {
+            toast.error('Hết lượt sử dụng AI. Vui lòng nâng cấp gói dịch vụ.')
+          } else {
+            toast.error('Không thể tạo câu hỏi bằng AI. Vui lòng thử lại.')
+          }
         },
       }
     )
@@ -606,10 +628,13 @@ function AssessmentsPage() {
   }, [takeAssessmentId, assessments, combinedLoading])
   const [query, setQuery] = React.useState('')
   const [status, setStatus] = React.useState<AssessmentStatusFilter>('all')
+  const [source, setSource] = React.useState<AssessmentSourceFilter>('all')
   const [statusMenuOpen, setStatusMenuOpen] = React.useState(false)
+  const [sourceMenuOpen, setSourceMenuOpen] = React.useState(false)
   // Populated by AssessmentCard children once their title queries resolve
   const [titleMap, setTitleMap] = React.useState<Record<string, string>>({})
   const statusMenuRef = React.useRef<HTMLDivElement>(null)
+  const sourceMenuRef = React.useRef<HTMLDivElement>(null)
 
   const registerTitle = React.useCallback((assessmentId: string, title: string) => {
     setTitleMap(prev => (prev[assessmentId] === title ? prev : { ...prev, [assessmentId]: title }))
@@ -624,6 +649,9 @@ function AssessmentsPage() {
       const target = event.target as Node
       if (statusMenuRef.current && !statusMenuRef.current.contains(target)) {
         setStatusMenuOpen(false)
+      }
+      if (sourceMenuRef.current && !sourceMenuRef.current.contains(target)) {
+        setSourceMenuOpen(false)
       }
     }
     document.addEventListener('mousedown', handleClickOutside)
@@ -686,15 +714,22 @@ function AssessmentsPage() {
     { key: 'SUBMITTED' },
     { key: 'EXPIRED' },
   ]
+  const sourceFilterOptions: Array<{ key: AssessmentSourceFilter }> = [
+    { key: 'all' },
+    { key: 'self' },
+    { key: 'recruiter' },
+  ]
 
   const filteredGroups = grouped.filter((group) => {
     const itemStatus = String(group.latestAttempt.status ?? 'NOT_STARTED')
     const byStatus = status === 'all' ? true : itemStatus === status
+    const isSelfCreated = selfAssessments.some((sa) => sa.id === group.assessmentId)
+    const bySource = source === 'all' ? true : source === 'self' ? isSelfCreated : !isSelfCreated
     const q = query.trim().toLowerCase()
     // Search by loaded title; fall back to assessmentId while title is still loading
     const resolvedTitle = titleMap[group.assessmentId] ?? group.assessmentId
     const byQuery = q === '' ? true : resolvedTitle.toLowerCase().includes(q)
-    return byStatus && byQuery
+    return byStatus && bySource && byQuery
   })
 
   return (
@@ -763,29 +798,57 @@ function AssessmentsPage() {
           placeholder={t('assessments_search_placeholder')}
           className="h-10 max-w-sm"
         />
-        <div className="relative" ref={statusMenuRef}>
-          <button
-            type="button"
-            onClick={() => setStatusMenuOpen((v) => !v)}
-            className="border-border bg-card/80 text-foreground flex h-10 min-w-44 items-center justify-between rounded-lg border px-3 text-sm shadow-sm"
-          >
-            {getFilterLabel(t, status)}
-            <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform ${statusMenuOpen ? 'rotate-180' : ''}`} />
-          </button>
-          {statusMenuOpen && (
-            <div className="border-border bg-card absolute left-0 top-11 z-20 w-full rounded-lg border p-1 shadow-lg">
-              {filterOptions.map((option) => (
-                <button
-                  key={option.key}
-                  type="button"
-                  onClick={() => { setStatus(option.key); setStatusMenuOpen(false) }}
-                  className={`w-full cursor-pointer rounded-md px-3 py-2 text-left text-sm ${status === option.key ? 'bg-primary/10 text-primary font-medium' : 'text-foreground hover:bg-muted'}`}
-                >
-                  {getFilterLabel(t, option.key)}
-                </button>
-              ))}
-            </div>
-          )}
+        <div>
+          <div className="relative" ref={sourceMenuRef}>
+            <button
+              type="button"
+              onClick={() => setSourceMenuOpen((v) => !v)}
+              className="border-border bg-card/80 text-foreground flex h-10 min-w-52 items-center justify-between rounded-lg border px-3 text-sm shadow-sm"
+            >
+              {getSourceFilterLabel(t, source)}
+              <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform ${sourceMenuOpen ? 'rotate-180' : ''}`} />
+            </button>
+            {sourceMenuOpen && (
+              <div className="border-border bg-card absolute left-0 top-11 z-20 w-full rounded-lg border p-1 shadow-lg">
+                {sourceFilterOptions.map((option) => (
+                  <button
+                    key={option.key}
+                    type="button"
+                    onClick={() => { setSource(option.key); setSourceMenuOpen(false) }}
+                    className={`w-full cursor-pointer rounded-md px-3 py-2 text-left text-sm ${source === option.key ? 'bg-primary/10 text-primary font-medium' : 'text-foreground hover:bg-muted'}`}
+                  >
+                    {getSourceFilterLabel(t, option.key)}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+        <div>
+          <div className="relative" ref={statusMenuRef}>
+            <button
+              type="button"
+              onClick={() => setStatusMenuOpen((v) => !v)}
+              className="border-border bg-card/80 text-foreground flex h-10 min-w-44 items-center justify-between rounded-lg border px-3 text-sm shadow-sm"
+            >
+              {getFilterLabel(t, status)}
+              <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform ${statusMenuOpen ? 'rotate-180' : ''}`} />
+            </button>
+            {statusMenuOpen && (
+              <div className="border-border bg-card absolute left-0 top-11 z-20 w-full rounded-lg border p-1 shadow-lg">
+                {filterOptions.map((option) => (
+                  <button
+                    key={option.key}
+                    type="button"
+                    onClick={() => { setStatus(option.key); setStatusMenuOpen(false) }}
+                    className={`w-full cursor-pointer rounded-md px-3 py-2 text-left text-sm ${status === option.key ? 'bg-primary/10 text-primary font-medium' : 'text-foreground hover:bg-muted'}`}
+                  >
+                    {getFilterLabel(t, option.key)}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
@@ -854,7 +917,7 @@ function AssessmentsPage() {
                                   ? 'bg-emerald-500/10 text-emerald-600 border border-emerald-500/20'
                                   : 'bg-red-500/10 text-red-600 border border-red-500/20'
                             }`}>
-                              {attempt.result === 'PENDING' ? 'Chờ chấm' : attempt.score != null ? `${attempt.score.toFixed(0)}%` : '—'}
+                              {formatAttemptScore(attempt)}
                             </span>
                           )
                         )}
@@ -1078,6 +1141,7 @@ function AssessmentsPage() {
                     className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm focus:outline-none"
                   >
                     <option value="Intern">Intern</option>
+                    <option value="Fresher">Fresher</option>
                     <option value="Junior">Junior</option>
                     <option value="Senior">Senior</option>
                     <option value="Lead">Lead</option>
@@ -1325,7 +1389,9 @@ function TakeAssessmentContent({
           ) : (
             <>
               <p className={`text-5xl font-bold ${isPassed ? 'text-[var(--success)]' : 'text-[var(--danger)]'}`}>
-                {result?.score ?? '—'}/100
+                {result?.correctAnswers != null && result?.totalQuestions != null && result.totalQuestions > 0
+                  ? `${result.correctAnswers}/${result.totalQuestions}`
+                  : '—'}
               </p>
               <p className="text-sm text-muted-foreground">
                 {isPassed ? t('assessment_passed_desc') : t('assessment_failed_desc')}

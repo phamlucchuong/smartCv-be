@@ -36,6 +36,12 @@ class CvAnalysisInternalTest {
     @Mock
     CvAnalysisDonePublisher cvAnalysisDonePublisher;
 
+    @Mock
+    vn.chuongpl.user_service.features.servicepackage.ServicePackageRepository servicePackageRepository;
+
+    @Mock
+    vn.chuongpl.user_service.integration.notification.AiCreditExhaustedPublisher aiCreditExhaustedPublisher;
+
     @InjectMocks
     CandidateService candidateService;
 

@@ -46,7 +46,8 @@ public enum ErrorCode {
     INSUFFICIENT_AI_QUOTA(6008, "Insufficient AI credit quota"),
     INVALID_IMAGE_TYPE(6006, "Only JPEG, PNG, and WebP images are accepted"),
     IMAGE_TOO_LARGE(6007, "Avatar image must not exceed 2MB"),
-    USER_LOCKED(1011, "User account is locked");
+    USER_LOCKED(1011, "User account is locked"),
+    INVALID_CATEGORY(1022, "Invalid job category");
 
     private int code;
     private String message;
