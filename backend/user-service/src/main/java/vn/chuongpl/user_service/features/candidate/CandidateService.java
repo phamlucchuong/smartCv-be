@@ -23,6 +23,8 @@ import vn.chuongpl.user_service.features.candidate.dto.CvInfoResponse;
 import vn.chuongpl.user_service.integration.job.JobClient;
 import vn.chuongpl.user_service.integration.job.JobSummary;
 import vn.chuongpl.user_service.integration.notification.CvAnalysisDonePublisher;
+import vn.chuongpl.user_service.integration.notification.AiCreditExhaustedPublisher;
+
 
 import java.time.LocalDateTime;
 import java.time.YearMonth;
@@ -47,6 +49,8 @@ public class CandidateService {
     JobClient jobClient;
     S3Service s3Service;
     CvAnalysisDonePublisher cvAnalysisDonePublisher;
+    AiCreditExhaustedPublisher aiCreditExhaustedPublisher;
+
 
     public CandidateResponse create(CandidateRequest request) {
         User user = userRepository.findById(request.getUserId()).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
@@ -296,8 +300,10 @@ public class CandidateService {
 
         Integer limit = servicePackage.getAiCredits();
         if (limit != null && limit != -1 && candidate.getMonthlyAiCreditsUsed() >= limit) {
+            aiCreditExhaustedPublisher.publish(userId, "CANDIDATE");
             throw new AppException(ErrorCode.INSUFFICIENT_AI_QUOTA);
         }
+
 
         candidate.setMonthlyAiCreditsUsed(candidate.getMonthlyAiCreditsUsed() + 1);
         candidate.setUpdatedAt(LocalDateTime.now());

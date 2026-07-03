@@ -42,6 +42,7 @@ class RecruiterServiceTest {
     @Mock RecruiterMapper recruiterMapper;
     @Mock RabbitTemplate rabbitTemplate;
     @Mock ServicePackageRepository servicePackageRepository;
+    @Mock vn.chuongpl.user_service.integration.notification.AiCreditExhaustedPublisher aiCreditExhaustedPublisher;
 
     @InjectMocks
     RecruiterService recruiterService;

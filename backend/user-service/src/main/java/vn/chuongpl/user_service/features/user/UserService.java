@@ -16,6 +16,7 @@ import vn.chuongpl.user_service.dtos.request.UpdateRolesRequest;
 import vn.chuongpl.user_service.dtos.request.UserStatusRequest;
 import vn.chuongpl.user_service.dtos.request.UserUpdateRequest;
 import vn.chuongpl.user_service.dtos.response.UserResponse;
+import vn.chuongpl.user_service.features.candidate.CandidateRepository;
 import vn.chuongpl.user_service.enums.ErrorCode;
 import vn.chuongpl.user_service.exception.AppException;
 import vn.chuongpl.user_service.features.role.Role;
@@ -35,6 +36,7 @@ public class UserService {
     PasswordEncoder passwordEncoder;
     RoleService roleService;
     MongoTemplate mongoTemplate;
+    CandidateRepository candidateRepository;
 
     @NonFinal
     @Value("${app.user-default-page-size:10}")
@@ -87,7 +89,7 @@ public class UserService {
             user.setPassword(passwordEncoder.encode(request.getPassword()));
         }
         user.setUpdatedAt(LocalDateTime.now());
-        return userMapper.toUserResponse(userRepository.save(user));
+        return enrichUserResponse(userMapper.toUserResponse(userRepository.save(user)));
     }
 
     public void changePassword(String userId, ChangePasswordRequest request) {
@@ -138,7 +140,7 @@ public class UserService {
         }
         user.setRoles(roles);
         user.setUpdatedAt(LocalDateTime.now());
-        return userMapper.toUserResponse(userRepository.save(user));
+        return enrichUserResponse(userMapper.toUserResponse(userRepository.save(user)));
     }
 
     public PageResponse<UserResponse> getAllUsers(int page, int size, String keyword, String role, Boolean locked) {
@@ -153,7 +155,7 @@ public class UserService {
         if (!hasKeyword && !hasRole && !hasLocked) {
             Page<User> users = userRepository.findAll(pageable);
             return PageResponse.<UserResponse>builder()
-                    .items(users.getContent().stream().map(userMapper::toUserResponse).toList())
+                    .items(users.getContent().stream().map(userMapper::toUserResponse).map(this::enrichUserResponse).toList())
                     .total(users.getTotalElements())
                     .page(pageCurrent + 1)
                     .pageSize(safeSize)
@@ -185,7 +187,7 @@ public class UserService {
         int totalPages = safeSize > 0 ? (int) Math.ceil((double) total / safeSize) : 1;
 
         return PageResponse.<UserResponse>builder()
-                .items(items.stream().map(userMapper::toUserResponse).toList())
+                .items(items.stream().map(userMapper::toUserResponse).map(this::enrichUserResponse).toList())
                 .total(total)
                 .page(pageCurrent + 1)
                 .pageSize(safeSize)
@@ -210,7 +212,7 @@ public class UserService {
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
         user.setLocked(request.isLocked());
         user.setUpdatedAt(LocalDateTime.now());
-        return userMapper.toUserResponse(userRepository.save(user));
+        return enrichUserResponse(userMapper.toUserResponse(userRepository.save(user)));
     }
 
     public boolean isEmailAvailable(String email) {
@@ -220,6 +222,17 @@ public class UserService {
     public UserResponse getUserById(String id) {
         if (id == null || id.isEmpty()) throw new AppException(ErrorCode.USER_NOT_FOUND);
         User user = userRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
-        return userMapper.toUserResponse(user);
+        return enrichUserResponse(userMapper.toUserResponse(user));
+    }
+
+    private UserResponse enrichUserResponse(UserResponse response) {
+        if (response == null || response.getId() == null || response.getAvatarUrl() != null) {
+            return response;
+        }
+        candidateRepository.findByUserIdAndDeletedFalse(response.getId())
+                .map(candidate -> candidate.getAvatarUrl())
+                .filter(avatarUrl -> avatarUrl != null && !avatarUrl.isBlank())
+                .ifPresent(response::setAvatarUrl);
+        return response;
     }
 }

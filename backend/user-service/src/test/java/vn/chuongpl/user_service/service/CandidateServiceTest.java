@@ -41,6 +41,8 @@ class CandidateServiceTest {
     CandidateMapper candidateMapper;
     @Mock
     ServicePackageRepository servicePackageRepository;
+    @Mock
+    vn.chuongpl.user_service.integration.notification.AiCreditExhaustedPublisher aiCreditExhaustedPublisher;
 
     @InjectMocks
     CandidateService candidateService;

@@ -17,6 +17,7 @@ public class UserResponse {
     String fullName;
     String email;
     String phone;
+    String avatarUrl;
     Set<String> roles;
     boolean verified;
     boolean locked;

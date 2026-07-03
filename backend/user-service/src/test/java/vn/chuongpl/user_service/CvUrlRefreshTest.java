@@ -28,6 +28,8 @@ class CvUrlRefreshTest {
     @Mock S3Service s3Service;
     @Mock UserRepository userRepository;
     @Mock CandidateMapper candidateMapper;
+    @Mock vn.chuongpl.user_service.features.servicepackage.ServicePackageRepository servicePackageRepository;
+    @Mock vn.chuongpl.user_service.integration.notification.AiCreditExhaustedPublisher aiCreditExhaustedPublisher;
     @InjectMocks CandidateService candidateService;
 
     private Candidate candidateWithKey;
@@ -45,6 +47,9 @@ class CvUrlRefreshTest {
                 .id("cv-2").url("http://legacy-url").filename("old.pdf").isDefault(true).build();
         candidateNoKey = Candidate.builder()
                 .userId("user2").cvs(new java.util.ArrayList<>(List.of(cvNoKey))).deleted(false).build();
+
+        given(servicePackageRepository.findById(anyString()))
+                .willReturn(Optional.of(vn.chuongpl.user_service.features.servicepackage.ServicePackage.builder().aiCredits(10).build()));
     }
 
     @Test

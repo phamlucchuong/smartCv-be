@@ -103,6 +103,12 @@ type PackageExpiringSoonMessage struct {
 	ExpiresAt string `json:"expiresAt"`
 }
 
+type AiCreditExhaustedMessage struct {
+	UserID   string `json:"userId"`
+	UserRole string `json:"userRole"`
+}
+
+
 type AssessmentEventMessage struct {
 	AttemptID       string  `json:"attemptId"`
 	AssessmentID    string  `json:"assessmentId"`
@@ -708,3 +714,46 @@ func (c *Consumer) ListenPackageExpiringSoonEvents() error {
 	c.logger.Info("RabbitMQ consumer listening on package.expiring.soon.queue")
 	return nil
 }
+
+func (c *Consumer) ListenAiCreditExhaustedEvents() error {
+	ch, err := c.conn.Channel()
+	if err != nil {
+		return err
+	}
+
+	if err = ch.ExchangeDeclare("recruiter.notification.exchange", "direct", true, false, false, false, nil); err != nil {
+		return err
+	}
+
+	queue, err := ch.QueueDeclare("ai.credit.exhausted.queue", true, false, false, false, nil)
+	if err != nil {
+		return err
+	}
+
+	if err = ch.QueueBind(queue.Name, "ai.credit.exhausted", "recruiter.notification.exchange", false, nil); err != nil {
+		return err
+	}
+
+	msgs, err := ch.Consume(queue.Name, "", true, false, false, false, nil)
+	if err != nil {
+		return err
+	}
+
+	go func() {
+		for d := range msgs {
+			var msg AiCreditExhaustedMessage
+			if err := json.Unmarshal(d.Body, &msg); err != nil {
+				c.logger.Error("failed to unmarshal AI credit exhausted event", "error", err)
+				continue
+			}
+			c.logger.Info("received AI credit exhausted event", "userId", msg.UserID, "role", msg.UserRole)
+			if err := c.notiSvc.HandleAiCreditExhaustedNotice(context.Background(), msg); err != nil {
+				c.logger.Error("failed to handle AI credit exhausted event", "userId", msg.UserID, "error", err)
+			}
+		}
+	}()
+
+	c.logger.Info("RabbitMQ consumer listening on ai.credit.exhausted.queue")
+	return nil
+}
+

@@ -30,6 +30,8 @@ import vn.chuongpl.user_service.features.servicepackage.ServicePackage;
 import vn.chuongpl.user_service.features.servicepackage.ServicePackageRepository;
 import vn.chuongpl.user_service.features.user.User;
 import vn.chuongpl.user_service.features.user.UserRepository;
+import vn.chuongpl.user_service.integration.notification.AiCreditExhaustedPublisher;
+
 
 import java.time.LocalDateTime;
 import java.time.YearMonth;
@@ -50,6 +52,8 @@ public class RecruiterService {
     S3Service s3Service;
     MongoTemplate mongoTemplate;
     RabbitTemplate rabbitTemplate;
+    AiCreditExhaustedPublisher aiCreditExhaustedPublisher;
+
 
     public RecruiterResponse create(RecruiterRequest request) {
         User user = userRepository.findById(request.getUserId()).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
@@ -436,8 +440,10 @@ public class RecruiterService {
 
         Integer limit = servicePackage.getAiCredits();
         if (limit != null && limit != -1 && recruiter.getMonthlyAiCreditsUsed() >= limit) {
+            aiCreditExhaustedPublisher.publish(userId, "RECRUITER");
             throw new AppException(ErrorCode.INSUFFICIENT_AI_QUOTA);
         }
+
 
         recruiter.setMonthlyAiCreditsUsed(recruiter.getMonthlyAiCreditsUsed() + 1);
         recruiter.setUpdatedAt(LocalDateTime.now());
