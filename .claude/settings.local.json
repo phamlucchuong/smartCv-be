@@ -109,7 +109,9 @@
       "Bash(pnpm -F web-recruiter lint)",
       "Bash(rtk ./mvnw clean install -DskipTests)",
       "Bash(bash mvnw clean install -DskipTests)",
-      "Bash(./mvnw test-compile *)"
+      "Bash(./mvnw test-compile *)",
+      "Bash(rtk docker *)",
+      "Bash(echo \"exit: $?\")"
     ]
   }
 }
