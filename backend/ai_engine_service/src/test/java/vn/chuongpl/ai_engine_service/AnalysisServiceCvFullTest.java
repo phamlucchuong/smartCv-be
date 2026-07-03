@@ -89,13 +89,14 @@ class AnalysisServiceCvFullTest {
         when(promptBuilder.buildAnalyzePrompt(any())).thenReturn("analyze prompt");
         when(modelRouter.call(anyString(), eq("analyze prompt")))
                 .thenReturn("{\"matchScore\":78,\"scoreLabel\":\"Good\",\"matchedSkills\":[\"Java\"],"
-                        + "\"missingSkills\":[\"Kubernetes\"],\"extraSkills\":[\"PHP\"],\"summary\":\"Good match\"}");
+                        + "\"missingSkills\":[\"Kubernetes\"],\"extraSkills\":[\"PHP\"],\"summary\":\"Good match\","
+                        + "\"summaryVi\":\"Kết quả phù hợp tốt\"}");
 
         when(promptBuilder.buildImproveStructuredPrompt(any())).thenReturn("improve prompt");
         when(modelRouter.call(anyString(), eq("improve prompt")))
-                .thenReturn("{\"strengths\":[{\"area\":\"Tech\",\"detail\":\"Java expert\"}],"
-                        + "\"weaknesses\":[{\"area\":\"Cloud\",\"detail\":\"No K8s\"}],"
-                        + "\"tips\":[{\"area\":\"Skills\",\"suggestion\":\"Learn K8s\",\"priority\":\"High\"}]}");
+                .thenReturn("{\"strengths\":[{\"area\":\"Tech\",\"detail\":\"Java expert\",\"detailVi\":\"Thành thạo Java\"}],"
+                        + "\"weaknesses\":[{\"area\":\"Cloud\",\"detail\":\"No K8s\",\"detailVi\":\"Chưa biết K8s\"}],"
+                        + "\"tips\":[{\"area\":\"Skills\",\"suggestion\":\"Learn K8s\",\"suggestionVi\":\"Học K8s\",\"priority\":\"High\"}]}");
 
         doNothing().when(userClient).updateCvAnalysis(anyString(), anyString(), anyString());
 
@@ -112,6 +113,10 @@ class AnalysisServiceCvFullTest {
         assertThat(result.weaknesses()).hasSize(1);
         assertThat(result.tips()).hasSize(1);
         assertThat(result.tips().get(0).priority()).isEqualTo("High");
+        assertThat(result.summaryVi()).isEqualTo("Kết quả phù hợp tốt");
+        assertThat(result.strengths().get(0).detailVi()).isEqualTo("Thành thạo Java");
+        assertThat(result.weaknesses().get(0).detailVi()).isEqualTo("Chưa biết K8s");
+        assertThat(result.tips().get(0).suggestionVi()).isEqualTo("Học K8s");
         verify(userClient).updateCvAnalysis(eq(CV_ID), anyString(), eq("DONE"));
     }
 
@@ -282,6 +287,7 @@ class AnalysisServiceCvFullTest {
 
         assertThat(result.targetPosition()).isEqualTo("Software Developers");
         assertThat(result.matchScore()).isEqualTo(84);
+        assertThat(result.summaryVi()).isEqualTo("Điểm số xác định dựa trên yêu cầu O*NET");
         verify(deterministicCvScoringService).score(cvProfile, requirements);
         verify(promptBuilder, never()).buildAnalyzePrompt(any());
         verify(promptBuilder, never()).buildExtractJobTargetPrompt(any());
