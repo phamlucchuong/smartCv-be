@@ -143,9 +143,17 @@ function UsersPage() {
                 return (
                   <tr key={user.id} className="border-t border-border">
                     <td className="p-3">
-                      <div className="size-8 rounded-full bg-primary/15 text-primary flex items-center justify-center text-xs font-semibold">
-                        {name[0]?.toUpperCase()}
-                      </div>
+                      {user.avatarUrl ? (
+                        <img
+                          src={user.avatarUrl}
+                          alt={name}
+                          className="size-8 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="size-8 rounded-full bg-primary/15 text-primary flex items-center justify-center text-xs font-semibold">
+                          {name[0]?.toUpperCase()}
+                        </div>
+                      )}
                     </td>
                     <td className="p-3 font-medium">{name}</td>
                     <td className="p-3 text-muted-foreground">{user.email ?? '—'}</td>

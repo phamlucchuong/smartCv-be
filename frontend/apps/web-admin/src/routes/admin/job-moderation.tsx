@@ -274,48 +274,50 @@ function JobModerationPage() {
 
   return (
     <div className="space-y-5">
-      <div className="flex flex-wrap items-center gap-3">
-        <h1 className="text-2xl font-bold flex-1">{t('admin_job_moderation_title')}</h1>
-        <div className="relative min-w-48 max-w-xs">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
-          <input
-            value={keyword}
-            onChange={(e) => setKeyword(e.target.value)}
-            placeholder="Tìm theo tên việc, công ty..."
-            className="h-9 w-full rounded-lg border border-input bg-background pl-9 pr-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring/40"
-          />
+      <div className="space-y-3">
+        <h1 className="text-2xl font-bold">{t('admin_job_moderation_title')}</h1>
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="relative min-w-48 max-w-xs">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-muted-foreground" />
+            <input
+              value={keyword}
+              onChange={(e) => setKeyword(e.target.value)}
+              placeholder="Tìm theo tên việc, công ty..."
+              className="h-9 w-full rounded-lg border border-input bg-background pl-9 pr-3 text-sm focus:outline-none focus:ring-2 focus:ring-ring/40"
+            />
+          </div>
+          <select
+            value={filter}
+            onChange={(e) => { setPage(1); setFilter(e.target.value as ModerationFilter) }}
+            className="h-9 rounded-md border border-input bg-background px-3 text-sm font-medium"
+          >
+            <option value="">Tất cả (tình trạng)</option>
+            <option value="PENDING">Chờ duyệt</option>
+            <option value="PUBLISHED">Đã duyệt</option>
+          </select>
+          <select
+            value={categoryFilter}
+            onChange={(e) => { setPage(1); setCategoryFilter(e.target.value) }}
+            className="h-9 rounded-md border border-input bg-background px-3 text-sm font-medium"
+          >
+            <option value="">Tất cả ngành nghề</option>
+            <option value="IT_SOFTWARE">IT &amp; Software</option>
+            <option value="FINANCE_BANKING">Finance &amp; Banking</option>
+            <option value="MARKETING">Marketing &amp; Advertising</option>
+            <option value="HEALTHCARE">Healthcare &amp; Pharma</option>
+            <option value="EDUCATION">Education &amp; Training</option>
+            <option value="MANUFACTURING">Manufacturing &amp; Production</option>
+            <option value="RETAIL">Retail &amp; Consumer Goods</option>
+            <option value="REAL_ESTATE">Real Estate &amp; Construction</option>
+            <option value="TRANSPORTATION">Transportation &amp; Logistics</option>
+            <option value="MEDIA_ENTERTAINMENT">Media &amp; Entertainment</option>
+            <option value="LEGAL_CONSULTING">Legal &amp; Consulting</option>
+            <option value="HUMAN_RESOURCES">Human Resources</option>
+            <option value="AGRICULTURE">Agriculture</option>
+            <option value="ENERGY_ENVIRONMENT">Energy &amp; Environment</option>
+            <option value="HOSPITALITY_TOURISM">Hospitality &amp; Tourism</option>
+          </select>
         </div>
-        <select
-          value={filter}
-          onChange={(e) => { setPage(1); setFilter(e.target.value as ModerationFilter) }}
-          className="h-9 rounded-md border border-input bg-background px-3 text-sm font-medium"
-        >
-          <option value="">Tất cả (tình trạng)</option>
-          <option value="PENDING">Chờ duyệt</option>
-          <option value="PUBLISHED">Đã duyệt</option>
-        </select>
-        <select
-          value={categoryFilter}
-          onChange={(e) => { setPage(1); setCategoryFilter(e.target.value) }}
-          className="h-9 rounded-md border border-input bg-background px-3 text-sm font-medium"
-        >
-          <option value="">Tất cả ngành nghề</option>
-          <option value="IT_SOFTWARE">IT &amp; Software</option>
-          <option value="FINANCE_BANKING">Finance &amp; Banking</option>
-          <option value="MARKETING">Marketing &amp; Advertising</option>
-          <option value="HEALTHCARE">Healthcare &amp; Pharma</option>
-          <option value="EDUCATION">Education &amp; Training</option>
-          <option value="MANUFACTURING">Manufacturing &amp; Production</option>
-          <option value="RETAIL">Retail &amp; Consumer Goods</option>
-          <option value="REAL_ESTATE">Real Estate &amp; Construction</option>
-          <option value="TRANSPORTATION">Transportation &amp; Logistics</option>
-          <option value="MEDIA_ENTERTAINMENT">Media &amp; Entertainment</option>
-          <option value="LEGAL_CONSULTING">Legal &amp; Consulting</option>
-          <option value="HUMAN_RESOURCES">Human Resources</option>
-          <option value="AGRICULTURE">Agriculture</option>
-          <option value="ENERGY_ENVIRONMENT">Energy &amp; Environment</option>
-          <option value="HOSPITALITY_TOURISM">Hospitality &amp; Tourism</option>
-        </select>
       </div>
 
       {isLoading && (

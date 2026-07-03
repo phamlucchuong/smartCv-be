@@ -108,14 +108,6 @@ function PaymentsPage() {
     <div className="space-y-5">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">{t('admin_payments_title')}</h1>
-        <Button
-          size="sm"
-          variant="outline"
-          className="h-9 gap-1.5 text-xs"
-          onClick={() => queryClient.invalidateQueries({ queryKey: getGetAdminPaymentOrdersQueryKey(0, 5000) })}
-        >
-          <RefreshCw className="size-3" /> Làm mới
-        </Button>
       </div>
 
       {/* Filter Options Bar */}
@@ -214,6 +206,17 @@ function PaymentsPage() {
             </Button>
           </div>
         )}
+
+        <div className="ml-auto self-end pb-0.5">
+          <Button
+            size="sm"
+            variant="outline"
+            className="h-9 gap-1.5 text-xs"
+            onClick={() => queryClient.invalidateQueries({ queryKey: getGetAdminPaymentOrdersQueryKey(0, 5000) })}
+          >
+            <RefreshCw className="size-3" /> Làm mới
+          </Button>
+        </div>
       </div>
 
       <div className="card-surface overflow-x-auto">

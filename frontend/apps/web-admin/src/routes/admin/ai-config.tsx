@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react'
 import { toast } from 'sonner'
 import { useQuery } from '@tanstack/react-query'
 import { customInstance } from '@smart-cv/api'
+import { AlertTriangle, X } from 'lucide-react'
 import {
   Brain,
   Key,
@@ -67,10 +68,100 @@ const fetchAiUsageReport = async (timeframe: string) => {
 
 type TimeRange = 'day' | 'week' | 'month' | 'year'
 
+// Delete Confirmation Dialog Component
+function DeleteConfirmDialog({
+  model,
+  onConfirm,
+  onCancel,
+}: {
+  model: AIModel
+  onConfirm: () => void
+  onCancel: () => void
+}) {
+  return (
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="delete-dialog-title"
+    >
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        onClick={onCancel}
+      />
+
+      {/* Dialog */}
+      <div className="relative z-10 w-full max-w-md mx-4 rounded-2xl border border-border bg-card shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+        {/* Header */}
+        <div className="flex items-start justify-between p-6 pb-4">
+          <div className="flex items-center gap-3">
+            <div className="flex-shrink-0 p-2.5 bg-danger/10 rounded-xl">
+              <AlertTriangle className="size-6 text-danger" />
+            </div>
+            <div>
+              <h3 id="delete-dialog-title" className="text-base font-semibold text-foreground">
+                Xác nhận xóa Model
+              </h3>
+              <p className="text-xs text-muted-foreground mt-0.5">Hành động này không thể hoàn tác</p>
+            </div>
+          </div>
+          <button
+            id="delete-dialog-close-btn"
+            onClick={onCancel}
+            className="p-1.5 rounded-lg hover:bg-muted transition-colors text-muted-foreground hover:text-foreground"
+            aria-label="Đóng"
+          >
+            <X className="size-4" />
+          </button>
+        </div>
+
+        {/* Body */}
+        <div className="px-6 pb-6">
+          <div className="rounded-xl bg-muted/50 border border-border p-4 mb-5">
+            <p className="text-sm text-muted-foreground mb-2">Model sẽ bị xóa:</p>
+            <div className="flex items-center justify-between">
+              <span className="font-semibold text-foreground">{model.name}</span>
+              <span className="text-xs bg-primary/10 text-primary font-medium px-2 py-0.5 rounded-full">
+                {model.provider}
+              </span>
+            </div>
+          </div>
+          <p className="text-sm text-muted-foreground mb-6">
+            Bạn có chắc chắn muốn xóa model{' '}
+            <strong className="text-foreground">{model.name}</strong> không? Tất cả cấu hình liên quan
+            sẽ bị mất vĩnh viễn.
+          </p>
+
+          <div className="flex gap-3">
+            <Button
+              id="delete-dialog-cancel-btn"
+              variant="outline"
+              className="flex-1"
+              onClick={onCancel}
+            >
+              Hủy bỏ
+            </Button>
+            <Button
+              id="delete-dialog-confirm-btn"
+              className="flex-1 bg-danger hover:bg-danger/90 text-white"
+              onClick={onConfirm}
+            >
+              <Trash2 className="size-4 mr-1.5" />
+              Xóa Model
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function AIConfigPage() {
   const [models, setModels] = useState<AIModel[]>(initialModels)
   const [selectedModelId, setSelectedModelId] = useState<string>('gpt-4o-mini')
   const [timeRange, setTimeRange] = useState<TimeRange>('week')
+  const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null)
 
   const { data: usageData = [] } = useQuery({
     queryKey: ['admin-ai-usage', timeRange],
@@ -168,14 +259,22 @@ function AIConfigPage() {
       toast.error('Phải giữ lại ít nhất một model hoạt động')
       return
     }
-    if (!confirm('Bạn có chắc chắn muốn xóa model này không?')) return
+    setDeleteTargetId(id)
+  }
 
-    const updated = models.filter((m) => m.id !== id)
+  const confirmDelete = () => {
+    if (!deleteTargetId) return
+    const updated = models.filter((m) => m.id !== deleteTargetId)
     setModels(updated)
-    if (selectedModelId === id) {
+    if (selectedModelId === deleteTargetId) {
       setSelectedModelId(updated[0].id)
     }
     toast.success('Xóa model thành công')
+    setDeleteTargetId(null)
+  }
+
+  const cancelDelete = () => {
+    setDeleteTargetId(null)
   }
 
   const activeModel = models.find((m) => m.id === selectedModelId) || models[0]
@@ -188,6 +287,9 @@ function AIConfigPage() {
   const totalCompletionTokens = useMemo(() => currentChartData.reduce((sum: number, item: any) => sum + item.completionTokens, 0), [currentChartData])
   const totalTokens = totalPromptTokens + totalCompletionTokens
   const totalCost = useMemo(() => currentChartData.reduce((sum: number, item: any) => sum + item.cost, 0), [currentChartData])
+  const averageCost = currentChartData.length > 0 ? totalCost / currentChartData.length : 0
+
+  const deleteTarget = deleteTargetId ? models.find((m) => m.id === deleteTargetId) : null
 
   return (
     <div className="space-y-6 w-full pb-10">
@@ -478,7 +580,7 @@ function AIConfigPage() {
           </div>
           <div>
             <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Chi phí trung bình</p>
-            <h3 className="text-2xl font-bold mt-1">${(totalCost / currentChartData.length).toFixed(2)} / kỳ</h3>
+            <h3 className="text-2xl font-bold mt-1">${averageCost.toFixed(2)} / kỳ</h3>
             <p className="text-xs text-muted-foreground mt-0.5">Tính toán theo khoảng thời gian lọc</p>
           </div>
         </div>
@@ -583,6 +685,14 @@ function AIConfigPage() {
           </ResponsiveContainer>
         </div>
       </div>
+      {/* Delete Confirmation Dialog */}
+      {deleteTarget && (
+        <DeleteConfirmDialog
+          model={deleteTarget}
+          onConfirm={confirmDelete}
+          onCancel={cancelDelete}
+        />
+      )}
     </div>
   )
 }
