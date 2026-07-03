@@ -1420,7 +1420,7 @@ function CvJobAnalysisResult({ result, lang }: { result: AiModels.CvFullAnalysis
                 {result.strengths!.map((s, i) => (
                   <li key={`${s.area}-${i}`}>
                     <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-300">{s.area}</p>
-                    <p className="mt-0.5 text-xs leading-relaxed text-emerald-900/80 dark:text-muted-foreground">{s.detail}</p>
+                    <p className="mt-0.5 text-xs leading-relaxed text-emerald-900/80 dark:text-muted-foreground">{lang === 'VI' && s.detailVi ? s.detailVi : s.detail}</p>
                   </li>
                 ))}
               </ul>
@@ -1435,7 +1435,7 @@ function CvJobAnalysisResult({ result, lang }: { result: AiModels.CvFullAnalysis
                 {result.weaknesses!.map((w, i) => (
                   <li key={`${w.area}-${i}`}>
                     <p className="text-sm font-semibold text-amber-700 dark:text-amber-300">{w.area}</p>
-                    <p className="mt-0.5 text-xs leading-relaxed text-amber-900/80 dark:text-muted-foreground">{w.detail}</p>
+                    <p className="mt-0.5 text-xs leading-relaxed text-amber-900/80 dark:text-muted-foreground">{lang === 'VI' && w.detailVi ? w.detailVi : w.detail}</p>
                   </li>
                 ))}
               </ul>
@@ -1471,7 +1471,7 @@ function CvJobAnalysisResult({ result, lang }: { result: AiModels.CvFullAnalysis
                         {priorityLabel}
                       </span>
                     </div>
-                    <p className="mt-1 text-xs leading-relaxed text-slate-600 dark:text-muted-foreground">{tip.suggestion}</p>
+                    <p className="mt-1 text-xs leading-relaxed text-slate-600 dark:text-muted-foreground">{lang === 'VI' && tip.suggestionVi ? tip.suggestionVi : tip.suggestion}</p>
                   </div>
                 </div>
               )
