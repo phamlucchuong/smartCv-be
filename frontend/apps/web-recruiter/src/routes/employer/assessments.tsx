@@ -254,8 +254,13 @@ function AssessmentsManager() {
           setIsFormOpen(true);
           toast.success("Đã tạo câu hỏi bằng AI thành công!");
         },
-        onError: () => {
-          toast.error("Không thể tạo câu hỏi bằng AI. Vui lòng thử lại.");
+        onError: (err: any) => {
+          const errCode = err?.response?.data?.code;
+          if (errCode === 8012 || errCode === 6008) {
+            toast.error("Hết lượt sử dụng AI. Vui lòng nâng cấp gói dịch vụ.");
+          } else {
+            toast.error("Không thể tạo câu hỏi bằng AI. Vui lòng thử lại.");
+          }
         },
       }
     );
@@ -1141,6 +1146,7 @@ function AssessmentsManager() {
                      className="flex h-9 w-full rounded-md border border-input bg-background px-3 py-1 text-sm shadow-sm focus:outline-none"
                    >
                      <option value="Intern">Intern</option>
+                     <option value="Fresher">Fresher</option>
                      <option value="Junior">Junior</option>
                      <option value="Senior">Senior</option>
                      <option value="Lead">Lead</option>

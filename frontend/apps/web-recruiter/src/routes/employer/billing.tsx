@@ -320,9 +320,6 @@ function RecruiterBillingPage() {
           <Stat l="AI Credit còn lại" v={formatAiCredits(recruiter?.aiCreditsRemaining, recruiter?.aiCreditsTotal, recruiter?.aiCreditsUsed)} />
         </div>
       </div>
-      <div className="rounded-2xl border border-border/70 bg-card p-4 text-sm text-muted-foreground">
-        Đã dùng {recruiter?.aiCreditsUsed ?? 0} credit AI trong chu kỳ hiện tại.
-      </div>
 
       {/* Available Packages Section */}
       <div id="packages-section" className="space-y-4">
@@ -516,7 +513,6 @@ function RecruiterBillingPage() {
                   <th className="text-left py-3 px-4">Số tiền</th>
                   <th className="text-left py-3 px-4">Trạng thái</th>
                   <th className="text-left py-3 px-4">Ngày giao dịch</th>
-                  <th className="text-right py-3 px-4">Thao tác</th>
                 </tr>
               </thead>
               <tbody>
@@ -532,29 +528,6 @@ function RecruiterBillingPage() {
                       <StatusBadge status={getOrderStatusLabel(o.status)} />
                     </td>
                     <td className="py-3 px-4 text-muted-foreground text-xs">{formatDate(o.createdAt)}</td>
-                    <td className="py-3 px-4 text-right space-x-2">
-                      {o.status === "PENDING" && (
-                        <>
-                          <Button
-                            size="sm"
-                            onClick={() => {
-                              window.location.href = o.paymentUrl;
-                            }}
-                          >
-                            Thanh toán
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            className="text-destructive hover:bg-destructive/5"
-                            onClick={() => handleCancelOrder(o.orderId)}
-                            disabled={cancelOrderMutation.isPending}
-                          >
-                            Hủy
-                          </Button>
-                        </>
-                      )}
-                    </td>
                   </tr>
                 ))}
               </tbody>
