@@ -13,19 +13,20 @@ flowchart LR
     classDef async fill:#FEF3C7,stroke:#D97706,color:#78350F,stroke-width:1px
 
     subgraph Clients[Client Applications]
-        WC[Web Candidate<br/>:3000]
-        WR[Web Recruiter<br/>:3001]
-        WA[Web Admin<br/>:3003]
+        WC[Web Candidate<br/>port:3000]
+        WR[Web Recruiter<br/>port:3001]
+        WA[Web Admin<br/>port:3003]
     end
 
-    AGW[API Gateway<br/>JWT + Routing + Rate Limiting<br/>:8080]
+    AGW[API Gateway<br/>JWT + Routing + Rate Limiting<br/>port:8080]
 
     subgraph Services[Backend Microservices]
-        US[User Service<br/>Auth, User, Candidate, Recruiter<br/>:8081]
-        JS[Job Service<br/>Jobs, Search, Moderation Data<br/>:8082]
-        AS[Application Service<br/>Applications, Assessments<br/>:8083]
-        NS[Notification Service<br/>OTP, In-app Notification, FCM<br/>:8084]
-        AIS[AI Engine Service<br/>CV Analysis, Recommend, Interview Q&A<br/>:8085]
+        US[User Service<br/>Auth, User, Candidate, Recruiter<br/>port:8081]
+        JS[Job Service<br/>Jobs, Search, Moderation Data<br/>port:8082]
+        AS[Application Service<br/>Applications, Assessments<br/>port:8083]
+        NS[Notification Service<br/>OTP, In-app Notification, FCM<br/>port:8084]
+        AIS[AI Engine Service<br/>CV Analysis, Recommend, Interview Q&A<br/>port:8085]
+        PS[Payment Service<br/>Orders, PayOS, Package Activation<br/>port:8086]
     end
 
     subgraph DataStores[Datastores and Infra]
@@ -35,6 +36,7 @@ flowchart LR
         REDIS[(Redis)]
         S3[(MinIO / S3 Bucket)]
         RMQ[(RabbitMQ)]
+        PAYOS[(PayOS Gateway)]
     end
 
     WC --> AGW
@@ -46,12 +48,14 @@ flowchart LR
     AGW --> AS
     AGW --> NS
     AGW --> AIS
+    AGW --> PS
 
     US --> MDB
     JS --> MDB
     JS --> ES
     AS --> MDB
     AS --> S3
+    PS --> MDB
     NS --> PG
     NS --> REDIS
 
@@ -59,10 +63,14 @@ flowchart LR
     AS <--> RMQ
     AIS <--> RMQ
     NS <--> RMQ
+    PS <--> RMQ
+
+    PS --> PAYOS
+    PAYOS --> PS
 
     class WC,WR,WA client
-    class AGW,US,JS,AS,NS,AIS service
-    class MDB,ES,PG,REDIS,S3 data
+    class AGW,US,JS,AS,NS,AIS,PS service
+    class MDB,ES,PG,REDIS,S3,PAYOS data
     class RMQ infra
 ```
 
@@ -84,6 +92,8 @@ flowchart TB
     MQ[[RabbitMQ Events]]
     AI[AI Engine]
     NOTI[Notification Service]
+    PAY[Payment Service]
+    PAYOS[PayOS]
 
     U -->|Tương tác UI| FE
     FE -->|REST + JWT| GW
@@ -92,18 +102,22 @@ flowchart TB
     SVC -->|Đọc/ghi nghiệp vụ| DB
     SVC -->|Upload / lấy file CV| OBJ
     SVC -->|Phát sự kiện bất đồng bộ| MQ
+    SVC -->|Tạo đơn, webhook, đồng bộ gói| PAY
 
     MQ --> AI
     MQ --> NOTI
 
     AI -->|Kết quả phân tích / gợi ý| DB
     NOTI -->|Thông báo OTP / in-app / push| FE
+    PAY -->|Thanh toán / tạo order| PAYOS
+    PAYOS -->|Webhook / trạng thái đơn| PAY
     FE -->|Hiển thị kết quả| U
 
     class U actor
-    class FE,GW,SVC,AI,NOTI process
+    class FE,GW,SVC,AI,NOTI,PAY process
     class DB,OBJ store
     class MQ event
+    class PAYOS store
 ```
 
 ## 3. Chức năng chính
@@ -279,6 +293,44 @@ flowchart TB
     class WC,WR,GW,APP,JOB,USER,AI,NOTI svc
     class ADB,S3 store
     class RMQ event
+```
+
+### 3.5 Mua gói dịch vụ, thanh toán PayOS, kích hoạt package
+
+```mermaid
+flowchart TB
+    classDef actor fill:#E0F2FE,stroke:#0284C7,color:#0C4A6E
+    classDef svc fill:#F8FAFC,stroke:#475569,color:#0F172A
+    classDef store fill:#FEF3C7,stroke:#CA8A04,color:#713F12
+    classDef event fill:#DCFCE7,stroke:#16A34A,color:#14532D
+
+    U[Candidate / Recruiter]
+    FE[Web Candidate / Web Recruiter]
+    GW[API Gateway]
+    PAY[Payment Service]
+    US[User Service]
+    RMQ[[payment.completed Event]]
+    PAYOS[PayOS]
+    MDB[(MongoDB Payment Orders)]
+    UDB[(MongoDB Users / Recruiters / Candidates)]
+
+    U --> FE
+    FE -->|chọn gói / tạo đơn| GW
+    GW --> PAY
+    PAY -->|lưu order PENDING| MDB
+    PAY -->|tạo payment link| PAYOS
+    PAYOS -->|webhook thanh toán| PAY
+    PAY -->|publish payment.completed| RMQ
+    RMQ --> US
+    US -->|kích hoạt package| UDB
+    FE -->|xem lịch sử giao dịch| GW
+    GW --> PAY
+
+    class U actor
+    class FE,GW,PAY,US svc
+    class MDB,UDB store
+    class RMQ event
+    class PAYOS store
 ```
 
 ## 4. Gợi ý sử dụng
