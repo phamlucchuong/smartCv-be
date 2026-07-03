@@ -13,6 +13,8 @@ export interface AttemptSummaryResponse {
   candidateId?: string;
   status?: AttemptSummaryResponseStatus;
   score?: number;
+  correctAnswers?: number;
+  totalQuestions?: number;
   result?: AttemptSummaryResponseResult;
   submittedAt?: string;
 }

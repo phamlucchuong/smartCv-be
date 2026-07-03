@@ -10,6 +10,7 @@ export interface UserResponse {
   fullName?: string;
   email?: string;
   phone?: string;
+  avatarUrl?: string;
   roles?: string[];
   verified?: boolean;
   locked?: boolean;

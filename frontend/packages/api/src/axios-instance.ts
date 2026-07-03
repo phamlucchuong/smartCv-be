@@ -93,6 +93,16 @@ AXIOS_INSTANCE.interceptors.request.use((config) => {
   if (config.url) {
     config.url = getPrefixedUrl(config.url);
   }
+  // Flatten request query parameters for Spring Boot compatibility
+  if (config.params && typeof config.params === 'object') {
+    let flattened = { ...config.params };
+    if ('request' in flattened && typeof flattened.request === 'object' && flattened.request !== null) {
+      const req = flattened.request;
+      delete flattened.request;
+      flattened = { ...flattened, ...req };
+    }
+    config.params = flattened;
+  }
   // FormData requests need a boundary in Content-Type — let Axios set it automatically
   if (config.data instanceof FormData) {
     delete config.headers['Content-Type'];
