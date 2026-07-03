@@ -25,6 +25,21 @@ public class UserServiceClient {
     @Value("${app.gateway-internal-secret:changeme}")
     private String internalSecret;
 
+    private String getBaseUrl() {
+        if (userServiceUrl == null) return "";
+        String base = userServiceUrl.trim();
+        if (base.endsWith("/user")) {
+            return base;
+        }
+        if (base.endsWith("/user/")) {
+            return base.substring(0, base.length() - 1);
+        }
+        if (base.endsWith("/")) {
+            return base + "user";
+        }
+        return base + "/user";
+    }
+
     /** Cache of userId -> Recruiter.id. The mapping is immutable, so no eviction is needed. */
     private final Map<String, String> recruiterIdCache = new ConcurrentHashMap<>();
 
@@ -37,7 +52,7 @@ public class UserServiceClient {
 
     /** Fetches the recruiter profile (recruiterId + status) for a given JWT userId. */
     public RecruiterProfileDto getRecruiterProfile(String userId) {
-        String url = userServiceUrl + "/user/api/internal/recruiters/by-user/" + userId;
+        String url = getBaseUrl() + "/api/internal/recruiters/by-user/" + userId;
         try {
             org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
             headers.set("X-Gateway-Secret", internalSecret);
@@ -68,7 +83,7 @@ public class UserServiceClient {
     }
 
     public RecruiterStatusDto getRecruiterStatus(String userId) {
-        String url = userServiceUrl + "/user/api/internal/recruiters/by-user/" + userId;
+        String url = getBaseUrl() + "/api/internal/recruiters/by-user/" + userId;
         try {
             org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
             headers.set("X-Gateway-Secret", internalSecret);
@@ -91,7 +106,7 @@ public class UserServiceClient {
     public record CompanyData(String id, String name, String logoUrl, String coverImageUrl, String industry, String location) {}
 
     public CompanyData getCompanyData(String userId) {
-        String url = userServiceUrl + "/user/api/companies/by-recruiter/" + userId;
+        String url = getBaseUrl() + "/api/companies/by-recruiter/" + userId;
         try {
             org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
             headers.set("X-Gateway-Secret", internalSecret);
@@ -117,7 +132,7 @@ public class UserServiceClient {
     }
 
     public List<CompanyData> getCompaniesByCategory(String category, int limit) {
-        String url = userServiceUrl + "/user/api/internal/recruiters/by-category?category=" + category + "&limit=" + limit;
+        String url = getBaseUrl() + "/api/internal/recruiters/by-category?category=" + category + "&limit=" + limit;
         try {
             org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
             headers.set("X-Gateway-Secret", internalSecret);
@@ -155,7 +170,7 @@ public class UserServiceClient {
     }
 
     public String getRecruiterEmail(String userId) {
-        String url = userServiceUrl + "/user/api/internal/recruiters/by-user/" + userId;
+        String url = getBaseUrl() + "/api/internal/recruiters/by-user/" + userId;
         try {
             org.springframework.http.HttpHeaders headers = new org.springframework.http.HttpHeaders();
             headers.set("X-Gateway-Secret", internalSecret);

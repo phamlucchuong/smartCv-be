@@ -44,6 +44,19 @@ public class JobIndexService {
         }
     }
 
+    /**
+     * Drops and recreates the index from the {@link JobDocument} annotations.
+     * Needed because an existing index keeps its old (possibly dynamic) mapping,
+     * which breaks the exact term filters used in {@link #search}.
+     */
+    public void recreateIndex() {
+        var indexOps = elasticsearchTemplate.indexOps(JobDocument.class);
+        if (indexOps.exists()) {
+            indexOps.delete();
+        }
+        indexOps.createWithMapping();
+    }
+
     public void removeFromIndex(String jobId) {
         try {
             esRepository.deleteById(jobId);

@@ -372,6 +372,7 @@ public class JobService {
     public int reindexAllJobs() {
         JobIndexService indexService = jobIndexServiceProvider.getIfAvailable();
         if (indexService == null) return 0;
+        indexService.recreateIndex();
         List<Job> allJobs = jobRepository.findByDeletedFalse(Pageable.unpaged()).getContent();
         allJobs.forEach(indexService::indexJob);
         return allJobs.size();
