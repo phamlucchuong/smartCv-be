@@ -1,20 +1,24 @@
 import { useTranslation } from '@smart-cv/i18n'
 import { Button, cn } from '@smart-cv/ui'
 import type { UserModels } from '@smart-cv/api'
+import { usePreferencesStore } from '../../store/usePreferencesStore'
 
 interface StrengthItem {
   area: string
   detail: string
+  detailVi?: string
 }
 
 interface WeaknessItem {
   area: string
   detail: string
+  detailVi?: string
 }
 
 interface ImprovementTip {
   area: string
   suggestion: string
+  suggestionVi?: string
   priority: 'High' | 'Medium' | 'Low'
 }
 
@@ -27,6 +31,7 @@ interface CvFullAnalysisResult {
   missingSkills: string[]
   extraSkills: string[]
   summary: string
+  summaryVi?: string
   strengths: StrengthItem[]
   weaknesses: WeaknessItem[]
   tips: ImprovementTip[]
@@ -69,6 +74,7 @@ const CIRCUMFERENCE = 99.9
 
 export function CvAnalysisPanel({ analysisResultJson, analysisStatus, onRetry }: CvAnalysisPanelProps) {
   const { t } = useTranslation()
+  const lang = usePreferencesStore((s) => s.language)
 
   let analysis: CvFullAnalysisResult | null = null
   let parseError = false
@@ -142,7 +148,7 @@ export function CvAnalysisPanel({ analysisResultJson, analysisStatus, onRetry }:
             </div>
             {analysis.summary && (
               <p className="mt-2 text-sm text-slate-600 dark:text-muted-foreground leading-relaxed">
-                {analysis.summary}
+                {lang === 'VI' && analysis.summaryVi ? analysis.summaryVi : analysis.summary}
               </p>
             )}
           </div>
@@ -215,7 +221,7 @@ export function CvAnalysisPanel({ analysisResultJson, analysisStatus, onRetry }:
                 {analysis.strengths.map((s, i) => (
                   <li key={`${s.area}-${i}`}>
                     <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-300">{s.area}</p>
-                    <p className="mt-0.5 text-xs leading-relaxed text-emerald-900/80 dark:text-muted-foreground">{s.detail}</p>
+                    <p className="mt-0.5 text-xs leading-relaxed text-emerald-900/80 dark:text-muted-foreground">{lang === 'VI' && s.detailVi ? s.detailVi : s.detail}</p>
                   </li>
                 ))}
               </ul>
@@ -231,7 +237,7 @@ export function CvAnalysisPanel({ analysisResultJson, analysisStatus, onRetry }:
                 {analysis.weaknesses.map((w, i) => (
                   <li key={`${w.area}-${i}`}>
                     <p className="text-sm font-semibold text-amber-700 dark:text-amber-300">{w.area}</p>
-                    <p className="mt-0.5 text-xs leading-relaxed text-amber-900/80 dark:text-muted-foreground">{w.detail}</p>
+                    <p className="mt-0.5 text-xs leading-relaxed text-amber-900/80 dark:text-muted-foreground">{lang === 'VI' && w.detailVi ? w.detailVi : w.detail}</p>
                   </li>
                 ))}
               </ul>
@@ -257,7 +263,7 @@ export function CvAnalysisPanel({ analysisResultJson, analysisStatus, onRetry }:
                       {tip.priority}
                     </span>
                   </div>
-                  <p className="mt-1 text-xs leading-relaxed text-slate-600 dark:text-muted-foreground">{tip.suggestion}</p>
+                  <p className="mt-1 text-xs leading-relaxed text-slate-600 dark:text-muted-foreground">{lang === 'VI' && tip.suggestionVi ? tip.suggestionVi : tip.suggestion}</p>
                 </div>
               </div>
             ))}
