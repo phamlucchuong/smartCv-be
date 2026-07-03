@@ -266,7 +266,8 @@ class AnalysisServiceCvFullTest {
         when(deterministicCvScoringService.score(eq(cvProfile), eq(requirements))).thenReturn(
                 new vn.chuongpl.ai_engine_service.dtos.response.CvAnalysisResponse(
                         84, "Good", List.of("Java"), List.of("Docker"), List.of("Git"),
-                        "Deterministic score from O*NET requirements", null, null
+                        "Deterministic score from O*NET requirements",
+                        "Điểm số xác định dựa trên yêu cầu O*NET", null, null
                 )
         );
 

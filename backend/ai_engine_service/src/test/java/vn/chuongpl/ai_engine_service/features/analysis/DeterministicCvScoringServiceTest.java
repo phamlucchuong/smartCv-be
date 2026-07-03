@@ -115,4 +115,104 @@ class DeterministicCvScoringServiceTest {
         assertThat(response.breakdown().appliedCaps()).isNotEmpty();
         assertThat(response.summary()).contains("capped");
     }
+
+    @Test
+    void score_returns_vietnamese_summary_alongside_english_summary() {
+        StructuredCvProfile cvProfile = new StructuredCvProfile(
+                new StructuredCvProfile.CandidateProfile(List.of("Backend Engineer"), "Mid", List.of("FinTech"), 4),
+                new StructuredCvProfile.SkillProfile(
+                        List.of("Java", "REST API", "Spring Boot", "Docker", "PostgreSQL"),
+                        List.of("Git", "Postman"),
+                        List.of("Spring Boot"),
+                        List.of("PostgreSQL"),
+                        List.of("AWS"),
+                        List.of("Communication"),
+                        List.of("English")
+                ),
+                List.of(new StructuredCvProfile.ExperienceItem(
+                        "Backend Engineer",
+                        "ABC",
+                        36,
+                        List.of("Built APIs"),
+                        List.of("Reduced latency"),
+                        List.of("Java", "Spring Boot", "REST API", "PostgreSQL", "Docker")
+                )),
+                List.of("BSc Computer Science"),
+                List.of("AWS Certified Developer"),
+                List.of(new StructuredCvProfile.ProjectItem("Payments", "Payment APIs", List.of("Java", "Docker")))
+        );
+
+        StructuredJobRequirements jobRequirements = new StructuredJobRequirements(
+                new StructuredJobRequirements.JobInfo("Backend Engineer", "Mid", "FinTech", "Full-time"),
+                new StructuredJobRequirements.RequirementProfile(
+                        List.of("Java", "REST API"),
+                        List.of("Docker"),
+                        List.of("Git"),
+                        List.of("Spring Boot"),
+                        List.of("PostgreSQL"),
+                        List.of("AWS"),
+                        List.of("English"),
+                        List.of(),
+                        3
+                ),
+                List.of("Build backend APIs"),
+                List.of()
+        );
+
+        CvAnalysisResponse response = scoringService.score(cvProfile, jobRequirements);
+
+        assertThat(response.summaryVi()).isNotBlank();
+        assertThat(response.summaryVi()).startsWith("Điểm ");
+        assertThat(response.summaryVi()).contains("Java", "REST API");
+        assertThat(response.summaryVi()).isNotEqualTo(response.summary());
+    }
+
+    @Test
+    void score_translates_applied_score_caps_into_vietnamese_summary() {
+        StructuredCvProfile cvProfile = new StructuredCvProfile(
+                new StructuredCvProfile.CandidateProfile(List.of("Backend Engineer"), "Junior", List.of("E-Commerce"), 1),
+                new StructuredCvProfile.SkillProfile(
+                        List.of("JavaScript"),
+                        List.of("Git"),
+                        List.of(),
+                        List.of(),
+                        List.of(),
+                        List.of(),
+                        List.of("English")
+                ),
+                List.of(new StructuredCvProfile.ExperienceItem(
+                        "Frontend Intern",
+                        "XYZ",
+                        12,
+                        List.of("Built UI"),
+                        List.of(),
+                        List.of("JavaScript")
+                )),
+                List.of(),
+                List.of(),
+                List.of()
+        );
+
+        StructuredJobRequirements jobRequirements = new StructuredJobRequirements(
+                new StructuredJobRequirements.JobInfo("Backend Engineer", "Mid", "FinTech", "Full-time"),
+                new StructuredJobRequirements.RequirementProfile(
+                        List.of("Java", "Spring Boot", "REST API"),
+                        List.of("Docker"),
+                        List.of("Git"),
+                        List.of(),
+                        List.of("PostgreSQL"),
+                        List.of(),
+                        List.of("English"),
+                        List.of(),
+                        3
+                ),
+                List.of(),
+                List.of()
+        );
+
+        CvAnalysisResponse response = scoringService.score(cvProfile, jobRequirements);
+
+        assertThat(response.summaryVi()).contains("Giới hạn điểm áp dụng");
+        assertThat(response.summaryVi()).doesNotContain("capped");
+    }
 }

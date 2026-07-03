@@ -14,6 +14,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 public class DeterministicCvScoringService {
@@ -62,7 +63,9 @@ public class DeterministicCvScoringService {
 
         List<String> experienceSignals = collectExperienceSignals(cvProfile, jobIndex, cvSkills);
         String yearsSummary = buildYearsSummary(cvProfile, jobRequirements);
+        String yearsSummaryVi = buildYearsSummaryVi(cvProfile, jobRequirements);
         String summary = buildSummary(finalScore, matchedMustHave, missingMustHave, matchedNiceToHave, yearsSummary, appliedCaps);
+        String summaryVi = buildSummaryVi(finalScore, matchedMustHave, missingMustHave, matchedNiceToHave, yearsSummaryVi, appliedCaps);
 
         return new CvAnalysisResponse(
                 finalScore,
@@ -71,6 +74,7 @@ public class DeterministicCvScoringService {
                 missingMustHave,
                 extraSkills,
                 summary,
+                summaryVi,
                 new ScoreBreakdownResponse(skillScore, experienceScore, seniorityScore, domainScore, bonusScore, List.copyOf(appliedCaps)),
                 new ScoreEvidenceResponse(
                         matchedMustHave,
@@ -208,6 +212,52 @@ public class DeterministicCvScoringService {
             summary.append("Scoring caps applied: ").append(String.join(" ", appliedCaps));
         }
         return summary.toString().trim();
+    }
+
+    private String buildYearsSummaryVi(StructuredCvProfile cvProfile, StructuredJobRequirements jobRequirements) {
+        int candidateYears = experienceYears(cvProfile);
+        int minYears = minYears(jobRequirements);
+        if (minYears <= 0) {
+            return candidateYears > 0
+                    ? "Ứng viên có khoảng " + candidateYears + " năm kinh nghiệm."
+                    : "Tin tuyển dụng không nêu rõ số năm kinh nghiệm tối thiểu.";
+        }
+        return "Ứng viên có khoảng " + candidateYears + " năm kinh nghiệm so với mức tối thiểu yêu cầu là "
+                + minYears + " năm.";
+    }
+
+    private String buildSummaryVi(int finalScore, List<String> matchedMustHave, List<String> missingMustHave,
+                                  List<String> matchedNiceToHave, String yearsSummaryVi, List<String> appliedCaps) {
+        StringBuilder summary = new StringBuilder();
+        summary.append("Điểm ").append(finalScore).append("/100. ");
+        if (!matchedMustHave.isEmpty()) {
+            summary.append("Kỹ năng bắt buộc đã đáp ứng: ").append(String.join(", ", matchedMustHave)).append(". ");
+        }
+        if (!missingMustHave.isEmpty()) {
+            summary.append("Kỹ năng bắt buộc còn thiếu: ").append(String.join(", ", missingMustHave)).append(". ");
+        }
+        if (!matchedNiceToHave.isEmpty()) {
+            summary.append("Có thêm kỹ năng cộng điểm: ").append(String.join(", ", matchedNiceToHave)).append(". ");
+        }
+        summary.append(yearsSummaryVi).append(' ');
+        if (!appliedCaps.isEmpty()) {
+            summary.append("Giới hạn điểm áp dụng: ").append(
+                    appliedCaps.stream().map(this::translateCap).collect(Collectors.joining(" ")));
+        }
+        return summary.toString().trim();
+    }
+
+    private String translateCap(String capMessage) {
+        if (capMessage.contains("no must-have requirement was matched")) {
+            return "Điểm bị giới hạn ở mức 35 vì không có yêu cầu bắt buộc nào được đáp ứng.";
+        }
+        if (capMessage.contains("must-have skill coverage is below 40%")) {
+            return "Điểm bị giới hạn ở mức 55 vì tỷ lệ đáp ứng kỹ năng bắt buộc dưới 40%.";
+        }
+        if (capMessage.contains("experience is less than half of the stated minimum")) {
+            return "Điểm bị giới hạn ở mức 65 vì số năm kinh nghiệm chưa bằng một nửa mức tối thiểu yêu cầu.";
+        }
+        return capMessage;
     }
 
     private SkillIndex buildCvSkillIndex(StructuredCvProfile cvProfile) {

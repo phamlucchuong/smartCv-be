@@ -53,7 +53,7 @@ class AnalysisServiceDeterministicAnalyzeTest {
         );
         CvAnalysisResponse expected = new CvAnalysisResponse(
                 88, "Excellent", List.of("Java", "Spring Boot"), List.of(), List.of(),
-                "Strong match", null, null
+                "Strong match", "Kết quả phù hợp", null, null
         );
 
         when(cvTextExtractor.resolveCvText("cv text", null)).thenReturn("cv text");
