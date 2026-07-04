@@ -69,6 +69,12 @@ app:
         api-key: ${AZURE_OPENAI_API_KEY:}
         endpoint: ${AZURE_OPENAI_ENDPOINT:}
         deployment-name: ${AZURE_OPENAI_DEPLOYMENT_NAME:gpt-4o}
+  onet:
+    enabled: ${ONET_ENABLED:false}
+    base-url: ${ONET_BASE_URL:https://api-v2.onetcenter.org}
+    username: ${ONET_USERNAME:}
+    password: ${ONET_PASSWORD:}
+    search-limit: ${ONET_SEARCH_LIMIT:5}
 
 logging:
   level:

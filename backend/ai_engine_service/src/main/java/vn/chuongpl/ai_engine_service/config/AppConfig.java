@@ -8,7 +8,7 @@ import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-@EnableConfigurationProperties(AiProviderProperties.class)
+@EnableConfigurationProperties({AiProviderProperties.class, OnetProperties.class})
 public class AppConfig {
     @Bean
     RestTemplate restTemplate() {

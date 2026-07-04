@@ -1,12 +1,15 @@
 package vn.chuongpl.ai_engine_service.integration.cv;
 
 import org.junit.jupiter.api.Test;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.client.MockRestServiceServer;
 import org.springframework.web.client.RestTemplate;
 import vn.chuongpl.ai_engine_service.exception.AppException;
 
+import java.io.ByteArrayOutputStream;
 import java.net.URI;
 import java.util.concurrent.atomic.AtomicReference;
 
@@ -62,5 +65,30 @@ class CvTextExtractorTest {
                 .isInstanceOf(AppException.class);
         assertThatThrownBy(() -> extractor.resolveCvText("  ", "  "))
                 .isInstanceOf(AppException.class);
+    }
+
+    @Test
+    void extractFromUpload_supportsDocx() throws Exception {
+        byte[] bytes;
+        try (XWPFDocument document = new XWPFDocument();
+             ByteArrayOutputStream outputStream = new ByteArrayOutputStream()) {
+            document.createParagraph().createRun().setText("Java Spring Boot Engineer");
+            document.createParagraph().createRun().setText("Built REST APIs with PostgreSQL");
+            document.write(outputStream);
+            bytes = outputStream.toByteArray();
+        }
+
+        MockMultipartFile file = new MockMultipartFile(
+                "file",
+                "resume.docx",
+                "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                bytes
+        );
+
+        CvTextExtractor extractor = new CvTextExtractor(new RestTemplate());
+        String result = extractor.extractFromUpload(file);
+
+        assertThat(result).contains("Java Spring Boot Engineer");
+        assertThat(result).contains("Built REST APIs with PostgreSQL");
     }
 }

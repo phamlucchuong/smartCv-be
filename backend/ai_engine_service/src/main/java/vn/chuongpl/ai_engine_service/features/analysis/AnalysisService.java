@@ -39,7 +39,6 @@ import java.util.Collections;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
 @Service
@@ -53,6 +52,9 @@ public class AnalysisService {
     private final JobClient jobClient;
     private final JobSuggestionsPublisher jobSuggestionsPublisher;
     private final UserClient userClient;
+    private final StructuredProfileExtractionService structuredProfileExtractionService;
+    private final DeterministicCvScoringService deterministicCvScoringService;
+    private final OnetOccupationKnowledgeService onetOccupationKnowledgeService;
 
     @Value("${app.ai.recommend-batch-size:20}")
     private int recommendBatchSize;
@@ -91,34 +93,15 @@ public class AnalysisService {
     }
 
     private CvAnalysisResponse analyzeCvText(String cvText, JobSummary job) {
-        String prompt = promptBuilder.buildAnalyzePrompt(Map.of(
-                "CV_TEXT", cvText,
-                "JOB_TITLE", nvl(job.title()),
-                "JOB_DESCRIPTION", nvl(job.description()),
-                "JOB_SKILLS", String.join(", ", safeList(job.skills())),
-                "JOB_REQUIREMENTS", String.join("\n- ", safeList(job.requirements())),
-                "EXPERIENCE_LEVEL", nvl(job.experienceLevel())
-        ));
-
-        String aiContent = callAi(prompt);
-        return parse(aiContent, CvAnalysisResponse.class);
+        StructuredCvProfile cvProfile = structuredProfileExtractionService.extractCvProfile(cvText);
+        StructuredJobRequirements jobRequirements = structuredProfileExtractionService.extractJobRequirements(job);
+        return deterministicCvScoringService.score(cvProfile, jobRequirements);
     }
 
     public CvAnalysisResponse autoScore(String cvUrl, String jobId) {
         String cvText = cvTextExtractor.resolveCvText(null, cvUrl);
         JobSummary job = jobClient.getJobById(jobId);
-
-        String prompt = promptBuilder.buildAnalyzePrompt(Map.of(
-                "CV_TEXT", cvText,
-                "JOB_TITLE", nvl(job.title()),
-                "JOB_DESCRIPTION", nvl(job.description()),
-                "JOB_SKILLS", String.join(", ", safeList(job.skills())),
-                "JOB_REQUIREMENTS", String.join("\n- ", safeList(job.requirements())),
-                "EXPERIENCE_LEVEL", nvl(job.experienceLevel())
-        ));
-
-        String aiContent = callAi(prompt);
-        return parse(aiContent, CvAnalysisResponse.class);
+        return analyzeCvText(cvText, job);
     }
 
     public SkillExtractionResponse extractSkills(String cvUrl) {
@@ -358,9 +341,12 @@ public class AnalysisService {
         }
 
         String cvText = cvTextExtractor.resolveCvText(null, cvInfo.cvUrl());
-
-        ExtractJobTargetResponse target = extractJobTarget(cvText);
-        String targetPosition = target.targetPosition();
+        StructuredCvProfile cvProfile = structuredProfileExtractionService.extractCvProfile(cvText);
+        String targetPosition = firstTargetRole(cvProfile);
+        if (targetPosition.isBlank()) {
+            ExtractJobTargetResponse target = extractJobTarget(cvText);
+            targetPosition = target.targetPosition();
+        }
 
         CvAnalysisResponse matchAnalysis;
         int overallScore;
@@ -368,28 +354,40 @@ public class AnalysisService {
 
         if (request.jobId() != null) {
             JobSummary job = jobClient.getJobById(request.jobId());
-            String jd = nvl(job.description());
-            String jTitle = nvl(job.title());
-            String jSkills = String.join(", ", safeList(job.skills()));
-            String jReqs = String.join("\n- ", safeList(job.requirements()));
-
-            CompletableFuture<CvAnalysisResponse> jobFuture = CompletableFuture.supplyAsync(
-                    () -> analyzeWithText(cvText, jd, jTitle, jSkills, jReqs));
-            CompletableFuture<CvAnalysisResponse> standaloneFuture = CompletableFuture.supplyAsync(
-                    () -> analyzeWithText(cvText, targetPosition, targetPosition, "", ""));
-
-            CompletableFuture.allOf(jobFuture, standaloneFuture).join();
-            matchAnalysis = jobFuture.join();
-            overallScore = standaloneFuture.join().matchScore();
-            improvement = improveWithText(cvText, jd, jTitle, jSkills, jReqs);
-        } else {
-            matchAnalysis = analyzeWithText(cvText, targetPosition, targetPosition, "", "");
+            StructuredJobRequirements jobRequirements = structuredProfileExtractionService.extractJobRequirements(job);
+            matchAnalysis = deterministicCvScoringService.score(cvProfile, jobRequirements);
             overallScore = matchAnalysis.matchScore();
-            improvement = improveWithText(cvText, targetPosition, targetPosition, "", "");
+            improvement = improveWithText(
+                    cvText,
+                    nvl(job.description()),
+                    nvl(job.title()),
+                    String.join(", ", safeList(job.skills())),
+                    String.join("\n- ", safeList(job.requirements()))
+            );
+        } else {
+            OnetJobProfile onetJobProfile = onetOccupationKnowledgeService.resolve(cvProfile).orElse(null);
+            if (onetJobProfile != null) {
+                matchAnalysis = deterministicCvScoringService.score(cvProfile, onetJobProfile.requirements());
+                overallScore = matchAnalysis.matchScore();
+                targetPosition = nvl(onetJobProfile.targetPosition()).isBlank() ? targetPosition : onetJobProfile.targetPosition();
+                improvement = improveWithText(
+                        cvText,
+                        onetJobProfile.jobDescription(),
+                        onetJobProfile.jobTitle(),
+                        onetJobProfile.jobSkills(),
+                        onetJobProfile.jobRequirements()
+                );
+            } else {
+                matchAnalysis = analyzeWithText(cvText, targetPosition, targetPosition, "", "");
+                overallScore = matchAnalysis.matchScore();
+                improvement = improveWithText(cvText, targetPosition, targetPosition, "", "");
+            }
         }
 
-        String scoreLabel = computeScoreLabel(overallScore);
-        List<String> extractedSkills = Stream.concat(
+        String scoreLabel = request.jobId() != null ? matchAnalysis.scoreLabel() : computeScoreLabel(overallScore);
+        List<String> extractedSkills = request.jobId() != null
+                ? collectExtractedSkills(cvProfile)
+                : Stream.concat(
                 safeList(matchAnalysis.matchedSkills()).stream(),
                 safeList(matchAnalysis.extraSkills()).stream()
         ).distinct().toList();
@@ -407,7 +405,9 @@ public class AnalysisService {
                 safeList(improvement.strengths()),
                 safeList(improvement.weaknesses()),
                 safeList(improvement.tips()),
-                extractedSkills
+                extractedSkills,
+                matchAnalysis.breakdown(),
+                matchAnalysis.evidence()
         );
 
         try {
@@ -464,5 +464,32 @@ public class AnalysisService {
                 "JOB_REQUIREMENTS", nvl(jobRequirements)
         ));
         return parse(callAi(prompt), CvImproveStructuredResponse.class);
+    }
+
+    private String firstTargetRole(StructuredCvProfile cvProfile) {
+        if (cvProfile == null || cvProfile.candidateProfile() == null || cvProfile.candidateProfile().targetRoles() == null) {
+            return "";
+        }
+        return cvProfile.candidateProfile().targetRoles().stream()
+                .filter(value -> value != null && !value.isBlank())
+                .findFirst()
+                .orElse("");
+    }
+
+    private List<String> collectExtractedSkills(StructuredCvProfile cvProfile) {
+        if (cvProfile == null || cvProfile.skills() == null) {
+            return Collections.emptyList();
+        }
+        return Stream.of(
+                        safeList(cvProfile.skills().technical()),
+                        safeList(cvProfile.skills().frameworks()),
+                        safeList(cvProfile.skills().databases()),
+                        safeList(cvProfile.skills().cloud()),
+                        safeList(cvProfile.skills().tools())
+                )
+                .flatMap(List::stream)
+                .filter(value -> value != null && !value.isBlank())
+                .distinct()
+                .toList();
     }
 }
