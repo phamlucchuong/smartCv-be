@@ -131,6 +131,28 @@ Table service_packages {
   updated_at datetime
 }
 
+Table ai_provider_configs {
+  id varchar [pk]
+  name varchar
+  provider varchar [not null]
+  api_key varchar
+  model varchar
+  base_url varchar
+  deployment_name varchar
+  api_version varchar
+  active boolean
+  updated_at datetime
+}
+
+Table ai_usage_logs {
+  id varchar [pk]
+  provider varchar [not null]
+  prompt_tokens int
+  completion_tokens int
+  cost float
+  created_at datetime
+}
+
 Table payment_orders {
   id varchar [pk]
   order_code bigint [not null]
@@ -150,7 +172,6 @@ Table payment_orders {
   updated_at datetime
   paid_at datetime
 }
-
 Table wishlists {
   id varchar [pk]
   candidate_id varchar [not null]
@@ -272,8 +293,6 @@ Ref: role_permissions.role_name > roles.name
 Ref: role_permissions.permission_name > permissions.name
 Ref: candidates.user_id > users.id
 Ref: recruiters.user_id > users.id
-Ref: payment_orders.user_id > users.id
-Ref: payment_orders.package_id > service_packages.id
 Ref: wishlists.candidate_id > candidates.id
 Ref: wishlists.job_id > jobs.id
 Ref: jobs.recruiter_id > users.id

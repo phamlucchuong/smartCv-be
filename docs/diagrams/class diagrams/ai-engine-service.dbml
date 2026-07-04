@@ -1,0 +1,29 @@
+Project ai_engine_service {
+  database_type: "MongoDB"
+}
+
+// Conceptual class diagram for ai_engine_service.
+// The service persists provider configuration and token usage logs.
+// O*NET and LLM providers are external integrations, not owned collections.
+
+Table ai_provider_configs {
+  id varchar [pk]
+  provider varchar [not null, unique, note: 'GROQ | AZURE_OPENAI | ANTHROPIC | GEMINI | LLAMA_3 | CLAUDE_AGENT_SDK']
+  api_key varchar [note: 'Encrypted credential when provider uses API key']
+  oauth_token varchar [note: 'Encrypted OAuth token for Claude Agent SDK']
+  model varchar
+  base_url varchar
+  deployment_name varchar
+  api_version varchar
+  active boolean
+  updated_at datetime
+}
+
+Table ai_usage_logs {
+  id varchar [pk]
+  provider varchar [not null]
+  prompt_tokens int
+  completion_tokens int
+  cost float
+  created_at datetime
+}

@@ -1,42 +1,58 @@
 # SmartCV System Diagrams
 
 Tài liệu này gom các sơ đồ Mermaid cho kiến trúc tổng thể, luồng dữ liệu và các chức năng chính của SmartCV.
+Các sơ đồ bên dưới được cập nhật theo wiring hiện có trong codebase: `application.yaml`, các HTTP client nội bộ, RabbitMQ publisher/consumer và các file compose.
 
 ## 1. Kiến trúc hệ thống tổng thể
 
 ```mermaid
 flowchart LR
     classDef client fill:#E8F1FF,stroke:#3B82F6,color:#0F172A,stroke-width:1px
+    classDef gateway fill:#DBEAFE,stroke:#2563EB,color:#0F172A,stroke-width:1px
     classDef service fill:#F8FAFC,stroke:#334155,color:#0F172A,stroke-width:1px
-    classDef infra fill:#ECFDF5,stroke:#10B981,color:#064E3B,stroke-width:1px
     classDef data fill:#FFF7ED,stroke:#F97316,color:#7C2D12,stroke-width:1px
-    classDef async fill:#FEF3C7,stroke:#D97706,color:#78350F,stroke-width:1px
+    classDef broker fill:#ECFDF5,stroke:#10B981,color:#064E3B,stroke-width:1px
+    classDef external fill:#FEF3C7,stroke:#D97706,color:#78350F,stroke-width:1px
 
     subgraph Clients[Client Applications]
-        WC[Web Candidate<br/>port:3000]
-        WR[Web Recruiter<br/>port:3001]
-        WA[Web Admin<br/>port:3003]
+        WC[Web Candidate<br/>port 3000]
+        WR[Web Recruiter<br/>port 3001]
+        WA[Web Admin<br/>port 3003]
     end
 
-    AGW[API Gateway<br/>JWT + Routing + Rate Limiting<br/>port:8080]
+    AGW[API Gateway<br/>JWT, public routes, internal headers,<br/>Redis rate limiting<br/>port 8080]
 
-    subgraph Services[Backend Microservices]
-        US[User Service<br/>Auth, User, Candidate, Recruiter<br/>port:8081]
-        JS[Job Service<br/>Jobs, Search, Moderation Data<br/>port:8082]
-        AS[Application Service<br/>Applications, Assessments<br/>port:8083]
-        NS[Notification Service<br/>OTP, In-app Notification, FCM<br/>port:8084]
-        AIS[AI Engine Service<br/>CV Analysis, Recommend, Interview Q&A<br/>port:8085]
-        PS[Payment Service<br/>Orders, PayOS, Package Activation<br/>port:8086]
+    subgraph Services[Backend services]
+        US[User Service<br/>auth, profile, wishlist, company,<br/>CV upload, package activation<br/>port 8081]
+        JS[Job Service<br/>job CRUD, moderation, home aggregate,<br/>search index<br/>port 8082]
+        AS[Application Service<br/>applications, assessments,<br/>attempts, AI request orchestration<br/>port 8083]
+        NS[Notification Service<br/>OTP, email, SMS, in-app, FCM<br/>port 8084]
+        AIS[AI Engine Service<br/>skill extraction, scoring,<br/>assessment generation, recommend<br/>port 8085]
+        PS[Payment Service<br/>orders, PayOS webhook,<br/>payment.completed publisher<br/>port 8086]
     end
 
-    subgraph DataStores[Datastores and Infra]
-        MDB[(MongoDB)]
+    subgraph DataStores[Datastores and messaging]
+        GREDIS[(Redis<br/>gateway rate limiter)]
+        UMDB[(MongoDB<br/>smartcv_user)]
+        JMDB[(MongoDB<br/>job_db)]
+        AMDB[(MongoDB<br/>application_db)]
+        AIMDB[(MongoDB<br/>ai_engine_db)]
+        PMDB[(MongoDB<br/>smartcv_payment)]
         ES[(Elasticsearch)]
         PG[(PostgreSQL)]
-        REDIS[(Redis)]
-        S3[(MinIO / S3 Bucket)]
+        UREDIS[(Redis<br/>OTP cache / blacklist / cache)]
+        S3[(MinIO / S3 bucket)]
         RMQ[(RabbitMQ)]
-        PAYOS[(PayOS Gateway)]
+    end
+
+    subgraph External[External providers]
+        GOOGLE[Google OAuth]
+        PAYOS[PayOS]
+        LLM[Groq / Gemini / Azure OpenAI / Llama 3]
+        ONET[O*NET]
+        MAIL[SMTP Email]
+        SMS[AWS SNS / Twilio]
+        FCM[Firebase Cloud Messaging]
     end
 
     WC --> AGW
@@ -48,30 +64,58 @@ flowchart LR
     AGW --> AS
     AGW --> NS
     AGW --> AIS
-    AGW --> PS
 
-    US --> MDB
-    JS --> MDB
+    AGW --> GREDIS
+
+    US --> UMDB
+    US --> UREDIS
+    US --> S3
+    US --> GOOGLE
+
+    JS --> JMDB
     JS --> ES
-    AS --> MDB
-    AS --> S3
-    PS --> MDB
+    JS --> UREDIS
+
+    AS --> AMDB
+
+    AIS --> AIMDB
+
+    PS --> PMDB
     NS --> PG
-    NS --> REDIS
+    NS --> UREDIS
+    NS --> MAIL
+    NS --> SMS
+    NS --> FCM
 
     US <--> RMQ
+    JS <--> RMQ
     AS <--> RMQ
     AIS <--> RMQ
     NS <--> RMQ
     PS <--> RMQ
 
+    US -. company jobs, wishlist job detail,<br/>deactivate excess jobs .-> JS
+    JS -. recruiter status, company data .-> US
+    JS -. top jobs aggregate .-> AS
+    AS -. user summary, candidate/recruiter lookup .-> US
+    AS -. job snapshot, related job info .-> JS
+    AS -. generate assessment questions .-> AIS
+    AIS -. fetch CV/profile .-> US
+    AIS -. fetch job detail .-> JS
+    AIS -. callback ai score .-> AS
+    PS -. package lookup / snapshot .-> US
+
+    AIS --> LLM
+    AIS --> ONET
     PS --> PAYOS
     PAYOS --> PS
 
     class WC,WR,WA client
-    class AGW,US,JS,AS,NS,AIS,PS service
-    class MDB,ES,PG,REDIS,S3,PAYOS data
-    class RMQ infra
+    class AGW gateway
+    class US,JS,AS,NS,AIS,PS service
+    class GREDIS,UMDB,JMDB,AMDB,AIMDB,PMDB,ES,PG,UREDIS,S3 data
+    class RMQ broker
+    class GOOGLE,PAYOS,LLM,ONET,MAIL,SMS,FCM external
 ```
 
 ## 2. Sơ đồ luồng dữ liệu tổng quát
@@ -80,44 +124,86 @@ flowchart LR
 flowchart TB
     classDef actor fill:#E0F2FE,stroke:#0284C7,color:#0C4A6E
     classDef process fill:#F8FAFC,stroke:#475569,color:#0F172A
-    classDef store fill:#FEF3C7,stroke:#CA8A04,color:#713F12
+    classDef store fill:#FFF7ED,stroke:#F97316,color:#7C2D12
     classDef event fill:#DCFCE7,stroke:#16A34A,color:#14532D
+    classDef external fill:#FEF3C7,stroke:#D97706,color:#78350F
 
     U[Người dùng<br/>Candidate / Recruiter / Admin]
     FE[Frontend Apps<br/>React + TanStack]
     GW[API Gateway]
-    SVC[Microservices]
-    DB[(MongoDB / PostgreSQL / Elasticsearch)]
-    OBJ[(MinIO / S3)]
-    MQ[[RabbitMQ Events]]
-    AI[AI Engine]
-    NOTI[Notification Service]
+    USER[User Service]
+    JOB[Job Service]
+    APP[Application Service]
+    AI[AI Engine Service]
     PAY[Payment Service]
+    NOTI[Notification Service]
+    MDB[(MongoDB)]
+    PG[(PostgreSQL)]
+    REDIS[(Redis)]
+    ES[(Elasticsearch)]
+    S3[(MinIO / S3)]
+    MQ[[RabbitMQ]]
     PAYOS[PayOS]
+    LLM[LLM / O*NET]
+    PUSH[SMTP / SNS / Twilio / FCM]
 
     U -->|Tương tác UI| FE
     FE -->|REST + JWT| GW
-    GW -->|Route theo domain| SVC
+    GW --> USER
+    GW --> JOB
+    GW --> APP
+    GW --> AI
+    GW --> PAY
+    GW --> NOTI
 
-    SVC -->|Đọc/ghi nghiệp vụ| DB
-    SVC -->|Upload / lấy file CV| OBJ
-    SVC -->|Phát sự kiện bất đồng bộ| MQ
-    SVC -->|Tạo đơn, webhook, đồng bộ gói| PAY
+    USER --> MDB
+    USER --> REDIS
+    USER --> S3
+    USER --> MQ
+    USER -. enrich wishlist / company jobs .-> JOB
 
-    MQ --> AI
+    JOB --> MDB
+    JOB --> REDIS
+    JOB --> ES
+    JOB --> MQ
+    JOB -. recruiter / company lookup .-> USER
+    JOB -. hot jobs aggregate .-> APP
+
+    APP --> MDB
+    APP --> MQ
+    APP -. user summary .-> USER
+    APP -. job snapshot .-> JOB
+    APP -. assessment generation .-> AI
+
+    AI --> MDB
+    AI --> MQ
+    AI --> LLM
+    AI -. fetch CV / job / application .-> USER
+    AI -. fetch job detail .-> JOB
+    AI -. callback ai score .-> APP
+
+    PAY --> MDB
+    PAY --> MQ
+    PAY -. package lookup .-> USER
+    PAY --> PAYOS
+    PAYOS --> PAY
+
+    NOTI --> PG
+    NOTI --> REDIS
+    NOTI --> PUSH
     MQ --> NOTI
+    MQ --> AI
+    MQ --> USER
 
-    AI -->|Kết quả phân tích / gợi ý| DB
-    NOTI -->|Thông báo OTP / in-app / push| FE
-    PAY -->|Thanh toán / tạo order| PAYOS
-    PAYOS -->|Webhook / trạng thái đơn| PAY
+    REDIS --> GW
+    NOTI -->|OTP / email / push / in-app| FE
     FE -->|Hiển thị kết quả| U
 
     class U actor
-    class FE,GW,SVC,AI,NOTI,PAY process
-    class DB,OBJ store
+    class FE,GW,USER,JOB,APP,AI,PAY,NOTI process
+    class MDB,PG,REDIS,ES,S3 store
     class MQ event
-    class PAYOS store
+    class PAYOS,LLM,PUSH external
 ```
 
 ## 3. Chức năng chính
@@ -134,21 +220,27 @@ flowchart TB
     FE[Web Candidate / Recruiter]
     GW[API Gateway]
     AUTH[User Service<br/>AuthController]
-    OTP[Notification Service<br/>OTP API]
+    RMQ[[OTP Event]]
+    OTP[Notification Service]
     UDB[(MongoDB Users)]
     CACHE[(Redis OTP Cache)]
+    MAIL[Email / SMS]
 
     C --> FE
     FE -->|register / login| GW
     GW --> AUTH
     AUTH -->|tạo user pending| UDB
-    AUTH -->|gửi OTP| OTP
+    AUTH -->|publish OTP request| RMQ
+    RMQ --> OTP
     OTP --> CACHE
-    OTP -->|email / sms OTP| C
+    OTP -->|gửi OTP| MAIL
+    MAIL --> C
     C -->|nhập OTP| FE
     FE -->|verify-registration| GW
     GW --> AUTH
-    AUTH -->|kiểm tra OTP + kích hoạt tài khoản| UDB
+    AUTH -->|gọi verify OTP| OTP
+    OTP --> CACHE
+    AUTH -->|kích hoạt tài khoản| UDB
     FE -->|login| GW
     GW --> AUTH
     AUTH -->|access token + refresh token| FE
@@ -156,6 +248,7 @@ flowchart TB
     class C actor
     class FE,GW,AUTH,OTP svc
     class UDB,CACHE store
+    class RMQ event
 ```
 
 ### 3.2 Upload CV, phân tích AI, gợi ý việc làm
@@ -166,17 +259,20 @@ flowchart TB
     classDef svc fill:#F8FAFC,stroke:#475569,color:#0F172A
     classDef store fill:#FEF3C7,stroke:#CA8A04,color:#713F12
     classDef event fill:#DCFCE7,stroke:#16A34A,color:#14532D
+    classDef external fill:#FEF3C7,stroke:#D97706,color:#78350F
 
     C[Candidate]
     FE[Web Candidate]
     GW[API Gateway]
-    US[User Service<br/>CandidateController]
+    US[User Service]
     S3[(MinIO / S3)]
     RMQ[[Skill Extract Event]]
     AI[AI Engine Service]
     UDB[(MongoDB Candidate Profile)]
     JOB[Job Service]
     ES[(Elasticsearch)]
+    RMQ2[[Job Suggestions Event]]
+    EXT[LLM Providers / O*NET]
 
     C --> FE
     FE -->|upload CV| GW
@@ -185,12 +281,15 @@ flowchart TB
     US -->|lưu metadata CV| UDB
     US -->|publish skill extract| RMQ
     RMQ --> AI
-    AI -->|phân tích kỹ năng / CV| UDB
+    AI -->|gọi model + dữ liệu nghề nghiệp| EXT
+    AI -->|publish job suggestions| RMQ2
+    RMQ2 --> US
+    US -->|lưu suggestions + skills vào profile| UDB
 
     FE -->|job-suggestions| GW
     GW --> US
-    US -->|lấy hồ sơ + skill đã phân tích| UDB
-    US -->|truy vấn job phù hợp| JOB
+    US -->|lấy suggestions từ profile| UDB
+    US -->|enrich job detail theo id| JOB
     JOB --> ES
     JOB --> US
     US --> FE
@@ -198,7 +297,8 @@ flowchart TB
     class C actor
     class FE,GW,US,AI,JOB svc
     class S3,UDB,ES store
-    class RMQ event
+    class RMQ,RMQ2 event
+    class EXT external
 ```
 
 ### 3.3 Nhà tuyển dụng đăng tin và admin duyệt tin
@@ -250,6 +350,7 @@ flowchart TB
     classDef svc fill:#F8FAFC,stroke:#475569,color:#0F172A
     classDef store fill:#FEF3C7,stroke:#CA8A04,color:#713F12
     classDef event fill:#DCFCE7,stroke:#16A34A,color:#14532D
+    classDef external fill:#FEF3C7,stroke:#D97706,color:#78350F
 
     C[Candidate]
     R[Recruiter]
@@ -317,6 +418,7 @@ flowchart TB
     U --> FE
     FE -->|chọn gói / tạo đơn| GW
     GW --> PAY
+    PAY -->|lấy snapshot gói| US
     PAY -->|lưu order PENDING| MDB
     PAY -->|tạo payment link| PAYOS
     PAYOS -->|webhook thanh toán| PAY
@@ -330,9 +432,8 @@ flowchart TB
     class FE,GW,PAY,US svc
     class MDB,UDB store
     class RMQ event
-    class PAYOS store
+    class PAYOS external
 ```
-
 ## 4. Gợi ý sử dụng
 
 - Dùng sơ đồ `1` khi mô tả kiến trúc tổng thể.
