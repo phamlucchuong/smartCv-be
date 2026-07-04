@@ -241,9 +241,26 @@ public class AnalysisService {
         } catch (AppException e) {
             throw e;
         } catch (Exception e) {
-            log.error("AI call failed: {}", e.getMessage());
-            throw new AppException(ErrorCode.AI_PROCESSING_FAILED);
+            log.error("AI call failed", e);
+            throw mapAiException(e);
         }
+    }
+
+    private AppException mapAiException(Exception e) {
+        String message = e.getMessage();
+        if (message == null) {
+            return new AppException(ErrorCode.AI_PROCESSING_FAILED);
+        }
+
+        String normalized = message.toLowerCase();
+        if (normalized.contains("429")
+                || normalized.contains("resource_exhausted")
+                || normalized.contains("quota exceeded")
+                || normalized.contains("rate limit")) {
+            return new AppException(ErrorCode.AI_PROVIDER_QUOTA_EXCEEDED);
+        }
+
+        return new AppException(ErrorCode.AI_PROCESSING_FAILED);
     }
 
     private <T> T parse(String raw, Class<T> clazz) {

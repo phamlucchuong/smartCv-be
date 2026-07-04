@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AiProviderConfigResponse {
+    String id;
+    String name;
     AiProvider provider;
     String model;
     String baseUrl;
@@ -23,6 +25,5 @@ public class AiProviderConfigResponse {
     String apiVersion;
     boolean active;
     boolean configured;
-    boolean oauthConfigured;
     LocalDateTime updatedAt;
 }

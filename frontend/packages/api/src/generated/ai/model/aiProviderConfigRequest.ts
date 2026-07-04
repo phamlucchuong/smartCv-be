@@ -6,9 +6,10 @@
  */
 
 export interface AiProviderConfigRequest {
+  name: string;
+  provider: 'GROQ' | 'AZURE_OPENAI' | 'GEMINI' | 'LLAMA_3';
   apiKey?: string;
-  oauthToken?: string;
-  model?: string;
+  model: string;
   baseUrl?: string;
   deploymentName?: string;
   apiVersion?: string;

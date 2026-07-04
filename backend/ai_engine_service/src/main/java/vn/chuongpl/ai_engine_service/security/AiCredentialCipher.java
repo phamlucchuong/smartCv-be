@@ -12,7 +12,7 @@ import java.security.SecureRandom;
 import java.util.Base64;
 
 /**
- * AES-256-GCM encryption for AI provider credentials at rest (apiKey, oauthToken).
+ * AES-256-GCM encryption for AI provider credentials at rest (apiKey).
  * Format: "v1:" + base64(iv) + ":" + base64(ciphertext||tag) — the same convention
  * used by scripts/seed_master.mjs so both write paths produce compatible values.
  * Values without the "v1:" prefix are treated as legacy plaintext and passed through

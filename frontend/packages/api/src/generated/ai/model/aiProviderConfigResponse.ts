@@ -7,11 +7,12 @@
 import type { AiProviderConfigResponseProvider } from './aiProviderConfigResponseProvider';
 
 export interface AiProviderConfigResponse {
+  id?: string;
+  name?: string;
   provider?: AiProviderConfigResponseProvider;
   model?: string;
   baseUrl?: string;
   deploymentName?: string;
-  oauthToken?: string;
   apiVersion?: string;
   active?: boolean;
   configured?: boolean;

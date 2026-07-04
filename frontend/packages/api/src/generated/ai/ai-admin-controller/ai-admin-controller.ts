@@ -4,10 +4,7 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
-import {
-  useMutation,
-  useQuery
-} from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -20,360 +17,398 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult
+  UseQueryResult,
 } from '@tanstack/react-query';
 
 import type {
   AiProviderConfigRequest,
   ApiResponseAiProviderConfigResponse,
   ApiResponseListAiProviderConfigResponse,
-  ApiResponseVoid
+  ApiResponseVoid,
 } from '.././model';
 
 import { customInstance } from '../../../axios-instance';
 
-
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
-export const upsertProvider = (
-    provider: string,
-    aiProviderConfigRequest: AiProviderConfigRequest,
- options?: SecondParameter<typeof customInstance>,) => {
-      
-      
-      return customInstance<ApiResponseAiProviderConfigResponse>(
-      {url: `/api/ai/admin/providers/${provider}`, method: 'PUT',
-      headers: {'Content-Type': 'application/json', },
-      data: aiProviderConfigRequest
-    },
-      options);
-    }
-  
-
-
-export const getUpsertProviderMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof upsertProvider>>, TError,{provider: string;data: AiProviderConfigRequest}, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof upsertProvider>>, TError,{provider: string;data: AiProviderConfigRequest}, TContext> => {
-
-const mutationKey = ['upsertProvider'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-      
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof upsertProvider>>, {provider: string;data: AiProviderConfigRequest}> = (props) => {
-          const {provider,data} = props ?? {};
-
-          return  upsertProvider(provider,data,requestOptions)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type UpsertProviderMutationResult = NonNullable<Awaited<ReturnType<typeof upsertProvider>>>
-    export type UpsertProviderMutationBody = AiProviderConfigRequest
-    export type UpsertProviderMutationError = unknown
-
-    export const useUpsertProvider = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof upsertProvider>>, TError,{provider: string;data: AiProviderConfigRequest}, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof upsertProvider>>,
-        TError,
-        {provider: string;data: AiProviderConfigRequest},
-        TContext
-      > => {
-
-      const mutationOptions = getUpsertProviderMutationOptions(options);
-
-      return useMutation(mutationOptions, queryClient);
-    }
-    export const deleteProvider = (
-    provider: string,
- options?: SecondParameter<typeof customInstance>,) => {
-      
-      
-      return customInstance<ApiResponseVoid>(
-      {url: `/api/ai/admin/providers/${provider}`, method: 'DELETE'
-    },
-      options);
-    }
-  
-
-
-export const getDeleteProviderMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteProvider>>, TError,{provider: string}, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof deleteProvider>>, TError,{provider: string}, TContext> => {
-
-const mutationKey = ['deleteProvider'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-      
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteProvider>>, {provider: string}> = (props) => {
-          const {provider} = props ?? {};
-
-          return  deleteProvider(provider,requestOptions)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type DeleteProviderMutationResult = NonNullable<Awaited<ReturnType<typeof deleteProvider>>>
-    
-    export type DeleteProviderMutationError = unknown
-
-    export const useDeleteProvider = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteProvider>>, TError,{provider: string}, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof deleteProvider>>,
-        TError,
-        {provider: string},
-        TContext
-      > => {
-
-      const mutationOptions = getDeleteProviderMutationOptions(options);
-
-      return useMutation(mutationOptions, queryClient);
-    }
-    export const activateProvider = (
-    provider: string,
- options?: SecondParameter<typeof customInstance>,) => {
-      
-      
-      return customInstance<ApiResponseAiProviderConfigResponse>(
-      {url: `/api/ai/admin/providers/${provider}/activate`, method: 'PUT'
-    },
-      options);
-    }
-  
-
-
-export const getActivateProviderMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof activateProvider>>, TError,{provider: string}, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof activateProvider>>, TError,{provider: string}, TContext> => {
-
-const mutationKey = ['activateProvider'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-      
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof activateProvider>>, {provider: string}> = (props) => {
-          const {provider} = props ?? {};
-
-          return  activateProvider(provider,requestOptions)
-        }
-
-        
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type ActivateProviderMutationResult = NonNullable<Awaited<ReturnType<typeof activateProvider>>>
-    
-    export type ActivateProviderMutationError = unknown
-
-    export const useActivateProvider = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof activateProvider>>, TError,{provider: string}, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof activateProvider>>,
-        TError,
-        {provider: string},
-        TContext
-      > => {
-
-      const mutationOptions = getActivateProviderMutationOptions(options);
-
-      return useMutation(mutationOptions, queryClient);
-    }
-    export const listProviders = (
-    
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+export const createModel = (
+  aiProviderConfigRequest: AiProviderConfigRequest,
+  options?: SecondParameter<typeof customInstance>,
 ) => {
-      
-      
-      return customInstance<ApiResponseListAiProviderConfigResponse>(
-      {url: `/api/ai/admin/providers`, method: 'GET', signal
+  return customInstance<ApiResponseAiProviderConfigResponse>(
+    {
+      url: '/api/ai/admin/models',
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: aiProviderConfigRequest,
     },
-      options);
-    }
-  
+    options,
+  );
+};
 
+export const getCreateModelMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createModel>>,
+    TError,
+    { data: AiProviderConfigRequest },
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof createModel>>,
+  TError,
+  { data: AiProviderConfigRequest },
+  TContext
+> => {
+  const mutationKey = ['createModel'];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof createModel>>,
+    { data: AiProviderConfigRequest }
+  > = (props) => {
+    const { data } = props ?? {};
 
-export const getListProvidersQueryKey = () => {
-    return [
-    `/api/ai/admin/providers`
-    ] as const;
-    }
+    return createModel(data, requestOptions);
+  };
 
-    
-export const getListProvidersQueryOptions = <TData = Awaited<ReturnType<typeof listProviders>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listProviders>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+  return { mutationFn, ...mutationOptions };
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export type CreateModelMutationResult = NonNullable<Awaited<ReturnType<typeof createModel>>>;
+export type CreateModelMutationBody = AiProviderConfigRequest;
+export type CreateModelMutationError = unknown;
 
-  const queryKey =  queryOptions?.queryKey ?? getListProvidersQueryKey();
+export const useCreateModel = <TError = unknown, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof createModel>>,
+      TError,
+      { data: AiProviderConfigRequest },
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof createModel>>,
+  TError,
+  { data: AiProviderConfigRequest },
+  TContext
+> => {
+  const mutationOptions = getCreateModelMutationOptions(options);
 
-  
+  return useMutation(mutationOptions, queryClient);
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof listProviders>>> = ({ signal }) => listProviders(requestOptions, signal);
+export const deleteModel = (id: string, options?: SecondParameter<typeof customInstance>) => {
+  return customInstance<ApiResponseVoid>(
+    {
+      url: `/api/ai/admin/models/${id}`,
+      method: 'DELETE',
+    },
+    options,
+  );
+};
 
-      
+export const getDeleteModelMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteModel>>,
+    TError,
+    { id: string },
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof deleteModel>>,
+  TError,
+  { id: string },
+  TContext
+> => {
+  const mutationKey = ['deleteModel'];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
-      
+  const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteModel>>, { id: string }> = (props) => {
+    const { id } = props ?? {};
 
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listProviders>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
+    return deleteModel(id, requestOptions);
+  };
 
-export type ListProvidersQueryResult = NonNullable<Awaited<ReturnType<typeof listProviders>>>
-export type ListProvidersQueryError = unknown
+  return { mutationFn, ...mutationOptions };
+};
 
+export type DeleteModelMutationResult = NonNullable<Awaited<ReturnType<typeof deleteModel>>>;
+export type DeleteModelMutationError = unknown;
 
-export function useListProviders<TData = Awaited<ReturnType<typeof listProviders>>, TError = unknown>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listProviders>>, TError, TData>> & Pick<
+export const useDeleteModel = <TError = unknown, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof deleteModel>>,
+      TError,
+      { id: string },
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<Awaited<ReturnType<typeof deleteModel>>, TError, { id: string }, TContext> => {
+  const mutationOptions = getDeleteModelMutationOptions(options);
+
+  return useMutation(mutationOptions, queryClient);
+};
+
+export const activateModel = (id: string, options?: SecondParameter<typeof customInstance>) => {
+  return customInstance<ApiResponseAiProviderConfigResponse>(
+    {
+      url: `/api/ai/admin/models/${id}/activate`,
+      method: 'PUT',
+    },
+    options,
+  );
+};
+
+export const getActivateModelMutationOptions = <TError = unknown, TContext = unknown>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof activateModel>>,
+    TError,
+    { id: string },
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof activateModel>>,
+  TError,
+  { id: string },
+  TContext
+> => {
+  const mutationKey = ['activateModel'];
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
+
+  const mutationFn: MutationFunction<Awaited<ReturnType<typeof activateModel>>, { id: string }> = (props) => {
+    const { id } = props ?? {};
+
+    return activateModel(id, requestOptions);
+  };
+
+  return { mutationFn, ...mutationOptions };
+};
+
+export type ActivateModelMutationResult = NonNullable<Awaited<ReturnType<typeof activateModel>>>;
+export type ActivateModelMutationError = unknown;
+
+export const useActivateModel = <TError = unknown, TContext = unknown>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof activateModel>>,
+      TError,
+      { id: string },
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<Awaited<ReturnType<typeof activateModel>>, TError, { id: string }, TContext> => {
+  const mutationOptions = getActivateModelMutationOptions(options);
+
+  return useMutation(mutationOptions, queryClient);
+};
+
+export const listModels = (options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
+  return customInstance<ApiResponseListAiProviderConfigResponse>(
+    {
+      url: '/api/ai/admin/models',
+      method: 'GET',
+      signal,
+    },
+    options,
+  );
+};
+
+export const getListModelsQueryKey = () => {
+  return ['/api/ai/admin/models'] as const;
+};
+
+export const getListModelsQueryOptions = <
+  TData = Awaited<ReturnType<typeof listModels>>,
+  TError = unknown,
+>(options?: {
+  query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listModels>>, TError, TData>>;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getListModelsQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof listModels>>> = ({ signal }) =>
+    listModels(requestOptions, signal);
+
+  return {
+    queryKey,
+    queryFn,
+    ...queryOptions,
+  } as UseQueryOptions<Awaited<ReturnType<typeof listModels>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
+};
+
+export type ListModelsQueryResult = NonNullable<Awaited<ReturnType<typeof listModels>>>;
+export type ListModelsQueryError = unknown;
+
+export function useListModels<TData = Awaited<ReturnType<typeof listModels>>, TError = unknown>(
+  options: {
+    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof listModels>>, TError, TData>> &
+      Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof listProviders>>,
+          Awaited<ReturnType<typeof listModels>>,
           TError,
-          Awaited<ReturnType<typeof listProviders>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListProviders<TData = Awaited<ReturnType<typeof listProviders>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listProviders>>, TError, TData>> & Pick<
+          Awaited<ReturnType<typeof listModels>>
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useListModels<TData = Awaited<ReturnType<typeof listModels>>, TError = unknown>(
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listModels>>, TError, TData>> &
+      Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof listProviders>>,
+          Awaited<ReturnType<typeof listModels>>,
           TError,
-          Awaited<ReturnType<typeof listProviders>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListProviders<TData = Awaited<ReturnType<typeof listProviders>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listProviders>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+          Awaited<ReturnType<typeof listModels>>
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useListModels<TData = Awaited<ReturnType<typeof listModels>>, TError = unknown>(
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listModels>>, TError, TData>>;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useListModels<TData = Awaited<ReturnType<typeof listModels>>, TError = unknown>(
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof listModels>>, TError, TData>>;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getListModelsQueryOptions(options);
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
-export function useListProviders<TData = Awaited<ReturnType<typeof listProviders>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listProviders>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient 
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getListProvidersQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  query.queryKey = queryOptions.queryKey ;
+  query.queryKey = queryOptions.queryKey;
 
   return query;
 }
 
-
-
-
-export const getActiveProvider = (
-    
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
-) => {
-      
-      
-      return customInstance<ApiResponseAiProviderConfigResponse>(
-      {url: `/api/ai/admin/providers/active`, method: 'GET', signal
+export const getActiveModel = (options?: SecondParameter<typeof customInstance>, signal?: AbortSignal) => {
+  return customInstance<ApiResponseAiProviderConfigResponse>(
+    {
+      url: '/api/ai/admin/models/active',
+      method: 'GET',
+      signal,
     },
-      options);
-    }
-  
+    options,
+  );
+};
 
+export const getGetActiveModelQueryKey = () => {
+  return ['/api/ai/admin/models/active'] as const;
+};
 
+export const getGetActiveModelQueryOptions = <
+  TData = Awaited<ReturnType<typeof getActiveModel>>,
+  TError = unknown,
+>(options?: {
+  query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getActiveModel>>, TError, TData>>;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+  const queryKey = queryOptions?.queryKey ?? getGetActiveModelQueryKey();
 
-export const getGetActiveProviderQueryKey = () => {
-    return [
-    `/api/ai/admin/providers/active`
-    ] as const;
-    }
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getActiveModel>>> = ({ signal }) =>
+    getActiveModel(requestOptions, signal);
 
-    
-export const getGetActiveProviderQueryOptions = <TData = Awaited<ReturnType<typeof getActiveProvider>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getActiveProvider>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+  return {
+    queryKey,
+    queryFn,
+    ...queryOptions,
+  } as UseQueryOptions<Awaited<ReturnType<typeof getActiveModel>>, TError, TData> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export type GetActiveModelQueryResult = NonNullable<Awaited<ReturnType<typeof getActiveModel>>>;
+export type GetActiveModelQueryError = unknown;
 
-  const queryKey =  queryOptions?.queryKey ?? getGetActiveProviderQueryKey();
-
-  
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getActiveProvider>>> = ({ signal }) => getActiveProvider(requestOptions, signal);
-
-      
-
-      
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getActiveProvider>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetActiveProviderQueryResult = NonNullable<Awaited<ReturnType<typeof getActiveProvider>>>
-export type GetActiveProviderQueryError = unknown
-
-
-export function useGetActiveProvider<TData = Awaited<ReturnType<typeof getActiveProvider>>, TError = unknown>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getActiveProvider>>, TError, TData>> & Pick<
+export function useGetActiveModel<TData = Awaited<ReturnType<typeof getActiveModel>>, TError = unknown>(
+  options: {
+    query: Partial<UseQueryOptions<Awaited<ReturnType<typeof getActiveModel>>, TError, TData>> &
+      Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getActiveProvider>>,
+          Awaited<ReturnType<typeof getActiveModel>>,
           TError,
-          Awaited<ReturnType<typeof getActiveProvider>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetActiveProvider<TData = Awaited<ReturnType<typeof getActiveProvider>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getActiveProvider>>, TError, TData>> & Pick<
+          Awaited<ReturnType<typeof getActiveModel>>
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useGetActiveModel<TData = Awaited<ReturnType<typeof getActiveModel>>, TError = unknown>(
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getActiveModel>>, TError, TData>> &
+      Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getActiveProvider>>,
+          Awaited<ReturnType<typeof getActiveModel>>,
           TError,
-          Awaited<ReturnType<typeof getActiveProvider>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetActiveProvider<TData = Awaited<ReturnType<typeof getActiveProvider>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getActiveProvider>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+          Awaited<ReturnType<typeof getActiveModel>>
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useGetActiveModel<TData = Awaited<ReturnType<typeof getActiveModel>>, TError = unknown>(
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getActiveModel>>, TError, TData>>;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+export function useGetActiveModel<TData = Awaited<ReturnType<typeof getActiveModel>>, TError = unknown>(
+  options?: {
+    query?: Partial<UseQueryOptions<Awaited<ReturnType<typeof getActiveModel>>, TError, TData>>;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+  const queryOptions = getGetActiveModelQueryOptions(options);
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<TData, TError> & {
+    queryKey: DataTag<QueryKey, TData, TError>;
+  };
 
-export function useGetActiveProvider<TData = Awaited<ReturnType<typeof getActiveProvider>>, TError = unknown>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getActiveProvider>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient 
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getGetActiveProviderQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  query.queryKey = queryOptions.queryKey ;
+  query.queryKey = queryOptions.queryKey;
 
   return query;
 }
-
-
-
-

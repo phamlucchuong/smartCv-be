@@ -65,20 +65,6 @@ class AiModelGatewayFactoryTest {
     }
 
     @Test
-    void create_anthropic_config_returns_AnthropicModelGateway() {
-        var config = AiProviderConfig.builder()
-                .provider(AiProvider.ANTHROPIC)
-                .apiKey("test-key")
-                .model("claude-sonnet-4-6")
-                .build();
-
-        AiModelGateway gateway = factory.create(config);
-
-        assertThat(gateway).isInstanceOf(AnthropicModelGateway.class);
-        assertThat(gateway.provider()).isEqualTo(AiProvider.ANTHROPIC);
-    }
-
-    @Test
     void create_azure_config_returns_AzureOpenAiModelGateway() {
         var config = AiProviderConfig.builder()
                 .provider(AiProvider.AZURE_OPENAI)
@@ -92,5 +78,19 @@ class AiModelGatewayFactoryTest {
 
         assertThat(gateway).isInstanceOf(AzureOpenAiModelGateway.class);
         assertThat(gateway.provider()).isEqualTo(AiProvider.AZURE_OPENAI);
+    }
+
+    @Test
+    void create_llama3_config_returns_Llama3ModelGateway() {
+        var config = AiProviderConfig.builder()
+                .provider(AiProvider.LLAMA_3)
+                .model("llama3.1")
+                .baseUrl("http://localhost:11434/v1")
+                .build();
+
+        AiModelGateway gateway = factory.create(config);
+
+        assertThat(gateway).isInstanceOf(Llama3ModelGateway.class);
+        assertThat(gateway.provider()).isEqualTo(AiProvider.LLAMA_3);
     }
 }

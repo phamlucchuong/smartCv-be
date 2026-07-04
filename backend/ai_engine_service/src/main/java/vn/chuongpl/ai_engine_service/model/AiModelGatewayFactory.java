@@ -3,9 +3,6 @@ package vn.chuongpl.ai_engine_service.model;
 import com.azure.ai.openai.OpenAIClientBuilder;
 import com.azure.core.credential.AzureKeyCredential;
 import lombok.RequiredArgsConstructor;
-import org.springframework.ai.anthropic.AnthropicChatModel;
-import org.springframework.ai.anthropic.AnthropicChatOptions;
-import org.springframework.ai.anthropic.api.AnthropicApi;
 import org.springframework.ai.azure.openai.AzureOpenAiChatModel;
 import org.springframework.ai.azure.openai.AzureOpenAiChatOptions;
 import org.springframework.ai.openai.OpenAiChatModel;
@@ -25,10 +22,8 @@ public class AiModelGatewayFactory {
         return switch (config.getProvider()) {
             case GROQ             -> buildGroq(config);
             case GEMINI           -> buildGemini(config);
-            case ANTHROPIC        -> buildAnthropic(config);
             case AZURE_OPENAI     -> buildAzure(config);
             case LLAMA_3          -> buildLlama3(config);
-            case CLAUDE_AGENT_SDK -> buildClaudeAgentSdk(config);
         };
     }
 
@@ -62,21 +57,6 @@ public class AiModelGatewayFactory {
         return new GeminiModelGateway(model);
     }
 
-    private AnthropicModelGateway buildAnthropic(AiProviderConfig c) {
-        var api = AnthropicApi.builder()
-                .apiKey(cipher.decrypt(c.getApiKey()))
-                .build();
-        var model = AnthropicChatModel.builder()
-                .anthropicApi(api)
-                .defaultOptions(AnthropicChatOptions.builder()
-                        .model(c.getModel())
-                        .maxTokens(4096)
-                        .temperature(0.2)
-                        .build())
-                .build();
-        return new AnthropicModelGateway(model);
-    }
-
     private AzureOpenAiModelGateway buildAzure(AiProviderConfig c) {
         var openAiClientBuilder = new OpenAIClientBuilder()
                 .credential(new AzureKeyCredential(cipher.decrypt(c.getApiKey())))
@@ -104,20 +84,5 @@ public class AiModelGatewayFactory {
                         .build())
                 .build();
         return new Llama3ModelGateway(model);
-    }
-
-    private ClaudeAgentSdkModelGateway buildClaudeAgentSdk(AiProviderConfig c) {
-        var api = AnthropicApi.builder()
-                .apiKey(cipher.decrypt(c.getOauthToken()))
-                .build();
-        var model = AnthropicChatModel.builder()
-                .anthropicApi(api)
-                .defaultOptions(AnthropicChatOptions.builder()
-                        .model(c.getModel())
-                        .maxTokens(4096)
-                        .temperature(0.2)
-                        .build())
-                .build();
-        return new ClaudeAgentSdkModelGateway(model);
     }
 }

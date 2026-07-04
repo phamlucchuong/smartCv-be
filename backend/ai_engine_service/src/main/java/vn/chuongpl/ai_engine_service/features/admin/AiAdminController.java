@@ -2,50 +2,51 @@ package vn.chuongpl.ai_engine_service.features.admin;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import vn.chuongpl.ai_engine_service.dtos.ApiResponse;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/ai/admin/providers")
+@RequestMapping("/api/ai/admin/models")
 @RequiredArgsConstructor
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+@Validated
 public class AiAdminController {
 
     private final AiAdminService adminService;
 
     @GetMapping
-    public ApiResponse<List<AiProviderConfigResponse>> listProviders() {
+    public ApiResponse<List<AiProviderConfigResponse>> listModels() {
         return ApiResponse.<List<AiProviderConfigResponse>>builder()
                 .data(adminService.listAll())
                 .build();
     }
 
-    @PutMapping("/{provider}")
-    public ApiResponse<AiProviderConfigResponse> upsertProvider(
-            @PathVariable String provider,
-            @RequestBody AiProviderConfigRequest request) {
+    @PostMapping
+    public ApiResponse<AiProviderConfigResponse> createModel(
+            @RequestBody @jakarta.validation.Valid AiProviderConfigRequest request) {
         return ApiResponse.<AiProviderConfigResponse>builder()
-                .data(adminService.upsert(provider, request))
+                .data(adminService.create(request))
                 .build();
     }
 
-    @DeleteMapping("/{provider}")
-    public ApiResponse<Void> deleteProvider(@PathVariable String provider) {
-        adminService.delete(provider);
-        return ApiResponse.<Void>builder().message("Provider deleted").build();
+    @DeleteMapping("/{id}")
+    public ApiResponse<Void> deleteModel(@PathVariable String id) {
+        adminService.delete(id);
+        return ApiResponse.<Void>builder().message("Model deleted").build();
     }
 
-    @PutMapping("/{provider}/activate")
-    public ApiResponse<AiProviderConfigResponse> activateProvider(@PathVariable String provider) {
+    @PutMapping("/{id}/activate")
+    public ApiResponse<AiProviderConfigResponse> activateModel(@PathVariable String id) {
         return ApiResponse.<AiProviderConfigResponse>builder()
-                .data(adminService.activate(provider))
+                .data(adminService.activate(id))
                 .build();
     }
 
     @GetMapping("/active")
-    public ApiResponse<AiProviderConfigResponse> getActiveProvider() {
+    public ApiResponse<AiProviderConfigResponse> getActiveModel() {
         return ApiResponse.<AiProviderConfigResponse>builder()
                 .data(adminService.getActive())
                 .build();

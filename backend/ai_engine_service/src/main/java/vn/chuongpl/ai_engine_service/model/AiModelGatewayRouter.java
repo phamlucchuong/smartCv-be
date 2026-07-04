@@ -10,6 +10,8 @@ import vn.chuongpl.ai_engine_service.features.admin.AiProviderConfig;
 import vn.chuongpl.ai_engine_service.features.admin.AiProviderConfigRepository;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.List;
 import java.util.UUID;
 import vn.chuongpl.ai_engine_service.features.analysis.AiUsageLog;
 import vn.chuongpl.ai_engine_service.features.analysis.AiUsageLogRepository;
@@ -30,16 +32,38 @@ public class AiModelGatewayRouter {
         loadActiveFromDb();
         if (activeGateway == null) {
             log.warn("No active AI provider configured. Seed the database (scripts/seed_master.mjs) "
-                    + "or activate one via PUT /ai/api/ai/admin/providers/{provider}/activate");
+                    + "or activate one via PUT /ai/api/ai/admin/models/{id}/activate");
         }
     }
 
     private synchronized void loadActiveFromDb() {
         if (activeGateway != null) return;
-        repository.findByActiveTrue().ifPresent(config -> {
-            activeGateway = factory.create(config);
-            log.info("AI gateway initialized with provider: {}", config.getProvider());
-        });
+        List<AiProviderConfig> actives = repository.findAllByActiveTrue();
+        if (actives.isEmpty()) return;
+
+        AiProviderConfig chosen = actives.stream()
+                .max(Comparator.comparing(AiProviderConfig::getUpdatedAt,
+                        Comparator.nullsFirst(Comparator.naturalOrder())))
+                .orElseThrow();
+        if (actives.size() > 1) {
+            // Stale writers (e.g. an old instance saving back pre-migration entities) can leave
+            // several active docs behind — keep the most recent one and heal the rest.
+            log.warn("Found {} active AI model configs; keeping {}/{} and deactivating the others",
+                    actives.size(), chosen.getProvider(), chosen.getModel());
+            deactivateOthers(actives, chosen);
+        }
+        activeGateway = factory.create(chosen);
+        log.info("AI gateway initialized with provider: {} model: {}", chosen.getProvider(), chosen.getModel());
+    }
+
+    private void deactivateOthers(List<AiProviderConfig> actives, AiProviderConfig keep) {
+        for (AiProviderConfig other : actives) {
+            if (other.getId() != null && other.getId().equals(keep.getId())) continue;
+            if (other == keep) continue;
+            other.setActive(false);
+            other.setUpdatedAt(LocalDateTime.now());
+            repository.save(other);
+        }
     }
 
     public String call(String systemPrompt, String userPrompt) {
@@ -83,8 +107,8 @@ public class AiModelGatewayRouter {
         return switch (provider.toLowerCase()) {
             case "groq" -> 0.05 / 1_000_000.0;
             case "gemini" -> 0.075 / 1_000_000.0;
-            case "anthropic" -> 3.0 / 1_000_000.0;
-            case "azure_openai", "openai" -> 2.5 / 1_000_000.0;
+            case "azure_openai" -> 2.5 / 1_000_000.0;
+            case "llama_3" -> 0.0;
             default -> 0.0000025;
         };
     }
@@ -94,19 +118,15 @@ public class AiModelGatewayRouter {
         return switch (provider.toLowerCase()) {
             case "groq" -> 0.10 / 1_000_000.0;
             case "gemini" -> 0.30 / 1_000_000.0;
-            case "anthropic" -> 15.0 / 1_000_000.0;
-            case "azure_openai", "openai" -> 10.0 / 1_000_000.0;
+            case "azure_openai" -> 10.0 / 1_000_000.0;
+            case "llama_3" -> 0.0;
             default -> 0.000010;
         };
     }
 
     public void activate(AiProviderConfig config) {
         AiModelGateway gateway = factory.create(config);
-        repository.findByActiveTrue().ifPresent(current -> {
-            current.setActive(false);
-            current.setUpdatedAt(LocalDateTime.now());
-            repository.save(current);
-        });
+        deactivateOthers(repository.findAllByActiveTrue(), config);
         config.setActive(true);
         config.setUpdatedAt(LocalDateTime.now());
         repository.save(config);
