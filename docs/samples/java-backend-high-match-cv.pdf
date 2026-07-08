@@ -1,0 +1,155 @@
+%PDF-1.4
+1 0 obj << /Type /Catalog /Pages 2 0 R >> endobj
+2 0 obj << /Type /Pages /Kids [3 0 R] /Count 1 >> endobj
+3 0 obj << /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >> endobj
+4 0 obj << /Type /Font /Subtype /Type1 /BaseFont /Helvetica >> endobj
+5 0 obj << /Length 3458 >> stream
+BT
+/F1 11 Tf
+50 790 Td
+14 TL
+(NGUYEN MINH KHANG) Tj
+T*
+(Senior Java Backend Engineer) Tj
+T*
+(Ho Chi Minh City | khang.nguyen.dev@example.com | +84 903 555 018 | github.com/khangjava) Tj
+T*
+() Tj
+T*
+(PROFESSIONAL SUMMARY) Tj
+T*
+(Backend engineer with 6+ years of experience building Java services for fintech and) Tj
+T*
+(e-commerce platforms.) Tj
+T*
+(Strong in Java, Spring Boot, RESTful APIs, SQL, Maven, Kafka, RabbitMQ, Linux, AWS, and) Tj
+T*
+(performance tuning.) Tj
+T*
+(Delivered high-availability services, improved latency, and collaborated closely with QA,) Tj
+T*
+(DevOps, and product teams.) Tj
+T*
+() Tj
+T*
+(CORE SKILLS) Tj
+T*
+(Java, Spring Boot, Spring Framework, REST API design, SQL, PostgreSQL, MySQL, Maven, Gradle,) Tj
+T*
+(Kafka, RabbitMQ, Redis, Docker, Tomcat, Linux, AWS, JUnit, Testcontainers, CI/CD, system) Tj
+T*
+(design.) Tj
+T*
+() Tj
+T*
+(PROFESSIONAL EXPERIENCE) Tj
+T*
+(Senior Java Backend Engineer | Lumina Commerce | 2022 - Present) Tj
+T*
+(- Designed and implemented 18+ Spring Boot microservices for order, payment, and inventory) Tj
+T*
+(workflows.) Tj
+T*
+(- Built RESTful APIs used by web and partner systems, serving 1.8M requests per day.) Tj
+T*
+(- Improved p95 response time by 34% through SQL optimization, caching, and async event) Tj
+T*
+(processing.) Tj
+T*
+(- Developed Kafka and RabbitMQ consumers for payment, recommendation, and notification) Tj
+T*
+(pipelines.) Tj
+T*
+(- Wrote automated integration tests and deployment runbooks with QA and DevOps teams.) Tj
+T*
+(- Deployed services on AWS EC2, RDS, S3, and CloudWatch with Linux-based runtime operations.) Tj
+T*
+() Tj
+T*
+(Java Backend Engineer | Nova Fintech | 2019 - 2022) Tj
+T*
+(- Developed Java 17 and Spring Boot services for wallet, billing, and user account) Tj
+T*
+(operations.) Tj
+T*
+(- Maintained Tomcat-based internal applications and migrated core APIs to containerized) Tj
+T*
+(deployments.) Tj
+T*
+(- Created SQL data models, stored procedures, and reporting queries for PostgreSQL and) Tj
+T*
+(MySQL.) Tj
+T*
+(- Partnered with systems analysts and product owners to translate business requirements into) Tj
+T*
+(backend solutions.) Tj
+T*
+(- Reduced production incidents by improving validation, logging, retry policies, and test) Tj
+T*
+(coverage.) Tj
+T*
+() Tj
+T*
+(Software Developer | Bright Systems | 2017 - 2019) Tj
+T*
+(- Built backend modules in Java for document processing and business workflow applications.) Tj
+T*
+(- Fixed defects, upgraded interfaces, and improved application performance for enterprise) Tj
+T*
+(customers.) Tj
+T*
+(- Prepared technical reports, implementation notes, and release documentation for project) Tj
+T*
+(stakeholders.) Tj
+T*
+() Tj
+T*
+(SELECTED PROJECTS) Tj
+T*
+(Payment Event Processing Platform) Tj
+T*
+(- Built a Java Spring Boot event-driven platform using RabbitMQ and Kafka for payment status) Tj
+T*
+(updates.) Tj
+T*
+(- Implemented idempotent consumers, retry policies, and monitoring dashboards for message) Tj
+T*
+(processing.) Tj
+T*
+() Tj
+T*
+(Merchant Settlement API) Tj
+T*
+(- Designed secure RESTful APIs for merchant settlements, reconciliation, and reporting.) Tj
+T*
+(- Optimized SQL queries and batch processing to reduce settlement runtime from 45 to 18) Tj
+T*
+(minutes.) Tj
+T*
+() Tj
+T*
+(EDUCATION) Tj
+T*
+(B.Sc. in Computer Science | Ho Chi Minh City University of Technology | 2017) Tj
+T*
+() Tj
+T*
+(CERTIFICATIONS) Tj
+T*
+(AWS Certified Developer - Associate) Tj
+T*
+(Oracle Certified Professional: Java SE Developer) Tj
+ET
+endstream endobj
+xref
+0 6
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+0000000115 00000 n 
+0000000241 00000 n 
+0000000311 00000 n 
+trailer << /Size 6 /Root 1 0 R >>
+startxref
+3821
+%%EOF
