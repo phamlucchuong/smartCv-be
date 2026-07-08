@@ -59,7 +59,7 @@ public class JobClient {
     public List<JobSummary> getActiveJobs(int page, int size) {
         try {
             HttpEntity<Void> entity = new HttpEntity<>(buildHeaders());
-            String url = jobServiceBaseUrl + "/api/jobs/active?page=" + page + "&size=" + size;
+            String url = jobServiceBaseUrl + "/api/jobs?page=" + page + "&size=" + size;
             ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
 
             JsonNode root = objectMapper.readTree(response.getBody());
@@ -74,9 +74,10 @@ public class JobClient {
             }
             return jobs;
         } catch (RestClientException e) {
-            log.error("Job service unavailable: {}", e.getMessage());
+            log.error("[JobSuggestions][FetchActiveJobs] Job service unavailable", e);
             throw new AppException(ErrorCode.JOB_SERVICE_UNAVAILABLE);
         } catch (Exception e) {
+            log.error("[JobSuggestions][FetchActiveJobs] Failed to parse active jobs response", e);
             return Collections.emptyList();
         }
     }

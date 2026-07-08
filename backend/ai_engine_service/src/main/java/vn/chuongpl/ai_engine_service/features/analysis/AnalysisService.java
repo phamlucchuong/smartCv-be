@@ -440,7 +440,7 @@ public class AnalysisService {
             try {
                 recommend(new JobRecommendRequest(null, cvUrl, 3), candidateId, false);
             } catch (Exception e) {
-                log.warn("Job recommendation failed for userId={}: {}", candidateId, e.getMessage());
+                log.error("[JobSuggestions][Trigger] Job recommendation failed for userId={}", candidateId, e);
             }
         });
 

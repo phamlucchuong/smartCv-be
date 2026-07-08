@@ -23,7 +23,9 @@ public class JobSuggestionsPublisher {
                     message.getUserId(),
                     message.getSuggestions() != null ? message.getSuggestions().size() : 0);
         } catch (Exception e) {
-            log.error("Failed to publish job suggestions for userId={}: {}", message.getUserId(), e.getMessage());
+            log.error("[JobSuggestions][Publish] Failed to publish job suggestions for userId={}",
+                    message.getUserId(), e);
+            throw new RuntimeException("Failed to publish job suggestions", e);
         }
     }
 }
