@@ -4,7 +4,9 @@
   "type": "module",
   "description": "Master data seeder for SmartCV databases",
   "scripts": {
-    "seed": "node seed_master.mjs"
+    "seed": "node seed_master.mjs",
+    "seed:core": "node seed_master.mjs --only core",
+    "seed:ai": "node seed_master.mjs --only ai"
   },
   "dependencies": {
     "mongodb": "^6.10.0"

@@ -7,6 +7,7 @@
  *
  *   cd backend/scripts && npm install        # first time only
  *   node seed_master.mjs                     # seed everything
+ *   node seed_master.mjs --only core         # seed roles/users/recruiters/candidates/packages/jobs
  *   node seed_master.mjs --only ai           # seed one service
  *   node seed_master.mjs --dry-run           # show what would change
  *   node seed_master.mjs --activate gemini
@@ -24,6 +25,9 @@ import { parseArgs } from "node:util";
 import { MongoClient } from "mongodb";
 
 const BACKEND_DIR = resolve(dirname(fileURLToPath(import.meta.url)), "..");
+const ROOT_DIR = resolve(BACKEND_DIR, "..");
+const TOPCV_SEED_FILE = resolve(ROOT_DIR, "data", "topcv-seed", "seed.json");
+const SERVICE_PACKAGE_SEED_NOW = new Date("2026-07-04T00:00:00.000Z");
 
 // ---------------------------------------------------------------------------
 // Env handling
@@ -82,6 +86,112 @@ export function mongoUri(env) {
   const user = env.get("MONGO_DB_USERNAME", "admin");
   const password = env.get("MONGO_DB_PASSWORD", "password");
   return `mongodb://${encodeURIComponent(user)}:${encodeURIComponent(password)}@${host}:${port}/?authSource=admin`;
+}
+
+function reviveExtendedJson(value) {
+  if (Array.isArray(value)) {
+    return value.map(reviveExtendedJson);
+  }
+  if (value && typeof value === "object") {
+    const keys = Object.keys(value);
+    if (keys.length === 1 && keys[0] === "$date") {
+      return new Date(value.$date);
+    }
+    return Object.fromEntries(
+      Object.entries(value).map(([key, nested]) => [key, reviveExtendedJson(nested)]),
+    );
+  }
+  return value;
+}
+
+function loadJsonSnapshot(path) {
+  return reviveExtendedJson(JSON.parse(readFileSync(path, "utf8")));
+}
+
+function assertStringIds(collectionName, docs) {
+  for (const doc of docs) {
+    if (!doc || typeof doc._id !== "string" || doc._id.length === 0) {
+      throw new Error(`collection ${collectionName} contains a non-string _id`);
+    }
+  }
+}
+
+function buildServicePackageSeeds() {
+  return [
+    {
+      _id: "free",
+      name: "Free",
+      price: 0,
+      ai_credits: 10,
+      job_limit: 5,
+      cv_limit: 3,
+      duration_days: null,
+      category: "STANDARD",
+      featured: false,
+      features: ["Hỗ trợ cơ bản", "Phân tích CV cơ bản"],
+      created_at: SERVICE_PACKAGE_SEED_NOW,
+      updated_at: SERVICE_PACKAGE_SEED_NOW,
+    },
+    {
+      _id: "plus",
+      name: "Plus",
+      price: 10000,
+      ai_credits: 20,
+      job_limit: 10,
+      cv_limit: 10,
+      duration_days: 30,
+      category: "STANDARD",
+      featured: true,
+      features: ["Hỗ trợ email 24/7", "Phân tích CV nâng cao", "Sàng lọc AI cơ bản"],
+      created_at: SERVICE_PACKAGE_SEED_NOW,
+      updated_at: SERVICE_PACKAGE_SEED_NOW,
+    },
+    {
+      _id: "pro",
+      name: "Pro",
+      price: 20000,
+      ai_credits: 30,
+      job_limit: 15,
+      cv_limit: -1,
+      duration_days: 30,
+      category: "STANDARD",
+      featured: false,
+      features: ["Hỗ trợ ưu tiên", "Sàng lọc AI nâng cao", "Bảng ATS toàn diện"],
+      created_at: SERVICE_PACKAGE_SEED_NOW,
+      updated_at: SERVICE_PACKAGE_SEED_NOW,
+    },
+    {
+      _id: "fee",
+      name: "Phí sàn",
+      price: 10000,
+      ai_credits: 0,
+      job_limit: 0,
+      cv_limit: 0,
+      duration_days: 30,
+      category: "PLATFORM_FEE",
+      featured: false,
+      features: ["Thanh toán phí sàn hàng tháng"],
+      created_at: SERVICE_PACKAGE_SEED_NOW,
+      updated_at: SERVICE_PACKAGE_SEED_NOW,
+    },
+  ];
+}
+
+async function upsertSeedCollection(collection, collectionName, docs, { dryRun }) {
+  assertStringIds(collectionName, docs);
+  if (dryRun) {
+    console.log(`  [dry-run] ${collectionName}: would upsert ${docs.length} documents`);
+    return;
+  }
+
+  let upserted = 0;
+  for (const doc of docs) {
+    const result = await collection.replaceOne({ _id: doc._id }, doc, { upsert: true });
+    if (result.upsertedCount > 0 || result.modifiedCount > 0) {
+      upserted += 1;
+    }
+  }
+  console.log(`  ${collectionName}: upserted ${upserted}/${docs.length} documents`);
 }
 
 // ---------------------------------------------------------------------------
@@ -185,11 +295,35 @@ async function seedAiEngine(client, env, { activate, dryRun }) {
 }
 
 // ---------------------------------------------------------------------------
+// Core system seed: roles, users, recruiters, candidates, service packages, jobs
+// ---------------------------------------------------------------------------
+
+async function seedCoreSystem(client, env, { dryRun }) {
+  const snapshot = loadJsonSnapshot(TOPCV_SEED_FILE);
+  const userDb = client.db(env.get("USER_MONGO_DB_NAME", "smartcv_user"));
+  const jobDb = client.db(env.get("JOB_MONGO_DB_NAME", "smartcv_job"));
+
+  const collections = [
+    { db: userDb, name: "role", docs: snapshot.role ?? [] },
+    { db: userDb, name: "users", docs: snapshot.users ?? [] },
+    { db: userDb, name: "recruiters", docs: snapshot.recruiters ?? [] },
+    { db: userDb, name: "candidates", docs: snapshot.candidates ?? [] },
+    { db: userDb, name: "service_packages", docs: buildServicePackageSeeds() },
+    { db: jobDb, name: "jobs", docs: snapshot.jobs ?? [] },
+  ];
+
+  for (const entry of collections) {
+    await upsertSeedCollection(entry.db.collection(entry.name), entry.name, entry.docs, { dryRun });
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Registry — add new service seeders here
 // ---------------------------------------------------------------------------
 
 const SEEDERS = {
   ai: seedAiEngine,
+  core: seedCoreSystem,
 };
 
 async function main() {

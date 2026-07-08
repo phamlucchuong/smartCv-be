@@ -2,12 +2,14 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 const { spawnSync } = require('child_process');
+const cheerio = require('./node_modules/cheerio');
 const { chromium } = require('./node_modules/playwright');
 
 const ROOT = path.resolve(__dirname, '..', '..');
 const OUTPUT_DIR = path.join(ROOT, 'data', 'topcv-seed');
 const TMP_DIR = path.join(ROOT, 'data', 'topcv-crawler', 'tmp');
 const ENV_FILE = path.join(ROOT, 'backend', '.env');
+const SAMPLE_LICENSE_FILE = path.join(ROOT, 'docs', 'samples', 'PhamLucChuong_6351071008.pdf');
 const TARGET_COMPANY_COUNT = 25;
 const APPROVED_COMPANY_COUNT = 20;
 const PENDING_COMPANY_COUNT = TARGET_COMPANY_COUNT - APPROVED_COMPANY_COUNT;
@@ -16,6 +18,23 @@ const MAX_LIST_PAGES = 12;
 const CANDIDATE_COUNT = 10;
 const NOW = new Date('2026-06-27T10:00:00+07:00');
 const PASSWORD_HASH = '$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.';
+const JOB_CATEGORIES = new Set([
+  'IT_SOFTWARE',
+  'FINANCE_BANKING',
+  'MARKETING',
+  'HEALTHCARE',
+  'EDUCATION',
+  'MANUFACTURING',
+  'RETAIL',
+  'REAL_ESTATE',
+  'TRANSPORTATION',
+  'MEDIA_ENTERTAINMENT',
+  'LEGAL_CONSULTING',
+  'HUMAN_RESOURCES',
+  'AGRICULTURE',
+  'ENERGY_ENVIRONMENT',
+  'HOSPITALITY_TOURISM',
+]);
 const USER_AGENT =
   'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36';
 
@@ -90,6 +109,27 @@ function normalizeWhitespace(value) {
   return String(value || '').replace(/\s+/g, ' ').trim();
 }
 
+function htmlToPlainText(value) {
+  const raw = String(value || '');
+  if (!raw.includes('<')) {
+    return normalizeWhitespace(raw);
+  }
+
+  const $ = cheerio.load(raw);
+  $('br').replaceWith('\n');
+  $('li').prepend('- ');
+  $('p, li, h1, h2, h3, h4, h5, h6, ul, ol').append('\n');
+  const text = $.root().text();
+
+  return text
+    .replace(/\r/g, '')
+    .replace(/\n{3,}/g, '\n\n')
+    .split('\n')
+    .map((line) => normalizeWhitespace(line))
+    .filter(Boolean)
+    .join('\n');
+}
+
 function pickWebsite(urls) {
   return (
     (urls || []).find(
@@ -126,6 +166,15 @@ function inferJobCategory(text) {
   if (/giáo dục|education/.test(value)) return 'EDUCATION';
   if (/y tế|healthcare|medical/.test(value)) return 'HEALTHCARE';
   if (/sản xuất|manufactur|factory/.test(value)) return 'MANUFACTURING';
+  return 'IT_SOFTWARE';
+}
+
+function resolveSupportedJobCategory(...candidates) {
+  for (const candidate of candidates) {
+    if (candidate && JOB_CATEGORIES.has(candidate)) {
+      return candidate;
+    }
+  }
   return 'IT_SOFTWARE';
 }
 
@@ -239,7 +288,13 @@ function uploadToS3(localPath, key, env) {
   const region = env.AWS_REGION;
   const bucket = env.AWS_S3_BUCKET_NAME;
   const url = `https://${bucket}.s3.${region}.amazonaws.com/${key}`;
-  const contentType = key.endsWith('.png') ? 'image/png' : key.endsWith('.svg') ? 'image/svg+xml' : 'image/jpeg';
+  const contentType = key.endsWith('.pdf')
+    ? 'application/pdf'
+    : key.endsWith('.png')
+      ? 'image/png'
+      : key.endsWith('.svg')
+        ? 'image/svg+xml'
+        : 'image/jpeg';
   shell('curl', [
     '--fail',
     '--silent',
@@ -561,7 +616,7 @@ function buildRecruiterSeed(company, status, index, assets) {
       logo_url: assets.logoUrl,
       cover_image_url: assets.coverUrl,
       tax_code: org.taxID || null,
-      business_license_url: null,
+      business_license_url: assets.businessLicenseUrl || null,
       linkedin_url: null,
       facebook_url: null,
       contact_name: contactName,
@@ -599,12 +654,13 @@ function buildJobSeed(job, recruiter) {
   const months = posting.experienceRequirements?.monthsOfExperience || 0;
   const address = posting.jobLocation?.address || {};
   const location = textList([address.streetAddress, address.addressLocality, address.addressRegion]).join(', ');
+  const inferredCategory = inferJobCategory(`${posting.industry || ''} ${job.title}`);
   return {
     _id: uuid(),
     recruiter_id: recruiter._id,
     title: normalizeWhitespace(job.title),
     normalized_title: normalizeWhitespace(job.title),
-    description: normalizeWhitespace(job.description.join(' ')),
+    description: htmlToPlainText(job.description.join(' ')),
     company: recruiter.company_name,
     location,
     salary_min: salary.min,
@@ -625,7 +681,7 @@ function buildJobSeed(job, recruiter) {
     rejectThreshold: 40,
     autoRejectEnabled: false,
     requiredTest: null,
-    category: inferJobCategory(`${posting.industry || ''} ${job.title}`),
+    category: resolveSupportedJobCategory(recruiter.category, inferredCategory),
     deleted: false,
     deletedAt: null,
     createdAt: isoDate(posting.datePosted || NOW),
@@ -754,6 +810,9 @@ async function main() {
   ensureDir(OUTPUT_DIR);
   ensureDir(TMP_DIR);
   const env = readEnv(ENV_FILE);
+  const sharedBusinessLicenseUrl = fs.existsSync(SAMPLE_LICENSE_FILE)
+    ? uploadToS3(SAMPLE_LICENSE_FILE, 'seed/topcv/shared/business-license.pdf', env)
+    : null;
   const browser = await chromium.launch({ headless: true });
   const listingPageState = await createPage(browser);
   const jobPageState = await createPage(browser);
@@ -842,7 +901,11 @@ async function main() {
         coverUrl = uploadToS3(coverTmp, coverKey, env);
       }
 
-      const recruiterSeed = buildRecruiterSeed(company, desiredStatus, recruiters.length, { logoUrl, coverUrl });
+      const recruiterSeed = buildRecruiterSeed(company, desiredStatus, recruiters.length, {
+        logoUrl,
+        coverUrl,
+        businessLicenseUrl: sharedBusinessLicenseUrl,
+      });
       users.push(recruiterSeed.user);
       recruiters.push(recruiterSeed.recruiter);
 
