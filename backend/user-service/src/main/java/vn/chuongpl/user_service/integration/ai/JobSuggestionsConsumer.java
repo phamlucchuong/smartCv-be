@@ -20,7 +20,9 @@ public class JobSuggestionsConsumer {
         try {
             candidateService.updateJobSuggestions(message.getUserId(), message.getSuggestions());
         } catch (Exception e) {
-            log.error("Failed to update job suggestions for userId={}: {}", message.getUserId(), e.getMessage());
+            log.error("[JobSuggestions][Consume] Failed to update job suggestions for userId={}",
+                    message.getUserId(), e);
+            throw new RuntimeException("Failed to process job suggestions", e);
         }
     }
 }

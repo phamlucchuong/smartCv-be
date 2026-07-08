@@ -500,6 +500,7 @@ public class CandidateService {
                         .suggestedAt(s.getSuggestedAt())
                         .job(jobMap.get(s.getJobId()))
                         .build())
+                .filter(suggestion -> suggestion.getJob() != null)
                 .toList();
     }
 

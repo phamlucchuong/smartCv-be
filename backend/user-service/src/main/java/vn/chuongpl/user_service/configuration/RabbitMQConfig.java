@@ -51,6 +51,9 @@ public class RabbitMQConfig {
     public static final String JOB_SUGGESTIONS_QUEUE = "job.suggestions.queue";
     public static final String JOB_SUGGESTIONS_EXCHANGE = "job.suggestions.exchange";
     public static final String JOB_SUGGESTIONS_ROUTING_KEY = "job.suggestions";
+    public static final String JOB_SUGGESTIONS_DLQ_EXCHANGE = "job.suggestions.dlq.exchange";
+    public static final String JOB_SUGGESTIONS_DLQ_QUEUE = "job.suggestions.dlq";
+    public static final String JOB_SUGGESTIONS_DLQ_ROUTING_KEY = "job.suggestions.dead";
 
     public static final String RECRUITER_EXCHANGE = "recruiter.notification.exchange";
     public static final String RECRUITER_APPROVED_QUEUE = "recruiter.approved.queue";
@@ -71,7 +74,10 @@ public class RabbitMQConfig {
 
     @Bean
     public Queue jobSuggestionsQueue() {
-        return new Queue(JOB_SUGGESTIONS_QUEUE, true);
+        return QueueBuilder.durable(JOB_SUGGESTIONS_QUEUE)
+                .withArgument("x-dead-letter-exchange", JOB_SUGGESTIONS_DLQ_EXCHANGE)
+                .withArgument("x-dead-letter-routing-key", JOB_SUGGESTIONS_DLQ_ROUTING_KEY)
+                .build();
     }
 
     @Bean
@@ -80,8 +86,25 @@ public class RabbitMQConfig {
     }
 
     @Bean
+    public DirectExchange jobSuggestionsDlqExchange() {
+        return new DirectExchange(JOB_SUGGESTIONS_DLQ_EXCHANGE);
+    }
+
+    @Bean
+    public Queue jobSuggestionsDlqQueue() {
+        return new Queue(JOB_SUGGESTIONS_DLQ_QUEUE, true);
+    }
+
+    @Bean
     public Binding jobSuggestionsBinding() {
         return BindingBuilder.bind(jobSuggestionsQueue()).to(jobSuggestionsExchange()).with(JOB_SUGGESTIONS_ROUTING_KEY);
+    }
+
+    @Bean
+    public Binding jobSuggestionsDlqBinding() {
+        return BindingBuilder.bind(jobSuggestionsDlqQueue())
+                .to(jobSuggestionsDlqExchange())
+                .with(JOB_SUGGESTIONS_DLQ_ROUTING_KEY);
     }
 
     @Bean

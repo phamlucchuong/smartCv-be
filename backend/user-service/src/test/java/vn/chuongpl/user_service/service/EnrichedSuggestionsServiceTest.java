@@ -51,7 +51,7 @@ class EnrichedSuggestionsServiceTest {
     }
 
     @Test
-    void getEnrichedJobSuggestions_shouldReturnSuggestionWithNullJobWhenJobClientFails() {
+    void getEnrichedJobSuggestions_shouldFilterOutSuggestionsWhenJobDetailsCannotBeResolved() {
         JobSuggestion suggestion = JobSuggestion.builder()
                 .jobId("j1").matchScore(80).build();
         Candidate c = Candidate.builder().userId("u1")
@@ -63,8 +63,7 @@ class EnrichedSuggestionsServiceTest {
 
         List<EnrichedJobSuggestion> result = candidateService.getEnrichedJobSuggestions("u1");
 
-        assertEquals(1, result.size());
-        assertNull(result.get(0).getJob());
+        assertTrue(result.isEmpty());
     }
 
     @Test
