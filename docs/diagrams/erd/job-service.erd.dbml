@@ -1,0 +1,44 @@
+Project job_service_erd {
+  database_type: "MongoDB"
+}
+
+// Logical ERD for job_service.
+
+Table jobs {
+  id varchar [pk]
+  recruiter_id varchar [not null, note: 'Recruiter userId from gateway']
+  title varchar
+  normalized_title varchar
+  description text
+  company varchar
+  location varchar
+  salary_min float
+  salary_max float
+  job_type varchar
+  experience_level varchar
+  skills json
+  requirements json
+  benefits json
+  moderation_status varchar
+  visibility_status varchar
+  moderation_note text
+  reviewed_by varchar
+  reviewed_at datetime
+  deadline date
+  openings int
+  qualified_threshold int
+  reject_threshold int
+  auto_reject_enabled boolean
+  required_test varchar
+  deleted boolean
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+}
+
+Table users {
+  id varchar [pk]
+}
+
+Ref: jobs.recruiter_id > users.id
+

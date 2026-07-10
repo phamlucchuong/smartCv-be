@@ -8,6 +8,7 @@ import type { RecruiterStatusRequestStatus } from './recruiterStatusRequestStatu
 
 export interface RecruiterStatusRequest {
   status: RecruiterStatusRequestStatus;
+  rejectionNote?: string;
   quotaJobPost?: number;
   quotaCvViews?: number;
 }

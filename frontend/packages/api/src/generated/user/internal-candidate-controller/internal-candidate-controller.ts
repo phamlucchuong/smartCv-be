@@ -5,17 +5,29 @@
  * OpenAPI spec version: v0
  */
 import {
-  useMutation
+  useMutation,
+  useQuery
 } from '@tanstack/react-query';
 import type {
+  DataTag,
+  DefinedInitialDataOptions,
+  DefinedUseQueryResult,
   MutationFunction,
   QueryClient,
+  QueryFunction,
+  QueryKey,
+  UndefinedInitialDataOptions,
   UseMutationOptions,
-  UseMutationResult
+  UseMutationResult,
+  UseQueryOptions,
+  UseQueryResult
 } from '@tanstack/react-query';
 
 import type {
+  ApiResponseCandidateResponse,
+  ApiResponseCvInfoResponse,
   ApiResponseVoid,
+  CvAnalysisUpdateRequest,
   SkillMergeRequest
 } from '.././model';
 
@@ -26,7 +38,121 @@ type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
 
 
-export const mergeSkills = (
+export const consumeAiCredit1 = (
+    userId: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<ApiResponseVoid>(
+      {url: `/api/internal/candidates/by-user/${userId}/consume-ai-credit`, method: 'POST', signal
+    },
+      options);
+    }
+  
+
+
+export const getConsumeAiCredit1MutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof consumeAiCredit1>>, TError,{userId: string}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof consumeAiCredit1>>, TError,{userId: string}, TContext> => {
+
+const mutationKey = ['consumeAiCredit1'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof consumeAiCredit1>>, {userId: string}> = (props) => {
+          const {userId} = props ?? {};
+
+          return  consumeAiCredit1(userId,requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type ConsumeAiCredit1MutationResult = NonNullable<Awaited<ReturnType<typeof consumeAiCredit1>>>
+    
+    export type ConsumeAiCredit1MutationError = unknown
+
+    export const useConsumeAiCredit1 = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof consumeAiCredit1>>, TError,{userId: string}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof consumeAiCredit1>>,
+        TError,
+        {userId: string},
+        TContext
+      > => {
+
+      const mutationOptions = getConsumeAiCredit1MutationOptions(options);
+
+      return useMutation(mutationOptions, queryClient);
+    }
+    export const updateCvAnalysis = (
+    cvId: string,
+    cvAnalysisUpdateRequest: CvAnalysisUpdateRequest,
+ options?: SecondParameter<typeof customInstance>,) => {
+      
+      
+      return customInstance<ApiResponseVoid>(
+      {url: `/api/internal/candidates/cvs/${cvId}/analysis`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: cvAnalysisUpdateRequest
+    },
+      options);
+    }
+  
+
+
+export const getUpdateCvAnalysisMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateCvAnalysis>>, TError,{cvId: string;data: CvAnalysisUpdateRequest}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateCvAnalysis>>, TError,{cvId: string;data: CvAnalysisUpdateRequest}, TContext> => {
+
+const mutationKey = ['updateCvAnalysis'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateCvAnalysis>>, {cvId: string;data: CvAnalysisUpdateRequest}> = (props) => {
+          const {cvId,data} = props ?? {};
+
+          return  updateCvAnalysis(cvId,data,requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateCvAnalysisMutationResult = NonNullable<Awaited<ReturnType<typeof updateCvAnalysis>>>
+    export type UpdateCvAnalysisMutationBody = CvAnalysisUpdateRequest
+    export type UpdateCvAnalysisMutationError = unknown
+
+    export const useUpdateCvAnalysis = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateCvAnalysis>>, TError,{cvId: string;data: CvAnalysisUpdateRequest}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof updateCvAnalysis>>,
+        TError,
+        {cvId: string;data: CvAnalysisUpdateRequest},
+        TContext
+      > => {
+
+      const mutationOptions = getUpdateCvAnalysisMutationOptions(options);
+
+      return useMutation(mutationOptions, queryClient);
+    }
+    export const mergeSkills = (
     userId: string,
     skillMergeRequest: SkillMergeRequest,
  options?: SecondParameter<typeof customInstance>,) => {
@@ -84,4 +210,175 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
 
       return useMutation(mutationOptions, queryClient);
     }
+    export const getCvInfo = (
+    cvId: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<ApiResponseCvInfoResponse>(
+      {url: `/api/internal/candidates/cvs/${cvId}`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+
+
+export const getGetCvInfoQueryKey = (cvId?: string,) => {
+    return [
+    `/api/internal/candidates/cvs/${cvId}`
+    ] as const;
+    }
+
     
+export const getGetCvInfoQueryOptions = <TData = Awaited<ReturnType<typeof getCvInfo>>, TError = unknown>(cvId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCvInfo>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetCvInfoQueryKey(cvId);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCvInfo>>> = ({ signal }) => getCvInfo(cvId, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(cvId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getCvInfo>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetCvInfoQueryResult = NonNullable<Awaited<ReturnType<typeof getCvInfo>>>
+export type GetCvInfoQueryError = unknown
+
+
+export function useGetCvInfo<TData = Awaited<ReturnType<typeof getCvInfo>>, TError = unknown>(
+ cvId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCvInfo>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getCvInfo>>,
+          TError,
+          Awaited<ReturnType<typeof getCvInfo>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetCvInfo<TData = Awaited<ReturnType<typeof getCvInfo>>, TError = unknown>(
+ cvId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCvInfo>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getCvInfo>>,
+          TError,
+          Awaited<ReturnType<typeof getCvInfo>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetCvInfo<TData = Awaited<ReturnType<typeof getCvInfo>>, TError = unknown>(
+ cvId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCvInfo>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetCvInfo<TData = Awaited<ReturnType<typeof getCvInfo>>, TError = unknown>(
+ cvId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCvInfo>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetCvInfoQueryOptions(cvId,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+export const getProfile1 = (
+    userId: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<ApiResponseCandidateResponse>(
+      {url: `/api/internal/candidates/by-user/${userId}`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+
+
+export const getGetProfile1QueryKey = (userId?: string,) => {
+    return [
+    `/api/internal/candidates/by-user/${userId}`
+    ] as const;
+    }
+
+    
+export const getGetProfile1QueryOptions = <TData = Awaited<ReturnType<typeof getProfile1>>, TError = unknown>(userId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfile1>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetProfile1QueryKey(userId);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getProfile1>>> = ({ signal }) => getProfile1(userId, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(userId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getProfile1>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetProfile1QueryResult = NonNullable<Awaited<ReturnType<typeof getProfile1>>>
+export type GetProfile1QueryError = unknown
+
+
+export function useGetProfile1<TData = Awaited<ReturnType<typeof getProfile1>>, TError = unknown>(
+ userId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfile1>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getProfile1>>,
+          TError,
+          Awaited<ReturnType<typeof getProfile1>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetProfile1<TData = Awaited<ReturnType<typeof getProfile1>>, TError = unknown>(
+ userId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfile1>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getProfile1>>,
+          TError,
+          Awaited<ReturnType<typeof getProfile1>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetProfile1<TData = Awaited<ReturnType<typeof getProfile1>>, TError = unknown>(
+ userId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfile1>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetProfile1<TData = Awaited<ReturnType<typeof getProfile1>>, TError = unknown>(
+ userId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getProfile1>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetProfile1QueryOptions(userId,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+

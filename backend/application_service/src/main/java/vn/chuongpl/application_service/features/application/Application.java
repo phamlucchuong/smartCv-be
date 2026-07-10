@@ -5,6 +5,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 import org.springframework.data.mongodb.core.mapping.MongoId;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 import vn.chuongpl.application_service.enums.AiScoringStatus;
 import vn.chuongpl.application_service.enums.ApplicationStatus;
 
@@ -19,7 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Application {
-    @MongoId
+    @MongoId(FieldType.STRING)
     String id;
 
     @Field("candidate_id")

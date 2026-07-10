@@ -1,5 +1,7 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
 @plugin "tailwindcss-animate";
+@source "./**/*.{tsx,ts}";
 
 @theme inline {
   --color-border: var(--border);
@@ -107,6 +109,7 @@
 }
 
 .dark {
+  color-scheme: dark;
   --background: 222.2 84% 4.9%;
   --foreground: 210 40% 98%;
 
@@ -152,5 +155,9 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none !important;
+    -webkit-appearance: none;
   }
 }

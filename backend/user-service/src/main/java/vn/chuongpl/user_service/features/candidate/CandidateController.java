@@ -14,6 +14,8 @@ import vn.chuongpl.user_service.dtos.response.CandidateResponse;
 import vn.chuongpl.user_service.dtos.response.CvUploadResponse;
 import vn.chuongpl.user_service.features.candidate.settings.CandidateSettings;
 import vn.chuongpl.user_service.features.candidate.settings.NotificationPreferences;
+import vn.chuongpl.user_service.features.candidate.settings.PreferencesSettings;
+import vn.chuongpl.user_service.features.candidate.settings.PreferencesSettingsRequest;
 import vn.chuongpl.user_service.features.candidate.settings.PrivacySettings;
 import vn.chuongpl.user_service.integration.ai.SkillExtractPublisher;
 
@@ -67,17 +69,40 @@ public class CandidateController {
         return ApiResponse.<CandidateResponse>builder().data(candidateService.getMe(userId)).build();
     }
 
+    @PostMapping("/me/avatar")
+    @PreAuthorize("hasRole('CANDIDATE')")
+    public ApiResponse<String> uploadAvatar(@RequestParam("file") MultipartFile file,
+                                             @AuthenticationPrincipal String userId) {
+        String avatarUrl = candidateService.uploadAvatar(userId, file);
+        return ApiResponse.<String>builder()
+                .data(avatarUrl)
+                .message("Avatar uploaded successfully")
+                .build();
+    }
+
     @PostMapping("/cv/upload")
     @PreAuthorize("hasRole('CANDIDATE')")
     public ApiResponse<CvUploadResponse> uploadCv(@RequestParam("file") MultipartFile file,
                                                    @AuthenticationPrincipal String userId) {
-        String url = s3Service.uploadCv(file, userId);
-        candidateService.saveCvUrl(userId, url);
-        candidateService.addCvToList(userId, url, file.getOriginalFilename());
-        skillExtractPublisher.publish(userId, url);
+        S3Service.CvUploadResult result = s3Service.uploadCv(file, userId);
+        candidateService.saveCvUrl(userId, result.url());
+        candidateService.addCvToList(userId, result.s3Key(), result.url(), file.getOriginalFilename());
+        skillExtractPublisher.publish(userId, result.url());
         return ApiResponse.<CvUploadResponse>builder()
                 .message("CV uploaded successfully")
-                .data(new CvUploadResponse(url))
+                .data(new CvUploadResponse(result.url()))
+                .build();
+    }
+
+    @GetMapping("/cvs/{cvId}/url")
+    @PreAuthorize("hasRole('CANDIDATE')")
+    public ApiResponse<java.util.Map<String, String>> refreshCvUrl(
+            @PathVariable String cvId,
+            @AuthenticationPrincipal String userId) {
+        String freshUrl = candidateService.refreshCvUrl(userId, cvId);
+        return ApiResponse.<java.util.Map<String, String>>builder()
+                .data(java.util.Map.of("url", freshUrl))
+                .message("URL refreshed")
                 .build();
     }
 
@@ -117,7 +142,9 @@ public class CandidateController {
     public ApiResponse<Void> reanalyzeCv(@PathVariable String cvId, @AuthenticationPrincipal String userId) {
         CvItem cv = candidateService.getCvAnalysis(userId, cvId);
         candidateService.markCvReanalyzing(userId, cvId);
-        skillExtractPublisher.publish(userId, cv.getUrl());
+        String urlForAnalysis = cv.getS3Key() != null
+                ? s3Service.generateFreshUrl(cv.getS3Key()) : cv.getUrl();
+        skillExtractPublisher.publish(userId, urlForAnalysis);
         return ApiResponse.<Void>builder().message("CV re-analysis triggered").build();
     }
 
@@ -153,6 +180,16 @@ public class CandidateController {
                                             @AuthenticationPrincipal String userId) {
         candidateService.updatePrivacySettings(userId, privacy);
         return ApiResponse.<Void>builder().message("Privacy settings updated").build();
+    }
+
+    @PutMapping("/settings/preferences")
+    @PreAuthorize("hasRole('CANDIDATE')")
+    public ApiResponse<PreferencesSettings> updatePreferences(@RequestBody PreferencesSettingsRequest preferences,
+                                                              @AuthenticationPrincipal String userId) {
+        return ApiResponse.<PreferencesSettings>builder()
+                .data(candidateService.updatePreferences(userId, preferences))
+                .message("Preferences updated")
+                .build();
     }
 
     @DeleteMapping("/me")

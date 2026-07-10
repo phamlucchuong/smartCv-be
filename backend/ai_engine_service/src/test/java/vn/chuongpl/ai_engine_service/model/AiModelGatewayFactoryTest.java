@@ -3,16 +3,35 @@ package vn.chuongpl.ai_engine_service.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import vn.chuongpl.ai_engine_service.features.admin.AiProviderConfig;
+import vn.chuongpl.ai_engine_service.security.AiCredentialCipher;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class AiModelGatewayFactoryTest {
 
+    private static final String TEST_KEY = "MDEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDE=";
+
+    AiCredentialCipher cipher;
     AiModelGatewayFactory factory;
 
     @BeforeEach
     void setUp() {
-        factory = new AiModelGatewayFactory();
+        cipher = new AiCredentialCipher(TEST_KEY);
+        factory = new AiModelGatewayFactory(cipher);
+    }
+
+    @Test
+    void create_decrypts_encrypted_apiKey_before_building_client() {
+        var config = AiProviderConfig.builder()
+                .provider(AiProvider.GROQ)
+                .apiKey(cipher.encrypt("real-secret-key"))
+                .model("llama-3.1-8b-instant")
+                .baseUrl("https://api.groq.com/openai")
+                .build();
+
+        AiModelGateway gateway = factory.create(config);
+
+        assertThat(gateway).isInstanceOf(GroqModelGateway.class);
     }
 
     @Test
@@ -46,20 +65,6 @@ class AiModelGatewayFactoryTest {
     }
 
     @Test
-    void create_anthropic_config_returns_AnthropicModelGateway() {
-        var config = AiProviderConfig.builder()
-                .provider(AiProvider.ANTHROPIC)
-                .apiKey("test-key")
-                .model("claude-sonnet-4-6")
-                .build();
-
-        AiModelGateway gateway = factory.create(config);
-
-        assertThat(gateway).isInstanceOf(AnthropicModelGateway.class);
-        assertThat(gateway.provider()).isEqualTo(AiProvider.ANTHROPIC);
-    }
-
-    @Test
     void create_azure_config_returns_AzureOpenAiModelGateway() {
         var config = AiProviderConfig.builder()
                 .provider(AiProvider.AZURE_OPENAI)
@@ -73,5 +78,19 @@ class AiModelGatewayFactoryTest {
 
         assertThat(gateway).isInstanceOf(AzureOpenAiModelGateway.class);
         assertThat(gateway.provider()).isEqualTo(AiProvider.AZURE_OPENAI);
+    }
+
+    @Test
+    void create_llama3_config_returns_Llama3ModelGateway() {
+        var config = AiProviderConfig.builder()
+                .provider(AiProvider.LLAMA_3)
+                .model("llama3.1")
+                .baseUrl("http://localhost:11434/v1")
+                .build();
+
+        AiModelGateway gateway = factory.create(config);
+
+        assertThat(gateway).isInstanceOf(Llama3ModelGateway.class);
+        assertThat(gateway.provider()).isEqualTo(AiProvider.LLAMA_3);
     }
 }

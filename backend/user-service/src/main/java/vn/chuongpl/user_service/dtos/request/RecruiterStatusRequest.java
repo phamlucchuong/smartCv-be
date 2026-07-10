@@ -13,6 +13,7 @@ import vn.chuongpl.user_service.enums.RecruiterStatus;
 public class RecruiterStatusRequest {
     @NotNull
     RecruiterStatus status;
+    String rejectionNote;
     Integer quotaJobPost;
     Integer quotaCvViews;
 }

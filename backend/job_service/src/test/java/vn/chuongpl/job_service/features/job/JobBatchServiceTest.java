@@ -8,8 +8,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 import vn.chuongpl.job_service.dtos.response.JobResponse;
-import vn.chuongpl.job_service.enums.JobStatus;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.ObjectProvider;
+import vn.chuongpl.job_service.enums.JobModerationStatus;
+import vn.chuongpl.job_service.enums.JobVisibilityStatus;
 import vn.chuongpl.job_service.integration.elasticsearch.JobIndexService;
 
 import java.util.List;
@@ -23,6 +25,7 @@ class JobBatchServiceTest {
     @Mock JobIndexService jobIndexService;
     @Mock JobMapper jobMapper;
     @Mock RabbitTemplate rabbitTemplate;
+    @Mock ObjectProvider<JobIndexService> jobIndexServiceProvider;
     @InjectMocks JobService jobService;
 
     @BeforeEach
@@ -32,8 +35,14 @@ class JobBatchServiceTest {
 
     @Test
     void getJobsByIds_shouldReturnMappedResponses() {
-        Job job1 = Job.builder().id("j1").status(JobStatus.ACTIVE).build();
-        Job job2 = Job.builder().id("j2").status(JobStatus.ACTIVE).build();
+        Job job1 = Job.builder().id("j1")
+                .moderationStatus(JobModerationStatus.PUBLISHED)
+                .visibilityStatus(JobVisibilityStatus.ACTIVE)
+                .build();
+        Job job2 = Job.builder().id("j2")
+                .moderationStatus(JobModerationStatus.PUBLISHED)
+                .visibilityStatus(JobVisibilityStatus.ACTIVE)
+                .build();
         JobResponse resp1 = new JobResponse(); resp1.setId("j1");
         JobResponse resp2 = new JobResponse(); resp2.setId("j2");
         when(jobRepository.findAllByIdInAndDeletedFalse(List.of("j1", "j2"))).thenReturn(List.of(job1, job2));
@@ -57,9 +66,16 @@ class JobBatchServiceTest {
 
     @Test
     void getActiveJobsByRecruiter_shouldReturnOnlyActiveJobsForRecruiter() {
-        Job job1 = Job.builder().id("j1").recruiterId("r1").status(JobStatus.ACTIVE).build();
+        Job job1 = Job.builder().id("j1").recruiterId("r1")
+                .moderationStatus(JobModerationStatus.PUBLISHED)
+                .visibilityStatus(JobVisibilityStatus.ACTIVE)
+                .build();
         JobResponse resp1 = new JobResponse(); resp1.setId("j1");
-        when(jobRepository.findTop20ByRecruiterIdAndStatusAndDeletedFalse("r1", JobStatus.ACTIVE))
+        when(jobRepository.findTop20ByRecruiterIdAndModerationStatusAndVisibilityStatusAndDeletedFalse(
+                "r1",
+                JobModerationStatus.PUBLISHED,
+                JobVisibilityStatus.ACTIVE
+        ))
                 .thenReturn(List.of(job1));
         when(jobMapper.toJobResponse(job1)).thenReturn(resp1);
 

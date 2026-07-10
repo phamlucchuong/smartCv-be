@@ -47,6 +47,10 @@ spring:
           uri: ${AI_SERVICE_URI:http://localhost:8085}
           predicates:
             - Path=/ai/**
+        - id: payment-service
+          uri: ${PAYMENT_SERVICE_URI:http://localhost:8086}
+          predicates:
+            - Path=/payment/**
   data:
     redis:
       host: ${REDIS_HOST:localhost}
@@ -54,6 +58,7 @@ spring:
       password: ${REDIS_PASSWORD:}
   main:
     banner-mode: off
+    log-startup-info: false
   output:
     ansi:
       enabled: always
@@ -82,6 +87,8 @@ app:
     - method: POST
       path: /user/api/auth/login
     - method: POST
+      path: /user/api/auth/google
+    - method: POST
       path: /user/api/auth/introspect
     - method: POST
       path: /user/api/auth/refresh
@@ -105,10 +112,33 @@ app:
       path: /job/api/home/**
     - method: GET
       path: /job/api/jobs/*/related
+    - method: GET
+      path: /job/api/jobs/*/related-companies
+    - method: POST
+      path: /payment/api/webhook/payos
+    - method: POST
+      path: /payment/api/webhook/payos/
+    - method: GET
+      path: /payment/api/webhook/payos
+    - method: GET
+      path: /payment/api/webhook/payos/
+    - method: HEAD
+      path: /payment/api/webhook/payos
+    - method: HEAD
+      path: /payment/api/webhook/payos/
+    - method: OPTIONS
+      path: /payment/api/webhook/payos
+    - method: OPTIONS
+      path: /payment/api/webhook/payos/
 
 logging:
   level:
-    root: INFO
+    root: WARN
+    org.springframework: WARN
+    org.springframework.boot: WARN
+    org.springframework.cloud: WARN
+    org.springframework.data: WARN
+    reactor.netty: WARN
     "vn.chuongpl.api_gateway": INFO
   pattern:
-    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    console: "%d{HH:mm:ss.SSS} %-5level %msg%n"

@@ -17,7 +17,15 @@ public enum ErrorCode {
     JOB_SERVICE_UNAVAILABLE(8006, "Job service is currently unavailable"),
     PROVIDER_NOT_CONFIGURED(8007, "No AI provider is configured or active"),
     PROVIDER_NOT_FOUND(8008, "AI provider config not found"),
-    PROVIDER_ACTIVE(8009, "Cannot delete the currently active provider");
+    PROVIDER_ACTIVE(8009, "Cannot delete the currently active provider"),
+    CV_NOT_FOUND(8010, "CV not found"),
+    USER_SERVICE_UNAVAILABLE(8011, "User service is currently unavailable"),
+    AI_CREDIT_EXHAUSTED(8012, "Insufficient AI credit quota"),
+    AI_MODEL_NAME_REQUIRED(8013, "AI model name is required"),
+    AI_MODEL_ID_REQUIRED(8014, "AI model id is required"),
+    PROVIDER_MODEL_NOT_FOUND(8015, "AI model config not found"),
+    PROVIDER_MODEL_ALREADY_EXISTS(8016, "AI model config already exists"),
+    AI_PROVIDER_QUOTA_EXCEEDED(8017, "AI provider quota or rate limit exceeded");
 
     private final int code;
     private final String message;

@@ -1,0 +1,76 @@
+Project application_service_erd {
+  database_type: "MongoDB"
+}
+
+// Logical ERD for application_service.
+
+Table applications {
+  id varchar [pk]
+  candidate_id varchar [not null]
+  job_id varchar [not null]
+  recruiter_id varchar [not null]
+  candidate_email varchar
+  job_title varchar
+  company_name varchar
+  job_location varchar
+  salary_min float
+  salary_max float
+  job_skills json
+  job_type varchar
+  status varchar
+  cover_letter text
+  cv_url text
+  ai_score int
+  matched_skills json
+  missing_skills json
+  ai_status varchar
+  recruiter_notes text
+  rejection_reason text
+  applied_at datetime
+  updated_at datetime
+  deleted boolean
+  deleted_at datetime
+}
+
+Table assessments {
+  id varchar [pk]
+  job_id varchar [not null]
+  recruiter_id varchar [not null]
+  title varchar
+  description text
+  questions json
+  time_limit_minutes int
+  status varchar
+  created_at datetime
+}
+
+Table assessment_attempts {
+  id varchar [pk]
+  assessment_id varchar [not null]
+  candidate_id varchar [not null]
+  application_id varchar [not null]
+  status varchar
+  answers json
+  started_at datetime
+  submitted_at datetime
+  score float
+  result varchar
+}
+
+Table users {
+  id varchar [pk]
+}
+
+Table jobs {
+  id varchar [pk]
+}
+
+Ref: applications.candidate_id > users.id
+Ref: applications.job_id > jobs.id
+Ref: applications.recruiter_id > users.id
+Ref: assessments.job_id > jobs.id
+Ref: assessments.recruiter_id > users.id
+Ref: assessment_attempts.assessment_id > assessments.id
+Ref: assessment_attempts.candidate_id > users.id
+Ref: assessment_attempts.application_id > applications.id
+

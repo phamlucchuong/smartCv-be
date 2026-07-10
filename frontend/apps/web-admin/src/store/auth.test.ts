@@ -1,41 +1,46 @@
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
+
+vi.mock('js-cookie', () => ({
+  default: {
+    get: vi.fn(() => undefined),
+    set: vi.fn(),
+    remove: vi.fn(),
+  },
+}))
+
+vi.mock('jwt-decode', () => ({
+  jwtDecode: vi.fn(() => ({ sub: 'admin-1', email: 'admin@gmail.com', scope: 'ROLE_ADMIN' })),
+}))
+
+import Cookies from 'js-cookie'
 import { useAuthStore } from './auth'
 
-const initialState = useAuthStore.getState()
-
 afterEach(() => {
-  useAuthStore.setState(initialState, true)
+  useAuthStore.setState({ user: null })
+  vi.clearAllMocks()
 })
 
 describe('useAuthStore', () => {
-  it('sets authenticated user state', () => {
-    useAuthStore.getState().setAuth({
-      user: {
-        id: 'admin-1',
-        name: 'Admin SmartCV',
-        email: 'admin@smartcv.vn',
-      },
-      token: 'token-123',
-    })
+  it('sets user state from decoded JWT on setAuth', () => {
+    useAuthStore.getState().setAuth({ token: 'test-jwt', refreshToken: 'refresh-jwt' })
 
-    expect(useAuthStore.getState().user?.email).toBe('admin@smartcv.vn')
-    expect(useAuthStore.getState().token).toBe('token-123')
+    expect(Cookies.set).toHaveBeenCalledWith('smart_cv_a_token', 'test-jwt', expect.any(Object))
+    expect(Cookies.set).toHaveBeenCalledWith('smart_cv_a_refresh', 'refresh-jwt', expect.any(Object))
+    expect(useAuthStore.getState().user?.id).toBe('admin-1')
+    expect(useAuthStore.getState().user?.email).toBe('admin@gmail.com')
   })
 
-  it('clears authentication state', () => {
-    useAuthStore.setState({
-      ...useAuthStore.getState(),
-      user: {
-        id: 'admin-1',
-        name: 'Admin SmartCV',
-        email: 'admin@smartcv.vn',
-      },
-      token: 'token-123',
-    })
+  it('clears cookies and user state on clearAuth', () => {
+    useAuthStore.setState({ user: { id: 'admin-1', email: 'admin@gmail.com' } })
 
     useAuthStore.getState().clearAuth()
 
+    expect(Cookies.remove).toHaveBeenCalledWith('smart_cv_a_token', { path: '/' })
+    expect(Cookies.remove).toHaveBeenCalledWith('smart_cv_a_refresh', { path: '/' })
     expect(useAuthStore.getState().user).toBeNull()
-    expect(useAuthStore.getState().token).toBeNull()
+  })
+
+  it('returns null user when no cookie present', () => {
+    expect(useAuthStore.getState().user).toBeNull()
   })
 })

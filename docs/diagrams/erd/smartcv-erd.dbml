@@ -1,0 +1,297 @@
+Project smartcv_erd {
+  database_type: "MongoDB + PostgreSQL"
+}
+
+// Combined logical ERD across all services.
+// This version emphasizes data relationships and keeps embedded content as JSON.
+
+Table users {
+  id varchar [pk]
+  full_name varchar
+  email varchar [not null]
+  password varchar
+  phone varchar
+  avt_image_id varchar
+  created_at datetime
+  updated_at datetime
+  deleted_at datetime
+  verified boolean
+  deleted boolean
+  locked boolean
+  preferences json
+}
+
+Table roles {
+  name varchar [pk]
+  description varchar
+}
+
+Table permissions {
+  name varchar [pk]
+  description varchar
+}
+
+Table user_roles {
+  user_id varchar [not null]
+  role_name varchar [not null]
+
+  indexes {
+    (user_id, role_name) [pk]
+  }
+}
+
+Table role_permissions {
+  role_name varchar [not null]
+  permission_name varchar [not null]
+
+  indexes {
+    (role_name, permission_name) [pk]
+  }
+}
+
+Table candidates {
+  id varchar [pk]
+  user_id varchar [not null]
+  dob date
+  gender varchar
+  address text
+  bio text
+  title varchar
+  avatar_url varchar
+  skills json
+  years_of_experience int
+  experiences json
+  educations json
+  certifications json
+  languages json
+  job_type varchar
+  preferred_location varchar
+  expected_salary_min int
+  expected_salary_max int
+  portfolio_url varchar
+  github_url varchar
+  linkedin_url varchar
+  cv_url varchar
+  cvs json
+  settings json
+  job_suggestions json
+  suggestions_updated_at datetime
+  followed_company_ids json
+  created_at datetime
+  updated_at datetime
+  deleted boolean
+  deleted_at datetime
+}
+
+Table recruiters {
+  id varchar [pk]
+  user_id varchar [not null]
+  company_name varchar
+  company_website varchar
+  company_address text
+  company_city varchar
+  company_description text
+  company_phone varchar
+  company_size varchar
+  company_type varchar
+  founded_year int
+  industry varchar
+  benefits json
+  rating float
+  review_count int
+  logo_url varchar
+  cover_image_url varchar
+  tax_code varchar
+  business_license_url varchar
+  linkedin_url varchar
+  facebook_url varchar
+  contact_name varchar
+  contact_email varchar
+  contact_phone varchar
+  status varchar
+  rejection_note text
+  quota_job_post int
+  quota_cv_views int
+  created_at datetime
+  updated_at datetime
+  deleted boolean
+  deleted_at datetime
+}
+
+Table service_packages {
+  id varchar [pk]
+  name varchar [not null]
+  price bigint
+  ai_credits int
+  job_limit int
+  cv_limit int
+  featured boolean
+  features json
+  created_at datetime
+  updated_at datetime
+}
+
+Table payment_orders {
+  id varchar [pk]
+  order_code bigint [not null]
+  user_id varchar [not null]
+  user_role varchar
+  package_id varchar [not null]
+  package_name varchar
+  package_ai_credits int
+  package_job_limit int
+  package_cv_limit int
+  package_duration_days int
+  amount bigint
+  status varchar
+  payment_url text
+  qr_code text
+  created_at datetime
+  updated_at datetime
+  paid_at datetime
+}
+
+Table wishlists {
+  id varchar [pk]
+  candidate_id varchar [not null]
+  job_id varchar [not null]
+  saved_at datetime
+  deleted boolean
+}
+
+Table jobs {
+  id varchar [pk]
+  recruiter_id varchar [not null]
+  title varchar
+  normalized_title varchar
+  description text
+  company varchar
+  location varchar
+  salary_min float
+  salary_max float
+  job_type varchar
+  experience_level varchar
+  skills json
+  requirements json
+  benefits json
+  moderation_status varchar
+  visibility_status varchar
+  moderation_note text
+  reviewed_by varchar
+  reviewed_at datetime
+  deadline date
+  openings int
+  qualified_threshold int
+  reject_threshold int
+  auto_reject_enabled boolean
+  required_test varchar
+  deleted boolean
+  deleted_at datetime
+  created_at datetime
+  updated_at datetime
+}
+
+Table applications {
+  id varchar [pk]
+  candidate_id varchar [not null]
+  job_id varchar [not null]
+  recruiter_id varchar [not null]
+  candidate_email varchar
+  job_title varchar
+  company_name varchar
+  job_location varchar
+  salary_min float
+  salary_max float
+  job_skills json
+  job_type varchar
+  status varchar
+  cover_letter text
+  cv_url text
+  ai_score int
+  matched_skills json
+  missing_skills json
+  ai_status varchar
+  recruiter_notes text
+  rejection_reason text
+  applied_at datetime
+  updated_at datetime
+  deleted boolean
+  deleted_at datetime
+}
+
+Table assessments {
+  id varchar [pk]
+  job_id varchar [not null]
+  recruiter_id varchar [not null]
+  title varchar
+  description text
+  questions json
+  time_limit_minutes int
+  status varchar
+  created_at datetime
+}
+
+Table assessment_attempts {
+  id varchar [pk]
+  assessment_id varchar [not null]
+  candidate_id varchar [not null]
+  application_id varchar [not null]
+  status varchar
+  answers json
+  started_at datetime
+  submitted_at datetime
+  score float
+  result varchar
+}
+
+Table notifications {
+  id uuid [pk]
+  user_id text [not null]
+  recipient_role varchar [not null]
+  type varchar
+  title varchar [not null]
+  body text [not null]
+  data json
+  is_read boolean
+  read_at timestamptz
+  created_at timestamptz
+}
+
+Table notification_fcm_tokens {
+  id uuid [pk]
+  user_id text [not null]
+  audience varchar [not null]
+  token text [not null]
+  created_at timestamptz
+  updated_at timestamptz
+}
+
+Table jobs_external {
+  id varchar [pk]
+}
+
+Table users_external {
+  id varchar [pk]
+}
+
+Ref: user_roles.user_id > users.id
+Ref: user_roles.role_name > roles.name
+Ref: role_permissions.role_name > roles.name
+Ref: role_permissions.permission_name > permissions.name
+Ref: candidates.user_id > users.id
+Ref: recruiters.user_id > users.id
+Ref: payment_orders.user_id > users.id
+Ref: payment_orders.package_id > service_packages.id
+Ref: wishlists.candidate_id > candidates.id
+Ref: wishlists.job_id > jobs_external.id
+Ref: jobs.recruiter_id > users.id
+Ref: applications.candidate_id > users.id
+Ref: applications.job_id > jobs_external.id
+Ref: applications.recruiter_id > users.id
+Ref: assessments.job_id > jobs_external.id
+Ref: assessments.recruiter_id > users.id
+Ref: assessment_attempts.assessment_id > assessments.id
+Ref: assessment_attempts.candidate_id > users.id
+Ref: assessment_attempts.application_id > applications.id
+Ref: notifications.user_id > users_external.id
+Ref: notification_fcm_tokens.user_id > users_external.id

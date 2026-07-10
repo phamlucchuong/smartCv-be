@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -21,13 +23,19 @@ public class JobClient {
     @Value("${app.job-service.base-url}")
     String jobServiceBaseUrl;
 
+    @Value("${app.gateway.internal-secret}")
+    String internalSecret;
+
     public JobResponse getActiveJob(String jobId) {
         String url = jobServiceBaseUrl + "/api/jobs/" + jobId;
         try {
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("X-Gateway-Secret", internalSecret);
+            HttpEntity<Void> entity = new HttpEntity<>(headers);
             ResponseEntity<ApiResponse<JobResponse>> response = restTemplate.exchange(
                     url,
                     HttpMethod.GET,
-                    null,
+                    entity,
                     new ParameterizedTypeReference<>() {
                     }
             );
@@ -35,7 +43,7 @@ public class JobClient {
             ApiResponse<JobResponse> body = response.getBody();
             JobResponse job = body == null ? null : body.getData();
             if (job == null) throw new AppException(ErrorCode.JOB_NOT_FOUND);
-            if (!"ACTIVE".equals(job.getStatus())) {
+            if (!"ACTIVE".equals(job.getVisibilityStatus()) || !"PUBLISHED".equals(job.getModerationStatus())) {
                 throw new AppException(ErrorCode.JOB_NOT_ACCEPTING_APPLICATIONS);
             }
             return job;

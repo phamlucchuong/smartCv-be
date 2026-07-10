@@ -1,0 +1,17 @@
+[
+  {
+    "_id": "ADMIN",
+    "description": "Administrator",
+    "permissions": []
+  },
+  {
+    "_id": "RECRUITER",
+    "description": "Recruiter",
+    "permissions": []
+  },
+  {
+    "_id": "CANDIDATE",
+    "description": "Candidate",
+    "permissions": []
+  }
+]

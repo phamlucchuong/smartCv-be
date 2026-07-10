@@ -44,10 +44,10 @@ export function AIScoreRing({ score, size = 80, thickness = 8, label }: Props) {
           />
         </svg>
         <div
-          className="absolute inset-0 flex flex-col items-center justify-center"
-          style={{ color: colorVar }}
+          className="absolute inset-0 flex flex-col items-center justify-center font-bold leading-none"
+          style={{ color: colorVar, fontSize: `${Math.max(9, Math.round(size * 0.28))}px` }}
         >
-          <span className="text-lg font-bold leading-none">{score}%</span>
+          <span>{score}%</span>
         </div>
       </div>
       {label && <span className="text-xs text-muted-foreground">{label}</span>}

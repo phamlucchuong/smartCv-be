@@ -5,6 +5,7 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.*;
 import vn.chuongpl.user_service.features.role.Role;
+import vn.chuongpl.user_service.features.user.settings.PreferencesSettings;
 
 import java.time.LocalDateTime;
 import java.util.Set;
@@ -21,8 +22,14 @@ public class User {
     String id;
     @Field(name = "full_name")
     String fullName;
+    @Indexed
     String email;
     String password;
+    @Field(name = "auth_provider")
+    String authProvider;
+    @Indexed(sparse = true)
+    @Field(name = "google_subject")
+    String googleSubject;
     @Indexed(sparse = true)
     String phone;
     @Field(name = "avt_image_id")
@@ -39,6 +46,8 @@ public class User {
     boolean deleted = false;
     @Builder.Default
     boolean locked = false;
+    @Builder.Default
+    PreferencesSettings preferences = new PreferencesSettings();
     @DocumentReference
     Set<Role> roles;
 }

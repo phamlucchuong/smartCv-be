@@ -7,8 +7,9 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import vn.chuongpl.job_service.enums.ExperienceLevel;
-import vn.chuongpl.job_service.enums.JobStatus;
+import vn.chuongpl.job_service.enums.JobModerationStatus;
 import vn.chuongpl.job_service.enums.JobType;
+import vn.chuongpl.job_service.enums.JobVisibilityStatus;
 import vn.chuongpl.job_service.features.job.Job;
 
 import java.time.LocalDate;
@@ -43,7 +44,8 @@ public class V1_001__Init_mock_jobs_for_ai_scoring {
                             "Comfortable with Docker and Git workflow"
                     ))
                     .benefits(List.of("Laptop", "Health insurance", "Flexible hours"))
-                    .status(JobStatus.ACTIVE)
+                    .moderationStatus(JobModerationStatus.PUBLISHED)
+                    .visibilityStatus(JobVisibilityStatus.ACTIVE)
                     .deadline(LocalDate.now().plusMonths(3))
                     .deleted(false)
                     .createdAt(LocalDateTime.now())
@@ -71,7 +73,8 @@ public class V1_001__Init_mock_jobs_for_ai_scoring {
                             "Experience with low-level device drivers"
                     ))
                     .benefits(List.of("Annual bonus", "Hardware lab access"))
-                    .status(JobStatus.ACTIVE)
+                    .moderationStatus(JobModerationStatus.PUBLISHED)
+                    .visibilityStatus(JobVisibilityStatus.ACTIVE)
                     .deadline(LocalDate.now().plusMonths(3))
                     .deleted(false)
                     .createdAt(LocalDateTime.now())

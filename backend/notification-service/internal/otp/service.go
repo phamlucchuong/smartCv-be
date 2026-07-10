@@ -11,8 +11,8 @@ import (
 )
 
 type Service interface {
-	GenerateOTP(ctx context.Context, target string, targetType string, ttlMinutes int) (string, error)
-	VerifyOTP(ctx context.Context, target string, targetType string, code string) (bool, error)
+	GenerateOTP(ctx context.Context, target string, targetType string, otpType string, ttlMinutes int) (string, error)
+	VerifyOTP(ctx context.Context, target string, targetType string, otpType string, code string) (bool, error)
 }
 
 type otpService struct {
@@ -27,13 +27,13 @@ func NewService(redisClient *redis.Client) Service {
 	}
 }
 
-func (s *otpService) GenerateOTP(ctx context.Context, target string, targetType string, ttlMinutes int) (string, error) {
+func (s *otpService) GenerateOTP(ctx context.Context, target string, targetType string, otpType string, ttlMinutes int) (string, error) {
 	code, err := s.codeGenerator(6)
 	if err != nil {
 		return "", err
 	}
 
-	key := s.getRedisKey(target, targetType)
+	key := s.getRedisKey(target, targetType, otpType)
 	err = s.redis.Set(ctx, key, code, time.Duration(ttlMinutes)*time.Minute).Err()
 	if err != nil {
 		return "", fmt.Errorf("failed to store otp in redis: %w", err)
@@ -42,8 +42,8 @@ func (s *otpService) GenerateOTP(ctx context.Context, target string, targetType 
 	return code, nil
 }
 
-func (s *otpService) VerifyOTP(ctx context.Context, target string, targetType string, code string) (bool, error) {
-	key := s.getRedisKey(target, targetType)
+func (s *otpService) VerifyOTP(ctx context.Context, target string, targetType string, otpType string, code string) (bool, error) {
+	key := s.getRedisKey(target, targetType, otpType)
 	storedCode, err := s.redis.Get(ctx, key).Result()
 	if err == redis.Nil {
 		return false, nil
@@ -53,7 +53,6 @@ func (s *otpService) VerifyOTP(ctx context.Context, target string, targetType st
 	}
 
 	if storedCode == code {
-		// Delete OTP after successful verification
 		s.redis.Del(ctx, key)
 		return true, nil
 	}
@@ -61,8 +60,11 @@ func (s *otpService) VerifyOTP(ctx context.Context, target string, targetType st
 	return false, nil
 }
 
-func (s *otpService) getRedisKey(target string, targetType string) string {
-	return fmt.Sprintf("otp:%s:%s", targetType, target)
+func (s *otpService) getRedisKey(target string, targetType string, otpType string) string {
+	if otpType == "" {
+		otpType = "VERIFY_ACCOUNT"
+	}
+	return fmt.Sprintf("otp:%s:%s:%s", otpType, targetType, target)
 }
 
 func generateRandomCode(length int) (string, error) {

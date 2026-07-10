@@ -8,8 +8,4 @@
 export type GetAll2Params = {
 page?: number;
 size?: number;
-query?: string;
-industry?: string;
-companySize?: string;
-location?: string;
 };

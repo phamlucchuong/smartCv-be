@@ -3,6 +3,7 @@ package vn.chuongpl.application_service.dtos.response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import vn.chuongpl.application_service.enums.AttemptStatus;
+import vn.chuongpl.application_service.enums.AttemptResult;
 import vn.chuongpl.application_service.features.assessment.AttemptAnswer;
 
 import java.time.LocalDateTime;
@@ -20,4 +21,8 @@ public class AttemptStateResponse {
     AttemptStatus status;
     List<AttemptAnswer> answers;
     LocalDateTime startedAt;
+    Double score;
+    Integer correctAnswers;
+    Integer totalQuestions;
+    AttemptResult result;
 }

@@ -6,7 +6,7 @@ import (
 	"gorm.io/gorm/logger"
 )
 
-// NewGormDB creates GORM connection. Schema migrations handled by golang-migrate.
+// NewGormDB creates GORM connection. Schema migrations handled outside the service.
 func NewGormDB(dsn string) (*gorm.DB, error) {
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
 		Logger: logger.Default.LogMode(logger.Info),

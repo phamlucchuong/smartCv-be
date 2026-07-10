@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 public class CvItem {
     String id;
     String url;
+    String s3Key;   // S3 object key (e.g. "cvs/userId/uuid.pdf"); null for legacy CVs
     String filename;
     boolean isDefault;
     LocalDateTime uploadedAt;

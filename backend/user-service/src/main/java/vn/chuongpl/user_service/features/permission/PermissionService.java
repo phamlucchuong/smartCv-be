@@ -1,6 +1,8 @@
 package vn.chuongpl.user_service.features.permission;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,14 +19,22 @@ public class PermissionService {
     PermissionMapper permissionMapper;
 
     public List<Permission> getAllById(List<String> permissions) {
-        return permissionRepository.findAllById(permissions);
+        List<String> normalizedNames = normalizePermissionNames(permissions);
+        List<Permission> existingPermissions = permissionRepository.findAllById(normalizedNames);
+        if (existingPermissions.size() != normalizedNames.size()) {
+            throw new AppException(ErrorCode.PERMISSION_NOT_FOUND);
+        }
+        return existingPermissions;
     }
 
     public PermissionResponse createPermission(CreatePermissionRequest request){
-        if(permissionRepository.existsById(request.getName())){
+        String normalizedName = normalizePermissionName(request.getName());
+        if(permissionRepository.existsById(normalizedName)){
             throw new AppException(ErrorCode.PERMISSION_EXISTED);
         }
-        var permission = permissionMapper.toPermission(request);
+        var permission = permissionMapper.toPermission(
+                new CreatePermissionRequest(normalizedName, normalizeDescription(request.getDescription()))
+        );
         return permissionMapper.toPermissionResponse(permissionRepository.save(permission));
     }
 
@@ -32,11 +42,32 @@ public class PermissionService {
         List<PermissionResponse> permissions = permissionRepository
                 .findAll()
                 .stream()
+                .sorted((left, right) -> left.getName().compareToIgnoreCase(right.getName()))
                 .map(permissionMapper::toPermissionResponse)
                 .toList();
         return permissions;
     }
     public void deletePermission(String name){
-        permissionRepository.deleteById(name);
+        permissionRepository.deleteById(normalizePermissionName(name));
+    }
+
+    private List<String> normalizePermissionNames(List<String> permissions) {
+        if (permissions == null) {
+            return List.of();
+        }
+
+        return permissions.stream()
+                .filter(Objects::nonNull)
+                .map(this::normalizePermissionName)
+                .distinct()
+                .toList();
+    }
+
+    private String normalizePermissionName(String name) {
+        return name == null ? "" : name.trim().toLowerCase(Locale.ROOT);
+    }
+
+    private String normalizeDescription(String description) {
+        return description == null ? "" : description.trim();
     }
 }

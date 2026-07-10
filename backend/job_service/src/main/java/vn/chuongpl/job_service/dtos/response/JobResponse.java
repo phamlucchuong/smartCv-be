@@ -3,8 +3,10 @@ package vn.chuongpl.job_service.dtos.response;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import vn.chuongpl.job_service.enums.ExperienceLevel;
-import vn.chuongpl.job_service.enums.JobStatus;
+import vn.chuongpl.job_service.enums.JobCategory;
+import vn.chuongpl.job_service.enums.JobModerationStatus;
 import vn.chuongpl.job_service.enums.JobType;
+import vn.chuongpl.job_service.enums.JobVisibilityStatus;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -31,8 +33,18 @@ public class JobResponse implements Serializable {
     List<String> skills;
     List<String> requirements;
     List<String> benefits;
-    JobStatus status;
+    JobModerationStatus moderationStatus;
+    JobVisibilityStatus visibilityStatus;
+    String moderationNote;
+    String reviewedBy;
+    LocalDateTime reviewedAt;
     LocalDate deadline;
+    Integer openings;
+    Integer qualifiedThreshold;
+    Integer rejectThreshold;
+    Boolean autoRejectEnabled;
+    String requiredTest;
+    JobCategory category;
     LocalDateTime createdAt;
     LocalDateTime updatedAt;
 }

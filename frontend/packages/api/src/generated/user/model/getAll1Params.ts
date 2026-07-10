@@ -4,8 +4,8 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
+import type { GetAll1Category } from './getAll1Category';
 
 export type GetAll1Params = {
-page?: number;
-size?: number;
+category?: GetAll1Category;
 };

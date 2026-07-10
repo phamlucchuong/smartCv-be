@@ -1,0 +1,692 @@
+[
+  {
+    "_id": "c159927b-bd35-40b3-8702-47cb0d533602",
+    "user_id": "8270ebb8-bc95-4fe0-b001-b1dbcccec888",
+    "dob": {
+      "$date": "1995-01-01T00:00:00.000Z"
+    },
+    "gender": "MALE",
+    "address": "Hà Nội, Việt Nam",
+    "bio": "Backend Developer đang tìm kiếm cơ hội phát triển trong môi trường sản phẩm và tăng trưởng.",
+    "title": "Backend Developer",
+    "avatar_url": null,
+    "skills": [
+      "Java",
+      "Spring Boot",
+      "REST API",
+      "MySQL"
+    ],
+    "years_of_experience": 1,
+    "experiences": [],
+    "educations": [],
+    "certifications": [],
+    "languages": [],
+    "job_type": "FULL_TIME",
+    "preferred_location": "Hà Nội",
+    "expected_salary_min": 10000000,
+    "expected_salary_max": 16000000,
+    "portfolio_url": null,
+    "github_url": "https://github.com/seed-candidate-1",
+    "linkedin_url": "https://www.linkedin.com/in/seed-candidate-1/",
+    "cv_url": null,
+    "cvs": [],
+    "settings": {
+      "notifications": {
+        "emailApplicationUpdates": true,
+        "emailJobSuggestions": true,
+        "pushNotifications": true,
+        "marketingEmails": false
+      },
+      "privacy": {
+        "profileVisibility": "RECRUITERS_ONLY",
+        "showCvToRecruiters": true,
+        "showContactInfo": false
+      },
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      }
+    },
+    "job_suggestions": [],
+    "suggestions_updated_at": null,
+    "followed_company_ids": [],
+    "active_package_id": null,
+    "package_activated_at": null,
+    "package_expires_at": null,
+    "last_payment_order_id": null,
+    "package_expiry_warning_sent_at": null,
+    "package_downgraded_at": null,
+    "post_expiry_cleanup_at": null,
+    "monthly_ai_credits_used": 0,
+    "monthly_ai_credits_month": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted": false,
+    "deleted_at": null
+  },
+  {
+    "_id": "c7343ba5-b215-4af1-bba5-576994584b08",
+    "user_id": "7f2cd428-a974-45bc-aef0-f8224bd0749a",
+    "dob": {
+      "$date": "1996-02-03T00:00:00.000Z"
+    },
+    "gender": "FEMALE",
+    "address": "Hồ Chí Minh, Việt Nam",
+    "bio": "Frontend Developer đang tìm kiếm cơ hội phát triển trong môi trường sản phẩm và tăng trưởng.",
+    "title": "Frontend Developer",
+    "avatar_url": null,
+    "skills": [
+      "React",
+      "TypeScript",
+      "HTML",
+      "CSS"
+    ],
+    "years_of_experience": 2,
+    "experiences": [],
+    "educations": [],
+    "certifications": [],
+    "languages": [],
+    "job_type": "FULL_TIME",
+    "preferred_location": "Hồ Chí Minh",
+    "expected_salary_min": 11000000,
+    "expected_salary_max": 17200000,
+    "portfolio_url": null,
+    "github_url": null,
+    "linkedin_url": "https://www.linkedin.com/in/seed-candidate-2/",
+    "cv_url": null,
+    "cvs": [],
+    "settings": {
+      "notifications": {
+        "emailApplicationUpdates": true,
+        "emailJobSuggestions": true,
+        "pushNotifications": true,
+        "marketingEmails": false
+      },
+      "privacy": {
+        "profileVisibility": "RECRUITERS_ONLY",
+        "showCvToRecruiters": true,
+        "showContactInfo": false
+      },
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      }
+    },
+    "job_suggestions": [],
+    "suggestions_updated_at": null,
+    "followed_company_ids": [],
+    "active_package_id": null,
+    "package_activated_at": null,
+    "package_expires_at": null,
+    "last_payment_order_id": null,
+    "package_expiry_warning_sent_at": null,
+    "package_downgraded_at": null,
+    "post_expiry_cleanup_at": null,
+    "monthly_ai_credits_used": 0,
+    "monthly_ai_credits_month": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted": false,
+    "deleted_at": null
+  },
+  {
+    "_id": "60c49402-6462-4255-9893-d073ddde55b7",
+    "user_id": "0fd74cbe-021c-4fc5-be7c-72d6e0cdce2e",
+    "dob": {
+      "$date": "1997-03-05T00:00:00.000Z"
+    },
+    "gender": "MALE",
+    "address": "Đà Nẵng, Việt Nam",
+    "bio": "Business Analyst đang tìm kiếm cơ hội phát triển trong môi trường sản phẩm và tăng trưởng.",
+    "title": "Business Analyst",
+    "avatar_url": null,
+    "skills": [
+      "SQL",
+      "Documentation",
+      "Agile",
+      "Stakeholder Management"
+    ],
+    "years_of_experience": 3,
+    "experiences": [],
+    "educations": [],
+    "certifications": [],
+    "languages": [],
+    "job_type": "FULL_TIME",
+    "preferred_location": "Đà Nẵng",
+    "expected_salary_min": 12000000,
+    "expected_salary_max": 18400000,
+    "portfolio_url": null,
+    "github_url": null,
+    "linkedin_url": "https://www.linkedin.com/in/seed-candidate-3/",
+    "cv_url": null,
+    "cvs": [],
+    "settings": {
+      "notifications": {
+        "emailApplicationUpdates": true,
+        "emailJobSuggestions": true,
+        "pushNotifications": true,
+        "marketingEmails": false
+      },
+      "privacy": {
+        "profileVisibility": "RECRUITERS_ONLY",
+        "showCvToRecruiters": true,
+        "showContactInfo": false
+      },
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      }
+    },
+    "job_suggestions": [],
+    "suggestions_updated_at": null,
+    "followed_company_ids": [],
+    "active_package_id": null,
+    "package_activated_at": null,
+    "package_expires_at": null,
+    "last_payment_order_id": null,
+    "package_expiry_warning_sent_at": null,
+    "package_downgraded_at": null,
+    "post_expiry_cleanup_at": null,
+    "monthly_ai_credits_used": 0,
+    "monthly_ai_credits_month": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted": false,
+    "deleted_at": null
+  },
+  {
+    "_id": "307bd179-8ef8-40b9-9d3f-73eccb99df86",
+    "user_id": "030b7c9d-97c2-4584-bc83-3332d889d640",
+    "dob": {
+      "$date": "1998-04-07T00:00:00.000Z"
+    },
+    "gender": "FEMALE",
+    "address": "Hải Phòng, Việt Nam",
+    "bio": "QA Engineer đang tìm kiếm cơ hội phát triển trong môi trường sản phẩm và tăng trưởng.",
+    "title": "QA Engineer",
+    "avatar_url": null,
+    "skills": [
+      "Automation Testing",
+      "Selenium",
+      "Postman",
+      "API Testing"
+    ],
+    "years_of_experience": 4,
+    "experiences": [],
+    "educations": [],
+    "certifications": [],
+    "languages": [],
+    "job_type": "FULL_TIME",
+    "preferred_location": "Hải Phòng",
+    "expected_salary_min": 13000000,
+    "expected_salary_max": 19600000,
+    "portfolio_url": null,
+    "github_url": "https://github.com/seed-candidate-4",
+    "linkedin_url": "https://www.linkedin.com/in/seed-candidate-4/",
+    "cv_url": null,
+    "cvs": [],
+    "settings": {
+      "notifications": {
+        "emailApplicationUpdates": true,
+        "emailJobSuggestions": true,
+        "pushNotifications": true,
+        "marketingEmails": false
+      },
+      "privacy": {
+        "profileVisibility": "RECRUITERS_ONLY",
+        "showCvToRecruiters": true,
+        "showContactInfo": false
+      },
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      }
+    },
+    "job_suggestions": [],
+    "suggestions_updated_at": null,
+    "followed_company_ids": [],
+    "active_package_id": null,
+    "package_activated_at": null,
+    "package_expires_at": null,
+    "last_payment_order_id": null,
+    "package_expiry_warning_sent_at": null,
+    "package_downgraded_at": null,
+    "post_expiry_cleanup_at": null,
+    "monthly_ai_credits_used": 0,
+    "monthly_ai_credits_month": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted": false,
+    "deleted_at": null
+  },
+  {
+    "_id": "0cdd6648-4197-4364-9d8a-bb4ebc08c0e6",
+    "user_id": "6eda0a17-a52d-425c-b4a9-36d092aa03fd",
+    "dob": {
+      "$date": "1999-05-09T00:00:00.000Z"
+    },
+    "gender": "MALE",
+    "address": "Cần Thơ, Việt Nam",
+    "bio": "Product Designer đang tìm kiếm cơ hội phát triển trong môi trường sản phẩm và tăng trưởng.",
+    "title": "Product Designer",
+    "avatar_url": null,
+    "skills": [
+      "Figma",
+      "Design System",
+      "UX Research",
+      "Prototype"
+    ],
+    "years_of_experience": 5,
+    "experiences": [],
+    "educations": [],
+    "certifications": [],
+    "languages": [],
+    "job_type": "FULL_TIME",
+    "preferred_location": "Cần Thơ",
+    "expected_salary_min": 14000000,
+    "expected_salary_max": 20800000,
+    "portfolio_url": null,
+    "github_url": null,
+    "linkedin_url": "https://www.linkedin.com/in/seed-candidate-5/",
+    "cv_url": null,
+    "cvs": [],
+    "settings": {
+      "notifications": {
+        "emailApplicationUpdates": true,
+        "emailJobSuggestions": true,
+        "pushNotifications": true,
+        "marketingEmails": false
+      },
+      "privacy": {
+        "profileVisibility": "RECRUITERS_ONLY",
+        "showCvToRecruiters": true,
+        "showContactInfo": false
+      },
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      }
+    },
+    "job_suggestions": [],
+    "suggestions_updated_at": null,
+    "followed_company_ids": [],
+    "active_package_id": null,
+    "package_activated_at": null,
+    "package_expires_at": null,
+    "last_payment_order_id": null,
+    "package_expiry_warning_sent_at": null,
+    "package_downgraded_at": null,
+    "post_expiry_cleanup_at": null,
+    "monthly_ai_credits_used": 0,
+    "monthly_ai_credits_month": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted": false,
+    "deleted_at": null
+  },
+  {
+    "_id": "ed7f3aa0-2b3d-4fee-936a-d38d54ffa842",
+    "user_id": "2015a6b3-06c1-4647-aaea-cbafb646e621",
+    "dob": {
+      "$date": "2000-06-11T00:00:00.000Z"
+    },
+    "gender": "FEMALE",
+    "address": "Hà Nội, Việt Nam",
+    "bio": "Data Analyst đang tìm kiếm cơ hội phát triển trong môi trường sản phẩm và tăng trưởng.",
+    "title": "Data Analyst",
+    "avatar_url": null,
+    "skills": [
+      "Java",
+      "Spring Boot",
+      "REST API",
+      "MySQL"
+    ],
+    "years_of_experience": 1,
+    "experiences": [],
+    "educations": [],
+    "certifications": [],
+    "languages": [],
+    "job_type": "FULL_TIME",
+    "preferred_location": "Hà Nội",
+    "expected_salary_min": 15000000,
+    "expected_salary_max": 22000000,
+    "portfolio_url": null,
+    "github_url": null,
+    "linkedin_url": "https://www.linkedin.com/in/seed-candidate-6/",
+    "cv_url": null,
+    "cvs": [],
+    "settings": {
+      "notifications": {
+        "emailApplicationUpdates": true,
+        "emailJobSuggestions": true,
+        "pushNotifications": true,
+        "marketingEmails": false
+      },
+      "privacy": {
+        "profileVisibility": "RECRUITERS_ONLY",
+        "showCvToRecruiters": true,
+        "showContactInfo": false
+      },
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      }
+    },
+    "job_suggestions": [],
+    "suggestions_updated_at": null,
+    "followed_company_ids": [],
+    "active_package_id": null,
+    "package_activated_at": null,
+    "package_expires_at": null,
+    "last_payment_order_id": null,
+    "package_expiry_warning_sent_at": null,
+    "package_downgraded_at": null,
+    "post_expiry_cleanup_at": null,
+    "monthly_ai_credits_used": 0,
+    "monthly_ai_credits_month": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted": false,
+    "deleted_at": null
+  },
+  {
+    "_id": "20ab51f8-4e05-4a40-b3d2-89d249ded272",
+    "user_id": "a3ec53fc-ec46-4e5e-aa7a-915ce46ce911",
+    "dob": {
+      "$date": "2001-07-13T00:00:00.000Z"
+    },
+    "gender": "MALE",
+    "address": "Hồ Chí Minh, Việt Nam",
+    "bio": "Mobile Developer đang tìm kiếm cơ hội phát triển trong môi trường sản phẩm và tăng trưởng.",
+    "title": "Mobile Developer",
+    "avatar_url": null,
+    "skills": [
+      "React",
+      "TypeScript",
+      "HTML",
+      "CSS"
+    ],
+    "years_of_experience": 2,
+    "experiences": [],
+    "educations": [],
+    "certifications": [],
+    "languages": [],
+    "job_type": "FULL_TIME",
+    "preferred_location": "Hồ Chí Minh",
+    "expected_salary_min": 16000000,
+    "expected_salary_max": 23200000,
+    "portfolio_url": null,
+    "github_url": "https://github.com/seed-candidate-7",
+    "linkedin_url": "https://www.linkedin.com/in/seed-candidate-7/",
+    "cv_url": null,
+    "cvs": [],
+    "settings": {
+      "notifications": {
+        "emailApplicationUpdates": true,
+        "emailJobSuggestions": true,
+        "pushNotifications": true,
+        "marketingEmails": false
+      },
+      "privacy": {
+        "profileVisibility": "RECRUITERS_ONLY",
+        "showCvToRecruiters": true,
+        "showContactInfo": false
+      },
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      }
+    },
+    "job_suggestions": [],
+    "suggestions_updated_at": null,
+    "followed_company_ids": [],
+    "active_package_id": null,
+    "package_activated_at": null,
+    "package_expires_at": null,
+    "last_payment_order_id": null,
+    "package_expiry_warning_sent_at": null,
+    "package_downgraded_at": null,
+    "post_expiry_cleanup_at": null,
+    "monthly_ai_credits_used": 0,
+    "monthly_ai_credits_month": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted": false,
+    "deleted_at": null
+  },
+  {
+    "_id": "d4d638c1-fe29-46f7-af8f-291e5bd3f400",
+    "user_id": "c2b74f9f-5a2c-4821-82a8-e1949e6858d0",
+    "dob": {
+      "$date": "2002-08-15T00:00:00.000Z"
+    },
+    "gender": "FEMALE",
+    "address": "Đà Nẵng, Việt Nam",
+    "bio": "DevOps Engineer đang tìm kiếm cơ hội phát triển trong môi trường sản phẩm và tăng trưởng.",
+    "title": "DevOps Engineer",
+    "avatar_url": null,
+    "skills": [
+      "SQL",
+      "Documentation",
+      "Agile",
+      "Stakeholder Management"
+    ],
+    "years_of_experience": 3,
+    "experiences": [],
+    "educations": [],
+    "certifications": [],
+    "languages": [],
+    "job_type": "FULL_TIME",
+    "preferred_location": "Đà Nẵng",
+    "expected_salary_min": 17000000,
+    "expected_salary_max": 24400000,
+    "portfolio_url": null,
+    "github_url": null,
+    "linkedin_url": "https://www.linkedin.com/in/seed-candidate-8/",
+    "cv_url": null,
+    "cvs": [],
+    "settings": {
+      "notifications": {
+        "emailApplicationUpdates": true,
+        "emailJobSuggestions": true,
+        "pushNotifications": true,
+        "marketingEmails": false
+      },
+      "privacy": {
+        "profileVisibility": "RECRUITERS_ONLY",
+        "showCvToRecruiters": true,
+        "showContactInfo": false
+      },
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      }
+    },
+    "job_suggestions": [],
+    "suggestions_updated_at": null,
+    "followed_company_ids": [],
+    "active_package_id": null,
+    "package_activated_at": null,
+    "package_expires_at": null,
+    "last_payment_order_id": null,
+    "package_expiry_warning_sent_at": null,
+    "package_downgraded_at": null,
+    "post_expiry_cleanup_at": null,
+    "monthly_ai_credits_used": 0,
+    "monthly_ai_credits_month": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted": false,
+    "deleted_at": null
+  },
+  {
+    "_id": "43dbd323-e836-4a3a-91bb-af1c98f59057",
+    "user_id": "cda501ad-7bd2-48f7-b1b9-5d8a1df56f8e",
+    "dob": {
+      "$date": "1995-09-17T00:00:00.000Z"
+    },
+    "gender": "MALE",
+    "address": "Hải Phòng, Việt Nam",
+    "bio": "Technical Recruiter đang tìm kiếm cơ hội phát triển trong môi trường sản phẩm và tăng trưởng.",
+    "title": "Technical Recruiter",
+    "avatar_url": null,
+    "skills": [
+      "Automation Testing",
+      "Selenium",
+      "Postman",
+      "API Testing"
+    ],
+    "years_of_experience": 4,
+    "experiences": [],
+    "educations": [],
+    "certifications": [],
+    "languages": [],
+    "job_type": "FULL_TIME",
+    "preferred_location": "Hải Phòng",
+    "expected_salary_min": 18000000,
+    "expected_salary_max": 25600000,
+    "portfolio_url": null,
+    "github_url": null,
+    "linkedin_url": "https://www.linkedin.com/in/seed-candidate-9/",
+    "cv_url": null,
+    "cvs": [],
+    "settings": {
+      "notifications": {
+        "emailApplicationUpdates": true,
+        "emailJobSuggestions": true,
+        "pushNotifications": true,
+        "marketingEmails": false
+      },
+      "privacy": {
+        "profileVisibility": "RECRUITERS_ONLY",
+        "showCvToRecruiters": true,
+        "showContactInfo": false
+      },
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      }
+    },
+    "job_suggestions": [],
+    "suggestions_updated_at": null,
+    "followed_company_ids": [],
+    "active_package_id": null,
+    "package_activated_at": null,
+    "package_expires_at": null,
+    "last_payment_order_id": null,
+    "package_expiry_warning_sent_at": null,
+    "package_downgraded_at": null,
+    "post_expiry_cleanup_at": null,
+    "monthly_ai_credits_used": 0,
+    "monthly_ai_credits_month": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted": false,
+    "deleted_at": null
+  },
+  {
+    "_id": "735302e4-3664-43da-9289-d44109ea7da1",
+    "user_id": "b2eaa471-1233-4f25-b634-c9b2fcb46dca",
+    "dob": {
+      "$date": "1996-10-19T00:00:00.000Z"
+    },
+    "gender": "FEMALE",
+    "address": "Cần Thơ, Việt Nam",
+    "bio": "Project Coordinator đang tìm kiếm cơ hội phát triển trong môi trường sản phẩm và tăng trưởng.",
+    "title": "Project Coordinator",
+    "avatar_url": null,
+    "skills": [
+      "Figma",
+      "Design System",
+      "UX Research",
+      "Prototype"
+    ],
+    "years_of_experience": 5,
+    "experiences": [],
+    "educations": [],
+    "certifications": [],
+    "languages": [],
+    "job_type": "FULL_TIME",
+    "preferred_location": "Cần Thơ",
+    "expected_salary_min": 19000000,
+    "expected_salary_max": 26800000,
+    "portfolio_url": null,
+    "github_url": "https://github.com/seed-candidate-10",
+    "linkedin_url": "https://www.linkedin.com/in/seed-candidate-10/",
+    "cv_url": null,
+    "cvs": [],
+    "settings": {
+      "notifications": {
+        "emailApplicationUpdates": true,
+        "emailJobSuggestions": true,
+        "pushNotifications": true,
+        "marketingEmails": false
+      },
+      "privacy": {
+        "profileVisibility": "RECRUITERS_ONLY",
+        "showCvToRecruiters": true,
+        "showContactInfo": false
+      },
+      "preferences": {
+        "language": "VI",
+        "theme": "LIGHT"
+      }
+    },
+    "job_suggestions": [],
+    "suggestions_updated_at": null,
+    "followed_company_ids": [],
+    "active_package_id": null,
+    "package_activated_at": null,
+    "package_expires_at": null,
+    "last_payment_order_id": null,
+    "package_expiry_warning_sent_at": null,
+    "package_downgraded_at": null,
+    "post_expiry_cleanup_at": null,
+    "monthly_ai_credits_used": 0,
+    "monthly_ai_credits_month": null,
+    "created_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "updated_at": {
+      "$date": "2026-06-27T03:00:00.000Z"
+    },
+    "deleted": false,
+    "deleted_at": null
+  }
+]

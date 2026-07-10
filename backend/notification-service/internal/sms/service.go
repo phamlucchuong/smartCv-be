@@ -19,5 +19,8 @@ func NewService(provider SMSProvider) Service {
 }
 
 func (s *smsService) SendOTP(ctx context.Context, to string, code string, ttlMinutes int) error {
+	if s.provider == nil {
+		return ErrProviderNotConfigured
+	}
 	return s.provider.SendOTP(ctx, to, code, ttlMinutes)
 }

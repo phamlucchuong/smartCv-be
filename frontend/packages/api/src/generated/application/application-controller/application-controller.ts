@@ -27,6 +27,7 @@ import type {
   AiScoreUpdateRequest,
   ApiResponseApplicationDetailResponse,
   ApiResponseApplicationResponse,
+  ApiResponseListTopJobCountDto,
   ApiResponseObject,
   ApiResponsePageResponseApplicationDetailResponse,
   ApiResponsePageResponseApplicationResponse,
@@ -35,7 +36,9 @@ import type {
   ApplicationStatusUpdateRequest,
   GetAllParams,
   GetByJobIdParams,
-  GetMyApplicationsParams
+  GetMyApplicationsParams,
+  GetMyJobsApplicationsParams,
+  GetTopJobsParams
 } from '.././model';
 
 import { customInstance } from '../../../axios-instance';
@@ -415,7 +418,181 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
 
       return useMutation(mutationOptions, queryClient);
     }
-    export const getMyApplications = (
+    export const getTopJobs = (
+    params?: GetTopJobsParams,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<ApiResponseListTopJobCountDto>(
+      {url: `/api/applications/top-jobs`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+  
+
+
+
+export const getGetTopJobsQueryKey = (params?: GetTopJobsParams,) => {
+    return [
+    `/api/applications/top-jobs`, ...(params ? [params]: [])
+    ] as const;
+    }
+
+    
+export const getGetTopJobsQueryOptions = <TData = Awaited<ReturnType<typeof getTopJobs>>, TError = unknown>(params?: GetTopJobsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTopJobs>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetTopJobsQueryKey(params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getTopJobs>>> = ({ signal }) => getTopJobs(params, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getTopJobs>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetTopJobsQueryResult = NonNullable<Awaited<ReturnType<typeof getTopJobs>>>
+export type GetTopJobsQueryError = unknown
+
+
+export function useGetTopJobs<TData = Awaited<ReturnType<typeof getTopJobs>>, TError = unknown>(
+ params: undefined |  GetTopJobsParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTopJobs>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getTopJobs>>,
+          TError,
+          Awaited<ReturnType<typeof getTopJobs>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetTopJobs<TData = Awaited<ReturnType<typeof getTopJobs>>, TError = unknown>(
+ params?: GetTopJobsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTopJobs>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getTopJobs>>,
+          TError,
+          Awaited<ReturnType<typeof getTopJobs>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetTopJobs<TData = Awaited<ReturnType<typeof getTopJobs>>, TError = unknown>(
+ params?: GetTopJobsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTopJobs>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetTopJobs<TData = Awaited<ReturnType<typeof getTopJobs>>, TError = unknown>(
+ params?: GetTopJobsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTopJobs>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetTopJobsQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+export const getMyJobsApplications = (
+    params?: GetMyJobsApplicationsParams,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<ApiResponsePageResponseApplicationDetailResponse>(
+      {url: `/api/applications/recruiter`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+  
+
+
+
+export const getGetMyJobsApplicationsQueryKey = (params?: GetMyJobsApplicationsParams,) => {
+    return [
+    `/api/applications/recruiter`, ...(params ? [params]: [])
+    ] as const;
+    }
+
+    
+export const getGetMyJobsApplicationsQueryOptions = <TData = Awaited<ReturnType<typeof getMyJobsApplications>>, TError = unknown>(params?: GetMyJobsApplicationsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyJobsApplications>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMyJobsApplicationsQueryKey(params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMyJobsApplications>>> = ({ signal }) => getMyJobsApplications(params, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMyJobsApplications>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMyJobsApplicationsQueryResult = NonNullable<Awaited<ReturnType<typeof getMyJobsApplications>>>
+export type GetMyJobsApplicationsQueryError = unknown
+
+
+export function useGetMyJobsApplications<TData = Awaited<ReturnType<typeof getMyJobsApplications>>, TError = unknown>(
+ params: undefined |  GetMyJobsApplicationsParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyJobsApplications>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMyJobsApplications>>,
+          TError,
+          Awaited<ReturnType<typeof getMyJobsApplications>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyJobsApplications<TData = Awaited<ReturnType<typeof getMyJobsApplications>>, TError = unknown>(
+ params?: GetMyJobsApplicationsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyJobsApplications>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMyJobsApplications>>,
+          TError,
+          Awaited<ReturnType<typeof getMyJobsApplications>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMyJobsApplications<TData = Awaited<ReturnType<typeof getMyJobsApplications>>, TError = unknown>(
+ params?: GetMyJobsApplicationsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyJobsApplications>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetMyJobsApplications<TData = Awaited<ReturnType<typeof getMyJobsApplications>>, TError = unknown>(
+ params?: GetMyJobsApplicationsParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMyJobsApplications>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMyJobsApplicationsQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+export const getMyApplications = (
     params?: GetMyApplicationsParams,
  options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {

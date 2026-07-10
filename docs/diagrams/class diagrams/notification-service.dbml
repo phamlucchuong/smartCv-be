@@ -1,0 +1,37 @@
+Project notification_service {
+  database_type: "PostgreSQL"
+}
+
+// Conceptual class diagram for notification-service.
+// This service persists notifications and push tokens in PostgreSQL.
+
+Table notifications {
+  id uuid [pk]
+  user_id text [not null, note: 'User id forwarded by gateway']
+  recipient_role varchar [not null, note: 'RECRUITER / ADMIN / USER']
+  type varchar
+  title varchar [not null]
+  body text [not null]
+  data json
+  is_read boolean
+  read_at timestamptz
+  created_at timestamptz
+}
+
+Table notification_fcm_tokens {
+  id uuid [pk]
+  user_id text [not null]
+  audience varchar [not null, note: 'web-user / web-vendor / web-admin']
+  token text [not null]
+  created_at timestamptz
+  updated_at timestamptz
+}
+
+// External stub for user ownership.
+Table users {
+  id text [pk]
+}
+
+Ref: notifications.user_id > users.id
+Ref: notification_fcm_tokens.user_id > users.id
+

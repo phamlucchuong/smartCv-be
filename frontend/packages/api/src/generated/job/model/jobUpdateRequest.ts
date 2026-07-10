@@ -6,6 +6,7 @@
  */
 import type { JobUpdateRequestJobType } from './jobUpdateRequestJobType';
 import type { JobUpdateRequestExperienceLevel } from './jobUpdateRequestExperienceLevel';
+import type { JobUpdateRequestCategory } from './jobUpdateRequestCategory';
 
 export interface JobUpdateRequest {
   title?: string;
@@ -20,4 +21,10 @@ export interface JobUpdateRequest {
   requirements?: string[];
   benefits?: string[];
   deadline?: string;
+  openings?: number;
+  qualifiedThreshold?: number;
+  rejectThreshold?: number;
+  autoRejectEnabled?: boolean;
+  requiredTest?: string;
+  category?: JobUpdateRequestCategory;
 }

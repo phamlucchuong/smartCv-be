@@ -10,6 +10,7 @@ public record CvImprovementResponse(
     public record ImprovementTip(
             String area,
             String suggestion,
+            String suggestionVi,
             String priority
     ) {
     }

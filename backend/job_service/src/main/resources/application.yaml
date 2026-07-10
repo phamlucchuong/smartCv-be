@@ -6,6 +6,12 @@ server:
 spring:
   config:
     import: optional:file:../.env[.properties]
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+  devtools:
+    livereload:
+      enabled: false
 
   application:
     name: JobService
@@ -40,6 +46,7 @@ spring:
 
   main:
     banner-mode: "off"
+    log-startup-info: false
 
   output:
     ansi:
@@ -48,6 +55,12 @@ spring:
 logging:
   level:
     root: WARN
+    org.springframework: WARN
+    org.springframework.boot: WARN
+    org.springframework.data: WARN
+    org.mongodb.driver: WARN
+    org.hibernate: WARN
+    org.elasticsearch: WARN
     "vn.chuongpl.job_service": INFO
   pattern:
     console: "%d{HH:mm:ss.SSS} %-5level %msg%n"
@@ -68,3 +81,5 @@ app:
   job-default-page-size: ${JOB_DEFAULT_PAGE_SIZE:10}
   gateway:
     internal-secret: ${GATEWAY_INTERNAL_SECRET:changeme}
+  user-service-url: ${USER_SERVICE_URL:http://localhost:8081}
+  gateway-internal-secret: ${GATEWAY_INTERNAL_SECRET:changeme}

@@ -12,6 +12,8 @@ export interface ApplicationDetailResponse {
   candidateId?: string;
   jobId?: string;
   recruiterId?: string;
+  jobTitle?: string;
+  companyName?: string;
   status?: ApplicationDetailResponseStatus;
   coverLetter?: string;
   cvUrl?: string;

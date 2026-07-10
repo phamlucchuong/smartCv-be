@@ -1,8 +1,26 @@
 import axios from 'axios';
 import type { AxiosRequestConfig } from 'axios';
 
-const ACCESS_COOKIE = 'smart_cv_token';
-const REFRESH_COOKIE = 'smart_cv_refresh';
+declare const __SMART_CV_API_BASE_URL__: string | undefined;
+
+let ACCESS_COOKIE = 'smart_cv_token';
+let REFRESH_COOKIE = 'smart_cv_refresh';
+
+export function configureCookieNames(access: string, refresh: string) {
+  ACCESS_COOKIE = access;
+  REFRESH_COOKIE = refresh;
+}
+const DEFAULT_API_BASE_URL = 'http://localhost:8080';
+const ACCESS_COOKIE_DAYS = 1;
+const REFRESH_COOKIE_DAYS = 1;
+
+function getApiBaseUrl(): string {
+  if (typeof __SMART_CV_API_BASE_URL__ === 'string' && __SMART_CV_API_BASE_URL__.length > 0) {
+    return __SMART_CV_API_BASE_URL__;
+  }
+
+  return DEFAULT_API_BASE_URL;
+}
 
 function getCookie(name: string): string | null {
   if (typeof document === 'undefined') return null;
@@ -25,12 +43,12 @@ export function registerSignOutHandler(fn: SignOutHandler) {
 }
 
 export const AXIOS_INSTANCE = axios.create({
-  baseURL: (import.meta as any).env?.VITE_API_BASE_URL || 'http://localhost:8080',
+  baseURL: getApiBaseUrl(),
   withCredentials: true,
   headers: { 'Content-Type': 'application/json' },
 });
 
-function getPrefixedUrl(url: string | undefined): string | undefined {
+export function getPrefixedUrl(url: string | undefined): string | undefined {
   if (!url) return url;
   if (
     url.startsWith('/user/') ||
@@ -48,13 +66,15 @@ function getPrefixedUrl(url: string | undefined): string | undefined {
   if (
     url.startsWith('/api/users') ||
     url.startsWith('/api/auth') ||
+    url.startsWith('/api/recruiters') ||
     url.startsWith('/api/candidates') ||
     url.startsWith('/api/companies') ||
-    url.startsWith('/api/wishlists')
+    url.startsWith('/api/wishlists') ||
+    url.startsWith('/api/packages')
   ) {
     return `/user${url}`;
   }
-  if (url.startsWith('/api/applications') || url.startsWith('/api/assessments')) {
+  if (url.startsWith('/api/applications') || url.startsWith('/api/assessments') || url.startsWith('/api/attempts')) {
     return `/application${url}`;
   }
   if (url.startsWith('/api/ai') || url.startsWith('/api/recommend')) {
@@ -72,6 +92,20 @@ AXIOS_INSTANCE.interceptors.request.use((config) => {
   if (token) config.headers.Authorization = `Bearer ${token}`;
   if (config.url) {
     config.url = getPrefixedUrl(config.url);
+  }
+  // Flatten request query parameters for Spring Boot compatibility
+  if (config.params && typeof config.params === 'object') {
+    let flattened = { ...config.params };
+    if ('request' in flattened && typeof flattened.request === 'object' && flattened.request !== null) {
+      const req = flattened.request;
+      delete flattened.request;
+      flattened = { ...flattened, ...req };
+    }
+    config.params = flattened;
+  }
+  // FormData requests need a boundary in Content-Type — let Axios set it automatically
+  if (config.data instanceof FormData) {
+    delete config.headers['Content-Type'];
   }
   return config;
 });
@@ -98,7 +132,10 @@ AXIOS_INSTANCE.interceptors.response.use(
     const refreshToken = getCookie(REFRESH_COOKIE);
     if (!refreshToken) {
       _signOutHandler?.();
-      if (typeof window !== 'undefined') window.location.href = '/signin';
+      if (typeof window !== 'undefined') {
+        const isRecruiter = window.location.pathname.startsWith('/employer') || window.location.port === '3001';
+        window.location.href = isRecruiter ? '/login' : '/signin';
+      }
       return Promise.reject(error);
     }
 
@@ -120,8 +157,12 @@ AXIOS_INSTANCE.interceptors.response.use(
     try {
       const res = await AXIOS_INSTANCE.post('/user/api/auth/refresh', { refreshToken });
       const newToken: string = res.data?.data?.token ?? res.data?.data?.accessToken;
+      const newRefreshToken: string = res.data?.data?.refreshToken ?? refreshToken;
       if (!newToken) throw new Error('No token in refresh response');
-      setCookieRaw(ACCESS_COOKIE, newToken, 1);
+      setCookieRaw(ACCESS_COOKIE, newToken, ACCESS_COOKIE_DAYS);
+      if (newRefreshToken) {
+        setCookieRaw(REFRESH_COOKIE, newRefreshToken, REFRESH_COOKIE_DAYS);
+      }
       processQueue(null, newToken);
       original.headers = { ...original.headers, Authorization: `Bearer ${newToken}` };
       return AXIOS_INSTANCE(original);
@@ -130,7 +171,10 @@ AXIOS_INSTANCE.interceptors.response.use(
       removeCookieRaw(ACCESS_COOKIE);
       removeCookieRaw(REFRESH_COOKIE);
       _signOutHandler?.();
-      if (typeof window !== 'undefined') window.location.href = '/signin';
+      if (typeof window !== 'undefined') {
+        const isRecruiter = window.location.pathname.startsWith('/employer') || window.location.port === '3001';
+        window.location.href = isRecruiter ? '/login' : '/signin';
+      }
       return Promise.reject(err);
     } finally {
       isRefreshing = false;

@@ -10,51 +10,55 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LoginRouteImport } from './routes/login'
-import { Route as EmployerRouteImport } from './routes/employer'
-import { Route as PublicRouteImport } from './routes/_public'
-import { Route as EmployerIndexRouteImport } from './routes/employer.index'
-import { Route as PublicIndexRouteImport } from './routes/_public.index'
-import { Route as SignupRecruiterRouteImport } from './routes/signup.recruiter'
-import { Route as EmployerVerificationRouteImport } from './routes/employer.verification'
-import { Route as EmployerSettingsRouteImport } from './routes/employer.settings'
-import { Route as EmployerNotificationsRouteImport } from './routes/employer.notifications'
-import { Route as EmployerCvSearchRouteImport } from './routes/employer.cv-search'
-import { Route as EmployerBillingRouteImport } from './routes/employer.billing'
-import { Route as EmployerAtsRouteImport } from './routes/employer.ats'
-import { Route as EmployerAssessmentsRouteImport } from './routes/employer.assessments'
-import { Route as EmployerApplicantsRouteImport } from './routes/employer.applicants'
-import { Route as PublicPricingRouteImport } from './routes/_public.pricing'
-import { Route as PublicForEmployersRouteImport } from './routes/_public.for-employers'
-import { Route as PublicAboutRouteImport } from './routes/_public.about'
-import { Route as EmployerJobsIndexRouteImport } from './routes/employer.jobs.index'
-import { Route as PublicJobsIndexRouteImport } from './routes/_public.jobs.index'
-import { Route as EmployerJobsNewRouteImport } from './routes/employer.jobs.new'
-import { Route as EmployerApplicantsIdRouteImport } from './routes/employer.applicants.$id'
-import { Route as PublicJobsIdRouteImport } from './routes/_public.jobs.$id'
+import { Route as EmployerRouteRouteImport } from './routes/employer/route'
+import { Route as PublicRouteRouteImport } from './routes/_public/route'
+import { Route as EmployerIndexRouteImport } from './routes/employer/index'
+import { Route as PublicIndexRouteImport } from './routes/_public/index'
+import { Route as SignupRecruiterRouteImport } from './routes/signup/recruiter'
+import { Route as EmployerVerificationRouteImport } from './routes/employer/verification'
+import { Route as EmployerSetupRouteImport } from './routes/employer/setup'
+import { Route as EmployerSettingsRouteImport } from './routes/employer/settings'
+import { Route as EmployerProfileRouteImport } from './routes/employer/profile'
+import { Route as EmployerPendingRouteImport } from './routes/employer/pending'
+import { Route as EmployerNotificationsRouteImport } from './routes/employer/notifications'
+import { Route as EmployerCvSearchRouteImport } from './routes/employer/cv-search'
+import { Route as EmployerBillingRouteImport } from './routes/employer/billing'
+import { Route as EmployerAtsRouteImport } from './routes/employer/ats'
+import { Route as EmployerAssessmentsRouteImport } from './routes/employer/assessments'
+import { Route as PublicPricingRouteImport } from './routes/_public/pricing'
+import { Route as PublicForEmployersRouteImport } from './routes/_public/for-employers'
+import { Route as PublicAboutRouteImport } from './routes/_public/about'
+import { Route as EmployerJobsIndexRouteImport } from './routes/employer/jobs/index'
+import { Route as EmployerApplicantsIndexRouteImport } from './routes/employer/applicants/index'
+import { Route as PublicJobsIndexRouteImport } from './routes/_public/jobs/index'
+import { Route as EmployerJobsNewRouteImport } from './routes/employer/jobs/new'
+import { Route as EmployerJobsIdRouteImport } from './routes/employer/jobs/$id'
+import { Route as EmployerApplicantsIdRouteImport } from './routes/employer/applicants/$id'
+import { Route as PublicJobsIdRouteImport } from './routes/_public/jobs/$id'
 
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const EmployerRoute = EmployerRouteImport.update({
+const EmployerRouteRoute = EmployerRouteRouteImport.update({
   id: '/employer',
   path: '/employer',
   getParentRoute: () => rootRouteImport,
 } as any)
-const PublicRoute = PublicRouteImport.update({
+const PublicRouteRoute = PublicRouteRouteImport.update({
   id: '/_public',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EmployerIndexRoute = EmployerIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => EmployerRoute,
+  getParentRoute: () => EmployerRouteRoute,
 } as any)
 const PublicIndexRoute = PublicIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => PublicRoute,
+  getParentRoute: () => PublicRouteRoute,
 } as any)
 const SignupRecruiterRoute = SignupRecruiterRouteImport.update({
   id: '/signup/recruiter',
@@ -64,105 +68,129 @@ const SignupRecruiterRoute = SignupRecruiterRouteImport.update({
 const EmployerVerificationRoute = EmployerVerificationRouteImport.update({
   id: '/verification',
   path: '/verification',
-  getParentRoute: () => EmployerRoute,
+  getParentRoute: () => EmployerRouteRoute,
+} as any)
+const EmployerSetupRoute = EmployerSetupRouteImport.update({
+  id: '/setup',
+  path: '/setup',
+  getParentRoute: () => EmployerRouteRoute,
 } as any)
 const EmployerSettingsRoute = EmployerSettingsRouteImport.update({
   id: '/settings',
   path: '/settings',
-  getParentRoute: () => EmployerRoute,
+  getParentRoute: () => EmployerRouteRoute,
+} as any)
+const EmployerProfileRoute = EmployerProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => EmployerRouteRoute,
+} as any)
+const EmployerPendingRoute = EmployerPendingRouteImport.update({
+  id: '/pending',
+  path: '/pending',
+  getParentRoute: () => EmployerRouteRoute,
 } as any)
 const EmployerNotificationsRoute = EmployerNotificationsRouteImport.update({
   id: '/notifications',
   path: '/notifications',
-  getParentRoute: () => EmployerRoute,
+  getParentRoute: () => EmployerRouteRoute,
 } as any)
 const EmployerCvSearchRoute = EmployerCvSearchRouteImport.update({
   id: '/cv-search',
   path: '/cv-search',
-  getParentRoute: () => EmployerRoute,
+  getParentRoute: () => EmployerRouteRoute,
 } as any)
 const EmployerBillingRoute = EmployerBillingRouteImport.update({
   id: '/billing',
   path: '/billing',
-  getParentRoute: () => EmployerRoute,
+  getParentRoute: () => EmployerRouteRoute,
 } as any)
 const EmployerAtsRoute = EmployerAtsRouteImport.update({
   id: '/ats',
   path: '/ats',
-  getParentRoute: () => EmployerRoute,
+  getParentRoute: () => EmployerRouteRoute,
 } as any)
 const EmployerAssessmentsRoute = EmployerAssessmentsRouteImport.update({
   id: '/assessments',
   path: '/assessments',
-  getParentRoute: () => EmployerRoute,
-} as any)
-const EmployerApplicantsRoute = EmployerApplicantsRouteImport.update({
-  id: '/applicants',
-  path: '/applicants',
-  getParentRoute: () => EmployerRoute,
+  getParentRoute: () => EmployerRouteRoute,
 } as any)
 const PublicPricingRoute = PublicPricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
-  getParentRoute: () => PublicRoute,
+  getParentRoute: () => PublicRouteRoute,
 } as any)
 const PublicForEmployersRoute = PublicForEmployersRouteImport.update({
   id: '/for-employers',
   path: '/for-employers',
-  getParentRoute: () => PublicRoute,
+  getParentRoute: () => PublicRouteRoute,
 } as any)
 const PublicAboutRoute = PublicAboutRouteImport.update({
   id: '/about',
   path: '/about',
-  getParentRoute: () => PublicRoute,
+  getParentRoute: () => PublicRouteRoute,
 } as any)
 const EmployerJobsIndexRoute = EmployerJobsIndexRouteImport.update({
   id: '/jobs/',
   path: '/jobs/',
-  getParentRoute: () => EmployerRoute,
+  getParentRoute: () => EmployerRouteRoute,
+} as any)
+const EmployerApplicantsIndexRoute = EmployerApplicantsIndexRouteImport.update({
+  id: '/applicants/',
+  path: '/applicants/',
+  getParentRoute: () => EmployerRouteRoute,
 } as any)
 const PublicJobsIndexRoute = PublicJobsIndexRouteImport.update({
   id: '/jobs/',
   path: '/jobs/',
-  getParentRoute: () => PublicRoute,
+  getParentRoute: () => PublicRouteRoute,
 } as any)
 const EmployerJobsNewRoute = EmployerJobsNewRouteImport.update({
   id: '/jobs/new',
   path: '/jobs/new',
-  getParentRoute: () => EmployerRoute,
+  getParentRoute: () => EmployerRouteRoute,
+} as any)
+const EmployerJobsIdRoute = EmployerJobsIdRouteImport.update({
+  id: '/jobs/$id',
+  path: '/jobs/$id',
+  getParentRoute: () => EmployerRouteRoute,
 } as any)
 const EmployerApplicantsIdRoute = EmployerApplicantsIdRouteImport.update({
-  id: '/$id',
-  path: '/$id',
-  getParentRoute: () => EmployerApplicantsRoute,
+  id: '/applicants/$id',
+  path: '/applicants/$id',
+  getParentRoute: () => EmployerRouteRoute,
 } as any)
 const PublicJobsIdRoute = PublicJobsIdRouteImport.update({
   id: '/jobs/$id',
   path: '/jobs/$id',
-  getParentRoute: () => PublicRoute,
+  getParentRoute: () => PublicRouteRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof PublicIndexRoute
-  '/employer': typeof EmployerRouteWithChildren
+  '/employer': typeof EmployerRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/about': typeof PublicAboutRoute
   '/for-employers': typeof PublicForEmployersRoute
   '/pricing': typeof PublicPricingRoute
-  '/employer/applicants': typeof EmployerApplicantsRouteWithChildren
   '/employer/assessments': typeof EmployerAssessmentsRoute
   '/employer/ats': typeof EmployerAtsRoute
   '/employer/billing': typeof EmployerBillingRoute
   '/employer/cv-search': typeof EmployerCvSearchRoute
   '/employer/notifications': typeof EmployerNotificationsRoute
+  '/employer/pending': typeof EmployerPendingRoute
+  '/employer/profile': typeof EmployerProfileRoute
   '/employer/settings': typeof EmployerSettingsRoute
+  '/employer/setup': typeof EmployerSetupRoute
   '/employer/verification': typeof EmployerVerificationRoute
   '/signup/recruiter': typeof SignupRecruiterRoute
   '/employer/': typeof EmployerIndexRoute
   '/jobs/$id': typeof PublicJobsIdRoute
   '/employer/applicants/$id': typeof EmployerApplicantsIdRoute
+  '/employer/jobs/$id': typeof EmployerJobsIdRoute
   '/employer/jobs/new': typeof EmployerJobsNewRoute
   '/jobs/': typeof PublicJobsIndexRoute
+  '/employer/applicants/': typeof EmployerApplicantsIndexRoute
   '/employer/jobs/': typeof EmployerJobsIndexRoute
 }
 export interface FileRoutesByTo {
@@ -170,46 +198,54 @@ export interface FileRoutesByTo {
   '/about': typeof PublicAboutRoute
   '/for-employers': typeof PublicForEmployersRoute
   '/pricing': typeof PublicPricingRoute
-  '/employer/applicants': typeof EmployerApplicantsRouteWithChildren
   '/employer/assessments': typeof EmployerAssessmentsRoute
   '/employer/ats': typeof EmployerAtsRoute
   '/employer/billing': typeof EmployerBillingRoute
   '/employer/cv-search': typeof EmployerCvSearchRoute
   '/employer/notifications': typeof EmployerNotificationsRoute
+  '/employer/pending': typeof EmployerPendingRoute
+  '/employer/profile': typeof EmployerProfileRoute
   '/employer/settings': typeof EmployerSettingsRoute
+  '/employer/setup': typeof EmployerSetupRoute
   '/employer/verification': typeof EmployerVerificationRoute
   '/signup/recruiter': typeof SignupRecruiterRoute
   '/': typeof PublicIndexRoute
   '/employer': typeof EmployerIndexRoute
   '/jobs/$id': typeof PublicJobsIdRoute
   '/employer/applicants/$id': typeof EmployerApplicantsIdRoute
+  '/employer/jobs/$id': typeof EmployerJobsIdRoute
   '/employer/jobs/new': typeof EmployerJobsNewRoute
   '/jobs': typeof PublicJobsIndexRoute
+  '/employer/applicants': typeof EmployerApplicantsIndexRoute
   '/employer/jobs': typeof EmployerJobsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/_public': typeof PublicRouteWithChildren
-  '/employer': typeof EmployerRouteWithChildren
+  '/_public': typeof PublicRouteRouteWithChildren
+  '/employer': typeof EmployerRouteRouteWithChildren
   '/login': typeof LoginRoute
   '/_public/about': typeof PublicAboutRoute
   '/_public/for-employers': typeof PublicForEmployersRoute
   '/_public/pricing': typeof PublicPricingRoute
-  '/employer/applicants': typeof EmployerApplicantsRouteWithChildren
   '/employer/assessments': typeof EmployerAssessmentsRoute
   '/employer/ats': typeof EmployerAtsRoute
   '/employer/billing': typeof EmployerBillingRoute
   '/employer/cv-search': typeof EmployerCvSearchRoute
   '/employer/notifications': typeof EmployerNotificationsRoute
+  '/employer/pending': typeof EmployerPendingRoute
+  '/employer/profile': typeof EmployerProfileRoute
   '/employer/settings': typeof EmployerSettingsRoute
+  '/employer/setup': typeof EmployerSetupRoute
   '/employer/verification': typeof EmployerVerificationRoute
   '/signup/recruiter': typeof SignupRecruiterRoute
   '/_public/': typeof PublicIndexRoute
   '/employer/': typeof EmployerIndexRoute
   '/_public/jobs/$id': typeof PublicJobsIdRoute
   '/employer/applicants/$id': typeof EmployerApplicantsIdRoute
+  '/employer/jobs/$id': typeof EmployerJobsIdRoute
   '/employer/jobs/new': typeof EmployerJobsNewRoute
   '/_public/jobs/': typeof PublicJobsIndexRoute
+  '/employer/applicants/': typeof EmployerApplicantsIndexRoute
   '/employer/jobs/': typeof EmployerJobsIndexRoute
 }
 export interface FileRouteTypes {
@@ -221,20 +257,24 @@ export interface FileRouteTypes {
     | '/about'
     | '/for-employers'
     | '/pricing'
-    | '/employer/applicants'
     | '/employer/assessments'
     | '/employer/ats'
     | '/employer/billing'
     | '/employer/cv-search'
     | '/employer/notifications'
+    | '/employer/pending'
+    | '/employer/profile'
     | '/employer/settings'
+    | '/employer/setup'
     | '/employer/verification'
     | '/signup/recruiter'
     | '/employer/'
     | '/jobs/$id'
     | '/employer/applicants/$id'
+    | '/employer/jobs/$id'
     | '/employer/jobs/new'
     | '/jobs/'
+    | '/employer/applicants/'
     | '/employer/jobs/'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -242,21 +282,25 @@ export interface FileRouteTypes {
     | '/about'
     | '/for-employers'
     | '/pricing'
-    | '/employer/applicants'
     | '/employer/assessments'
     | '/employer/ats'
     | '/employer/billing'
     | '/employer/cv-search'
     | '/employer/notifications'
+    | '/employer/pending'
+    | '/employer/profile'
     | '/employer/settings'
+    | '/employer/setup'
     | '/employer/verification'
     | '/signup/recruiter'
     | '/'
     | '/employer'
     | '/jobs/$id'
     | '/employer/applicants/$id'
+    | '/employer/jobs/$id'
     | '/employer/jobs/new'
     | '/jobs'
+    | '/employer/applicants'
     | '/employer/jobs'
   id:
     | '__root__'
@@ -266,27 +310,31 @@ export interface FileRouteTypes {
     | '/_public/about'
     | '/_public/for-employers'
     | '/_public/pricing'
-    | '/employer/applicants'
     | '/employer/assessments'
     | '/employer/ats'
     | '/employer/billing'
     | '/employer/cv-search'
     | '/employer/notifications'
+    | '/employer/pending'
+    | '/employer/profile'
     | '/employer/settings'
+    | '/employer/setup'
     | '/employer/verification'
     | '/signup/recruiter'
     | '/_public/'
     | '/employer/'
     | '/_public/jobs/$id'
     | '/employer/applicants/$id'
+    | '/employer/jobs/$id'
     | '/employer/jobs/new'
     | '/_public/jobs/'
+    | '/employer/applicants/'
     | '/employer/jobs/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  PublicRoute: typeof PublicRouteWithChildren
-  EmployerRoute: typeof EmployerRouteWithChildren
+  PublicRouteRoute: typeof PublicRouteRouteWithChildren
+  EmployerRouteRoute: typeof EmployerRouteRouteWithChildren
   LoginRoute: typeof LoginRoute
   SignupRecruiterRoute: typeof SignupRecruiterRoute
 }
@@ -304,14 +352,14 @@ declare module '@tanstack/react-router' {
       id: '/employer'
       path: '/employer'
       fullPath: '/employer'
-      preLoaderRoute: typeof EmployerRouteImport
+      preLoaderRoute: typeof EmployerRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_public': {
       id: '/_public'
       path: ''
       fullPath: '/'
-      preLoaderRoute: typeof PublicRouteImport
+      preLoaderRoute: typeof PublicRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/employer/': {
@@ -319,14 +367,14 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/employer/'
       preLoaderRoute: typeof EmployerIndexRouteImport
-      parentRoute: typeof EmployerRoute
+      parentRoute: typeof EmployerRouteRoute
     }
     '/_public/': {
       id: '/_public/'
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof PublicIndexRouteImport
-      parentRoute: typeof PublicRoute
+      parentRoute: typeof PublicRouteRoute
     }
     '/signup/recruiter': {
       id: '/signup/recruiter'
@@ -340,117 +388,145 @@ declare module '@tanstack/react-router' {
       path: '/verification'
       fullPath: '/employer/verification'
       preLoaderRoute: typeof EmployerVerificationRouteImport
-      parentRoute: typeof EmployerRoute
+      parentRoute: typeof EmployerRouteRoute
+    }
+    '/employer/setup': {
+      id: '/employer/setup'
+      path: '/setup'
+      fullPath: '/employer/setup'
+      preLoaderRoute: typeof EmployerSetupRouteImport
+      parentRoute: typeof EmployerRouteRoute
     }
     '/employer/settings': {
       id: '/employer/settings'
       path: '/settings'
       fullPath: '/employer/settings'
       preLoaderRoute: typeof EmployerSettingsRouteImport
-      parentRoute: typeof EmployerRoute
+      parentRoute: typeof EmployerRouteRoute
+    }
+    '/employer/profile': {
+      id: '/employer/profile'
+      path: '/profile'
+      fullPath: '/employer/profile'
+      preLoaderRoute: typeof EmployerProfileRouteImport
+      parentRoute: typeof EmployerRouteRoute
+    }
+    '/employer/pending': {
+      id: '/employer/pending'
+      path: '/pending'
+      fullPath: '/employer/pending'
+      preLoaderRoute: typeof EmployerPendingRouteImport
+      parentRoute: typeof EmployerRouteRoute
     }
     '/employer/notifications': {
       id: '/employer/notifications'
       path: '/notifications'
       fullPath: '/employer/notifications'
       preLoaderRoute: typeof EmployerNotificationsRouteImport
-      parentRoute: typeof EmployerRoute
+      parentRoute: typeof EmployerRouteRoute
     }
     '/employer/cv-search': {
       id: '/employer/cv-search'
       path: '/cv-search'
       fullPath: '/employer/cv-search'
       preLoaderRoute: typeof EmployerCvSearchRouteImport
-      parentRoute: typeof EmployerRoute
+      parentRoute: typeof EmployerRouteRoute
     }
     '/employer/billing': {
       id: '/employer/billing'
       path: '/billing'
       fullPath: '/employer/billing'
       preLoaderRoute: typeof EmployerBillingRouteImport
-      parentRoute: typeof EmployerRoute
+      parentRoute: typeof EmployerRouteRoute
     }
     '/employer/ats': {
       id: '/employer/ats'
       path: '/ats'
       fullPath: '/employer/ats'
       preLoaderRoute: typeof EmployerAtsRouteImport
-      parentRoute: typeof EmployerRoute
+      parentRoute: typeof EmployerRouteRoute
     }
     '/employer/assessments': {
       id: '/employer/assessments'
       path: '/assessments'
       fullPath: '/employer/assessments'
       preLoaderRoute: typeof EmployerAssessmentsRouteImport
-      parentRoute: typeof EmployerRoute
-    }
-    '/employer/applicants': {
-      id: '/employer/applicants'
-      path: '/applicants'
-      fullPath: '/employer/applicants'
-      preLoaderRoute: typeof EmployerApplicantsRouteImport
-      parentRoute: typeof EmployerRoute
+      parentRoute: typeof EmployerRouteRoute
     }
     '/_public/pricing': {
       id: '/_public/pricing'
       path: '/pricing'
       fullPath: '/pricing'
       preLoaderRoute: typeof PublicPricingRouteImport
-      parentRoute: typeof PublicRoute
+      parentRoute: typeof PublicRouteRoute
     }
     '/_public/for-employers': {
       id: '/_public/for-employers'
       path: '/for-employers'
       fullPath: '/for-employers'
       preLoaderRoute: typeof PublicForEmployersRouteImport
-      parentRoute: typeof PublicRoute
+      parentRoute: typeof PublicRouteRoute
     }
     '/_public/about': {
       id: '/_public/about'
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof PublicAboutRouteImport
-      parentRoute: typeof PublicRoute
+      parentRoute: typeof PublicRouteRoute
     }
     '/employer/jobs/': {
       id: '/employer/jobs/'
       path: '/jobs'
       fullPath: '/employer/jobs/'
       preLoaderRoute: typeof EmployerJobsIndexRouteImport
-      parentRoute: typeof EmployerRoute
+      parentRoute: typeof EmployerRouteRoute
+    }
+    '/employer/applicants/': {
+      id: '/employer/applicants/'
+      path: '/applicants'
+      fullPath: '/employer/applicants/'
+      preLoaderRoute: typeof EmployerApplicantsIndexRouteImport
+      parentRoute: typeof EmployerRouteRoute
     }
     '/_public/jobs/': {
       id: '/_public/jobs/'
       path: '/jobs'
       fullPath: '/jobs/'
       preLoaderRoute: typeof PublicJobsIndexRouteImport
-      parentRoute: typeof PublicRoute
+      parentRoute: typeof PublicRouteRoute
     }
     '/employer/jobs/new': {
       id: '/employer/jobs/new'
       path: '/jobs/new'
       fullPath: '/employer/jobs/new'
       preLoaderRoute: typeof EmployerJobsNewRouteImport
-      parentRoute: typeof EmployerRoute
+      parentRoute: typeof EmployerRouteRoute
+    }
+    '/employer/jobs/$id': {
+      id: '/employer/jobs/$id'
+      path: '/jobs/$id'
+      fullPath: '/employer/jobs/$id'
+      preLoaderRoute: typeof EmployerJobsIdRouteImport
+      parentRoute: typeof EmployerRouteRoute
     }
     '/employer/applicants/$id': {
       id: '/employer/applicants/$id'
-      path: '/$id'
+      path: '/applicants/$id'
       fullPath: '/employer/applicants/$id'
       preLoaderRoute: typeof EmployerApplicantsIdRouteImport
-      parentRoute: typeof EmployerApplicantsRoute
+      parentRoute: typeof EmployerRouteRoute
     }
     '/_public/jobs/$id': {
       id: '/_public/jobs/$id'
       path: '/jobs/$id'
       fullPath: '/jobs/$id'
       preLoaderRoute: typeof PublicJobsIdRouteImport
-      parentRoute: typeof PublicRoute
+      parentRoute: typeof PublicRouteRoute
     }
   }
 }
 
-interface PublicRouteChildren {
+interface PublicRouteRouteChildren {
   PublicAboutRoute: typeof PublicAboutRoute
   PublicForEmployersRoute: typeof PublicForEmployersRoute
   PublicPricingRoute: typeof PublicPricingRoute
@@ -459,7 +535,7 @@ interface PublicRouteChildren {
   PublicJobsIndexRoute: typeof PublicJobsIndexRoute
 }
 
-const PublicRouteChildren: PublicRouteChildren = {
+const PublicRouteRouteChildren: PublicRouteRouteChildren = {
   PublicAboutRoute: PublicAboutRoute,
   PublicForEmployersRoute: PublicForEmployersRoute,
   PublicPricingRoute: PublicPricingRoute,
@@ -468,55 +544,55 @@ const PublicRouteChildren: PublicRouteChildren = {
   PublicJobsIndexRoute: PublicJobsIndexRoute,
 }
 
-const PublicRouteWithChildren =
-  PublicRoute._addFileChildren(PublicRouteChildren)
+const PublicRouteRouteWithChildren = PublicRouteRoute._addFileChildren(
+  PublicRouteRouteChildren,
+)
 
-interface EmployerApplicantsRouteChildren {
-  EmployerApplicantsIdRoute: typeof EmployerApplicantsIdRoute
-}
-
-const EmployerApplicantsRouteChildren: EmployerApplicantsRouteChildren = {
-  EmployerApplicantsIdRoute: EmployerApplicantsIdRoute,
-}
-
-const EmployerApplicantsRouteWithChildren =
-  EmployerApplicantsRoute._addFileChildren(EmployerApplicantsRouteChildren)
-
-interface EmployerRouteChildren {
-  EmployerApplicantsRoute: typeof EmployerApplicantsRouteWithChildren
+interface EmployerRouteRouteChildren {
   EmployerAssessmentsRoute: typeof EmployerAssessmentsRoute
   EmployerAtsRoute: typeof EmployerAtsRoute
   EmployerBillingRoute: typeof EmployerBillingRoute
   EmployerCvSearchRoute: typeof EmployerCvSearchRoute
   EmployerNotificationsRoute: typeof EmployerNotificationsRoute
+  EmployerPendingRoute: typeof EmployerPendingRoute
+  EmployerProfileRoute: typeof EmployerProfileRoute
   EmployerSettingsRoute: typeof EmployerSettingsRoute
+  EmployerSetupRoute: typeof EmployerSetupRoute
   EmployerVerificationRoute: typeof EmployerVerificationRoute
   EmployerIndexRoute: typeof EmployerIndexRoute
+  EmployerApplicantsIdRoute: typeof EmployerApplicantsIdRoute
+  EmployerJobsIdRoute: typeof EmployerJobsIdRoute
   EmployerJobsNewRoute: typeof EmployerJobsNewRoute
+  EmployerApplicantsIndexRoute: typeof EmployerApplicantsIndexRoute
   EmployerJobsIndexRoute: typeof EmployerJobsIndexRoute
 }
 
-const EmployerRouteChildren: EmployerRouteChildren = {
-  EmployerApplicantsRoute: EmployerApplicantsRouteWithChildren,
+const EmployerRouteRouteChildren: EmployerRouteRouteChildren = {
   EmployerAssessmentsRoute: EmployerAssessmentsRoute,
   EmployerAtsRoute: EmployerAtsRoute,
   EmployerBillingRoute: EmployerBillingRoute,
   EmployerCvSearchRoute: EmployerCvSearchRoute,
   EmployerNotificationsRoute: EmployerNotificationsRoute,
+  EmployerPendingRoute: EmployerPendingRoute,
+  EmployerProfileRoute: EmployerProfileRoute,
   EmployerSettingsRoute: EmployerSettingsRoute,
+  EmployerSetupRoute: EmployerSetupRoute,
   EmployerVerificationRoute: EmployerVerificationRoute,
   EmployerIndexRoute: EmployerIndexRoute,
+  EmployerApplicantsIdRoute: EmployerApplicantsIdRoute,
+  EmployerJobsIdRoute: EmployerJobsIdRoute,
   EmployerJobsNewRoute: EmployerJobsNewRoute,
+  EmployerApplicantsIndexRoute: EmployerApplicantsIndexRoute,
   EmployerJobsIndexRoute: EmployerJobsIndexRoute,
 }
 
-const EmployerRouteWithChildren = EmployerRoute._addFileChildren(
-  EmployerRouteChildren,
+const EmployerRouteRouteWithChildren = EmployerRouteRoute._addFileChildren(
+  EmployerRouteRouteChildren,
 )
 
 const rootRouteChildren: RootRouteChildren = {
-  PublicRoute: PublicRouteWithChildren,
-  EmployerRoute: EmployerRouteWithChildren,
+  PublicRouteRoute: PublicRouteRouteWithChildren,
+  EmployerRouteRoute: EmployerRouteRouteWithChildren,
   LoginRoute: LoginRoute,
   SignupRecruiterRoute: SignupRecruiterRoute,
 }

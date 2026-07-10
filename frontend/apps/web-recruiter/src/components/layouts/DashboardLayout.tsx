@@ -1,16 +1,25 @@
 import { Link, Outlet, useRouterState, useNavigate } from "@tanstack/react-router";
 import {
-  Bell, Search, Sparkles, LogOut, Sun, Moon, ChevronDown,
+  Search, Sparkles, Sun, Moon, ChevronDown, LogOut, UserRound,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { cn } from "@/lib/utils";
-import { Button } from "@smart-cv/ui";
+import { Button, NotificationPopover } from "@smart-cv/ui";
+import type { LucideIcon } from "lucide-react";
+import type { NotificationItem, NotificationFilter } from "@smart-cv/ui";
+import { useRecruiterStore } from "@/store/useRecruiterStore";
+import { useTranslation } from "@smart-cv/i18n";
+import {
+  RecruiterApi,
+  type RecruiterResponse,
+  useCreatePaymentOrder,
+  useNotificationsList,
+  useMarkNotificationRead,
+  useMarkAllNotificationsRead,
+} from "@smart-cv/api";
 import {
   DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator,
 } from "@smart-cv/ui";
-import type { LucideIcon } from "lucide-react";
-import { useRecruiterStore } from "@/store/useRecruiterStore";
-import { useTranslation } from "@smart-cv/i18n";
 
 export interface NavItem {
   to: string;
@@ -31,7 +40,7 @@ const ROLE_HOME: Record<Props["role"], string> = {
   admin: "/admin",
 };
 
-export function DashboardLayout({ role, nav, userName, userRole }: Props) {
+export function DashboardLayout({ role, nav, userName }: Props) {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
@@ -39,6 +48,8 @@ export function DashboardLayout({ role, nav, userName, userRole }: Props) {
   const theme = useRecruiterStore((s) => s.theme);
   const setTheme = useRecruiterStore((s) => s.setTheme);
   const language: "EN" | "VI" = i18n.language?.toUpperCase() === "VI" ? "VI" : "EN";
+  const [filter, setFilter] = useState<NotificationFilter>("all");
+  const [currentTime] = useState(() => Date.now());
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
     overview: true,
     hiring: true,
@@ -46,13 +57,59 @@ export function DashboardLayout({ role, nav, userName, userRole }: Props) {
     account: true,
   });
 
+  const { data: recruiterMe } = RecruiterApi.useGetMe1();
+  const recruiter = recruiterMe?.data as RecruiterResponse | undefined;
+  const { data: notifData } = useNotificationsList({ page: 1, pageSize: 30 });
+  const markReadMutation = useMarkNotificationRead();
+  const markAllReadMutation = useMarkAllNotificationsRead();
+  const createOrderMutation = useCreatePaymentOrder();
+
+  const notifications: NotificationItem[] = useMemo(() => {
+    const items = notifData?.data?.items ?? [];
+    return items.map((item) => ({
+      id: item.id,
+      title: item.title,
+      message: item.body,
+      createdAt: item.createdAt,
+      read: item.isRead,
+      tone: ((): NotificationItem["tone"] => {
+        if (item.type === "RECRUITER_APPROVED" || item.type === "JOB_APPROVED") return "success";
+        if (item.type === "RECRUITER_REJECTED" || item.type === "JOB_REJECTED") return "danger";
+        if (item.type === "RECRUITER_FEE_LOCKED") return "danger";
+        if (item.type === "RECRUITER_FEE_DUE") return "warning";
+        return "info";
+      })(),
+      url: item.data?.url,
+    }));
+  }, [notifData]);
+
+  const unreadCount = notifData?.data?.unreadCount ?? 0;
+  const feeDueAt = recruiter?.platformFeeDueAt ? new Date(recruiter.platformFeeDueAt) : null;
+  const feeLockedAt = recruiter?.platformFeeLockedAt ? new Date(recruiter.platformFeeLockedAt) : null;
+  const feeIsOverdue = feeDueAt ? feeDueAt.getTime() <= currentTime : false;
+  const feeIsLocked = Boolean(feeLockedAt);
+
   useEffect(() => {
     document.documentElement.classList.toggle("dark", theme === "dark");
   }, [theme]);
+
   const toggleLanguage = () => {
     const nextLanguage = language === "EN" ? "VI" : "EN";
     localStorage.setItem("smartcv_lang", nextLanguage.toLowerCase());
     i18n.changeLanguage(nextLanguage.toLowerCase());
+  };
+
+  const payPlatformFee = () => {
+    createOrderMutation.mutate(
+      { packageId: "fee" },
+      {
+        onSuccess: (res) => {
+          if (res.data?.paymentUrl) {
+            window.location.href = res.data.paymentUrl;
+          }
+        },
+      }
+    );
   };
 
   const navGroups = useMemo(() => ([
@@ -64,7 +121,7 @@ export function DashboardLayout({ role, nav, userName, userRole }: Props) {
     {
       key: "hiring",
       label: t("recruiter_sidebar_group_hiring"),
-      items: nav.filter((item) => ["/employer/company-verification", "/employer/jobs", "/employer/applicants", "/employer/ats-board"].includes(item.to)),
+      items: nav.filter((item) => ["/employer/verification", "/employer/company-verification", "/employer/jobs", "/employer/applicants"].includes(item.to)),
     },
     {
       key: "intelligence",
@@ -74,7 +131,7 @@ export function DashboardLayout({ role, nav, userName, userRole }: Props) {
     {
       key: "account",
       label: t("recruiter_sidebar_group_account"),
-      items: nav.filter((item) => ["/employer/billing", "/employer/notifications", "/employer/settings"].includes(item.to)),
+      items: nav.filter((item) => ["/employer/profile", "/employer/billing", "/employer/notifications", "/employer/settings"].includes(item.to)),
     },
   ].filter((group) => group.items.length > 0)), [nav, role, t]);
 
@@ -199,26 +256,50 @@ export function DashboardLayout({ role, nav, userName, userRole }: Props) {
               {theme === "dark" ? <Sun className="h-4 w-4 transition-transform duration-300 hover:rotate-12" /> : <Moon className="h-4 w-4 transition-transform duration-300 hover:-rotate-12" />}
             </Button>
 
-            <button className="relative rounded-lg p-2 hover:bg-accent">
-              <Bell className="size-5" />
-              <span className="absolute top-1.5 right-1.5 size-2 rounded-full bg-danger" />
-            </button>
+            <NotificationPopover
+              notifications={notifications}
+              unreadCount={unreadCount}
+              filter={filter}
+              onFilterChange={setFilter}
+              onMarkRead={(id) => markReadMutation.mutate(id)}
+              onDelete={() => {}}
+              onMarkAllRead={() => markAllReadMutation.mutate()}
+              onClearAll={() => {}}
+              onClickNotification={(id, url) => {
+                const notifItem = notifData?.data?.items?.find((i) => i.id === id)
+                if (notifItem && !notifItem.isRead) markReadMutation.mutate(id)
+                if (url) window.location.href = url
+              }}
+              locale={language === "VI" ? "vi-VN" : "en-US"}
+              triggerClassName="text-foreground hover:bg-accent"
+              labels={{
+                title: t("recruiter_nav_notifications"),
+                all: t("notifications_filter_all"),
+                unread: t("notifications_filter_unread"),
+                read: t("notifications_filter_read"),
+                markRead: t("notifications_mark_read"),
+                delete: t("notifications_delete"),
+                markAllRead: t("notifications_mark_all_read"),
+                clearAll: t("notifications_clear_all"),
+                empty: t("notifications_empty"),
+                noUnread: t("notifications_no_unread"),
+                unreadCount: t("notifications_unread_count", { count: unreadCount }),
+                openNotifications: t("notifications_popup_aria"),
+              }}
+            />
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="flex items-center gap-2 rounded-lg px-1.5 py-1 hover:bg-accent">
-                  <div className="size-8 rounded-full bg-primary text-primary-foreground flex items-center justify-center text-xs font-semibold">
-                    {userName.split(" ").slice(-1)[0]?.[0] ?? "U"}
+                <button className="flex items-center gap-2 rounded-full bg-primary/20 border border-primary/30 px-3 py-1.5 cursor-pointer hover:bg-primary/25 transition-colors">
+                  <div className="flex h-7 w-7 items-center justify-center overflow-hidden rounded-full bg-primary/20 text-primary">
+                    <UserRound className="h-4 w-4" />
                   </div>
-                  <div className="hidden md:block text-left leading-tight">
-                    <div className="text-sm font-medium">{userName}</div>
-                    <div className="text-xs text-muted-foreground">{userRole}</div>
-                  </div>
+                  <span className="text-sm font-medium text-foreground">{userName}</span>
+                  <ChevronDown className="h-4 w-4 text-muted-foreground" />
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">
-                <DropdownMenuItem>{t("account_my_profile")}</DropdownMenuItem>
-                <DropdownMenuItem>{t("account_settings")}</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => navigate({ to: "/employer/settings" })}>{t("account_settings")}</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => navigate({ to: "/login" })}>
                   <LogOut className="size-4 mr-2" /> {t("account_sign_out")}
@@ -227,6 +308,33 @@ export function DashboardLayout({ role, nav, userName, userRole }: Props) {
             </DropdownMenu>
           </div>
         </header>
+        {(role === "employer" && (feeIsOverdue || feeIsLocked)) && (
+          <button
+            type="button"
+            onClick={payPlatformFee}
+            className={cn(
+              "border-b px-4 lg:px-5 py-3 text-left text-sm font-medium transition-colors",
+              feeIsLocked
+                ? "bg-destructive/10 text-destructive border-destructive/20 hover:bg-destructive/15"
+                : "bg-warning/10 text-warning-foreground border-warning/20 hover:bg-warning/15",
+            )}
+          >
+            <div className="flex items-center justify-between gap-3">
+              <div>
+                <div className="font-semibold">
+                  {feeIsLocked ? "Tài khoản đã bị khóa do chưa thanh toán phí sàn" : "Phí sàn đã đến hạn thanh toán"}
+                </div>
+                <div className="text-xs opacity-80 mt-1">
+                  {feeDueAt ? `Hạn thanh toán: ${feeDueAt.toLocaleDateString("vi-VN")}` : "Phí sàn hàng tháng: 10.000đ"}
+                </div>
+              </div>
+              <Button size="sm" variant={feeIsLocked ? "destructive" : "default"} disabled={createOrderMutation.isPending}>
+                Thanh toán ngay
+              </Button>
+            </div>
+          </button>
+        )}
+
         <main className="flex-1 p-6 max-w-[1600px] w-full mx-auto">
           <Outlet />
         </main>

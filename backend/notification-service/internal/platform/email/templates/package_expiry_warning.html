@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head><meta charset="UTF-8"><title>Gói dịch vụ sắp hết hạn</title></head>
+<body style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:24px;color:#1a1a1a;">
+  <div style="background:#2563eb;padding:16px 24px;border-radius:8px 8px 0 0;">
+    <h1 style="color:#fff;margin:0;font-size:18px;">Gói dịch vụ của bạn sắp hết hạn</h1>
+  </div>
+  <div style="border:1px solid #e5e7eb;border-top:none;padding:24px;border-radius:0 0 8px 8px;">
+    <p>Xin chào,</p>
+    <p>Gói dịch vụ <strong>{{.PackageID}}</strong> của bạn sẽ <strong>hết hạn vào {{.ExpiresAt}}</strong>.</p>
+    <p>Để tiếp tục sử dụng đầy đủ tính năng, vui lòng gia hạn gói trước khi hết hạn. Sau ngày này, tài khoản sẽ tự động được chuyển về <strong>gói miễn phí</strong>.</p>
+    <div style="margin:24px 0;">
+      <a href="http://localhost:3000/billing"
+         style="background:#2563eb;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:600;">
+        Gia hạn ngay
+      </a>
+    </div>
+    <p style="margin-top:24px;color:#6b7280;font-size:13px;">Email này được gửi tự động từ hệ thống SmartCV. Vui lòng không trả lời email này.</p>
+  </div>
+</body>
+</html>

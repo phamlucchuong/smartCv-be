@@ -3,6 +3,7 @@ package vn.chuongpl.job_service.dtos.request;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import vn.chuongpl.job_service.enums.ExperienceLevel;
+import vn.chuongpl.job_service.enums.JobCategory;
 import vn.chuongpl.job_service.enums.JobType;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class JobSearchRequest {
     JobType jobType;
     ExperienceLevel experienceLevel;
     List<String> skills;
+    JobCategory category;
     String sortBy;
     String sortDir;
     @Builder.Default int page = 1;

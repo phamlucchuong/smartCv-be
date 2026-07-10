@@ -9,6 +9,7 @@ on:
       - "backend/api-gateway/**"
       - "backend/job_service/**"
       - "backend/user-service/**"
+      - "backend/payment-service/**"
       - ".github/workflows/java-services-ci.yml"
       - ".github/workflows/_java-service-ci.yml"
   pull_request:
@@ -19,6 +20,7 @@ on:
       - "backend/api-gateway/**"
       - "backend/job_service/**"
       - "backend/user-service/**"
+      - "backend/payment-service/**"
       - ".github/workflows/java-services-ci.yml"
       - ".github/workflows/_java-service-ci.yml"
 
@@ -46,6 +48,9 @@ jobs:
             test_command: ./mvnw test
           - service_name: user-service
             service_path: backend/user-service
+            test_command: ./mvnw test
+          - service_name: payment-service
+            service_path: backend/payment-service
             test_command: ./mvnw test
     uses: ./.github/workflows/_java-service-ci.yml
     with:

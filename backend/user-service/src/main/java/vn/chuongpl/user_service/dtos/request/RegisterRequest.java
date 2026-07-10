@@ -8,6 +8,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -23,4 +24,5 @@ public class RegisterRequest {
     String preferredVerification;
     @NotBlank(message = "ROLE_REQUIRED")
     String role;
+    String companyName;
 }

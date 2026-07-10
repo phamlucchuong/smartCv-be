@@ -9,6 +9,7 @@ import type { CvItemAnalysisStatus } from './cvItemAnalysisStatus';
 export interface CvItem {
   id?: string;
   url?: string;
+  s3Key?: string;
   filename?: string;
   uploadedAt?: string;
   analysisStatus?: CvItemAnalysisStatus;

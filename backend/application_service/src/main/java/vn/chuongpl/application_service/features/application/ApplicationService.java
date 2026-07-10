@@ -76,6 +76,8 @@ public class ApplicationService {
 
         Application saved = applicationRepository.save(app);
         aiScoringPublisher.publishScoringRequest(saved);
+        String recruiterUserId = userClient.resolveUserIdFromRecruiterId(saved.getRecruiterId());
+        notificationPublisher.publishNewApplication(saved, recruiterUserId);
         return applicationMapper.toResponse(saved);
     }
 
@@ -90,7 +92,8 @@ public class ApplicationService {
         if (isAdmin) return applicationMapper.toDetailResponse(app);
 
         if (isRecruiter) {
-            if (!app.getRecruiterId().equals(userId)) throw new AppException(ErrorCode.UNAUTHORIZED);
+            String recruiterId = resolveToRecruiterId(userId);
+            if (!app.getRecruiterId().equals(recruiterId)) throw new AppException(ErrorCode.UNAUTHORIZED);
             return applicationMapper.toDetailResponse(app);
         }
 
@@ -98,10 +101,11 @@ public class ApplicationService {
         return applicationMapper.toResponse(app);
     }
 
-    public PageResponse<ApplicationDetailResponse> getByJobId(String jobId, String recruiterId, boolean isAdmin, int page, int size) {
+    public PageResponse<ApplicationDetailResponse> getByJobId(String jobId, String userId, boolean isAdmin, int page, int size) {
         Page<Application> results = applicationRepository.findByJobIdAndDeletedFalse(jobId, buildPageable(page, size));
 
         if (!isAdmin) {
+            String recruiterId = resolveToRecruiterId(userId);
             results.getContent().stream()
                     .filter(a -> !a.getRecruiterId().equals(recruiterId))
                     .findFirst()
@@ -113,10 +117,13 @@ public class ApplicationService {
         return toPage(results, applicationMapper::toDetailResponse, page, size);
     }
 
-    public ApplicationDetailResponse updateStatus(String id, ApplicationStatusUpdateRequest request, String recruiterId, boolean isAdmin) {
+    public ApplicationDetailResponse updateStatus(String id, ApplicationStatusUpdateRequest request, String userId, boolean isAdmin) {
         Application app = findActiveById(id);
 
-        if (!isAdmin && !app.getRecruiterId().equals(recruiterId)) throw new AppException(ErrorCode.UNAUTHORIZED);
+        if (!isAdmin) {
+            String recruiterId = resolveToRecruiterId(userId);
+            if (!app.getRecruiterId().equals(recruiterId)) throw new AppException(ErrorCode.UNAUTHORIZED);
+        }
 
         validateRecruiterTransition(app.getStatus(), request.getStatus());
 
@@ -174,9 +181,21 @@ public class ApplicationService {
         applicationRepository.save(app);
     }
 
+    public PageResponse<ApplicationDetailResponse> getByRecruiterId(String userId, int page, int size) {
+        String recruiterId = resolveToRecruiterId(userId);
+        Page<Application> results = applicationRepository.findByRecruiterIdAndDeletedFalse(recruiterId, buildPageable(page, size));
+        return toPage(results, applicationMapper::toDetailResponse, page, size);
+    }
+
     public PageResponse<ApplicationDetailResponse> getAll(int page, int size) {
         Page<Application> results = applicationRepository.findAllByDeletedFalse(buildPageable(page, size));
         return toPage(results, applicationMapper::toDetailResponse, page, size);
+    }
+
+    private String resolveToRecruiterId(String userId) {
+        String recruiterId = userClient.resolveRecruiterId(userId);
+        if (recruiterId == null) throw new AppException(ErrorCode.UNAUTHORIZED);
+        return recruiterId;
     }
 
     private Application findActiveById(String id) {

@@ -4,6 +4,7 @@
  * OpenAPI definition
  * OpenAPI spec version: v0
  */
+import type { RecruiterRequestCategory } from './recruiterRequestCategory';
 import type { RecruiterRequestStatus } from './recruiterRequestStatus';
 
 export interface RecruiterRequest {
@@ -11,12 +12,14 @@ export interface RecruiterRequest {
   companyName?: string;
   companyWebsite?: string;
   companyAddress?: string;
+  companyCity?: string;
   companyDescription?: string;
   companyPhone?: string;
   companySize?: string;
   companyType?: string;
   foundedYear?: number;
   industry?: string;
+  category?: RecruiterRequestCategory;
   benefits?: string[];
   rating?: number;
   reviewCount?: number;

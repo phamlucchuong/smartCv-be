@@ -1,0 +1,157 @@
+Project user_service {
+  database_type: "MongoDB"
+}
+
+// Conceptual class diagram for user-service.
+// Embedded Mongo sub-documents are represented as JSON or helper tables when needed
+// to make dbdiagram.io relationships visible.
+
+Table users {
+  id varchar [pk]
+  full_name varchar
+  email varchar [not null]
+  password varchar
+  phone varchar
+  avt_image_id varchar
+  created_at datetime
+  updated_at datetime
+  deleted_at datetime
+  verified boolean
+  deleted boolean
+  locked boolean
+  preferences json [note: 'Embedded PreferencesSettings']
+}
+
+Table roles {
+  name varchar [pk]
+  description varchar
+  permissions json [note: 'Embedded Set<Permission>']
+}
+
+Table permissions {
+  name varchar [pk]
+  description varchar
+  note varchar [note: 'Embedded inside roles.permissions in Mongo']
+}
+
+Table user_roles {
+  user_id varchar [not null]
+  role_name varchar [not null]
+
+  indexes {
+    (user_id, role_name) [pk]
+  }
+}
+
+Table role_permissions {
+  role_name varchar [not null]
+  permission_name varchar [not null]
+
+  indexes {
+    (role_name, permission_name) [pk]
+  }
+}
+
+Table candidates {
+  id varchar [pk]
+  user_id varchar [not null]
+  dob date
+  gender varchar
+  address text
+  bio text
+  title varchar
+  avatar_url varchar
+  skills json
+  years_of_experience int
+  experiences json [note: 'Embedded WorkExperience[]']
+  educations json [note: 'Embedded Education[]']
+  certifications json [note: 'Embedded Certification[]']
+  languages json [note: 'Embedded Language[]']
+  job_type varchar
+  preferred_location varchar
+  expected_salary_min int
+  expected_salary_max int
+  portfolio_url varchar
+  github_url varchar
+  linkedin_url varchar
+  cv_url varchar
+  cvs json [note: 'Embedded CvItem[]']
+  settings json [note: 'Embedded CandidateSettings']
+  job_suggestions json [note: 'Embedded JobSuggestion[]']
+  suggestions_updated_at datetime
+  followed_company_ids json [note: 'Array of recruiter.profile ids']
+  created_at datetime
+  updated_at datetime
+  deleted boolean
+  deleted_at datetime
+}
+
+Table recruiters {
+  id varchar [pk]
+  user_id varchar [not null]
+  company_name varchar
+  company_website varchar
+  company_address text
+  company_city varchar
+  company_description text
+  company_phone varchar
+  company_size varchar
+  company_type varchar
+  founded_year int
+  industry varchar
+  benefits json
+  rating float
+  review_count int
+  logo_url varchar
+  cover_image_url varchar
+  tax_code varchar
+  business_license_url varchar
+  linkedin_url varchar
+  facebook_url varchar
+  contact_name varchar
+  contact_email varchar
+  contact_phone varchar
+  status varchar
+  rejection_note text
+  quota_job_post int
+  quota_cv_views int
+  created_at datetime
+  updated_at datetime
+  deleted boolean
+  deleted_at datetime
+}
+
+Table service_packages {
+  id varchar [pk]
+  name varchar [not null, unique]
+  price bigint
+  ai_credits int
+  job_limit int
+  cv_limit int
+  featured boolean
+  features json
+  created_at datetime
+  updated_at datetime
+}
+
+Table wishlists {
+  id varchar [pk]
+  candidate_id varchar [not null]
+  job_id varchar [not null]
+  saved_at datetime
+  deleted boolean
+}
+
+// External stub so wishlist.job_id can point to the owning job document.
+Table jobs {
+  id varchar [pk]
+}
+
+Ref: user_roles.user_id > users.id
+Ref: user_roles.role_name > roles.name
+Ref: role_permissions.role_name > roles.name
+Ref: role_permissions.permission_name > permissions.name
+Ref: candidates.user_id > users.id
+Ref: recruiters.user_id > users.id
+Ref: wishlists.candidate_id > candidates.id
+Ref: wishlists.job_id > jobs.id

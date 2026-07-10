@@ -10,8 +10,8 @@ import (
 )
 
 type OTPService interface {
-	SendOTP(ctx context.Context, target string, targetType string, ttlMinutes int) error
-	VerifyOTP(ctx context.Context, target string, targetType string, code string) (bool, error)
+	SendOTP(ctx context.Context, target string, targetType string, otpType string, ttlMinutes int) error
+	VerifyOTP(ctx context.Context, target string, targetType string, otpType string, code string) (bool, error)
 }
 
 type Handler struct {
@@ -38,10 +38,10 @@ func (h *Handler) SendOTP(c *echo.Context) error {
 
 	ttl := req.TTLMinutes
 	if ttl == 0 {
-		ttl = 1 // default 1 minute
+		ttl = DefaultTTLMinutes
 	}
 
-	err := h.notiSvc.SendOTP(c.Request().Context(), req.Target, req.TargetType, ttl)
+	err := h.notiSvc.SendOTP(c.Request().Context(), req.Target, req.TargetType, req.OtpType, ttl)
 	if err != nil {
 		h.logger.Error("failed to send otp", "target", req.Target, "err", err)
 		return pkg.JSONError(c, http.StatusInternalServerError, pkg.CodeInternalError, "failed to send otp")
@@ -60,7 +60,7 @@ func (h *Handler) VerifyOTP(c *echo.Context) error {
 		return pkg.JSONError(c, http.StatusInternalServerError, pkg.CodeInternalError, "notification service not initialized")
 	}
 
-	isValid, err := h.notiSvc.VerifyOTP(c.Request().Context(), req.Target, req.TargetType, req.Code)
+	isValid, err := h.notiSvc.VerifyOTP(c.Request().Context(), req.Target, req.TargetType, req.OtpType, req.Code)
 	if err != nil {
 		h.logger.Error("failed to verify otp", "target", req.Target, "err", err)
 		return pkg.JSONError(c, http.StatusInternalServerError, pkg.CodeInternalError, "failed to verify otp")

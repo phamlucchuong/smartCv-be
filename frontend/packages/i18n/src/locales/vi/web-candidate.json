@@ -1,5 +1,8 @@
 {
   "welcome": "Welcome to SmartCV",
   "login": "Login",
-  "register": "Register"
+  "register": "Register",
+  "assessment_passed_desc": "Chúc mừng! Bạn đã vượt qua bài kiểm tra.",
+  "assessment_failed_desc": "Bạn chưa đạt yêu cầu. Hãy ôn luyện thêm và thử lại sau.",
+  "assessment_result_pending_desc": "Bài thi có câu tự luận sẽ được nhà tuyển dụng chấm điểm thủ công. Kết quả sẽ được cập nhật sau."
 }

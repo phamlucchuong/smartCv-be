@@ -24,8 +24,11 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
+  ApiResponseListCompanyResponse,
+  ApiResponseMapStringString,
   ApiResponseRecruiterProfileResponse,
   ApiResponseVoid,
+  GetByCategoryParams,
   QuotaDeltaRequest
 } from '.././model';
 
@@ -207,7 +210,149 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
 
       return useMutation(mutationOptions, queryClient);
     }
-    export const getProfile = (
+    export const consumeAiCredit = (
+    userId: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<ApiResponseVoid>(
+      {url: `/api/internal/recruiters/by-user/${userId}/consume-ai-credit`, method: 'POST', signal
+    },
+      options);
+    }
+  
+
+
+export const getConsumeAiCreditMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof consumeAiCredit>>, TError,{userId: string}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof consumeAiCredit>>, TError,{userId: string}, TContext> => {
+
+const mutationKey = ['consumeAiCredit'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof consumeAiCredit>>, {userId: string}> = (props) => {
+          const {userId} = props ?? {};
+
+          return  consumeAiCredit(userId,requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type ConsumeAiCreditMutationResult = NonNullable<Awaited<ReturnType<typeof consumeAiCredit>>>
+    
+    export type ConsumeAiCreditMutationError = unknown
+
+    export const useConsumeAiCredit = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof consumeAiCredit>>, TError,{userId: string}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof consumeAiCredit>>,
+        TError,
+        {userId: string},
+        TContext
+      > => {
+
+      const mutationOptions = getConsumeAiCreditMutationOptions(options);
+
+      return useMutation(mutationOptions, queryClient);
+    }
+    export const getUserId = (
+    id: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<ApiResponseMapStringString>(
+      {url: `/api/internal/recruiters/${id}/user-id`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+
+
+export const getGetUserIdQueryKey = (id?: string,) => {
+    return [
+    `/api/internal/recruiters/${id}/user-id`
+    ] as const;
+    }
+
+    
+export const getGetUserIdQueryOptions = <TData = Awaited<ReturnType<typeof getUserId>>, TError = unknown>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserId>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetUserIdQueryKey(id);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getUserId>>> = ({ signal }) => getUserId(id, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getUserId>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetUserIdQueryResult = NonNullable<Awaited<ReturnType<typeof getUserId>>>
+export type GetUserIdQueryError = unknown
+
+
+export function useGetUserId<TData = Awaited<ReturnType<typeof getUserId>>, TError = unknown>(
+ id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserId>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getUserId>>,
+          TError,
+          Awaited<ReturnType<typeof getUserId>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetUserId<TData = Awaited<ReturnType<typeof getUserId>>, TError = unknown>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserId>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getUserId>>,
+          TError,
+          Awaited<ReturnType<typeof getUserId>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetUserId<TData = Awaited<ReturnType<typeof getUserId>>, TError = unknown>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserId>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetUserId<TData = Awaited<ReturnType<typeof getUserId>>, TError = unknown>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getUserId>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetUserIdQueryOptions(id,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+export const getProfile = (
     userId: string,
  options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
@@ -282,6 +427,93 @@ export function useGetProfile<TData = Awaited<ReturnType<typeof getProfile>>, TE
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
   const queryOptions = getGetProfileQueryOptions(userId,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+export const getByCategory = (
+    params: GetByCategoryParams,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<ApiResponseListCompanyResponse>(
+      {url: `/api/internal/recruiters/by-category`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+  
+
+
+
+export const getGetByCategoryQueryKey = (params?: GetByCategoryParams,) => {
+    return [
+    `/api/internal/recruiters/by-category`, ...(params ? [params]: [])
+    ] as const;
+    }
+
+    
+export const getGetByCategoryQueryOptions = <TData = Awaited<ReturnType<typeof getByCategory>>, TError = unknown>(params: GetByCategoryParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getByCategory>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetByCategoryQueryKey(params);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getByCategory>>> = ({ signal }) => getByCategory(params, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getByCategory>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetByCategoryQueryResult = NonNullable<Awaited<ReturnType<typeof getByCategory>>>
+export type GetByCategoryQueryError = unknown
+
+
+export function useGetByCategory<TData = Awaited<ReturnType<typeof getByCategory>>, TError = unknown>(
+ params: GetByCategoryParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getByCategory>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getByCategory>>,
+          TError,
+          Awaited<ReturnType<typeof getByCategory>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetByCategory<TData = Awaited<ReturnType<typeof getByCategory>>, TError = unknown>(
+ params: GetByCategoryParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getByCategory>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getByCategory>>,
+          TError,
+          Awaited<ReturnType<typeof getByCategory>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetByCategory<TData = Awaited<ReturnType<typeof getByCategory>>, TError = unknown>(
+ params: GetByCategoryParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getByCategory>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetByCategory<TData = Awaited<ReturnType<typeof getByCategory>>, TError = unknown>(
+ params: GetByCategoryParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getByCategory>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetByCategoryQueryOptions(params,options)
 
   const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 

@@ -53,6 +53,14 @@ public class CandidateResponse {
     // ── CV ────────────────────────────────────────────────────────────────────
     String cvUrl;
 
+    // ── Package Activation ───────────────────────────────────────────────────
+    String activePackageId;
+    LocalDateTime packageActivatedAt;
+    LocalDateTime packageExpiresAt;
+    Integer aiCreditsTotal;
+    Integer aiCreditsUsed;
+    Integer aiCreditsRemaining;
+
     // ── Audit ─────────────────────────────────────────────────────────────────
     LocalDateTime createdAt;
     LocalDateTime updatedAt;

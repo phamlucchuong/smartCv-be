@@ -8,4 +8,6 @@ import java.util.List;
 @Repository
 public interface AssessmentRepository extends MongoRepository<Assessment, String> {
     List<Assessment> findByRecruiterId(String recruiterId);
+    List<Assessment> findByJobId(String jobId);
+    List<Assessment> findByCandidateId(String candidateId);
 }

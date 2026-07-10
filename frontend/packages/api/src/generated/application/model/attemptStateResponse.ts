@@ -6,6 +6,7 @@
  */
 import type { AttemptStateResponseStatus } from './attemptStateResponseStatus';
 import type { AttemptAnswer } from './attemptAnswer';
+import type { AttemptStateResponseResult } from './attemptStateResponseResult';
 
 export interface AttemptStateResponse {
   attemptId?: string;
@@ -13,4 +14,8 @@ export interface AttemptStateResponse {
   status?: AttemptStateResponseStatus;
   answers?: AttemptAnswer[];
   startedAt?: string;
+  score?: number;
+  correctAnswers?: number;
+  totalQuestions?: number;
+  result?: AttemptStateResponseResult;
 }

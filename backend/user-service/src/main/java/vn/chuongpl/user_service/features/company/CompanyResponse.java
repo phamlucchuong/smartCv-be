@@ -2,6 +2,7 @@ package vn.chuongpl.user_service.features.company;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import vn.chuongpl.user_service.enums.JobCategory;
 import vn.chuongpl.user_service.features.recruiter.Recruiter;
 
 import java.util.List;
@@ -17,6 +18,7 @@ public class CompanyResponse {
     String logoUrl;
     String coverImageUrl;
     String industry;
+    JobCategory category;
     String size;
     String location;
     String website;
@@ -34,6 +36,7 @@ public class CompanyResponse {
                 .logoUrl(r.getLogoUrl())
                 .coverImageUrl(r.getCoverImageUrl())
                 .industry(r.getIndustry())
+                .category(r.getCategory())
                 .size(r.getCompanySize())
                 .location(r.getCompanyAddress())
                 .website(r.getCompanyWebsite())

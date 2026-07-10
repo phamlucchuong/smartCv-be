@@ -6,6 +6,7 @@
  */
 import type { JobSearchRequestJobType } from './jobSearchRequestJobType';
 import type { JobSearchRequestExperienceLevel } from './jobSearchRequestExperienceLevel';
+import type { JobSearchRequestCategory } from './jobSearchRequestCategory';
 
 export interface JobSearchRequest {
   keyword?: string;
@@ -15,6 +16,7 @@ export interface JobSearchRequest {
   jobType?: JobSearchRequestJobType;
   experienceLevel?: JobSearchRequestExperienceLevel;
   skills?: string[];
+  category?: JobSearchRequestCategory;
   sortBy?: string;
   sortDir?: string;
   page?: number;

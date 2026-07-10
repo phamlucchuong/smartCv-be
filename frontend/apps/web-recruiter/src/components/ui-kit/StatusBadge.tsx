@@ -3,7 +3,13 @@ import { cn } from "@/lib/utils";
 type Tone = "success" | "warning" | "danger" | "info" | "muted" | "ai" | "primary";
 
 const STATUS_MAP: Record<string, Tone> = {
-  // applications
+  // applications — real API enum labels (Vietnamese)
+  "Chờ duyệt": "warning",
+  "Đang xét": "info",
+  "Chấp nhận": "success",
+  "Từ chối": "danger",
+  "Đã rút": "muted",
+  // applications — legacy mock labels
   Qualified: "success",
   Accepted: "success",
   "Offer Sent": "success",
@@ -22,6 +28,7 @@ const STATUS_MAP: Record<string, Tone> = {
   Paid: "success",
   Pending: "warning",
   Failed: "danger",
+  Cancelled: "danger",
   Refunded: "muted",
   // verification
   Verified: "success",

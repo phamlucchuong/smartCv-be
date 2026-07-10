@@ -23,6 +23,18 @@ class PromptBuilderTest {
     }
 
     @Test
+    void buildAssessmentGeneratePrompt_shouldReplaceTemplateVariables() {
+        String prompt = promptBuilder.buildAssessmentGeneratePrompt(Map.of(
+                "JOB_NAME", "Java Developer",
+                "LEVEL", "Junior",
+                "DIFFICULTY", "Medium",
+                "NUM_QUESTIONS", "5"
+        ));
+        assertTrue(prompt.contains("Java Developer"));
+        assertFalse(prompt.contains("{{JOB_NAME}}"));
+    }
+
+    @Test
     void systemPrompt_shouldLoadSystemInstructions() {
         String prompt = promptBuilder.systemPrompt();
 

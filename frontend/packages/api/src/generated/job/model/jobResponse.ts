@@ -6,7 +6,9 @@
  */
 import type { JobResponseJobType } from './jobResponseJobType';
 import type { JobResponseExperienceLevel } from './jobResponseExperienceLevel';
-import type { JobResponseStatus } from './jobResponseStatus';
+import type { JobResponseModerationStatus } from './jobResponseModerationStatus';
+import type { JobResponseVisibilityStatus } from './jobResponseVisibilityStatus';
+import type { JobResponseCategory } from './jobResponseCategory';
 
 export interface JobResponse {
   id?: string;
@@ -22,8 +24,18 @@ export interface JobResponse {
   skills?: string[];
   requirements?: string[];
   benefits?: string[];
-  status?: JobResponseStatus;
+  moderationStatus?: JobResponseModerationStatus;
+  visibilityStatus?: JobResponseVisibilityStatus;
+  moderationNote?: string;
+  reviewedBy?: string;
+  reviewedAt?: string;
   deadline?: string;
+  openings?: number;
+  qualifiedThreshold?: number;
+  rejectThreshold?: number;
+  autoRejectEnabled?: boolean;
+  requiredTest?: string;
+  category?: JobResponseCategory;
   createdAt?: string;
   updatedAt?: string;
 }

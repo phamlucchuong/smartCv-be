@@ -27,9 +27,10 @@ public class CompanyController {
             @RequestParam(required = false) String query,
             @RequestParam(required = false) String industry,
             @RequestParam(required = false) String companySize,
-            @RequestParam(required = false) String location) {
+            @RequestParam(required = false) String location,
+            @RequestParam(required = false) String category) {
         return ApiResponse.<PageResponse<CompanyResponse>>builder()
-                .data(companyService.getAll(page, size, query, industry, companySize, location))
+                .data(companyService.getAll(page, size, query, industry, companySize, location, category))
                 .build();
     }
 
@@ -73,6 +74,13 @@ public class CompanyController {
     public ApiResponse<List<CompanyResponse>> getRelatedCompanies(@PathVariable String id) {
         return ApiResponse.<List<CompanyResponse>>builder()
                 .data(companyService.getRelatedCompanies(id))
+                .build();
+    }
+
+    @GetMapping("/by-recruiter/{recruiterId}")
+    public ApiResponse<CompanyResponse> getByRecruiterId(@PathVariable String recruiterId) {
+        return ApiResponse.<CompanyResponse>builder()
+                .data(companyService.getByRecruiterId(recruiterId))
                 .build();
     }
 }

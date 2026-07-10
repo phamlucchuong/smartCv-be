@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
+import org.springframework.data.mongodb.core.mapping.FieldType;
 import org.springframework.data.mongodb.core.mapping.MongoId;
 import vn.chuongpl.application_service.enums.AttemptResult;
 import vn.chuongpl.application_service.enums.AttemptStatus;
@@ -20,7 +21,7 @@ import java.util.List;
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class AssessmentAttempt {
-    @MongoId
+    @MongoId(FieldType.STRING)
     String id;
 
     @Field("assessment_id")

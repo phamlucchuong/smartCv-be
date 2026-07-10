@@ -30,8 +30,32 @@ public class PromptBuilder {
         return apply(load("prompts/interview_questions.md"), vars);
     }
 
+    public String buildAssessmentGeneratePrompt(Map<String, Object> vars) {
+        return apply(load("prompts/generate_assessment.md"), vars);
+    }
+
     public String buildExtractSkillsPrompt(Map<String, Object> vars) {
         return apply(load("prompts/extract_skills.md"), vars);
+    }
+
+    public String buildExtractJobTargetPrompt(Map<String, Object> vars) {
+        return apply(load("prompts/extract_job_target.md"), vars);
+    }
+
+    public String buildImproveStructuredPrompt(Map<String, Object> vars) {
+        return apply(load("prompts/improve_cv_structured.md"), vars);
+    }
+
+    public String buildExtractCvStructuredPrompt(Map<String, Object> vars) {
+        return apply(load("prompts/extract_cv_structured.md"), vars);
+    }
+
+    public String buildExtractJdRequirementsPrompt(Map<String, Object> vars) {
+        return apply(load("prompts/extract_jd_requirements.md"), vars);
+    }
+
+    public String buildExtractOnetRequirementsPrompt(Map<String, Object> vars) {
+        return apply(load("prompts/extract_onet_requirements.md"), vars);
     }
 
     public String systemPrompt() {

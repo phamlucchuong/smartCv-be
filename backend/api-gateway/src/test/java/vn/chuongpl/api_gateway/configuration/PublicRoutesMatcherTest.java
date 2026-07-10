@@ -42,4 +42,20 @@ class PublicRoutesMatcherTest {
 
         assertFalse(actual);
     }
+
+    @Test
+    void isPublic_shouldNotTreatRecruiterOwnJobsEndpointAsPublic() {
+        PublicRoutesMatcher.PublicRoute route = new PublicRoutesMatcher.PublicRoute();
+        route.setMethod("GET");
+        route.setPath("/job/api/jobs/*");
+
+        PublicRoutesMatcher matcher = new PublicRoutesMatcher();
+        matcher.setPublicRoutes(List.of(route));
+
+        boolean actual = matcher.isPublic(MockServerWebExchange.from(
+                MockServerHttpRequest.get("/job/api/jobs/my").build()
+        ));
+
+        assertFalse(actual);
+    }
 }

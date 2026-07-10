@@ -27,6 +27,8 @@ class CvManagementServiceTest {
     @Mock CandidateRepository candidateRepository;
     @Mock UserRepository userRepository;
     @Mock CandidateMapper candidateMapper;
+    @Mock vn.chuongpl.user_service.features.servicepackage.ServicePackageRepository servicePackageRepository;
+    @Mock vn.chuongpl.user_service.integration.notification.AiCreditExhaustedPublisher aiCreditExhaustedPublisher;
     @InjectMocks CandidateService candidateService;
 
     @Test
@@ -34,7 +36,7 @@ class CvManagementServiceTest {
         Candidate c = Candidate.builder().id("c1").userId("u1").cvs(new ArrayList<>()).build();
         when(candidateRepository.findByUserIdAndDeletedFalse("u1")).thenReturn(Optional.of(c));
 
-        candidateService.addCvToList("u1", "https://s3/cv1.pdf", "cv1.pdf");
+        candidateService.addCvToList("u1", null, "https://s3/cv1.pdf", "cv1.pdf");
 
         assertEquals(1, c.getCvs().size());
         assertTrue(c.getCvs().get(0).isDefault());
@@ -49,7 +51,7 @@ class CvManagementServiceTest {
                 .cvs(new ArrayList<>(List.of(existing))).build();
         when(candidateRepository.findByUserIdAndDeletedFalse("u1")).thenReturn(Optional.of(c));
 
-        candidateService.addCvToList("u1", "https://s3/cv2.pdf", "cv2.pdf");
+        candidateService.addCvToList("u1", null, "https://s3/cv2.pdf", "cv2.pdf");
 
         assertEquals(2, c.getCvs().size());
         assertFalse(c.getCvs().get(1).isDefault());

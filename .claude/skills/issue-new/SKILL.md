@@ -15,11 +15,11 @@ File an issue about "$ARGUMENTS".
 ## Step 1: Deep investigation
 
 Thoroughly investigate the related information:
-- **Check existing issues**: `backend/plans/issues/` (backend) or `frontend/docs/issues/` (frontend)
+- **Check existing issues**: `plans/issues/`
 - **Investigate related code**:
   - Backend: `backend/api-gateway/src/`, `backend/user-service/src/`, `backend/job_service/src/`, `backend/application_service/src/`, `backend/ai_engine_service/src/`, `backend/notification-service/`
   - Frontend: `frontend/apps/web-candidate/src/`, `frontend/apps/web-recruiter/src/`, `frontend/apps/web-admin/src/`, `frontend/packages/`
-- **Check docs**: `backend/plans/EN/` for backend architecture decisions
+- **Check docs**: `docs/EN/` for backend architecture decisions
 
 Do not conclude based on docs alone; always confirm with the code.
 
@@ -33,8 +33,7 @@ Use AskUserQuestion to clarify:
 
 ## Step 3: Create the issue file
 
-- Backend issue: `backend/plans/issues/YYYYMMDD_HHmm_[summary].md`
-- Frontend issue: `frontend/docs/issues/YYYYMMDD_HHmm_[summary].md`
+- Issue: `plans/issues/YYYYMMDD_HHmm_[summary].md`
 
 ```markdown
 # [Title]

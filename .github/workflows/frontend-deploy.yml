@@ -1,0 +1,113 @@
+name: Deploy Frontend
+
+on:
+  push:
+    branches: [main, dev]
+    paths:
+      - 'frontend/**'
+      - '.github/workflows/frontend-deploy.yml'
+
+jobs:
+  deploy:
+    name: Build and Deploy to S3 + CloudFront
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9
+
+      - name: Install dependencies
+        run: |
+          cd frontend
+          pnpm install --frozen-lockfile
+
+      - name: Build all apps
+        env:
+          VITE_API_BASE_URL: https://api.smartcv-chuongpl.io.vn
+          VITE_DOMAIN_URL: https://smartcv-chuongpl.io.vn
+          VITE_I18N_DEFAULT_LOCALE: vi
+          VITE_I18N_FALLBACK_LOCALE: en
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
+          VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+          VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
+          VITE_FIREBASE_MEASUREMENT_ID: ${{ secrets.VITE_FIREBASE_MEASUREMENT_ID }}
+          VITE_FIREBASE_VAPID_KEY: ${{ secrets.VITE_FIREBASE_VAPID_KEY }}
+        run: |
+          cd frontend
+          pnpm build
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name: Upload web-candidate to S3
+        run: |
+          aws s3 sync frontend/apps/web-candidate/dist/ \
+            s3://${{ secrets.AWS_S3_BUCKET_NAME }}/web-candidate/ \
+            --delete --exclude "index.html" --no-progress
+          aws s3 sync frontend/apps/web-candidate/dist/ \
+            s3://${{ secrets.AWS_S3_BUCKET_NAME }}/web-candidate/ \
+            --exclude "*" --include "assets/*" \
+            --cache-control "public,max-age=31536000,immutable" --no-progress
+          aws s3 cp frontend/apps/web-candidate/dist/index.html \
+            s3://${{ secrets.AWS_S3_BUCKET_NAME }}/web-candidate/index.html \
+            --cache-control "no-cache,no-store,must-revalidate" \
+            --content-type "text/html"
+
+      - name: Upload web-recruiter to S3
+        run: |
+          aws s3 sync frontend/apps/web-recruiter/dist/ \
+            s3://${{ secrets.AWS_S3_BUCKET_NAME }}/web-recruiter/ \
+            --delete --exclude "index.html" --no-progress
+          aws s3 sync frontend/apps/web-recruiter/dist/ \
+            s3://${{ secrets.AWS_S3_BUCKET_NAME }}/web-recruiter/ \
+            --exclude "*" --include "assets/*" \
+            --cache-control "public,max-age=31536000,immutable" --no-progress
+          aws s3 cp frontend/apps/web-recruiter/dist/index.html \
+            s3://${{ secrets.AWS_S3_BUCKET_NAME }}/web-recruiter/index.html \
+            --cache-control "no-cache,no-store,must-revalidate" \
+            --content-type "text/html"
+
+      - name: Upload web-admin to S3
+        run: |
+          aws s3 sync frontend/apps/web-admin/dist/ \
+            s3://${{ secrets.AWS_S3_BUCKET_NAME }}/web-admin/ \
+            --delete --exclude "index.html" --no-progress
+          aws s3 sync frontend/apps/web-admin/dist/ \
+            s3://${{ secrets.AWS_S3_BUCKET_NAME }}/web-admin/ \
+            --exclude "*" --include "assets/*" \
+            --cache-control "public,max-age=31536000,immutable" --no-progress
+          aws s3 cp frontend/apps/web-admin/dist/index.html \
+            s3://${{ secrets.AWS_S3_BUCKET_NAME }}/web-admin/index.html \
+            --cache-control "no-cache,no-store,must-revalidate" \
+            --content-type "text/html"
+
+      - name: Invalidate CloudFront cache
+        run: |
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.CF_DIST_ID_CANDIDATE }} \
+            --paths "/*"
+
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.CF_DIST_ID_RECRUITER }} \
+            --paths "/*"
+
+          aws cloudfront create-invalidation \
+            --distribution-id ${{ secrets.CF_DIST_ID_ADMIN }} \
+            --paths "/*"

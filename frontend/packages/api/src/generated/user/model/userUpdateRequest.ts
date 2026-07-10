@@ -8,5 +8,11 @@
 export interface UserUpdateRequest {
   fullName?: string;
   email?: string;
+  /**
+   * @minLength 8
+   * @maxLength 2147483647
+   */
   password?: string;
+  /** @pattern ^(0|\+84)(3|5|7|8|9)\d{8}$ */
+  phone?: string;
 }

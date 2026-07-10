@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head><meta charset="UTF-8"><title>Thông báo phí sàn</title></head>
+<body style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:24px;color:#1a1a1a;">
+  {{if eq .Status "LOCKED"}}
+  <div style="background:#dc2626;padding:16px 24px;border-radius:8px 8px 0 0;">
+    <h1 style="color:#fff;margin:0;font-size:18px;">Tài khoản bị khóa do chưa thanh toán phí sàn</h1>
+  </div>
+  {{else if eq .Status "OVERDUE"}}
+  <div style="background:#f59e0b;padding:16px 24px;border-radius:8px 8px 0 0;">
+    <h1 style="color:#fff;margin:0;font-size:18px;">Phí sàn đã đến hạn thanh toán</h1>
+  </div>
+  {{else}}
+  <div style="background:#2563eb;padding:16px 24px;border-radius:8px 8px 0 0;">
+    <h1 style="color:#fff;margin:0;font-size:18px;">Phí sàn sắp đến hạn thanh toán</h1>
+  </div>
+  {{end}}
+  <div style="border:1px solid #e5e7eb;border-top:none;padding:24px;border-radius:0 0 8px 8px;">
+    <p>Xin chào nhà tuyển dụng <strong>{{.CompanyName}}</strong>,</p>
+    {{if eq .Status "APPROACHING"}}
+    <p>Phí sàn hàng tháng của công ty sẽ <strong>đến hạn vào {{.DueAt}}</strong>. Vui lòng thanh toán trước hạn để tránh gián đoạn dịch vụ.</p>
+    {{else if eq .Status "OVERDUE"}}
+    <p>Phí sàn hàng tháng của công ty đã <strong>đến hạn vào {{.DueAt}}</strong>. Vui lòng thanh toán ngay — tài khoản sẽ bị khóa sau 3 ngày nếu chưa thanh toán.</p>
+    {{else if eq .Status "LOCKED"}}
+    <p>Tài khoản nhà tuyển dụng của công ty đã bị <strong>tự động khóa</strong> do chưa thanh toán phí sàn. Hạn thanh toán: <strong>{{.DueAt}}</strong>.</p>
+    <p>Để mở khóa tài khoản, vui lòng liên hệ admin SmartCV sau khi hoàn tất thanh toán.</p>
+    {{else}}
+    <p>Phí sàn hàng tháng của công ty cần được thanh toán. Hạn: <strong>{{.DueAt}}</strong>.</p>
+    {{end}}
+    {{if ne .Status "LOCKED"}}
+    <div style="margin:24px 0;">
+      <a href="http://localhost:3001/employer/billing"
+         style="background:#2563eb;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:600;">
+        Thanh toán ngay
+      </a>
+    </div>
+    {{end}}
+    <p style="margin-top:24px;color:#6b7280;font-size:13px;">Email này được gửi tự động từ hệ thống SmartCV. Vui lòng không trả lời email này.</p>
+  </div>
+</body>
+</html>

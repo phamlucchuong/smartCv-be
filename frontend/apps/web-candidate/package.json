@@ -19,6 +19,7 @@
     "@smart-cv/ui": "workspace:*",
     "@tanstack/react-query": "^5.66.0",
     "@tanstack/react-router": "^1.100.0",
+    "firebase": "^12.15.0",
     "js-cookie": "^3.0.8",
     "jwt-decode": "^4.0.0",
     "lucide-react": "^0.475.0",

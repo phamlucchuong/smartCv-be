@@ -9,61 +9,89 @@ import vn.chuongpl.user_service.dtos.response.RoleResponse;
 import vn.chuongpl.user_service.enums.ErrorCode;
 import vn.chuongpl.user_service.exception.AppException;
 import vn.chuongpl.user_service.features.permission.Permission;
-import vn.chuongpl.user_service.features.permission.PermissionRepository;
 import vn.chuongpl.user_service.features.permission.PermissionService;
+import vn.chuongpl.user_service.features.user.User;
+import vn.chuongpl.user_service.features.user.UserRepository;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class RoleService {
     RoleRepository roleRepository;
-    PermissionRepository permissionRepository;
+    UserRepository userRepository;
     RoleMapper roleMapper;
     PermissionService permissionService;
 
     public RoleResponse createRole(CreateRoleRequest request) {
-        if (roleRepository.existsById(request.getName())) {
+        String roleName = normalizeRoleName(request.getName());
+        if (roleRepository.existsById(roleName)) {
             throw new AppException(ErrorCode.ROLE_ALREADY_EXISTS);
         }
 
-        Role role = new Role(request.getName(), request.getDescription(), null);
-        var permissions = permissionRepository.findAllById(request.getPermissions());
-
-        role.setPermissions(new HashSet<>(permissions));
+        List<Permission> permissions = permissionService.getAllById(request.getPermissions());
+        Role role = new Role(roleName, normalizeDescription(request.getDescription()), new HashSet<>(permissions));
         return roleMapper.toRoleResponse(roleRepository.save(role));
     }
 
     public Optional<Role> findById(String name) {
-        return roleRepository.findById(name);
+        return roleRepository.findById(normalizeRoleName(name));
     }
 
     public List<RoleResponse> getAllRole() {
-        List<RoleResponse> listRole = roleRepository.findAll()
-                .stream().map(roleMapper::toRoleResponse).toList();
-        return listRole;
+        return roleRepository.findAll()
+                .stream()
+                .sorted((left, right) -> left.getName().compareToIgnoreCase(right.getName()))
+                .map(roleMapper::toRoleResponse)
+                .toList();
     }
 
     public RoleResponse updateRole(String name, CreateRoleRequest request) {
-        var role = roleRepository.findById(name).orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_FOUND));
-        role.setName(request.getName());
-        role.setDescription(request.getDescription());
+        var role = roleRepository.findById(normalizeRoleName(name))
+                .orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_FOUND));
+        role.setDescription(normalizeDescription(request.getDescription()));
         List<Permission> permissions = permissionService.getAllById(request.getPermissions());
         role.setPermissions(new HashSet<>(permissions));
         return roleMapper.toRoleResponse(roleRepository.save(role));
     }
 
     public void deleteRole(String name) {
-        roleRepository.deleteById(name);
+        String roleName = normalizeRoleName(name);
+        roleRepository.findById(roleName).orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_FOUND));
+        roleRepository.deleteById(roleName);
+
+        List<User> usersToUpdate = userRepository.findAll().stream()
+                .filter(user -> user.getRoles() != null && user.getRoles().stream().anyMatch(role -> roleName.equals(role.getName())))
+                .peek(user -> user.setRoles(removeRole(user.getRoles(), roleName)))
+                .toList();
+
+        if (!usersToUpdate.isEmpty()) {
+            userRepository.saveAll(usersToUpdate);
+        }
     }
 
     public RoleResponse getRoleByName(String roleName) {
         return roleMapper.toRoleResponse(
-                roleRepository.findById(roleName)
+                roleRepository.findById(normalizeRoleName(roleName))
                         .orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_FOUND))
         );
+    }
+
+    private Set<Role> removeRole(Set<Role> roles, String roleName) {
+        return roles.stream()
+                .filter(role -> !roleName.equals(role.getName()))
+                .collect(java.util.stream.Collectors.toSet());
+    }
+
+    private String normalizeRoleName(String name) {
+        return name == null ? "" : name.trim();
+    }
+
+    private String normalizeDescription(String description) {
+        return description == null ? "" : description.trim();
     }
 }

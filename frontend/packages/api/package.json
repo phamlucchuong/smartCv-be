@@ -8,15 +8,16 @@
   "scripts": {
     "fetch-specs": "node scripts/fetch-specs.mjs",
     "generate": "node scripts/fetch-specs.mjs && orval",
-    "generate:user": "node scripts/fetch-specs.mjs && orval --config orval.config.ts userService",
-    "generate:job": "node scripts/fetch-specs.mjs && orval --config orval.config.ts jobService",
-    "generate:application": "node scripts/fetch-specs.mjs && orval --config orval.config.ts applicationService",
-    "generate:ai": "node scripts/fetch-specs.mjs && orval --config orval.config.ts aiService",
+    "generate:user": "node scripts/fetch-specs.mjs && orval --config orval.config.ts --project userService",
+    "generate:job": "node scripts/fetch-specs.mjs && orval --config orval.config.ts --project jobService",
+    "generate:application": "node scripts/fetch-specs.mjs && orval --config orval.config.ts --project applicationService",
+    "generate:ai": "node scripts/fetch-specs.mjs && orval --config orval.config.ts --project aiService",
     "build": "tsc"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.66.0",
     "axios": "^1.7.9",
-    "@tanstack/react-query": "^5.66.0"
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "orval": "^7.5.0",

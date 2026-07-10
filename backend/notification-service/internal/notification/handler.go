@@ -56,7 +56,7 @@ func (h *Handler) ListNotifications(c *echo.Context) error {
 	for i, n := range notifs {
 		items[i] = NotificationResponse{
 			ID:            n.ID.String(),
-			ReceiverID:    n.UserID.String(),
+			ReceiverID:    n.UserID,
 			RecipientRole: n.RecipientRole,
 			Type:          n.Type,
 			Title:         n.Title,
@@ -122,9 +122,11 @@ func (h *Handler) MarkAllRead(c *echo.Context) error {
 func mapAudienceToRole(audience string) string {
 	switch audience {
 	case "web-vendor":
-		return "VENDOR"
+		return "RECRUITER"
 	case "web-admin":
 		return "ADMIN"
+	case "web-recruiter":
+		return "RECRUITER"
 	default:
 		return "USER"
 	}
@@ -146,7 +148,13 @@ func (h *Handler) SubscribeFCMToken(c *echo.Context) error {
 		return pkg.JSONError(c, http.StatusBadRequest, pkg.CodeBadRequest, "missing token")
 	}
 
-	if err := h.notifSvc.SubscribeFCMToken(c.Request().Context(), userID, req.Token); err != nil {
+	// Always derive audience from the middleware context (set from X-User-Scope by the gateway).
+	// Never trust the client-supplied req.Audience — it could be forged to store tokens under another audience.
+	audience, _ := c.Get("audience").(string)
+	if audience == "" {
+		audience = "web-user"
+	}
+	if err := h.notifSvc.SubscribeFCMToken(c.Request().Context(), userID, req.Token, audience); err != nil {
 		h.logger.Error("failed to save fcm token", "userID", userID, "err", err)
 		return pkg.JSONError(c, http.StatusInternalServerError, pkg.CodeInternalError, "failed to save token")
 	}
@@ -170,6 +178,15 @@ func (h *Handler) UnsubscribeFCMToken(c *echo.Context) error {
 		return pkg.JSONError(c, http.StatusBadRequest, pkg.CodeBadRequest, "missing token")
 	}
 
+	audience, _ := c.Get("audience").(string)
+	if audience == "" {
+		audience = "web-user"
+	}
+	if err := h.notifSvc.UnsubscribeFCMToken(c.Request().Context(), userID, req.Token, audience); err != nil {
+		h.logger.Error("failed to remove fcm token", "userID", userID, "err", err)
+		return pkg.JSONError(c, http.StatusInternalServerError, pkg.CodeInternalError, "failed to remove token")
+	}
+
 	return pkg.JSONOK(c, nil)
 }
 
@@ -186,4 +203,22 @@ func (h *Handler) GetFirebaseToken(c *echo.Context) error {
 		return pkg.JSONError(c, http.StatusInternalServerError, pkg.CodeInternalError, "firebase token generation failed")
 	}
 	return pkg.JSONOK(c, map[string]string{"firebaseToken": token})
+}
+
+func (h *Handler) DeleteNotification(c *echo.Context) error {
+	userID, _ := c.Get("user_id").(string)
+	if userID == "" {
+		return pkg.JSONError(c, http.StatusUnauthorized, pkg.CodeUnauthorized, "unauthorized")
+	}
+
+	id := c.Param("id")
+	if id == "" {
+		return pkg.JSONError(c, http.StatusBadRequest, pkg.CodeBadRequest, "notification id is required")
+	}
+
+	if err := h.notifSvc.DeleteNotificationForUser(c.Request().Context(), id, userID); err != nil {
+		return pkg.JSONError(c, http.StatusInternalServerError, pkg.CodeInternalError, "failed to delete notification")
+	}
+
+	return pkg.JSONOK(c, nil)
 }

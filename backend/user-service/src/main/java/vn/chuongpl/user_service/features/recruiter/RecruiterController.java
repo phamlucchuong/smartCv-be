@@ -6,12 +6,15 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import jakarta.validation.Valid;
 import vn.chuongpl.user_service.dtos.ApiResponse;
 import vn.chuongpl.user_service.dtos.PageResponse;
 import vn.chuongpl.user_service.dtos.request.RecruiterRequest;
 import vn.chuongpl.user_service.dtos.request.RecruiterStatusRequest;
+import vn.chuongpl.user_service.dtos.response.RecruiterPublicResponse;
 import vn.chuongpl.user_service.dtos.response.RecruiterResponse;
+import vn.chuongpl.user_service.enums.RecruiterStatus;
 
 @RestController
 @RequestMapping("/api/recruiters")
@@ -27,13 +30,13 @@ public class RecruiterController {
     }
 
     @GetMapping("/{id}")
-    public ApiResponse<RecruiterResponse> getById(@PathVariable String id) {
-        return ApiResponse.<RecruiterResponse>builder().data(recruiterService.getById(id)).build();
+    public ApiResponse<RecruiterPublicResponse> getById(@PathVariable String id) {
+        return ApiResponse.<RecruiterPublicResponse>builder().data(recruiterService.getById(id)).build();
     }
 
     @GetMapping("/user/{userId}")
-    public ApiResponse<RecruiterResponse> getByUserId(@PathVariable String userId) {
-        return ApiResponse.<RecruiterResponse>builder().data(recruiterService.getByUserId(userId)).build();
+    public ApiResponse<RecruiterPublicResponse> getByUserId(@PathVariable String userId) {
+        return ApiResponse.<RecruiterPublicResponse>builder().data(recruiterService.getByUserId(userId)).build();
     }
 
     @GetMapping("/me")
@@ -42,11 +45,44 @@ public class RecruiterController {
         return ApiResponse.<RecruiterResponse>builder().data(recruiterService.getMe(userId)).build();
     }
 
+    @PostMapping("/me/submit")
+    @PreAuthorize("hasRole('RECRUITER')")
+    public ApiResponse<RecruiterResponse> submitForApproval(@AuthenticationPrincipal String userId) {
+        return ApiResponse.<RecruiterResponse>builder().data(recruiterService.submitForApproval(userId)).build();
+    }
+
+    @PostMapping("/me/business-license")
+    @PreAuthorize("hasRole('RECRUITER')")
+    public ApiResponse<RecruiterResponse> uploadBusinessLicense(
+            @RequestParam("file") MultipartFile file,
+            @AuthenticationPrincipal String userId) {
+        return ApiResponse.<RecruiterResponse>builder().data(recruiterService.uploadBusinessLicense(userId, file)).build();
+    }
+
+    @PostMapping("/me/logo")
+    @PreAuthorize("hasRole('RECRUITER')")
+    public ApiResponse<String> uploadLogo(
+            @RequestParam("file") MultipartFile file,
+            @AuthenticationPrincipal String userId) {
+        return ApiResponse.<String>builder().data(recruiterService.uploadLogo(userId, file)).build();
+    }
+
+    @PostMapping("/me/banner")
+    @PreAuthorize("hasRole('RECRUITER')")
+    public ApiResponse<String> uploadBanner(
+            @RequestParam("file") MultipartFile file,
+            @AuthenticationPrincipal String userId) {
+        return ApiResponse.<String>builder().data(recruiterService.uploadBanner(userId, file)).build();
+    }
+
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ApiResponse<PageResponse<RecruiterResponse>> getAll(@RequestParam(defaultValue = "1") int page,
-                                                               @RequestParam(defaultValue = "10") int size) {
-        return ApiResponse.<PageResponse<RecruiterResponse>>builder().data(recruiterService.getAll(page, size)).build();
+    public ApiResponse<PageResponse<RecruiterResponse>> getAll(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) RecruiterStatus status,
+            @RequestParam(required = false) String keyword) {
+        return ApiResponse.<PageResponse<RecruiterResponse>>builder().data(recruiterService.getAll(page, size, status, keyword)).build();
     }
 
     @PutMapping("/{id}")

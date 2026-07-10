@@ -71,6 +71,14 @@ public class AuthController {
                 .build();
     }
 
+    @PostMapping("/google")
+    public ApiResponse<AuthResponse> authenticateWithGoogle(@Valid @RequestBody GoogleAuthRequest request) {
+        return ApiResponse.<AuthResponse>builder()
+                .message("Google sign-in successful")
+                .data(authService.authenticateWithGoogle(request))
+                .build();
+    }
+
     @PostMapping("/introspect")
     public ApiResponse<IntrospectResponse> introspect(@RequestBody IntrospectRequest request)
             throws ParseException, JOSEException {

@@ -14,6 +14,21 @@ public class NotificationPublisher {
 
     final RabbitTemplate rabbitTemplate;
 
+    public void publishNewApplication(Application application, String recruiterUserId) {
+        ApplicationEventMessage message = ApplicationEventMessage.builder()
+                .applicationId(application.getId())
+                .candidateId(application.getCandidateId())
+                .candidateEmail(application.getCandidateEmail())
+                .recruiterId(application.getRecruiterId())
+                .recruiterUserId(recruiterUserId)
+                .jobId(application.getJobId())
+                .jobTitle(application.getJobTitle())
+                .newStatus("SUBMITTED")
+                .occurredAt(LocalDateTime.now())
+                .build();
+        rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE, RabbitMQConfig.APPLICATION_SUBMITTED_KEY, message);
+    }
+
     public void publishStatusChanged(Application application) {
         ApplicationEventMessage message = ApplicationEventMessage.builder()
                 .applicationId(application.getId())

@@ -12,6 +12,8 @@ import vn.chuongpl.user_service.features.candidate.Candidate;
 import vn.chuongpl.user_service.features.candidate.CandidateMapper;
 import vn.chuongpl.user_service.features.candidate.CandidateRepository;
 import vn.chuongpl.user_service.features.candidate.CandidateService;
+import vn.chuongpl.user_service.features.servicepackage.ServicePackage;
+import vn.chuongpl.user_service.features.servicepackage.ServicePackageRepository;
 import vn.chuongpl.user_service.features.user.User;
 import vn.chuongpl.user_service.features.user.UserRepository;
 
@@ -37,6 +39,10 @@ class CandidateServiceTest {
     UserRepository userRepository;
     @Mock
     CandidateMapper candidateMapper;
+    @Mock
+    ServicePackageRepository servicePackageRepository;
+    @Mock
+    vn.chuongpl.user_service.integration.notification.AiCreditExhaustedPublisher aiCreditExhaustedPublisher;
 
     @InjectMocks
     CandidateService candidateService;
@@ -99,5 +105,30 @@ class CandidateServiceTest {
         AppException ex = assertThrows(AppException.class, () -> candidateService.mergeSkills("missing", List.of("Java")));
 
         assertEquals(ErrorCode.CANDIDATE_NOT_FOUND, ex.getErrorCode());
+    }
+
+    @Test
+    void getByUserId_shouldExposeAiCreditSummaryForBilling() {
+        Candidate candidate = Candidate.builder()
+                .id("c1")
+                .userId("u1")
+                .activePackageId("plus")
+                .monthlyAiCreditsUsed(7)
+                .monthlyAiCreditsMonth(java.time.YearMonth.now().toString())
+                .build();
+        User user = User.builder().id("u1").fullName("Jane").build();
+        var mapped = vn.chuongpl.user_service.dtos.response.CandidateResponse.builder().id("c1").build();
+        ServicePackage activePackage = ServicePackage.builder().id("plus").aiCredits(20).build();
+
+        when(candidateRepository.findByUserIdAndDeletedFalse("u1")).thenReturn(Optional.of(candidate));
+        when(userRepository.findById("u1")).thenReturn(Optional.of(user));
+        when(candidateMapper.toCandidateResponse(candidate, user)).thenReturn(mapped);
+        when(servicePackageRepository.findById("plus")).thenReturn(Optional.of(activePackage));
+
+        var response = candidateService.getByUserId("u1");
+
+        assertEquals(20, response.getAiCreditsTotal());
+        assertEquals(7, response.getAiCreditsUsed());
+        assertEquals(13, response.getAiCreditsRemaining());
     }
 }

@@ -12,4 +12,11 @@ export interface RecruiterProfileResponse {
   status?: RecruiterProfileResponseStatus;
   quotaJobPost?: number;
   quotaCvViews?: number;
+  activePackageId?: string;
+  packageExpiresAt?: string;
+  platformFeeDueAt?: string;
+  platformFeeLastPaidAt?: string;
+  platformFeeReminderSentAt?: string;
+  platformFeeOverdueSentAt?: string;
+  platformFeeLockedAt?: string;
 }

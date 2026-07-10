@@ -1,0 +1,46 @@
+Project payment_service {
+  database_type: "MongoDB"
+}
+
+// Conceptual class diagram for payment-service.
+// The service owns payment order history and snapshots service package data
+// at the time the order is created.
+
+Table payment_orders {
+  id varchar [pk]
+  order_code bigint [not null, unique]
+  user_id varchar [not null]
+  user_role varchar [note: 'CANDIDATE | RECRUITER']
+  package_id varchar [not null]
+  package_name varchar
+  package_ai_credits int
+  package_job_limit int
+  package_cv_limit int
+  package_duration_days int
+  amount bigint
+  status varchar [note: 'PENDING | PAID | FAILED | CANCELLED']
+  payment_url text
+  qr_code text
+  created_at datetime
+  updated_at datetime
+  paid_at datetime
+
+  indexes {
+    user_id
+    status
+    (user_id, package_id, status)
+    (user_id, status)
+  }
+}
+
+// External stubs for cross-service references.
+Table users {
+  id varchar [pk]
+}
+
+Table service_packages {
+  id varchar [pk]
+}
+
+Ref: payment_orders.user_id > users.id
+Ref: payment_orders.package_id > service_packages.id

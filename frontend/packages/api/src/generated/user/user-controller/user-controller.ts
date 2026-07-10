@@ -26,10 +26,12 @@ import type {
 import type {
   ApiResponseBoolean,
   ApiResponsePageResponseUserResponse,
+  ApiResponsePreferencesSettings,
   ApiResponseUserResponse,
   ApiResponseVoid,
   ChangePasswordRequest,
   GetAllUsersParams,
+  PreferencesSettingsRequest,
   UpdateRolesRequest,
   UserStatusRequest,
   UserUpdateRequest
@@ -183,6 +185,63 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
       > => {
 
       const mutationOptions = getUpdateUserMutationOptions(options);
+
+      return useMutation(mutationOptions, queryClient);
+    }
+    export const updatePreferences = (
+    preferencesSettingsRequest: PreferencesSettingsRequest,
+ options?: SecondParameter<typeof customInstance>,) => {
+      
+      
+      return customInstance<ApiResponsePreferencesSettings>(
+      {url: `/api/users/me/settings/preferences`, method: 'PUT',
+      headers: {'Content-Type': 'application/json', },
+      data: preferencesSettingsRequest
+    },
+      options);
+    }
+  
+
+
+export const getUpdatePreferencesMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updatePreferences>>, TError,{data: PreferencesSettingsRequest}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof updatePreferences>>, TError,{data: PreferencesSettingsRequest}, TContext> => {
+
+const mutationKey = ['updatePreferences'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updatePreferences>>, {data: PreferencesSettingsRequest}> = (props) => {
+          const {data} = props ?? {};
+
+          return  updatePreferences(data,requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdatePreferencesMutationResult = NonNullable<Awaited<ReturnType<typeof updatePreferences>>>
+    export type UpdatePreferencesMutationBody = PreferencesSettingsRequest
+    export type UpdatePreferencesMutationError = unknown
+
+    export const useUpdatePreferences = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updatePreferences>>, TError,{data: PreferencesSettingsRequest}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof updatePreferences>>,
+        TError,
+        {data: PreferencesSettingsRequest},
+        TContext
+      > => {
+
+      const mutationOptions = getUpdatePreferencesMutationOptions(options);
 
       return useMutation(mutationOptions, queryClient);
     }

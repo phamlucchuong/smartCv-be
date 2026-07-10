@@ -16,6 +16,7 @@ public class ApplicationEventMessage implements Serializable {
     String candidateId;
     String candidateEmail;
     String recruiterId;
+    String recruiterUserId;
     String jobId;
     String jobTitle;
     String newStatus;

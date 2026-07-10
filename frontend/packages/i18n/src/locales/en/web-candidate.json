@@ -1,5 +1,8 @@
 {
   "welcome": "Welcome to SmartCV",
   "login": "Login",
-  "register": "Register"
+  "register": "Register",
+  "assessment_passed_desc": "Congratulations! You passed the assessment.",
+  "assessment_failed_desc": "You did not pass the assessment. Keep practicing and try again.",
+  "assessment_result_pending_desc": "This assessment contains essay questions that will be manually graded by the recruiter. Your result will be updated soon."
 }

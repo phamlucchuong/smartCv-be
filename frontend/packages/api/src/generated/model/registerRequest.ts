@@ -16,4 +16,5 @@ export interface RegisterRequest {
   phone?: string;
   preferredVerification?: RegisterRequestPreferredVerification;
   role: string;
+  companyName?: string;
 }

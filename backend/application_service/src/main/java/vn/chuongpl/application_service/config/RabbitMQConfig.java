@@ -10,6 +10,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitMQConfig {
     public static final String EXCHANGE = "application.exchange";
+    public static final String APPLICATION_SUBMITTED_KEY = "application.submitted";
+    public static final String APPLICATION_SUBMITTED_QUEUE = "application.submitted.queue";
     public static final String APPLICATION_ACCEPTED_KEY = "application.accepted";
     public static final String APPLICATION_REJECTED_KEY = "application.rejected";
     public static final String APPLICATION_WITHDRAWN_KEY = "application.withdrawn";
@@ -19,9 +21,15 @@ public class RabbitMQConfig {
         return new DirectExchange(EXCHANGE);
     }
 
+    @Bean Queue applicationSubmittedQueue() { return new Queue(APPLICATION_SUBMITTED_QUEUE, true); }
     @Bean Queue acceptedQueue() { return new Queue("application.accepted.queue"); }
     @Bean Queue rejectedQueue() { return new Queue("application.rejected.queue"); }
     @Bean Queue withdrawnQueue() { return new Queue("application.withdrawn.queue"); }
+
+    @Bean
+    Binding applicationSubmittedBinding(@Qualifier("applicationExchange") DirectExchange e) {
+        return BindingBuilder.bind(applicationSubmittedQueue()).to(e).with(APPLICATION_SUBMITTED_KEY);
+    }
 
     @Bean
     Binding acceptedBinding(@Qualifier("applicationExchange") DirectExchange e) {
@@ -51,6 +59,16 @@ public class RabbitMQConfig {
 
     @Bean Binding cvScoringBinding() {
         return BindingBuilder.bind(cvScoringQueue()).to(cvScoringExchange()).with(CV_SCORING_KEY);
+    }
+
+    public static final String ASSESSMENT_EXCHANGE = "assessment.exchange";
+    public static final String ASSESSMENT_SUBMITTED_KEY = "assessment.submitted";
+    public static final String ASSESSMENT_SUBMITTED_QUEUE = "assessment.submitted.queue";
+
+    @Bean DirectExchange assessmentExchange() { return new DirectExchange(ASSESSMENT_EXCHANGE); }
+    @Bean Queue assessmentSubmittedQueue() { return new Queue(ASSESSMENT_SUBMITTED_QUEUE, true); }
+    @Bean Binding assessmentSubmittedBinding(@Qualifier("assessmentExchange") DirectExchange e) {
+        return BindingBuilder.bind(assessmentSubmittedQueue()).to(e).with(ASSESSMENT_SUBMITTED_KEY);
     }
 
     @Bean

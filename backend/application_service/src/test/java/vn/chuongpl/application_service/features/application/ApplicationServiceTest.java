@@ -61,6 +61,28 @@ class ApplicationServiceTest {
     }
 
     @Test
+    void submit_shouldPublishNewApplicationNotificationOnSuccess() {
+        ApplicationCreateRequest request = new ApplicationCreateRequest("job-1", "cv.pdf", "cover");
+        when(jobClient.getActiveJob("job-1"))
+                .thenReturn(JobResponse.builder().id("job-1").recruiterId("recruiter-1").title("Backend Engineer").build());
+        when(applicationRepository.existsByCandidateIdAndJobIdAndStatusIn(eq("candidate-1"), eq("job-1"), anyList()))
+                .thenReturn(false);
+        when(userClient.getCandidateEmail("candidate-1")).thenReturn("candidate@example.com");
+        Application saved = Application.builder()
+                .id("app-new")
+                .candidateId("candidate-1")
+                .jobId("job-1")
+                .recruiterId("recruiter-1")
+                .build();
+        when(applicationRepository.save(any(Application.class))).thenReturn(saved);
+        when(applicationMapper.toResponse(saved)).thenReturn(ApplicationResponse.builder().id("app-new").build());
+
+        applicationService.submit(request, "candidate-1");
+
+        verify(notificationPublisher).publishNewApplication(eq(saved), any());
+    }
+
+    @Test
     void submit_shouldThrowWhenCandidateAlreadyApplied() {
         ApplicationCreateRequest request = new ApplicationCreateRequest("job-1", "cv.pdf", "cover");
         when(jobClient.getActiveJob("job-1"))
@@ -103,6 +125,7 @@ class ApplicationServiceTest {
                 .status(ApplicationStatus.REVIEWING)
                 .build();
         when(applicationRepository.findByIdAndDeletedFalse("app-1")).thenReturn(Optional.of(application));
+        when(userClient.resolveRecruiterId("recruiter-1")).thenReturn("recruiter-1");
 
         AppException ex = assertThrows(
                 AppException.class,

@@ -23,9 +23,9 @@ func TestGenerateOTP(t *testing.T) {
 	ttl := 5
 	code := "123456"
 
-	mock.ExpectSet("otp:EMAIL:test@example.com", code, time.Duration(ttl)*time.Minute).SetVal("OK")
+	mock.ExpectSet("otp:VERIFY_ACCOUNT:EMAIL:test@example.com", code, time.Duration(ttl)*time.Minute).SetVal("OK")
 
-	generatedCode, err := svc.GenerateOTP(ctx, target, targetType, ttl)
+	generatedCode, err := svc.GenerateOTP(ctx, target, targetType, "VERIFY_ACCOUNT", ttl)
 	assert.NoError(t, err)
 	assert.Equal(t, code, generatedCode)
 	assert.NoError(t, mock.ExpectationsWereMet())
@@ -40,10 +40,10 @@ func TestVerifyOTP_Success(t *testing.T) {
 	targetType := "EMAIL"
 	code := "123456"
 
-	mock.ExpectGet("otp:EMAIL:test@example.com").SetVal(code)
-	mock.ExpectDel("otp:EMAIL:test@example.com").SetVal(1)
+	mock.ExpectGet("otp:VERIFY_ACCOUNT:EMAIL:test@example.com").SetVal(code)
+	mock.ExpectDel("otp:VERIFY_ACCOUNT:EMAIL:test@example.com").SetVal(1)
 
-	isValid, err := svc.VerifyOTP(ctx, target, targetType, code)
+	isValid, err := svc.VerifyOTP(ctx, target, targetType, "VERIFY_ACCOUNT", code)
 	assert.NoError(t, err)
 	assert.True(t, isValid)
 	assert.NoError(t, mock.ExpectationsWereMet())
@@ -59,9 +59,9 @@ func TestVerifyOTP_WrongCode(t *testing.T) {
 	storedCode := "123456"
 	wrongCode := "654321"
 
-	mock.ExpectGet("otp:EMAIL:test@example.com").SetVal(storedCode)
+	mock.ExpectGet("otp:VERIFY_ACCOUNT:EMAIL:test@example.com").SetVal(storedCode)
 
-	isValid, err := svc.VerifyOTP(ctx, target, targetType, wrongCode)
+	isValid, err := svc.VerifyOTP(ctx, target, targetType, "VERIFY_ACCOUNT", wrongCode)
 	assert.NoError(t, err)
 	assert.False(t, isValid)
 	assert.NoError(t, mock.ExpectationsWereMet())
@@ -76,9 +76,9 @@ func TestVerifyOTP_Expired(t *testing.T) {
 	targetType := "EMAIL"
 	code := "123456"
 
-	mock.ExpectGet("otp:EMAIL:test@example.com").RedisNil()
+	mock.ExpectGet("otp:VERIFY_ACCOUNT:EMAIL:test@example.com").RedisNil()
 
-	isValid, err := svc.VerifyOTP(ctx, target, targetType, code)
+	isValid, err := svc.VerifyOTP(ctx, target, targetType, "VERIFY_ACCOUNT", code)
 	assert.NoError(t, err)
 	assert.False(t, isValid)
 	assert.NoError(t, mock.ExpectationsWereMet())

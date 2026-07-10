@@ -42,9 +42,19 @@ Evaluate the candidate's CV against the target job and return a structured analy
    required skills, weighted by how critical each requirement appears in the JD. Then adjust
    ±10 points based on years of experience alignment with `experienceLevel`.
 
-5. Write a `summary` of 2–3 sentences that gives the candidate an honest, direct assessment
-   of where they stand and what the biggest lever is to improve their match.
+5. Write a `summary` (English) of 2–3 sentences that gives the candidate an honest, direct
+   assessment of where they stand and what the biggest lever is to improve their match.
+   Then write `summaryVi`: the exact same assessment translated to Vietnamese.
 
 6. Set `scoreLabel` based on the score calibration table in the system prompt.
 
-Return ONLY the JSON object matching the format specification below.
+Return ONLY a valid JSON object with these fields (no markdown, no extra text):
+{
+  "matchScore": 0,
+  "scoreLabel": "Fair",
+  "matchedSkills": [],
+  "missingSkills": [],
+  "extraSkills": [],
+  "summary": "English summary here.",
+  "summaryVi": "Bản dịch tiếng Việt ở đây."
+}

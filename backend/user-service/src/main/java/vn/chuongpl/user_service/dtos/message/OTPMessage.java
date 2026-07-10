@@ -14,4 +14,5 @@ public class OTPMessage implements Serializable {
     String target;
     String targetType;
     String otpType;
+    Integer ttlMinutes;
 }

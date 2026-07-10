@@ -1,0 +1,1266 @@
+{
+  "meta": {
+    "source": "data/seed_recruiter.sql",
+    "format": "mongo-collections",
+    "generatedAt": "2026-06-20T10:00:00+07:00"
+  },
+  "users": [
+    {
+      "id": "user-candidate-001",
+      "full_name": "Nguyen Minh An",
+      "email": "candidate.an@smartcv.seed.local",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "phone": "0909001001",
+      "created_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {},
+      "roles": [
+        "CANDIDATE"
+      ]
+    },
+    {
+      "id": "user-candidate-002",
+      "full_name": "Tran Ha Vy",
+      "email": "candidate.vy@smartcv.seed.local",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "phone": "0909001002",
+      "created_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {},
+      "roles": [
+        "CANDIDATE"
+      ]
+    },
+    {
+      "id": "user-candidate-003",
+      "full_name": "Le Duc Huy",
+      "email": "candidate.huy@smartcv.seed.local",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "phone": "0909001003",
+      "created_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {},
+      "roles": [
+        "CANDIDATE"
+      ]
+    },
+    {
+      "id": "user-recruiter-001",
+      "full_name": "Sapo Talent Acquisition",
+      "email": "tuyendung@sapo.vn",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "phone": "0765588715",
+      "created_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {},
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "id": "user-recruiter-002",
+      "full_name": "VNPAY Recruitment",
+      "email": "recruitment@vnpay.vn",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "phone": "0901002003",
+      "created_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {},
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "id": "user-recruiter-003",
+      "full_name": "Novaon Talent Team",
+      "email": "talent@novaon.net",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "phone": "0901002004",
+      "created_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {},
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "id": "user-recruiter-004",
+      "full_name": "iCheck Hiring Team",
+      "email": "careers@icheck.com.vn",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "phone": "0901002005",
+      "created_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {},
+      "roles": [
+        "RECRUITER"
+      ]
+    },
+    {
+      "id": "user-recruiter-005",
+      "full_name": "PJSB HR Team",
+      "email": "hr@pjsb.vn",
+      "password": "$2a$10$mGl6Qnn6RPj5sCcQojIFj.yvBtWF88/whqo57Hllz2XcbZUO1Rx5.",
+      "phone": "0901002006",
+      "created_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deleted_at": null,
+      "verified": true,
+      "deleted": false,
+      "locked": false,
+      "preferences": {},
+      "roles": [
+        "RECRUITER"
+      ]
+    }
+  ],
+  "candidates": [
+    {
+      "id": "candidate-001",
+      "user_id": "user-candidate-001",
+      "dob": "1998-04-12",
+      "gender": "MALE",
+      "address": "Cầu Giấy, Hà Nội",
+      "bio": "Backend engineer quan tâm đến Java, Spring Boot và hệ thống phân tán.",
+      "title": "Backend Java Developer",
+      "avatar_url": null,
+      "skills": [
+        "Java",
+        "Spring Boot",
+        "REST API",
+        "MySQL",
+        "Docker"
+      ],
+      "years_of_experience": 3,
+      "job_type": "FULL_TIME",
+      "preferred_location": "Hà Nội",
+      "expected_salary_min": 18000000,
+      "expected_salary_max": 25000000,
+      "portfolio_url": null,
+      "github_url": "https://github.com/minhan-seed",
+      "linkedin_url": "https://www.linkedin.com/in/minhan-seed/",
+      "cv_url": null,
+      "cvs": [],
+      "settings": {
+        "notifications": {},
+        "privacy": {}
+      },
+      "job_suggestions": [],
+      "followed_company_ids": [],
+      "created_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deleted": false
+    },
+    {
+      "id": "candidate-002",
+      "user_id": "user-candidate-002",
+      "dob": "1999-09-05",
+      "gender": "FEMALE",
+      "address": "Thủ Đức, Hồ Chí Minh",
+      "bio": "Business analyst định hướng sản phẩm số và thương mại điện tử.",
+      "title": "Business Analyst",
+      "avatar_url": null,
+      "skills": [
+        "Business Analysis",
+        "SQL",
+        "Wireframe",
+        "Agile",
+        "Documentation"
+      ],
+      "years_of_experience": 2,
+      "job_type": "FULL_TIME",
+      "preferred_location": "Hồ Chí Minh",
+      "expected_salary_min": 16000000,
+      "expected_salary_max": 22000000,
+      "portfolio_url": null,
+      "github_url": null,
+      "linkedin_url": "https://www.linkedin.com/in/havy-seed/",
+      "cv_url": null,
+      "cvs": [],
+      "settings": {
+        "notifications": {},
+        "privacy": {}
+      },
+      "job_suggestions": [],
+      "followed_company_ids": [],
+      "created_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deleted": false
+    },
+    {
+      "id": "candidate-003",
+      "user_id": "user-candidate-003",
+      "dob": "2000-01-18",
+      "gender": "MALE",
+      "address": "Thanh Xuân, Hà Nội",
+      "bio": "Ứng viên junior yêu thích sales công nghệ và phát triển khách hàng B2B.",
+      "title": "Business Development Executive",
+      "avatar_url": null,
+      "skills": [
+        "B2B Sales",
+        "Lead Generation",
+        "Presentation",
+        "CRM"
+      ],
+      "years_of_experience": 1,
+      "job_type": "FULL_TIME",
+      "preferred_location": "Hà Nội",
+      "expected_salary_min": 12000000,
+      "expected_salary_max": 18000000,
+      "portfolio_url": null,
+      "github_url": null,
+      "linkedin_url": "https://www.linkedin.com/in/duchuy-seed/",
+      "cv_url": null,
+      "cvs": [],
+      "settings": {
+        "notifications": {},
+        "privacy": {}
+      },
+      "job_suggestions": [],
+      "followed_company_ids": [],
+      "created_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deleted": false
+    }
+  ],
+  "recruiters": [
+    {
+      "id": "recruiter-sapo",
+      "user_id": "user-recruiter-001",
+      "company_name": "Công ty cổ phần Công nghệ Sapo",
+      "company_website": "https://tuyendung.sapo.vn/",
+      "company_address": "Tầng 6, Tòa Ladeco, 266 Đội Cấn, Quận Ba Đình, TP Hà Nội",
+      "company_city": "Hà Nội",
+      "company_description": "Sapo là nền tảng quản lý bán hàng hợp kênh được sử dụng rộng rãi tại Việt Nam. Doanh nghiệp được thành lập năm 2008, tập trung vào công nghệ bán lẻ, thương mại điện tử và các giải pháp số giúp nhà bán hàng tăng trưởng doanh thu.",
+      "company_phone": "0765588715",
+      "company_size": "500-1000 nhân viên",
+      "company_type": "PRODUCT_COMPANY",
+      "founded_year": 2008,
+      "industry": "IT - Phần mềm",
+      "benefits": [
+        "Thu nhập cạnh tranh theo năng lực",
+        "Môi trường công nghệ tăng trưởng nhanh",
+        "Đào tạo nội bộ và lộ trình thăng tiến rõ ràng"
+      ],
+      "rating": 4.7,
+      "review_count": 40,
+      "logo_url": "https://smartcv-bucket-411307360545-ap-southeast-2-an.s3.ap-southeast-2.amazonaws.com/avatars/sapo/sapo.jpg",
+      "cover_image_url": null,
+      "tax_code": "0103243195",
+      "business_license_url": null,
+      "linkedin_url": "https://www.linkedin.com/company/sapo-tech/",
+      "facebook_url": "https://www.facebook.com/sapo.vn",
+      "contact_name": "Sapo Talent Acquisition",
+      "contact_email": "tuyendung@sapo.vn",
+      "contact_phone": "0765588715",
+      "status": "APPROVED",
+      "rejection_note": null,
+      "quota_job_post": 10,
+      "quota_cv_views": 50,
+      "created_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deleted": false,
+      "source_page": "https://www.topcv.vn/brand/sapovn?id=11698"
+    },
+    {
+      "id": "recruiter-vnpay",
+      "user_id": "user-recruiter-002",
+      "company_name": "Công ty CP Giải pháp Thanh toán Việt Nam (VNPAY)",
+      "company_website": "https://vnpay.vn/",
+      "company_address": "Hà Nội, Việt Nam",
+      "company_city": "Hà Nội",
+      "company_description": "VNPAY thành lập tháng 03/2007, là doanh nghiệp hàng đầu về thanh toán điện tử tại Việt Nam. Công ty phát triển sản phẩm trong các lĩnh vực tài chính ngân hàng, công nghệ thông tin và viễn thông.",
+      "company_phone": null,
+      "company_size": "2000+ nhân sự",
+      "company_type": "FINTECH",
+      "founded_year": 2007,
+      "industry": "Tài chính - Công nghệ thanh toán",
+      "benefits": [
+        "Dự án quy mô lớn trong fintech",
+        "Môi trường chuyên nghiệp, chú trọng sáng tạo",
+        "Làm việc cùng hệ sinh thái ngân hàng và thanh toán số"
+      ],
+      "rating": 4.6,
+      "review_count": 18,
+      "logo_url": "https://smartcv-bucket-411307360545-ap-southeast-2-an.s3.ap-southeast-2.amazonaws.com/avatars/vnpay/vnpay.jpg",
+      "cover_image_url": null,
+      "tax_code": null,
+      "business_license_url": null,
+      "linkedin_url": "https://www.linkedin.com/company/vnpay/",
+      "facebook_url": "https://www.facebook.com/VNPAYQR/",
+      "contact_name": "VNPAY Recruitment",
+      "contact_email": "recruitment@vnpay.vn",
+      "contact_phone": "0901002003",
+      "status": "APPROVED",
+      "rejection_note": null,
+      "quota_job_post": 10,
+      "quota_cv_views": 50,
+      "created_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deleted": false,
+      "source_page": "https://www.topcv.vn/cong-ty/cong-ty-cp-giai-phap-thanh-toan-viet-nam-vnpay/200858.html"
+    },
+    {
+      "id": "recruiter-novaon",
+      "user_id": "user-recruiter-003",
+      "company_name": "Tập Đoàn Novaon",
+      "company_website": "https://novaon.net",
+      "company_address": "Hà Nội, Việt Nam",
+      "company_city": "Hà Nội",
+      "company_description": "Novaon được thành lập năm 2006, hoạt động trong ba mảng chính gồm tiếp thị số, công nghiệp và thương mại điện tử. Doanh nghiệp sở hữu hệ sinh thái sản phẩm công nghệ và phục vụ hàng chục nghìn khách hàng.",
+      "company_phone": null,
+      "company_size": "1000+ nhân sự",
+      "company_type": "TECH_GROUP",
+      "founded_year": 2006,
+      "industry": "Digital Marketing / IT - Phần mềm",
+      "benefits": [
+        "Hệ sinh thái công nghệ và marketing số lớn",
+        "Nhiều cơ hội chuyển dự án và phát triển chuyên môn",
+        "Môi trường tăng trưởng nhanh, hướng tới thị trường quốc tế"
+      ],
+      "rating": 4.5,
+      "review_count": 27,
+      "logo_url": "https://smartcv-bucket-411307360545-ap-southeast-2-an.s3.ap-southeast-2.amazonaws.com/avatars/novaon/novaon.png",
+      "cover_image_url": null,
+      "tax_code": null,
+      "business_license_url": null,
+      "linkedin_url": "https://www.linkedin.com/company/novaon-group/",
+      "facebook_url": "https://www.facebook.com/NovaonGroup",
+      "contact_name": "Novaon Talent Team",
+      "contact_email": "talent@novaon.net",
+      "contact_phone": "0901002004",
+      "status": "APPROVED",
+      "rejection_note": null,
+      "quota_job_post": 10,
+      "quota_cv_views": 50,
+      "created_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deleted": false,
+      "source_page": "https://www.topcv.vn/cong-ty/tap-doan-novaon/201092.html"
+    },
+    {
+      "id": "recruiter-icheck",
+      "user_id": "user-recruiter-004",
+      "company_name": "Công ty cổ phần iCheck",
+      "company_website": "https://careers.icheck.com.vn/",
+      "company_address": "Hà Nội, Việt Nam",
+      "company_city": "Hà Nội",
+      "company_description": "iCheck thành lập năm 2015, phát triển từ ứng dụng quét mã sang hệ sinh thái giải pháp số hóa sản phẩm, minh bạch thông tin và hỗ trợ chuyển đổi số cho doanh nghiệp.",
+      "company_phone": null,
+      "company_size": "200-500 nhân sự",
+      "company_type": "PRODUCT_COMPANY",
+      "founded_year": 2015,
+      "industry": "IT - Phần mềm / Chuyển đổi số",
+      "benefits": [
+        "Sản phẩm công nghệ có tác động thực tế đến doanh nghiệp và người tiêu dùng",
+        "Môi trường làm việc dữ liệu và tăng trưởng",
+        "Định hướng chuyển đổi số bài bản"
+      ],
+      "rating": 4.4,
+      "review_count": 6,
+      "logo_url": "https://smartcv-bucket-411307360545-ap-southeast-2-an.s3.ap-southeast-2.amazonaws.com/avatars/icheck/icheck.jpg",
+      "cover_image_url": null,
+      "tax_code": null,
+      "business_license_url": null,
+      "linkedin_url": "https://www.linkedin.com/company/icheck-corporation/",
+      "facebook_url": "https://www.facebook.com/iCheckCorporation",
+      "contact_name": "iCheck Hiring Team",
+      "contact_email": "careers@icheck.com.vn",
+      "contact_phone": "0901002005",
+      "status": "PENDING",
+      "rejection_note": null,
+      "quota_job_post": 10,
+      "quota_cv_views": 10,
+      "created_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deleted": false,
+      "source_page": "https://www.topcv.vn/cong-ty/cong-ty-co-phan-icheck/1319.html"
+    },
+    {
+      "id": "recruiter-pjsb",
+      "user_id": "user-recruiter-005",
+      "company_name": "CÔNG TY TNHH PJSB",
+      "company_website": "https://www.topcv.vn/cong-ty/cong-ty-tnhh-pjsb/225311.html",
+      "company_address": "Hà Nội, Việt Nam",
+      "company_city": "Hà Nội",
+      "company_description": "PJSB thành lập năm 2023, hoạt động trong lĩnh vực phân phối thực phẩm chức năng, mỹ phẩm và các sản phẩm chăm sóc sức khỏe, sắc đẹp.",
+      "company_phone": null,
+      "company_size": "100-499 nhân viên",
+      "company_type": "DISTRIBUTOR",
+      "founded_year": 2023,
+      "industry": "Bán lẻ - Hàng tiêu dùng - FMCG",
+      "benefits": [
+        "Môi trường phát triển thị trường nhanh",
+        "Sản phẩm chăm sóc sức khỏe và làm đẹp chính hãng",
+        "Định hướng mở rộng hệ thống phân phối toàn quốc"
+      ],
+      "rating": 4.1,
+      "review_count": 3,
+      "logo_url": "https://smartcv-bucket-411307360545-ap-southeast-2-an.s3.ap-southeast-2.amazonaws.com/avatars/pjsb/pjsb.jpg",
+      "cover_image_url": null,
+      "tax_code": null,
+      "business_license_url": null,
+      "linkedin_url": null,
+      "facebook_url": null,
+      "contact_name": "PJSB HR Team",
+      "contact_email": "hr@pjsb.vn",
+      "contact_phone": "0901002006",
+      "status": "PENDING",
+      "rejection_note": null,
+      "quota_job_post": 10,
+      "quota_cv_views": 10,
+      "created_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deleted": false,
+      "source_page": "https://www.topcv.vn/cong-ty/cong-ty-tnhh-pjsb/225311.html"
+    }
+  ],
+  "jobs": [
+    {
+      "id": "job-001",
+      "recruiter_id": "recruiter-sapo",
+      "title": "Chuyên Viên Tư Vấn Phần Mềm/Website [Toàn Quốc] - Lương Cơ Bản Upto 13 Triệu + Hoa Hồng 43% + Phụ Cấp, Open Fresher",
+      "normalized_title": "Chuyên Viên Tư Vấn Phần Mềm/Website - Lương Cơ Bản Upto 13 Triệu + Hoa Hồng 43% + Phụ Cấp, Open Fresher",
+      "description": "Tin tuyển dụng được seed từ snapshot TopCV cho vị trí 'Chuyên Viên Tư Vấn Phần Mềm/Website - Lương Cơ Bản Upto 13 Triệu + Hoa Hồng 43% + Phụ Cấp, Open Fresher'. Job này được gắn với recruiter 'Công ty cổ phần Công nghệ Sapo' để phục vụ dữ liệu demo cho luồng recruiter/job của SmartCV.",
+      "company": "Công ty cổ phần Công nghệ Sapo",
+      "location": "Hà Nội",
+      "salary_min": 12000000,
+      "salary_max": 35000000,
+      "job_type": "FULL_TIME",
+      "experience_level": "JUNIOR",
+      "skills": [
+        "Tư vấn giải pháp",
+        "CRM",
+        "SaaS",
+        "Sales B2B",
+        "Website"
+      ],
+      "requirements": [
+        "Có khả năng giao tiếp và tư vấn giải pháp phần mềm cho khách hàng doanh nghiệp",
+        "Chủ động học nhanh về sản phẩm SaaS và website",
+        "Ưu tiên ứng viên có định hướng kinh doanh công nghệ"
+      ],
+      "benefits": [
+        "Lương cứng và hoa hồng rõ ràng",
+        "Đào tạo sản phẩm",
+        "Cơ hội phát triển sales công nghệ"
+      ],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderation_note": null,
+      "reviewed_by": "admin-seed",
+      "reviewed_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deadline": "2026-08-31",
+      "openings": 4,
+      "qualified_threshold": 70,
+      "reject_threshold": 40,
+      "auto_reject_enabled": false,
+      "required_test": null,
+      "deleted": false,
+      "created_at": {
+        "$date": "2026-06-20 10:01:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:01:00"
+      },
+      "source_page": "https://www.topcv.vn/brand/sapovn?id=11698"
+    },
+    {
+      "id": "job-002",
+      "recruiter_id": "recruiter-sapo",
+      "title": "Fullstack Developer [Hà Nội] - Thu Nhập Cạnh Tranh, Từ 4 Năm Kinh Nghiệm",
+      "normalized_title": "Fullstack Developer - Thu Nhập Cạnh Tranh, Từ 4 Năm Kinh Nghiệm",
+      "description": "Tin tuyển dụng được seed từ snapshot TopCV cho vị trí 'Fullstack Developer - Thu Nhập Cạnh Tranh, Từ 4 Năm Kinh Nghiệm'. Job này được gắn với recruiter 'Công ty cổ phần Công nghệ Sapo' để phục vụ dữ liệu demo cho luồng recruiter/job của SmartCV.",
+      "company": "Công ty cổ phần Công nghệ Sapo",
+      "location": "Hà Nội",
+      "salary_min": null,
+      "salary_max": null,
+      "job_type": "FULL_TIME",
+      "experience_level": "SENIOR",
+      "skills": [
+        "JavaScript",
+        "TypeScript",
+        "Node.js",
+        "React",
+        "SQL"
+      ],
+      "requirements": [
+        "Có kinh nghiệm phát triển fullstack từ 4 năm trở lên",
+        "Hiểu kiến trúc web hiện đại và tối ưu hiệu năng hệ thống",
+        "Có kinh nghiệm phối hợp chặt chẽ với đội sản phẩm"
+      ],
+      "benefits": [
+        "Dự án sản phẩm lớn",
+        "Thu nhập cạnh tranh",
+        "Môi trường kỹ thuật hiện đại"
+      ],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderation_note": null,
+      "reviewed_by": "admin-seed",
+      "reviewed_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deadline": "2026-08-31",
+      "openings": 2,
+      "qualified_threshold": 70,
+      "reject_threshold": 40,
+      "auto_reject_enabled": false,
+      "required_test": null,
+      "deleted": false,
+      "created_at": {
+        "$date": "2026-06-20 10:02:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:02:00"
+      },
+      "source_page": "https://www.topcv.vn/brand/sapovn?id=11698"
+    },
+    {
+      "id": "job-003",
+      "recruiter_id": "recruiter-sapo",
+      "title": "Business Development Executive (B2B) - Thu Nhập Upto 40 Triệu, Phúc Lợi Hấp Dẫn",
+      "normalized_title": "Business Development Executive (B2B) - Thu Nhập Upto 40 Triệu, Phúc Lợi Hấp Dẫn",
+      "description": "Tin tuyển dụng được seed từ snapshot TopCV cho vị trí 'Business Development Executive (B2B) - Thu Nhập Upto 40 Triệu, Phúc Lợi Hấp Dẫn'. Job này được gắn với recruiter 'Công ty cổ phần Công nghệ Sapo' để phục vụ dữ liệu demo cho luồng recruiter/job của SmartCV.",
+      "company": "Công ty cổ phần Công nghệ Sapo",
+      "location": "Hà Nội",
+      "salary_min": 15000000,
+      "salary_max": 40000000,
+      "job_type": "FULL_TIME",
+      "experience_level": "JUNIOR",
+      "skills": [
+        "Business Development",
+        "B2B Sales",
+        "Pipeline",
+        "Presentation"
+      ],
+      "requirements": [
+        "Có kinh nghiệm làm việc với khách hàng doanh nghiệp",
+        "Biết xây dựng pipeline và theo dõi cơ hội kinh doanh",
+        "Kỹ năng trình bày giải pháp tốt"
+      ],
+      "benefits": [
+        "Thu nhập lên tới 40 triệu",
+        "Phúc lợi hấp dẫn",
+        "Tăng trưởng theo hiệu quả kinh doanh"
+      ],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderation_note": null,
+      "reviewed_by": "admin-seed",
+      "reviewed_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deadline": "2026-08-31",
+      "openings": 3,
+      "qualified_threshold": 70,
+      "reject_threshold": 40,
+      "auto_reject_enabled": false,
+      "required_test": null,
+      "deleted": false,
+      "created_at": {
+        "$date": "2026-06-20 10:03:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:03:00"
+      },
+      "source_page": "https://www.topcv.vn/brand/sapovn?id=11698"
+    },
+    {
+      "id": "job-004",
+      "recruiter_id": "recruiter-sapo",
+      "title": "Nhân Viên Lái Xe Văn Phòng",
+      "normalized_title": "Nhân Viên Lái Xe Văn Phòng",
+      "description": "Tin tuyển dụng được seed từ snapshot TopCV cho vị trí 'Nhân Viên Lái Xe Văn Phòng'. Job này được gắn với recruiter 'Công ty cổ phần Công nghệ Sapo' để phục vụ dữ liệu demo cho luồng recruiter/job của SmartCV.",
+      "company": "Công ty cổ phần Công nghệ Sapo",
+      "location": "Hà Nội",
+      "salary_min": 12000000,
+      "salary_max": 15000000,
+      "job_type": "FULL_TIME",
+      "experience_level": "JUNIOR",
+      "skills": [
+        "Lái xe",
+        "An toàn giao thông",
+        "Hỗ trợ hành chính"
+      ],
+      "requirements": [
+        "Có bằng lái phù hợp và kinh nghiệm lái xe văn phòng",
+        "Tác phong chuyên nghiệp và đúng giờ",
+        "Hỗ trợ công việc vận hành khi cần"
+      ],
+      "benefits": [
+        "Mức lương ổn định",
+        "Môi trường doanh nghiệp công nghệ",
+        "Phúc lợi theo chính sách công ty"
+      ],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderation_note": null,
+      "reviewed_by": "admin-seed",
+      "reviewed_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deadline": "2026-08-31",
+      "openings": 1,
+      "qualified_threshold": 70,
+      "reject_threshold": 40,
+      "auto_reject_enabled": false,
+      "required_test": null,
+      "deleted": false,
+      "created_at": {
+        "$date": "2026-06-20 10:04:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:04:00"
+      },
+      "source_page": "https://www.topcv.vn/brand/sapovn?id=11698"
+    },
+    {
+      "id": "job-005",
+      "recruiter_id": "recruiter-sapo",
+      "title": "Business Development Executive (B2B/Sapo Enterprise) - Lương Cơ Bản Upto 21 Triệu + Hoa Hồng + Phụ Cấp",
+      "normalized_title": "Business Development Executive (B2B/Sapo Enterprise) - Lương Cơ Bản Upto 21 Triệu + Hoa Hồng + Phụ Cấp",
+      "description": "Tin tuyển dụng được seed từ snapshot TopCV cho vị trí 'Business Development Executive (B2B/Sapo Enterprise) - Lương Cơ Bản Upto 21 Triệu + Hoa Hồng + Phụ Cấp'. Job này được gắn với recruiter 'Công ty cổ phần Công nghệ Sapo' để phục vụ dữ liệu demo cho luồng recruiter/job của SmartCV.",
+      "company": "Công ty cổ phần Công nghệ Sapo",
+      "location": "Hà Nội",
+      "salary_min": 12000000,
+      "salary_max": 40000000,
+      "job_type": "FULL_TIME",
+      "experience_level": "MIDDLE",
+      "skills": [
+        "Enterprise Sales",
+        "B2B",
+        "Solution Selling",
+        "Negotiation"
+      ],
+      "requirements": [
+        "Có khả năng bán giải pháp enterprise cho khách hàng doanh nghiệp lớn",
+        "Kỹ năng đàm phán và theo đuổi hợp đồng tốt",
+        "Chủ động quản lý cơ hội bán hàng dài hạn"
+      ],
+      "benefits": [
+        "Lương cứng cao",
+        "Hoa hồng và phụ cấp",
+        "Làm việc với phân khúc khách hàng lớn"
+      ],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderation_note": null,
+      "reviewed_by": "admin-seed",
+      "reviewed_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deadline": "2026-08-31",
+      "openings": 2,
+      "qualified_threshold": 70,
+      "reject_threshold": 40,
+      "auto_reject_enabled": false,
+      "required_test": null,
+      "deleted": false,
+      "created_at": {
+        "$date": "2026-06-20 10:05:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:05:00"
+      },
+      "source_page": "https://www.topcv.vn/brand/sapovn?id=11698"
+    },
+    {
+      "id": "job-006",
+      "recruiter_id": "recruiter-vnpay",
+      "title": "Business Analyst",
+      "normalized_title": "Business Analyst",
+      "description": "Tin tuyển dụng được seed từ snapshot TopCV cho vị trí 'Business Analyst'. Job này được gắn với recruiter 'Công ty CP Giải pháp Thanh toán Việt Nam (VNPAY)' để phục vụ dữ liệu demo cho luồng recruiter/job của SmartCV.",
+      "company": "Công ty CP Giải pháp Thanh toán Việt Nam (VNPAY)",
+      "location": "Hà Nội",
+      "salary_min": null,
+      "salary_max": null,
+      "job_type": "FULL_TIME",
+      "experience_level": "MIDDLE",
+      "skills": [
+        "Business Analysis",
+        "UML",
+        "SQL",
+        "Fintech",
+        "Agile"
+      ],
+      "requirements": [
+        "Từ 3 năm kinh nghiệm phân tích nghiệp vụ",
+        "Có khả năng làm việc giữa business và engineering",
+        "Ưu tiên hiểu biết sản phẩm tài chính hoặc thanh toán"
+      ],
+      "benefits": [
+        "Dự án fintech quy mô lớn",
+        "Quy trình sản phẩm rõ ràng",
+        "Cơ hội làm việc đa phòng ban"
+      ],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderation_note": null,
+      "reviewed_by": "admin-seed",
+      "reviewed_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deadline": "2026-08-31",
+      "openings": 2,
+      "qualified_threshold": 70,
+      "reject_threshold": 40,
+      "auto_reject_enabled": false,
+      "required_test": null,
+      "deleted": false,
+      "created_at": {
+        "$date": "2026-06-20 10:06:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:06:00"
+      },
+      "source_page": "https://www.topcv.vn/tim-viec-lam-cong-nghe-thong-tin-cr257"
+    },
+    {
+      "id": "job-007",
+      "recruiter_id": "recruiter-vnpay",
+      "title": "Kỹ Sư Java Backend",
+      "normalized_title": "Kỹ Sư Java Backend",
+      "description": "Tin tuyển dụng được seed từ snapshot TopCV cho vị trí 'Kỹ Sư Java Backend'. Job này được gắn với recruiter 'Công ty CP Giải pháp Thanh toán Việt Nam (VNPAY)' để phục vụ dữ liệu demo cho luồng recruiter/job của SmartCV.",
+      "company": "Công ty CP Giải pháp Thanh toán Việt Nam (VNPAY)",
+      "location": "Hà Nội",
+      "salary_min": null,
+      "salary_max": null,
+      "job_type": "FULL_TIME",
+      "experience_level": "MIDDLE",
+      "skills": [
+        "Java",
+        "Spring Boot",
+        "Microservices",
+        "SQL",
+        "REST API"
+      ],
+      "requirements": [
+        "Có tối thiểu 2 năm kinh nghiệm backend Java",
+        "Hiểu microservices, API và hệ thống tích hợp",
+        "Ưu tiên ứng viên từng làm dự án giao dịch lớn"
+      ],
+      "benefits": [
+        "Hệ thống transaction lớn",
+        "Môi trường kỹ thuật mạnh",
+        "Cơ hội phát triển backend chuyên sâu"
+      ],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderation_note": null,
+      "reviewed_by": "admin-seed",
+      "reviewed_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deadline": "2026-08-31",
+      "openings": 3,
+      "qualified_threshold": 70,
+      "reject_threshold": 40,
+      "auto_reject_enabled": false,
+      "required_test": null,
+      "deleted": false,
+      "created_at": {
+        "$date": "2026-06-20 10:07:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:07:00"
+      },
+      "source_page": "https://www.topcv.vn/tim-viec-lam-cong-nghe-thong-tin-cr257"
+    },
+    {
+      "id": "job-008",
+      "recruiter_id": "recruiter-vnpay",
+      "title": "Sales Manager ICT (B2B) - HCM",
+      "normalized_title": "Sales Manager ICT (B2B) - HCM",
+      "description": "Tin tuyển dụng được seed từ snapshot TopCV cho vị trí 'Sales Manager ICT (B2B) - HCM'. Job này được gắn với recruiter 'Công ty CP Giải pháp Thanh toán Việt Nam (VNPAY)' để phục vụ dữ liệu demo cho luồng recruiter/job của SmartCV.",
+      "company": "Công ty CP Giải pháp Thanh toán Việt Nam (VNPAY)",
+      "location": "Hồ Chí Minh",
+      "salary_min": null,
+      "salary_max": null,
+      "job_type": "FULL_TIME",
+      "experience_level": "MIDDLE",
+      "skills": [
+        "B2B Sales",
+        "ICT",
+        "Account Management",
+        "Negotiation"
+      ],
+      "requirements": [
+        "Có kinh nghiệm dẫn dắt hoạt động sales B2B trong lĩnh vực ICT",
+        "Kỹ năng quản lý tài khoản và phát triển doanh số tốt",
+        "Chủ động làm việc với khách hàng doanh nghiệp"
+      ],
+      "benefits": [
+        "Mở rộng mạng lưới khách hàng doanh nghiệp",
+        "Môi trường B2B năng động",
+        "Cơ hội tăng trưởng theo doanh số"
+      ],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderation_note": null,
+      "reviewed_by": "admin-seed",
+      "reviewed_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deadline": "2026-08-31",
+      "openings": 1,
+      "qualified_threshold": 70,
+      "reject_threshold": 40,
+      "auto_reject_enabled": false,
+      "required_test": null,
+      "deleted": false,
+      "created_at": {
+        "$date": "2026-06-20 10:08:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:08:00"
+      },
+      "source_page": "https://www.topcv.vn/tim-viec-lam-cong-nghe-thong-tin-cr257"
+    },
+    {
+      "id": "job-009",
+      "recruiter_id": "recruiter-vnpay",
+      "title": "Senior QA Manager (AI & Enterprise Software) - Thu Nhập Upto 50 Triệu - Hà Nội",
+      "normalized_title": "Senior QA Manager (AI & Enterprise Software) - Thu Nhập Upto 50 Triệu - Hà Nội",
+      "description": "Tin tuyển dụng được seed từ snapshot TopCV cho vị trí 'Senior QA Manager (AI & Enterprise Software) - Thu Nhập Upto 50 Triệu - Hà Nội'. Job này được gắn với recruiter 'Công ty CP Giải pháp Thanh toán Việt Nam (VNPAY)' để phục vụ dữ liệu demo cho luồng recruiter/job của SmartCV.",
+      "company": "Công ty CP Giải pháp Thanh toán Việt Nam (VNPAY)",
+      "location": "Hà Nội",
+      "salary_min": 30000000,
+      "salary_max": 50000000,
+      "job_type": "FULL_TIME",
+      "experience_level": "SENIOR",
+      "skills": [
+        "QA Strategy",
+        "AI Systems",
+        "Test Management",
+        "Automation",
+        "Leadership"
+      ],
+      "requirements": [
+        "Có kinh nghiệm quản lý QA và kiểm thử hệ thống enterprise",
+        "Hiểu chiến lược kiểm thử cho sản phẩm tích hợp AI",
+        "Có khả năng dẫn dắt team và chuẩn hóa quy trình chất lượng"
+      ],
+      "benefits": [
+        "Mức thu nhập senior",
+        "Vai trò quản lý chất lượng",
+        "Làm việc với sản phẩm nhiều tích hợp"
+      ],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderation_note": null,
+      "reviewed_by": "admin-seed",
+      "reviewed_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deadline": "2026-08-31",
+      "openings": 1,
+      "qualified_threshold": 70,
+      "reject_threshold": 40,
+      "auto_reject_enabled": false,
+      "required_test": null,
+      "deleted": false,
+      "created_at": {
+        "$date": "2026-06-20 10:09:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:09:00"
+      },
+      "source_page": "https://www.topcv.vn/tim-viec-lam-cong-nghe-thong-tin-cr257"
+    },
+    {
+      "id": "job-010",
+      "recruiter_id": "recruiter-vnpay",
+      "title": "Nhân Viên Thiết Kế AI - Thu Nhập Upto 22 Triệu /Tháng, Từ 2 Năm Kinh Nghiệm + Gửi Kèm Sản Phẩm",
+      "normalized_title": "Nhân Viên Thiết Kế AI - Thu Nhập Upto 22 Triệu /Tháng, Từ 2 Năm Kinh Nghiệm + Gửi Kèm Sản Phẩm",
+      "description": "Tin tuyển dụng được seed từ snapshot TopCV cho vị trí 'Nhân Viên Thiết Kế AI - Thu Nhập Upto 22 Triệu /Tháng, Từ 2 Năm Kinh Nghiệm + Gửi Kèm Sản Phẩm'. Job này được gắn với recruiter 'Công ty CP Giải pháp Thanh toán Việt Nam (VNPAY)' để phục vụ dữ liệu demo cho luồng recruiter/job của SmartCV.",
+      "company": "Công ty CP Giải pháp Thanh toán Việt Nam (VNPAY)",
+      "location": "Hà Nội",
+      "salary_min": 12000000,
+      "salary_max": 22000000,
+      "job_type": "FULL_TIME",
+      "experience_level": "MIDDLE",
+      "skills": [
+        "AI Design",
+        "Creative",
+        "Prompting",
+        "Visual Design"
+      ],
+      "requirements": [
+        "Có tư duy thiết kế và khả năng làm việc với công cụ AI",
+        "Có portfolio hoặc sản phẩm kèm theo",
+        "Chủ động phối hợp với team sản phẩm và marketing"
+      ],
+      "benefits": [
+        "Thu nhập cạnh tranh",
+        "Cơ hội thử nghiệm công cụ AI",
+        "Môi trường làm việc sáng tạo"
+      ],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderation_note": null,
+      "reviewed_by": "admin-seed",
+      "reviewed_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deadline": "2026-08-31",
+      "openings": 1,
+      "qualified_threshold": 70,
+      "reject_threshold": 40,
+      "auto_reject_enabled": false,
+      "required_test": null,
+      "deleted": false,
+      "created_at": {
+        "$date": "2026-06-20 10:10:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:10:00"
+      },
+      "source_page": "https://www.topcv.vn/tim-viec-lam-cong-nghe-thong-tin-cr257"
+    },
+    {
+      "id": "job-011",
+      "recruiter_id": "recruiter-novaon",
+      "title": "CAD/CAM Engineer / Kỹ Sư Lập Trình CNC - Hybrid Working",
+      "normalized_title": "CAD/CAM Engineer / Kỹ Sư Lập Trình CNC - Hybrid Working",
+      "description": "Tin tuyển dụng được seed từ snapshot TopCV cho vị trí 'CAD/CAM Engineer / Kỹ Sư Lập Trình CNC - Hybrid Working'. Job này được gắn với recruiter 'Tập Đoàn Novaon' để phục vụ dữ liệu demo cho luồng recruiter/job của SmartCV.",
+      "company": "Tập Đoàn Novaon",
+      "location": "Hồ Chí Minh",
+      "salary_min": null,
+      "salary_max": null,
+      "job_type": "FULL_TIME",
+      "experience_level": "JUNIOR",
+      "skills": [
+        "CAD/CAM",
+        "CNC",
+        "Engineering",
+        "Technical Drawing"
+      ],
+      "requirements": [
+        "Hiểu quy trình CAD/CAM và lập trình máy CNC",
+        "Có khả năng đọc bản vẽ kỹ thuật",
+        "Sẵn sàng làm việc hybrid và phối hợp đa bộ phận"
+      ],
+      "benefits": [
+        "Mô hình hybrid",
+        "Môi trường kỹ thuật ứng dụng",
+        "Cơ hội phát triển kỹ năng chuyên môn"
+      ],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderation_note": null,
+      "reviewed_by": "admin-seed",
+      "reviewed_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deadline": "2026-08-31",
+      "openings": 1,
+      "qualified_threshold": 70,
+      "reject_threshold": 40,
+      "auto_reject_enabled": false,
+      "required_test": null,
+      "deleted": false,
+      "created_at": {
+        "$date": "2026-06-20 10:11:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:11:00"
+      },
+      "source_page": "https://www.topcv.vn/tim-viec-lam-cong-nghe-thong-tin-cr257"
+    },
+    {
+      "id": "job-012",
+      "recruiter_id": "recruiter-novaon",
+      "title": "Nhân Viên Thiết Kế Designer Mỹ Phẩm - Thu Nhập Hấp Dẫn - Đi Làm Ngay",
+      "normalized_title": "Nhân Viên Thiết Kế Designer Mỹ Phẩm - Thu Nhập Hấp Dẫn - Đi Làm Ngay",
+      "description": "Tin tuyển dụng được seed từ snapshot TopCV cho vị trí 'Nhân Viên Thiết Kế Designer Mỹ Phẩm - Thu Nhập Hấp Dẫn - Đi Làm Ngay'. Job này được gắn với recruiter 'Tập Đoàn Novaon' để phục vụ dữ liệu demo cho luồng recruiter/job của SmartCV.",
+      "company": "Tập Đoàn Novaon",
+      "location": "Hà Nội",
+      "salary_min": null,
+      "salary_max": null,
+      "job_type": "FULL_TIME",
+      "experience_level": "MIDDLE",
+      "skills": [
+        "Graphic Design",
+        "Branding",
+        "Adobe Suite",
+        "Packaging"
+      ],
+      "requirements": [
+        "Có kinh nghiệm thiết kế ấn phẩm marketing hoặc thương hiệu",
+        "Am hiểu thiết kế cho nhóm hàng mỹ phẩm là lợi thế",
+        "Có khả năng lên ý tưởng và triển khai nhanh"
+      ],
+      "benefits": [
+        "Đi làm ngay",
+        "Thu nhập hấp dẫn",
+        "Môi trường sáng tạo"
+      ],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderation_note": null,
+      "reviewed_by": "admin-seed",
+      "reviewed_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deadline": "2026-08-31",
+      "openings": 1,
+      "qualified_threshold": 70,
+      "reject_threshold": 40,
+      "auto_reject_enabled": false,
+      "required_test": null,
+      "deleted": false,
+      "created_at": {
+        "$date": "2026-06-20 10:12:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:12:00"
+      },
+      "source_page": "https://www.topcv.vn/tim-viec-lam-cong-nghe-thong-tin-cr257"
+    },
+    {
+      "id": "job-013",
+      "recruiter_id": "recruiter-novaon",
+      "title": "Nhân Viên Lập Trình & Đứng Máy Phay CNC - Lương Up To 20 Triệu - Làm Tại Dĩ An, Bình Dương",
+      "normalized_title": "Nhân Viên Lập Trình & Đứng Máy Phay CNC - Lương Up To 20 Triệu - Làm Tại Dĩ An, Bình Dương",
+      "description": "Tin tuyển dụng được seed từ snapshot TopCV cho vị trí 'Nhân Viên Lập Trình & Đứng Máy Phay CNC - Lương Up To 20 Triệu - Làm Tại Dĩ An, Bình Dương'. Job này được gắn với recruiter 'Tập Đoàn Novaon' để phục vụ dữ liệu demo cho luồng recruiter/job của SmartCV.",
+      "company": "Tập Đoàn Novaon",
+      "location": "Bình Dương",
+      "salary_min": 10000000,
+      "salary_max": 20000000,
+      "job_type": "FULL_TIME",
+      "experience_level": "JUNIOR",
+      "skills": [
+        "CNC",
+        "Machine Programming",
+        "Mechanical",
+        "Quality Control"
+      ],
+      "requirements": [
+        "Có kinh nghiệm vận hành hoặc lập trình máy phay CNC",
+        "Hiểu kiểm soát chất lượng gia công",
+        "Tác phong cẩn thận và kỷ luật trong sản xuất"
+      ],
+      "benefits": [
+        "Lương tới 20 triệu",
+        "Môi trường sản xuất thực tế",
+        "Ổn định lâu dài"
+      ],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderation_note": null,
+      "reviewed_by": "admin-seed",
+      "reviewed_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deadline": "2026-08-31",
+      "openings": 2,
+      "qualified_threshold": 70,
+      "reject_threshold": 40,
+      "auto_reject_enabled": false,
+      "required_test": null,
+      "deleted": false,
+      "created_at": {
+        "$date": "2026-06-20 10:13:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:13:00"
+      },
+      "source_page": "https://www.topcv.vn/tim-viec-lam-cong-nghe-thong-tin-cr257"
+    },
+    {
+      "id": "job-014",
+      "recruiter_id": "recruiter-novaon",
+      "title": "Nhân Viên Kinh Doanh, Tư Vấn Phần Mềm / Sale B2B - Tuyển Nữ (Nghỉ Thứ 7, Chủ Nhật, Thu Nhập 10 - 20M) Tại Hà Nội",
+      "normalized_title": "Nhân Viên Kinh Doanh, Tư Vấn Phần Mềm / Sale B2B - Tuyển Nữ (Nghỉ Thứ 7, Chủ Nhật, Thu Nhập 10 - 20M) Tại Hà Nội",
+      "description": "Tin tuyển dụng được seed từ snapshot TopCV cho vị trí 'Nhân Viên Kinh Doanh, Tư Vấn Phần Mềm / Sale B2B - Tuyển Nữ (Nghỉ Thứ 7, Chủ Nhật, Thu Nhập 10 - 20M) Tại Hà Nội'. Job này được gắn với recruiter 'Tập Đoàn Novaon' để phục vụ dữ liệu demo cho luồng recruiter/job của SmartCV.",
+      "company": "Tập Đoàn Novaon",
+      "location": "Hà Nội",
+      "salary_min": 10000000,
+      "salary_max": 20000000,
+      "job_type": "FULL_TIME",
+      "experience_level": "JUNIOR",
+      "skills": [
+        "Sales B2B",
+        "Software Consulting",
+        "Lead Generation",
+        "Presentation"
+      ],
+      "requirements": [
+        "Có khả năng tư vấn giải pháp phần mềm cho khách hàng doanh nghiệp",
+        "Ưu tiên ứng viên có kinh nghiệm sale B2B hoặc telesales",
+        "Có tinh thần bám đuổi doanh số"
+      ],
+      "benefits": [
+        "Nghỉ thứ 7 và chủ nhật",
+        "Thu nhập 10-20 triệu",
+        "Đào tạo bài bản"
+      ],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderation_note": null,
+      "reviewed_by": "admin-seed",
+      "reviewed_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deadline": "2026-08-31",
+      "openings": 2,
+      "qualified_threshold": 70,
+      "reject_threshold": 40,
+      "auto_reject_enabled": false,
+      "required_test": null,
+      "deleted": false,
+      "created_at": {
+        "$date": "2026-06-20 10:14:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:14:00"
+      },
+      "source_page": "https://www.topcv.vn/tim-viec-lam-cong-nghe-thong-tin-cr257"
+    },
+    {
+      "id": "job-015",
+      "recruiter_id": "recruiter-novaon",
+      "title": "Business Development Executive (B2B/Sapo Enterprise) - Lương Cứng Thỏa Thuận, Thu Nhập Upto 40 Triệu, Open Fresher",
+      "normalized_title": "Business Development Executive (B2B/Sapo Enterprise) - Lương Cứng Thỏa Thuận, Thu Nhập Upto 40 Triệu, Open Fresher",
+      "description": "Tin tuyển dụng được seed từ snapshot TopCV cho vị trí 'Business Development Executive (B2B/Sapo Enterprise) - Lương Cứng Thỏa Thuận, Thu Nhập Upto 40 Triệu, Open Fresher'. Job này được gắn với recruiter 'Tập Đoàn Novaon' để phục vụ dữ liệu demo cho luồng recruiter/job của SmartCV.",
+      "company": "Tập Đoàn Novaon",
+      "location": "Hà Nội",
+      "salary_min": 15000000,
+      "salary_max": 40000000,
+      "job_type": "FULL_TIME",
+      "experience_level": "JUNIOR",
+      "skills": [
+        "Business Development",
+        "B2B",
+        "Pipeline",
+        "Prospecting"
+      ],
+      "requirements": [
+        "Sẵn sàng học nhanh về giải pháp số cho doanh nghiệp",
+        "Có kỹ năng giao tiếp và phát triển khách hàng mới",
+        "Open Fresher nhưng có định hướng kinh doanh công nghệ rõ ràng"
+      ],
+      "benefits": [
+        "Thu nhập tới 40 triệu",
+        "Lương cứng thỏa thuận",
+        "Open Fresher"
+      ],
+      "moderation_status": "PUBLISHED",
+      "visibility_status": "ACTIVE",
+      "moderation_note": null,
+      "reviewed_by": "admin-seed",
+      "reviewed_at": {
+        "$date": "2026-06-20 10:00:00"
+      },
+      "deadline": "2026-08-31",
+      "openings": 2,
+      "qualified_threshold": 70,
+      "reject_threshold": 40,
+      "auto_reject_enabled": false,
+      "required_test": null,
+      "deleted": false,
+      "created_at": {
+        "$date": "2026-06-20 10:15:00"
+      },
+      "updated_at": {
+        "$date": "2026-06-20 10:15:00"
+      },
+      "source_page": "https://www.topcv.vn/brand/sapovn?id=11698"
+    }
+  ]
+}

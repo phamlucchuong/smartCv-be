@@ -11,12 +11,16 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import vn.chuongpl.job_service.dtos.response.JobResponse;
-import vn.chuongpl.job_service.enums.JobStatus;
+import vn.chuongpl.job_service.enums.JobModerationStatus;
 import vn.chuongpl.job_service.enums.JobType;
+import vn.chuongpl.job_service.enums.JobVisibilityStatus;
 import vn.chuongpl.job_service.features.job.Job;
 import vn.chuongpl.job_service.features.job.JobMapper;
+import vn.chuongpl.job_service.integration.applicationservice.ApplicationServiceClient;
+import vn.chuongpl.job_service.integration.userservice.UserServiceClient;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +29,8 @@ public class HomeService {
 
     MongoTemplate mongoTemplate;
     JobMapper jobMapper;
+    UserServiceClient userServiceClient;
+    ApplicationServiceClient applicationServiceClient;
 
     private static final List<ResourceItem> STATIC_RESOURCES = List.of(
             new ResourceItem("1", "How to Write a Winning CV", "Practical tips to make your CV stand out to recruiters.", "/resources/cv-guide", "guide"),
@@ -48,7 +54,9 @@ public class HomeService {
 
     @Cacheable(value = "home:stats", unless = "#result == null")
     public HomeStatsResponse getStats() {
-        Criteria active = Criteria.where("status").is(JobStatus.ACTIVE).and("deleted").is(false);
+        Criteria active = Criteria.where("moderationStatus").is(JobModerationStatus.PUBLISHED)
+                .and("visibilityStatus").is(JobVisibilityStatus.ACTIVE)
+                .and("deleted").is(false);
 
         long activeJobs = mongoTemplate.count(Query.query(active), Job.class);
 
@@ -69,11 +77,14 @@ public class HomeService {
                 .build();
     }
 
-    @Cacheable(value = "home:categories", unless = "#result == null")
+    @Cacheable(value = "home:categories-v2", unless = "#result == null")
     public List<JobCategoryResponse> getCategories() {
         Aggregation agg = Aggregation.newAggregation(
-                Aggregation.match(Criteria.where("status").is(JobStatus.ACTIVE).and("deleted").is(false)),
-                Aggregation.group("jobType").count().as("jobCount"),
+                Aggregation.match(Criteria.where("moderationStatus").is(JobModerationStatus.PUBLISHED)
+                        .and("visibilityStatus").is(JobVisibilityStatus.ACTIVE)
+                        .and("deleted").is(false)
+                        .and("category").ne(null)),
+                Aggregation.group("category").count().as("jobCount"),
                 Aggregation.project("jobCount").and("_id").as("name"),
                 Aggregation.sort(Sort.by(Sort.Direction.DESC, "jobCount"))
         );
@@ -85,27 +96,109 @@ public class HomeService {
 
     @Cacheable(value = "home:featured-jobs", unless = "#result == null")
     public List<JobResponse> getFeaturedJobs() {
-        Query q = Query.query(Criteria.where("status").is(JobStatus.ACTIVE).and("deleted").is(false))
+        Query q = Query.query(Criteria.where("moderationStatus").is(JobModerationStatus.PUBLISHED)
+                        .and("visibilityStatus").is(JobVisibilityStatus.ACTIVE)
+                        .and("deleted").is(false))
                 .with(Sort.by(Sort.Direction.DESC, "createdAt"))
                 .limit(6);
         return mongoTemplate.find(q, Job.class).stream().map(jobMapper::toJobResponse).toList();
     }
 
-    @Cacheable(value = "home:top-companies", unless = "#result == null")
+    @Cacheable(value = "home:hot-jobs", unless = "#result == null")
+    public List<JobResponse> getHotJobs() {
+        List<String> topJobIds = applicationServiceClient.getTopJobIds(6);
+        Criteria activeCriteria = Criteria.where("moderationStatus").is(JobModerationStatus.PUBLISHED)
+                .and("visibilityStatus").is(JobVisibilityStatus.ACTIVE)
+                .and("deleted").is(false);
+        Query q = topJobIds.isEmpty()
+                ? Query.query(activeCriteria).with(Sort.by(Sort.Direction.DESC, "createdAt")).limit(6)
+                : Query.query(Criteria.where("_id").in(topJobIds).andOperator(activeCriteria));
+        return mongoTemplate.find(q, Job.class).stream().map(jobMapper::toJobResponse).toList();
+    }
+
+    @Cacheable(value = "home:top-companies-v3", unless = "#result == null")
     public List<TopCompanyResponse> getTopCompanies() {
-        Aggregation agg = Aggregation.newAggregation(
-                Aggregation.match(Criteria.where("status").is(JobStatus.ACTIVE).and("deleted").is(false)),
-                Aggregation.group("recruiterId")
-                        .count().as("activeJobCount")
-                        .first("company").as("name")
-                        .first("location").as("location"),
-                Aggregation.project("activeJobCount", "name", "location").and("_id").as("recruiterId"),
-                Aggregation.sort(Sort.by(Sort.Direction.DESC, "activeJobCount")),
-                Aggregation.limit(8)
-        );
-        AggregationResults<TopCompanyResponse> results =
-                mongoTemplate.aggregate(agg, "jobs", TopCompanyResponse.class);
-        return results.getMappedResults();
+        // 1. Get all active published jobs
+        Query activeQuery = Query.query(Criteria.where("moderationStatus").is(JobModerationStatus.PUBLISHED)
+                .and("visibilityStatus").is(JobVisibilityStatus.ACTIVE)
+                .and("deleted").is(false));
+        List<Job> activeJobs = mongoTemplate.find(activeQuery, Job.class);
+
+        if (activeJobs.isEmpty()) {
+            return java.util.Collections.emptyList();
+        }
+
+        // 2. Fetch top jobs by application count from application-service
+        List<Map<String, Object>> topJobs = applicationServiceClient.getTopJobs(1000);
+        java.util.Map<String, Long> jobCounts = new java.util.HashMap<>();
+        for (Map<String, Object> item : topJobs) {
+            String jobId = (String) item.get("jobId");
+            Number count = (Number) item.get("count");
+            if (jobId != null && count != null) {
+                jobCounts.put(jobId, count.longValue());
+            }
+        }
+
+        // 3. Group jobs by recruiterId and sum application counts and active job count
+        java.util.Map<String, CompanyStats> statsMap = new java.util.HashMap<>();
+        for (Job job : activeJobs) {
+            String recruiterId = job.getRecruiterId();
+            if (recruiterId == null) recruiterId = "";
+            
+            CompanyStats stats = statsMap.computeIfAbsent(recruiterId, k -> new CompanyStats(job.getCompany(), job.getLocation()));
+            stats.activeJobCount++;
+            stats.totalApplications += jobCounts.getOrDefault(job.getId(), 0L);
+        }
+
+        // 4. Sort companies by total applications, then by active job count
+        List<String> sortedRecruiterIds = statsMap.entrySet().stream()
+                .sorted((e1, e2) -> {
+                    int cmp = Long.compare(e2.getValue().totalApplications, e1.getValue().totalApplications);
+                    if (cmp != 0) return cmp;
+                    return Integer.compare(e2.getValue().activeJobCount, e1.getValue().activeJobCount);
+                })
+                .map(java.util.Map.Entry::getKey)
+                .limit(8)
+                .toList();
+
+        // 5. Build response list
+        List<TopCompanyResponse> companies = new java.util.ArrayList<>();
+        for (String recruiterId : sortedRecruiterIds) {
+            CompanyStats stats = statsMap.get(recruiterId);
+            TopCompanyResponse resp = new TopCompanyResponse();
+            resp.setRecruiterId(recruiterId);
+            resp.setName(stats.name);
+            resp.setLocation(stats.location);
+            resp.setActiveJobCount(stats.activeJobCount);
+            UserServiceClient.CompanyData companyData = userServiceClient.getCompanyData(recruiterId);
+            if (companyData != null) {
+                resp.setCompanyId(companyData.id());
+                if (companyData.name() != null) {
+                    resp.setName(companyData.name());
+                }
+                resp.setLogoUrl(companyData.logoUrl());
+                resp.setCoverImageUrl(companyData.coverImageUrl());
+                resp.setIndustry(companyData.industry());
+                if (companyData.location() != null) {
+                    resp.setLocation(companyData.location());
+                }
+            }
+            companies.add(resp);
+        }
+
+        return companies;
+    }
+
+    private static class CompanyStats {
+        String name;
+        String location;
+        int activeJobCount = 0;
+        long totalApplications = 0;
+
+        CompanyStats(String name, String location) {
+            this.name = name;
+            this.location = location;
+        }
     }
 
     public List<ResourceItem> getResources() {

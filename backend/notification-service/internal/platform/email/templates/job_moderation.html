@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kết quả kiểm duyệt tin tuyển dụng - Smart CV</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; color: #333; }
+        .container { max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; }
+        .header { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: #ffffff; padding: 30px; text-align: center; }
+        .header h1 { margin: 0; font-size: 24px; letter-spacing: 1px; }
+        .header .subtitle { margin-top: 8px; font-size: 13px; opacity: 0.85; letter-spacing: 0.5px; }
+        .content { padding: 40px 40px 30px 40px; }
+        .job-card { background-color: #f7f9fc; border: 1px solid #e1e8f0; border-radius: 8px; padding: 18px 22px; margin-bottom: 28px; }
+        .job-card .label { font-size: 12px; color: #7a8a99; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 4px; }
+        .job-card .title { font-size: 18px; font-weight: 600; color: #1e3c72; margin: 0 0 4px 0; }
+        .job-card .company { font-size: 14px; color: #555; margin: 0; }
+        .status-banner { border-radius: 8px; padding: 28px 24px; margin-bottom: 28px; text-align: center; }
+        .status-banner .icon { font-size: 44px; line-height: 1; margin-bottom: 12px; display: block; }
+        .status-banner .title { font-size: 20px; font-weight: 700; margin: 0 0 8px 0; }
+        .status-banner .desc { font-size: 14px; line-height: 1.6; margin: 0; }
+        .status-approved { background-color: #e6f9ed; border-left: 4px solid #28a745; }
+        .status-approved .title { color: #1b6b34; }
+        .status-approved .desc { color: #2d7a47; }
+        .status-rejected { background-color: #fdecee; border-left: 4px solid #dc3545; }
+        .status-rejected .title { color: #8a1a23; }
+        .status-rejected .desc { color: #a02832; }
+        .note-box { background-color: #ffffff; border: 1px solid #f5c6cb; border-radius: 6px; padding: 14px 16px; margin-top: 16px; text-align: left; }
+        .note-box .note-label { font-size: 12px; color: #8a1a23; text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 6px; }
+        .note-box .note-text { font-size: 14px; color: #555; line-height: 1.5; margin: 0; }
+        .next-steps { background-color: #f0f4f8; border-radius: 8px; padding: 20px 24px; margin-bottom: 24px; }
+        .next-steps h3 { margin: 0 0 10px 0; font-size: 15px; color: #1e3c72; font-weight: 600; }
+        .next-steps p { margin: 0; font-size: 14px; line-height: 1.6; color: #555; }
+        .closing { font-size: 15px; line-height: 1.6; color: #444; margin-top: 24px; }
+        .signature { margin-top: 8px; font-weight: 600; color: #1e3c72; }
+        .footer { background-color: #f9f9f9; padding: 20px; text-align: center; font-size: 12px; color: #999; border-top: 1px solid #eeeeee; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>SMART CV</h1>
+            <div class="subtitle">Kết quả kiểm duyệt tin tuyển dụng</div>
+        </div>
+        <div class="content">
+            <p>Xin chào,</p>
+            <div class="job-card">
+                <div class="label">Tin tuyển dụng</div>
+                <p class="title">{{.JobTitle}}</p>
+                <p class="company">{{.Company}}</p>
+            </div>
+            {{if eq .Status "APPROVED"}}
+            <div class="status-banner status-approved">
+                <span class="icon">&#10004;</span>
+                <h2 class="title">Tin tuyển dụng đã được phê duyệt!</h2>
+                <p class="desc">Tin tuyển dụng của bạn đã vượt qua quá trình kiểm duyệt và hiện đang được hiển thị công khai trên Smart CV.</p>
+            </div>
+            <div class="next-steps">
+                <h3>Tiếp theo</h3>
+                <p>Tin tuyển dụng của bạn đã được đăng tải. Ứng viên có thể tìm thấy và nộp đơn ngay bây giờ. Hãy theo dõi các đơn ứng tuyển trong trang quản lý của bạn.</p>
+            </div>
+            {{else}}
+            <div class="status-banner status-rejected">
+                <span class="icon">&#9888;</span>
+                <h2 class="title">Tin tuyển dụng chưa được phê duyệt</h2>
+                <p class="desc">Tin tuyển dụng của bạn chưa đáp ứng tiêu chuẩn kiểm duyệt và cần được chỉnh sửa trước khi được đăng tải.</p>
+                {{if .Note}}
+                <div class="note-box">
+                    <div class="note-label">Lý do</div>
+                    <p class="note-text">{{.Note}}</p>
+                </div>
+                {{end}}
+            </div>
+            <div class="next-steps">
+                <h3>Cần chỉnh sửa</h3>
+                <p>Vui lòng đăng nhập vào Smart CV, chỉnh sửa nội dung tin tuyển dụng theo góp ý của đội ngũ kiểm duyệt và gửi lại để xem xét.</p>
+            </div>
+            {{end}}
+            <p class="closing">
+                Cảm ơn bạn đã tin tưởng và sử dụng Smart CV.<br>
+                <span class="signature">— Đội ngũ Smart CV</span>
+            </p>
+        </div>
+        <div class="footer">
+            <p>&copy; 2026 Smart CV. Tất cả quyền được bảo lưu.</p>
+            <p>Email này được gửi tự động, vui lòng không trả lời.</p>
+        </div>
+    </div>
+</body>
+</html>

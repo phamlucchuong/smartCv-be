@@ -14,12 +14,23 @@ import vn.chuongpl.application_service.dtos.request.ApplicationStatusUpdateReque
 import vn.chuongpl.application_service.dtos.response.ApplicationDetailResponse;
 import vn.chuongpl.application_service.dtos.response.ApplicationResponse;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/applications")
 @RequiredArgsConstructor
 public class ApplicationController {
 
     final ApplicationService applicationService;
+    final ApplicationAggregateService applicationAggregateService;
+
+    @GetMapping("/top-jobs")
+    public ApiResponse<List<TopJobCountDto>> getTopJobs(
+            @RequestParam(defaultValue = "6") int limit) {
+        return ApiResponse.<List<TopJobCountDto>>builder()
+                .data(applicationAggregateService.getTopJobsByApplicationCount(limit))
+                .build();
+    }
 
     @PostMapping
     @PreAuthorize("hasRole('CANDIDATE')")
@@ -96,6 +107,17 @@ public class ApplicationController {
                                                                     @AuthenticationPrincipal String userId) {
         return ApiResponse.<ApplicationResponse>builder()
                 .data(applicationService.getMyApplicationForJob(userId, jobId))
+                .build();
+    }
+
+    @GetMapping("/recruiter")
+    @PreAuthorize("hasRole('RECRUITER')")
+    public ApiResponse<PageResponse<ApplicationDetailResponse>> getMyJobsApplications(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "50") int size,
+            @AuthenticationPrincipal String userId) {
+        return ApiResponse.<PageResponse<ApplicationDetailResponse>>builder()
+                .data(applicationService.getByRecruiterId(userId, page, size))
                 .build();
     }
 

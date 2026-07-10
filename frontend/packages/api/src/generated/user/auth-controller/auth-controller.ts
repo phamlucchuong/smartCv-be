@@ -21,6 +21,7 @@ import type {
   ApiResponseVoid,
   AuthRequest,
   ForgotPasswordRequest,
+  GoogleAuthRequest,
   IntrospectRequest,
   RefreshTokenRequest,
   RegisterRequest,
@@ -495,6 +496,64 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
       > => {
 
       const mutationOptions = getIntrospectMutationOptions(options);
+
+      return useMutation(mutationOptions, queryClient);
+    }
+    export const authenticateWithGoogle = (
+    googleAuthRequest: GoogleAuthRequest,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<ApiResponseAuthResponse>(
+      {url: `/api/auth/google`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: googleAuthRequest, signal
+    },
+      options);
+    }
+  
+
+
+export const getAuthenticateWithGoogleMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof authenticateWithGoogle>>, TError,{data: GoogleAuthRequest}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof authenticateWithGoogle>>, TError,{data: GoogleAuthRequest}, TContext> => {
+
+const mutationKey = ['authenticateWithGoogle'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof authenticateWithGoogle>>, {data: GoogleAuthRequest}> = (props) => {
+          const {data} = props ?? {};
+
+          return  authenticateWithGoogle(data,requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type AuthenticateWithGoogleMutationResult = NonNullable<Awaited<ReturnType<typeof authenticateWithGoogle>>>
+    export type AuthenticateWithGoogleMutationBody = GoogleAuthRequest
+    export type AuthenticateWithGoogleMutationError = unknown
+
+    export const useAuthenticateWithGoogle = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof authenticateWithGoogle>>, TError,{data: GoogleAuthRequest}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof authenticateWithGoogle>>,
+        TError,
+        {data: GoogleAuthRequest},
+        TContext
+      > => {
+
+      const mutationOptions = getAuthenticateWithGoogleMutationOptions(options);
 
       return useMutation(mutationOptions, queryClient);
     }

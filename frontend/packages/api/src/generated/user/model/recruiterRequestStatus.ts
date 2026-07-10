@@ -10,6 +10,7 @@ export type RecruiterRequestStatus = typeof RecruiterRequestStatus[keyof typeof 
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const RecruiterRequestStatus = {
+  DRAFT: 'DRAFT',
   PENDING: 'PENDING',
   APPROVED: 'APPROVED',
   REJECTED: 'REJECTED',

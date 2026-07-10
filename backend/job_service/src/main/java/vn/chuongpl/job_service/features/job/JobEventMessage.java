@@ -14,8 +14,10 @@ import java.time.LocalDateTime;
 public class JobEventMessage {
     String jobId;
     String recruiterId;
+    String recruiterEmail;
     String title;
     String company;
     String eventType;
+    String moderationNote;
     LocalDateTime occurredAt;
 }

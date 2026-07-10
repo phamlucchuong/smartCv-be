@@ -1,0 +1,8 @@
+{
+  "name": "smart-cv",
+  "private": true,
+  "scripts": {
+    "gen:api": "pnpm --dir frontend gen:api",
+    "generate:api": "pnpm --dir frontend gen:api"
+  }
+}

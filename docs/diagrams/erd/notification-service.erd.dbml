@@ -1,0 +1,35 @@
+Project notification_service_erd {
+  database_type: "PostgreSQL"
+}
+
+// Logical ERD for notification-service.
+
+Table notifications {
+  id uuid [pk]
+  user_id text [not null]
+  recipient_role varchar [not null]
+  type varchar
+  title varchar [not null]
+  body text [not null]
+  data json
+  is_read boolean
+  read_at timestamptz
+  created_at timestamptz
+}
+
+Table notification_fcm_tokens {
+  id uuid [pk]
+  user_id text [not null]
+  audience varchar [not null]
+  token text [not null]
+  created_at timestamptz
+  updated_at timestamptz
+}
+
+Table users {
+  id text [pk]
+}
+
+Ref: notifications.user_id > users.id
+Ref: notification_fcm_tokens.user_id > users.id
+

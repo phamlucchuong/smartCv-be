@@ -21,16 +21,18 @@ class AiProviderTest {
     }
 
     @Test
-    void from_anthropic_aliases_return_ANTHROPIC() {
-        assertThat(AiProvider.from("anthropic")).isEqualTo(AiProvider.ANTHROPIC);
-        assertThat(AiProvider.from("claude")).isEqualTo(AiProvider.ANTHROPIC);
-    }
-
-    @Test
     void from_azure_aliases_return_AZURE_OPENAI() {
         assertThat(AiProvider.from("azure")).isEqualTo(AiProvider.AZURE_OPENAI);
         assertThat(AiProvider.from("azure_openai")).isEqualTo(AiProvider.AZURE_OPENAI);
         assertThat(AiProvider.from("azure-openai")).isEqualTo(AiProvider.AZURE_OPENAI);
+    }
+
+    @Test
+    void from_llama_aliases_return_LLAMA_3() {
+        assertThat(AiProvider.from("llama")).isEqualTo(AiProvider.LLAMA_3);
+        assertThat(AiProvider.from("llama3")).isEqualTo(AiProvider.LLAMA_3);
+        assertThat(AiProvider.from("llama_3")).isEqualTo(AiProvider.LLAMA_3);
+        assertThat(AiProvider.from("llama-3")).isEqualTo(AiProvider.LLAMA_3);
     }
 
     @Test

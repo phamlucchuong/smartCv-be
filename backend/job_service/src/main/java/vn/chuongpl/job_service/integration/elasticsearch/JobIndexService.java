@@ -19,6 +19,8 @@ import org.springframework.stereotype.Service;
 import vn.chuongpl.job_service.dtos.PageResponse;
 import vn.chuongpl.job_service.dtos.request.JobSearchRequest;
 import vn.chuongpl.job_service.dtos.response.JobResponse;
+import vn.chuongpl.job_service.enums.JobModerationStatus;
+import vn.chuongpl.job_service.enums.JobVisibilityStatus;
 import vn.chuongpl.job_service.features.job.*;
 
 import java.util.ArrayList;
@@ -42,6 +44,19 @@ public class JobIndexService {
         }
     }
 
+    /**
+     * Drops and recreates the index from the {@link JobDocument} annotations.
+     * Needed because an existing index keeps its old (possibly dynamic) mapping,
+     * which breaks the exact term filters used in {@link #search}.
+     */
+    public void recreateIndex() {
+        var indexOps = elasticsearchTemplate.indexOps(JobDocument.class);
+        if (indexOps.exists()) {
+            indexOps.delete();
+        }
+        indexOps.createWithMapping();
+    }
+
     public void removeFromIndex(String jobId) {
         try {
             esRepository.deleteById(jobId);
@@ -56,7 +71,8 @@ public class JobIndexService {
         Pageable pageable = PageRequest.of(page, size);
 
         List<Query> filters = new ArrayList<>();
-        filters.add(TermQuery.of(t -> t.field("status").value("ACTIVE"))._toQuery());
+        filters.add(TermQuery.of(t -> t.field("moderationStatus").value(JobModerationStatus.PUBLISHED.name()))._toQuery());
+        filters.add(TermQuery.of(t -> t.field("visibilityStatus").value(JobVisibilityStatus.ACTIVE.name()))._toQuery());
 
         if (request.getLocation() != null && !request.getLocation().isBlank()) {
             filters.add(TermQuery.of(t -> t.field("location").value(request.getLocation()))._toQuery());
@@ -69,6 +85,9 @@ public class JobIndexService {
         }
         if (request.getSkills() != null) {
             request.getSkills().forEach(skill -> filters.add(TermQuery.of(t -> t.field("skills").value(skill))._toQuery()));
+        }
+        if (request.getCategory() != null) {
+            filters.add(TermQuery.of(t -> t.field("category").value(request.getCategory().name()))._toQuery());
         }
         if (request.getSalaryMin() != null) {
             filters.add(Query.of(q -> q.range(r -> r.number(n -> n.field("salaryMin").gte(request.getSalaryMin())))));

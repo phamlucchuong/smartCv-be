@@ -15,11 +15,10 @@ Operation: $0
 ### Phase 1: Investigation
 
 1. **Read the issue**: read the file path provided in `$1` and understand its contents
-   - Backend issues live under `backend/plans/issues/`
-   - Frontend issues live under `frontend/docs/issues/`
+   - Issues live under `plans/issues/`
 2. **Evaluate existing context**: if the current conversation already contains enough investigation results, skip to Phase 2
 3. **Supplementary investigation**:
-   - Backend: review `backend/plans/EN/` for architecture decisions; grep code under:
+   - Backend: review `docs/EN/` for architecture decisions; grep code under:
      - `backend/api-gateway/src/`
      - `backend/user-service/src/`
      - `backend/job_service/src/`
@@ -101,12 +100,12 @@ After refactoring, re-confirm all tests pass. Invoke the code-reviewer agent. Ad
 
 Use AskUserQuestion to decide:
 - **Recurring pitfall** → add one line to the Important section of the relevant `CLAUDE.md`
-- **Architecture decision** → add to `backend/plans/EN/architecture-decisions.md`
+- **Architecture decision** → add to `docs/EN/architecture-decisions.md`
 - **No promotion needed** → skip
 
 ### Step 3: Design decision log
 
-Append to `backend/plans/EN/architecture-decisions.md` when: a library/tool was selected, architecture was changed, a choice was made after considering alternatives.
+Append to `docs/EN/architecture-decisions.md` when: a library/tool was selected, architecture was changed, a choice was made after considering alternatives.
 
 ```markdown
 ## YYYY/MM/DD: [the decision]
@@ -118,18 +117,12 @@ Append to `backend/plans/EN/architecture-decisions.md` when: a library/tool was 
 
 ### Step 4: Update the plan (if applicable)
 
-Update relevant task status in `backend/plans/` or `frontend/docs/`.
+Update relevant task status in `docs/`.
 
 ### Step 5: Move the issue file
 
-Backend issue:
 ```bash
-mv "backend/plans/issues/$1" "backend/plans/issues/✅/✅$(basename $1)"
-```
-
-Frontend issue:
-```bash
-mv "frontend/docs/issues/$1" "frontend/docs/issues/✅/✅$(basename $1)"
+mv "plans/issues/$1" "plans/issues/✅/✅$(basename $1)"
 ```
 
 ### Step 6: Commit & open PR into dev

@@ -30,7 +30,14 @@ public class PublicRoutesMatcher {
         private String path;
 
         public boolean matches(HttpMethod m, String p, AntPathMatcher matcher) {
+            if (isProtectedJobRoute(p)) {
+                return false;
+            }
             return m.name().equalsIgnoreCase(method) && matcher.match(path, p);
+        }
+
+        private boolean isProtectedJobRoute(String path) {
+            return "/job/api/jobs/my".equals(path);
         }
     }
 }

@@ -18,6 +18,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class InternalAuthFilter extends OncePerRequestFilter {
 
@@ -43,6 +46,7 @@ public class InternalAuthFilter extends OncePerRequestFilter {
 
         String userId = request.getHeader("X-User-Id");
         String scope = request.getHeader("X-User-Scope");
+        log.info("[Auth] {} {} | userId={} scope={}", request.getMethod(), request.getServletPath(), userId, scope);
 
         if (userId != null && !userId.isBlank()) {
             List<GrantedAuthority> authorities = Collections.emptyList();
@@ -51,6 +55,7 @@ public class InternalAuthFilter extends OncePerRequestFilter {
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());
             }
+            log.info("[Auth] authorities={}", authorities);
             UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(userId, null, authorities);
             SecurityContextHolder.getContext().setAuthentication(auth);
         }

@@ -13,4 +13,5 @@ export const AssessmentResultResponseResult = {
   PASS: 'PASS',
   FAIL: 'FAIL',
   PENDING: 'PENDING',
+  OVERTIME: 'OVERTIME',
 } as const;

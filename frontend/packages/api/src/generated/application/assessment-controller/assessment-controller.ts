@@ -24,15 +24,20 @@ import type {
 } from '@tanstack/react-query';
 
 import type {
+  ApiResponseAssessmentGenerateResponse,
   ApiResponseAssessmentResponse,
   ApiResponseAssessmentResultResponse,
   ApiResponseAttemptStateResponse,
+  ApiResponseListAssessmentResponse,
   ApiResponseListAttemptStateResponse,
+  ApiResponseListAttemptSummaryResponse,
   ApiResponseMapStringString,
   ApiResponseVoid,
   AssessmentAnswerRequest,
   AssessmentCreateRequest,
-  AssignToCandidateBody
+  AssessmentGenerateRequest,
+  AssignToCandidateBody,
+  SubmitAttemptParams
 } from '.././model';
 
 import { customInstance } from '../../../axios-instance';
@@ -42,14 +47,215 @@ type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
 
 
-export const submitAttempt = (
+export const getAssessment = (
+    id: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<ApiResponseAssessmentResponse>(
+      {url: `/api/assessments/${id}`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+
+
+export const getGetAssessmentQueryKey = (id?: string,) => {
+    return [
+    `/api/assessments/${id}`
+    ] as const;
+    }
+
+    
+export const getGetAssessmentQueryOptions = <TData = Awaited<ReturnType<typeof getAssessment>>, TError = unknown>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssessment>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetAssessmentQueryKey(id);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAssessment>>> = ({ signal }) => getAssessment(id, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAssessment>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetAssessmentQueryResult = NonNullable<Awaited<ReturnType<typeof getAssessment>>>
+export type GetAssessmentQueryError = unknown
+
+
+export function useGetAssessment<TData = Awaited<ReturnType<typeof getAssessment>>, TError = unknown>(
+ id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssessment>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAssessment>>,
+          TError,
+          Awaited<ReturnType<typeof getAssessment>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAssessment<TData = Awaited<ReturnType<typeof getAssessment>>, TError = unknown>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssessment>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAssessment>>,
+          TError,
+          Awaited<ReturnType<typeof getAssessment>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAssessment<TData = Awaited<ReturnType<typeof getAssessment>>, TError = unknown>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssessment>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetAssessment<TData = Awaited<ReturnType<typeof getAssessment>>, TError = unknown>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssessment>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetAssessmentQueryOptions(id,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+export const updateAssessment = (
+    id: string,
+    assessmentCreateRequest: AssessmentCreateRequest,
+ options?: SecondParameter<typeof customInstance>,) => {
+      
+      
+      return customInstance<ApiResponseAssessmentResponse>(
+      {url: `/api/assessments/${id}`, method: 'PUT',
+      headers: {'Content-Type': 'application/json', },
+      data: assessmentCreateRequest
+    },
+      options);
+    }
+  
+
+
+export const getUpdateAssessmentMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateAssessment>>, TError,{id: string;data: AssessmentCreateRequest}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateAssessment>>, TError,{id: string;data: AssessmentCreateRequest}, TContext> => {
+
+const mutationKey = ['updateAssessment'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateAssessment>>, {id: string;data: AssessmentCreateRequest}> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  updateAssessment(id,data,requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateAssessmentMutationResult = NonNullable<Awaited<ReturnType<typeof updateAssessment>>>
+    export type UpdateAssessmentMutationBody = AssessmentCreateRequest
+    export type UpdateAssessmentMutationError = unknown
+
+    export const useUpdateAssessment = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateAssessment>>, TError,{id: string;data: AssessmentCreateRequest}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof updateAssessment>>,
+        TError,
+        {id: string;data: AssessmentCreateRequest},
+        TContext
+      > => {
+
+      const mutationOptions = getUpdateAssessmentMutationOptions(options);
+
+      return useMutation(mutationOptions, queryClient);
+    }
+    export const deleteAssessment = (
+    id: string,
+ options?: SecondParameter<typeof customInstance>,) => {
+      
+      
+      return customInstance<ApiResponseVoid>(
+      {url: `/api/assessments/${id}`, method: 'DELETE'
+    },
+      options);
+    }
+  
+
+
+export const getDeleteAssessmentMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteAssessment>>, TError,{id: string}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteAssessment>>, TError,{id: string}, TContext> => {
+
+const mutationKey = ['deleteAssessment'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteAssessment>>, {id: string}> = (props) => {
+          const {id} = props ?? {};
+
+          return  deleteAssessment(id,requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteAssessmentMutationResult = NonNullable<Awaited<ReturnType<typeof deleteAssessment>>>
+    
+    export type DeleteAssessmentMutationError = unknown
+
+    export const useDeleteAssessment = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteAssessment>>, TError,{id: string}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof deleteAssessment>>,
+        TError,
+        {id: string},
+        TContext
+      > => {
+
+      const mutationOptions = getDeleteAssessmentMutationOptions(options);
+
+      return useMutation(mutationOptions, queryClient);
+    }
+    export const submitAttempt = (
     attemptId: string,
+    params?: SubmitAttemptParams,
  options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
       
       
       return customInstance<ApiResponseVoid>(
-      {url: `/api/attempts/${attemptId}/submit`, method: 'POST', signal
+      {url: `/api/attempts/${attemptId}/submit`, method: 'POST',
+        params, signal
     },
       options);
     }
@@ -57,8 +263,8 @@ export const submitAttempt = (
 
 
 export const getSubmitAttemptMutationOptions = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof submitAttempt>>, TError,{attemptId: string}, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof submitAttempt>>, TError,{attemptId: string}, TContext> => {
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof submitAttempt>>, TError,{attemptId: string;params?: SubmitAttemptParams}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof submitAttempt>>, TError,{attemptId: string;params?: SubmitAttemptParams}, TContext> => {
 
 const mutationKey = ['submitAttempt'];
 const {mutation: mutationOptions, request: requestOptions} = options ?
@@ -70,10 +276,10 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
       
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof submitAttempt>>, {attemptId: string}> = (props) => {
-          const {attemptId} = props ?? {};
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof submitAttempt>>, {attemptId: string;params?: SubmitAttemptParams}> = (props) => {
+          const {attemptId,params} = props ?? {};
 
-          return  submitAttempt(attemptId,requestOptions)
+          return  submitAttempt(attemptId,params,requestOptions)
         }
 
         
@@ -86,11 +292,11 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
     export type SubmitAttemptMutationError = unknown
 
     export const useSubmitAttempt = <TError = unknown,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof submitAttempt>>, TError,{attemptId: string}, TContext>, request?: SecondParameter<typeof customInstance>}
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof submitAttempt>>, TError,{attemptId: string;params?: SubmitAttemptParams}, TContext>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient): UseMutationResult<
         Awaited<ReturnType<typeof submitAttempt>>,
         TError,
-        {attemptId: string},
+        {attemptId: string;params?: SubmitAttemptParams},
         TContext
       > => {
 
@@ -157,7 +363,93 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
 
       return useMutation(mutationOptions, queryClient);
     }
-    export const createAssessment = (
+    export const getRecruiterAssessments = (
+    
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<ApiResponseListAssessmentResponse>(
+      {url: `/api/assessments`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+
+
+export const getGetRecruiterAssessmentsQueryKey = () => {
+    return [
+    `/api/assessments`
+    ] as const;
+    }
+
+    
+export const getGetRecruiterAssessmentsQueryOptions = <TData = Awaited<ReturnType<typeof getRecruiterAssessments>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecruiterAssessments>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRecruiterAssessmentsQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRecruiterAssessments>>> = ({ signal }) => getRecruiterAssessments(requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getRecruiterAssessments>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetRecruiterAssessmentsQueryResult = NonNullable<Awaited<ReturnType<typeof getRecruiterAssessments>>>
+export type GetRecruiterAssessmentsQueryError = unknown
+
+
+export function useGetRecruiterAssessments<TData = Awaited<ReturnType<typeof getRecruiterAssessments>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecruiterAssessments>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getRecruiterAssessments>>,
+          TError,
+          Awaited<ReturnType<typeof getRecruiterAssessments>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetRecruiterAssessments<TData = Awaited<ReturnType<typeof getRecruiterAssessments>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecruiterAssessments>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getRecruiterAssessments>>,
+          TError,
+          Awaited<ReturnType<typeof getRecruiterAssessments>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetRecruiterAssessments<TData = Awaited<ReturnType<typeof getRecruiterAssessments>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecruiterAssessments>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetRecruiterAssessments<TData = Awaited<ReturnType<typeof getRecruiterAssessments>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecruiterAssessments>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetRecruiterAssessmentsQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+export const createAssessment = (
     assessmentCreateRequest: AssessmentCreateRequest,
  options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
@@ -268,6 +560,263 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
       > => {
 
       const mutationOptions = getStartAttemptMutationOptions(options);
+
+      return useMutation(mutationOptions, queryClient);
+    }
+    export const getMySelfAssessments = (
+    
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<ApiResponseListAssessmentResponse>(
+      {url: `/api/assessments/self`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+
+
+export const getGetMySelfAssessmentsQueryKey = () => {
+    return [
+    `/api/assessments/self`
+    ] as const;
+    }
+
+    
+export const getGetMySelfAssessmentsQueryOptions = <TData = Awaited<ReturnType<typeof getMySelfAssessments>>, TError = unknown>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMySelfAssessments>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMySelfAssessmentsQueryKey();
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMySelfAssessments>>> = ({ signal }) => getMySelfAssessments(requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMySelfAssessments>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMySelfAssessmentsQueryResult = NonNullable<Awaited<ReturnType<typeof getMySelfAssessments>>>
+export type GetMySelfAssessmentsQueryError = unknown
+
+
+export function useGetMySelfAssessments<TData = Awaited<ReturnType<typeof getMySelfAssessments>>, TError = unknown>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMySelfAssessments>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMySelfAssessments>>,
+          TError,
+          Awaited<ReturnType<typeof getMySelfAssessments>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMySelfAssessments<TData = Awaited<ReturnType<typeof getMySelfAssessments>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMySelfAssessments>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMySelfAssessments>>,
+          TError,
+          Awaited<ReturnType<typeof getMySelfAssessments>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMySelfAssessments<TData = Awaited<ReturnType<typeof getMySelfAssessments>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMySelfAssessments>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetMySelfAssessments<TData = Awaited<ReturnType<typeof getMySelfAssessments>>, TError = unknown>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMySelfAssessments>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMySelfAssessmentsQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+export const createSelfAssessment = (
+    assessmentCreateRequest: AssessmentCreateRequest,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<ApiResponseAssessmentResponse>(
+      {url: `/api/assessments/self`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: assessmentCreateRequest, signal
+    },
+      options);
+    }
+  
+
+
+export const getCreateSelfAssessmentMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createSelfAssessment>>, TError,{data: AssessmentCreateRequest}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof createSelfAssessment>>, TError,{data: AssessmentCreateRequest}, TContext> => {
+
+const mutationKey = ['createSelfAssessment'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createSelfAssessment>>, {data: AssessmentCreateRequest}> = (props) => {
+          const {data} = props ?? {};
+
+          return  createSelfAssessment(data,requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateSelfAssessmentMutationResult = NonNullable<Awaited<ReturnType<typeof createSelfAssessment>>>
+    export type CreateSelfAssessmentMutationBody = AssessmentCreateRequest
+    export type CreateSelfAssessmentMutationError = unknown
+
+    export const useCreateSelfAssessment = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createSelfAssessment>>, TError,{data: AssessmentCreateRequest}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createSelfAssessment>>,
+        TError,
+        {data: AssessmentCreateRequest},
+        TContext
+      > => {
+
+      const mutationOptions = getCreateSelfAssessmentMutationOptions(options);
+
+      return useMutation(mutationOptions, queryClient);
+    }
+    export const generateQuestions = (
+    assessmentGenerateRequest: AssessmentGenerateRequest,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<ApiResponseAssessmentGenerateResponse>(
+      {url: `/api/assessments/generate-questions`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: assessmentGenerateRequest, signal
+    },
+      options);
+    }
+  
+
+
+export const getGenerateQuestionsMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof generateQuestions>>, TError,{data: AssessmentGenerateRequest}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof generateQuestions>>, TError,{data: AssessmentGenerateRequest}, TContext> => {
+
+const mutationKey = ['generateQuestions'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof generateQuestions>>, {data: AssessmentGenerateRequest}> = (props) => {
+          const {data} = props ?? {};
+
+          return  generateQuestions(data,requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type GenerateQuestionsMutationResult = NonNullable<Awaited<ReturnType<typeof generateQuestions>>>
+    export type GenerateQuestionsMutationBody = AssessmentGenerateRequest
+    export type GenerateQuestionsMutationError = unknown
+
+    export const useGenerateQuestions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof generateQuestions>>, TError,{data: AssessmentGenerateRequest}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof generateQuestions>>,
+        TError,
+        {data: AssessmentGenerateRequest},
+        TContext
+      > => {
+
+      const mutationOptions = getGenerateQuestionsMutationOptions(options);
+
+      return useMutation(mutationOptions, queryClient);
+    }
+    export const publishAssessment = (
+    id: string,
+ options?: SecondParameter<typeof customInstance>,) => {
+      
+      
+      return customInstance<ApiResponseAssessmentResponse>(
+      {url: `/api/assessments/${id}/publish`, method: 'PATCH'
+    },
+      options);
+    }
+  
+
+
+export const getPublishAssessmentMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof publishAssessment>>, TError,{id: string}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof publishAssessment>>, TError,{id: string}, TContext> => {
+
+const mutationKey = ['publishAssessment'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof publishAssessment>>, {id: string}> = (props) => {
+          const {id} = props ?? {};
+
+          return  publishAssessment(id,requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type PublishAssessmentMutationResult = NonNullable<Awaited<ReturnType<typeof publishAssessment>>>
+    
+    export type PublishAssessmentMutationError = unknown
+
+    export const usePublishAssessment = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof publishAssessment>>, TError,{id: string}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof publishAssessment>>,
+        TError,
+        {id: string},
+        TContext
+      > => {
+
+      const mutationOptions = getPublishAssessmentMutationOptions(options);
 
       return useMutation(mutationOptions, queryClient);
     }
@@ -415,7 +964,62 @@ export function useGetAttemptState<TData = Awaited<ReturnType<typeof getAttemptS
 
 
 
-export const getResult = (
+export const deleteAttempt = (
+    attemptId: string,
+ options?: SecondParameter<typeof customInstance>,) => {
+      
+      
+      return customInstance<ApiResponseVoid>(
+      {url: `/api/attempts/${attemptId}`, method: 'DELETE'
+    },
+      options);
+    }
+  
+
+
+export const getDeleteAttemptMutationOptions = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteAttempt>>, TError,{attemptId: string}, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteAttempt>>, TError,{attemptId: string}, TContext> => {
+
+const mutationKey = ['deleteAttempt'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+      
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteAttempt>>, {attemptId: string}> = (props) => {
+          const {attemptId} = props ?? {};
+
+          return  deleteAttempt(attemptId,requestOptions)
+        }
+
+        
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteAttemptMutationResult = NonNullable<Awaited<ReturnType<typeof deleteAttempt>>>
+    
+    export type DeleteAttemptMutationError = unknown
+
+    export const useDeleteAttempt = <TError = unknown,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteAttempt>>, TError,{attemptId: string}, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof deleteAttempt>>,
+        TError,
+        {attemptId: string},
+        TContext
+      > => {
+
+      const mutationOptions = getDeleteAttemptMutationOptions(options);
+
+      return useMutation(mutationOptions, queryClient);
+    }
+    export const getResult = (
     attemptId: string,
  options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
@@ -501,14 +1105,14 @@ export function useGetResult<TData = Awaited<ReturnType<typeof getResult>>, TErr
 
 
 
-export const getAssessment = (
-    id: string,
+export const getAttemptsByCandidate = (
+    candidateId: string,
  options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
       
       
-      return customInstance<ApiResponseAssessmentResponse>(
-      {url: `/api/assessments/${id}`, method: 'GET', signal
+      return customInstance<ApiResponseListAttemptSummaryResponse>(
+      {url: `/api/attempts/candidate/${candidateId}`, method: 'GET', signal
     },
       options);
     }
@@ -516,66 +1120,238 @@ export const getAssessment = (
 
 
 
-export const getGetAssessmentQueryKey = (id?: string,) => {
+export const getGetAttemptsByCandidateQueryKey = (candidateId?: string,) => {
     return [
-    `/api/assessments/${id}`
+    `/api/attempts/candidate/${candidateId}`
     ] as const;
     }
 
     
-export const getGetAssessmentQueryOptions = <TData = Awaited<ReturnType<typeof getAssessment>>, TError = unknown>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssessment>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getGetAttemptsByCandidateQueryOptions = <TData = Awaited<ReturnType<typeof getAttemptsByCandidate>>, TError = unknown>(candidateId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAttemptsByCandidate>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetAssessmentQueryKey(id);
+  const queryKey =  queryOptions?.queryKey ?? getGetAttemptsByCandidateQueryKey(candidateId);
 
   
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAssessment>>> = ({ signal }) => getAssessment(id, requestOptions, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAttemptsByCandidate>>> = ({ signal }) => getAttemptsByCandidate(candidateId, requestOptions, signal);
 
       
 
       
 
-   return  { queryKey, queryFn, enabled: !!(id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAssessment>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+   return  { queryKey, queryFn, enabled: !!(candidateId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAttemptsByCandidate>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type GetAssessmentQueryResult = NonNullable<Awaited<ReturnType<typeof getAssessment>>>
-export type GetAssessmentQueryError = unknown
+export type GetAttemptsByCandidateQueryResult = NonNullable<Awaited<ReturnType<typeof getAttemptsByCandidate>>>
+export type GetAttemptsByCandidateQueryError = unknown
 
 
-export function useGetAssessment<TData = Awaited<ReturnType<typeof getAssessment>>, TError = unknown>(
- id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssessment>>, TError, TData>> & Pick<
+export function useGetAttemptsByCandidate<TData = Awaited<ReturnType<typeof getAttemptsByCandidate>>, TError = unknown>(
+ candidateId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAttemptsByCandidate>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getAssessment>>,
+          Awaited<ReturnType<typeof getAttemptsByCandidate>>,
           TError,
-          Awaited<ReturnType<typeof getAssessment>>
+          Awaited<ReturnType<typeof getAttemptsByCandidate>>
         > , 'initialData'
       >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetAssessment<TData = Awaited<ReturnType<typeof getAssessment>>, TError = unknown>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssessment>>, TError, TData>> & Pick<
+export function useGetAttemptsByCandidate<TData = Awaited<ReturnType<typeof getAttemptsByCandidate>>, TError = unknown>(
+ candidateId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAttemptsByCandidate>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getAssessment>>,
+          Awaited<ReturnType<typeof getAttemptsByCandidate>>,
           TError,
-          Awaited<ReturnType<typeof getAssessment>>
+          Awaited<ReturnType<typeof getAttemptsByCandidate>>
         > , 'initialData'
       >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetAssessment<TData = Awaited<ReturnType<typeof getAssessment>>, TError = unknown>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssessment>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export function useGetAttemptsByCandidate<TData = Awaited<ReturnType<typeof getAttemptsByCandidate>>, TError = unknown>(
+ candidateId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAttemptsByCandidate>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 
-export function useGetAssessment<TData = Awaited<ReturnType<typeof getAssessment>>, TError = unknown>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssessment>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export function useGetAttemptsByCandidate<TData = Awaited<ReturnType<typeof getAttemptsByCandidate>>, TError = unknown>(
+ candidateId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAttemptsByCandidate>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient 
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const queryOptions = getGetAssessmentQueryOptions(id,options)
+  const queryOptions = getGetAttemptsByCandidateQueryOptions(candidateId,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+export const getAttemptsByAssessment = (
+    id: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<ApiResponseListAttemptSummaryResponse>(
+      {url: `/api/assessments/${id}/attempts`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+
+
+export const getGetAttemptsByAssessmentQueryKey = (id?: string,) => {
+    return [
+    `/api/assessments/${id}/attempts`
+    ] as const;
+    }
+
+    
+export const getGetAttemptsByAssessmentQueryOptions = <TData = Awaited<ReturnType<typeof getAttemptsByAssessment>>, TError = unknown>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAttemptsByAssessment>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetAttemptsByAssessmentQueryKey(id);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAttemptsByAssessment>>> = ({ signal }) => getAttemptsByAssessment(id, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(id), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAttemptsByAssessment>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetAttemptsByAssessmentQueryResult = NonNullable<Awaited<ReturnType<typeof getAttemptsByAssessment>>>
+export type GetAttemptsByAssessmentQueryError = unknown
+
+
+export function useGetAttemptsByAssessment<TData = Awaited<ReturnType<typeof getAttemptsByAssessment>>, TError = unknown>(
+ id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAttemptsByAssessment>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAttemptsByAssessment>>,
+          TError,
+          Awaited<ReturnType<typeof getAttemptsByAssessment>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAttemptsByAssessment<TData = Awaited<ReturnType<typeof getAttemptsByAssessment>>, TError = unknown>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAttemptsByAssessment>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAttemptsByAssessment>>,
+          TError,
+          Awaited<ReturnType<typeof getAttemptsByAssessment>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAttemptsByAssessment<TData = Awaited<ReturnType<typeof getAttemptsByAssessment>>, TError = unknown>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAttemptsByAssessment>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetAttemptsByAssessment<TData = Awaited<ReturnType<typeof getAttemptsByAssessment>>, TError = unknown>(
+ id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAttemptsByAssessment>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetAttemptsByAssessmentQueryOptions(id,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+export const getAssessmentsByRecruiter = (
+    recruiterId: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<ApiResponseListAssessmentResponse>(
+      {url: `/api/assessments/recruiter/${recruiterId}`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+
+
+export const getGetAssessmentsByRecruiterQueryKey = (recruiterId?: string,) => {
+    return [
+    `/api/assessments/recruiter/${recruiterId}`
+    ] as const;
+    }
+
+    
+export const getGetAssessmentsByRecruiterQueryOptions = <TData = Awaited<ReturnType<typeof getAssessmentsByRecruiter>>, TError = unknown>(recruiterId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssessmentsByRecruiter>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetAssessmentsByRecruiterQueryKey(recruiterId);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAssessmentsByRecruiter>>> = ({ signal }) => getAssessmentsByRecruiter(recruiterId, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(recruiterId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAssessmentsByRecruiter>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetAssessmentsByRecruiterQueryResult = NonNullable<Awaited<ReturnType<typeof getAssessmentsByRecruiter>>>
+export type GetAssessmentsByRecruiterQueryError = unknown
+
+
+export function useGetAssessmentsByRecruiter<TData = Awaited<ReturnType<typeof getAssessmentsByRecruiter>>, TError = unknown>(
+ recruiterId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssessmentsByRecruiter>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAssessmentsByRecruiter>>,
+          TError,
+          Awaited<ReturnType<typeof getAssessmentsByRecruiter>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAssessmentsByRecruiter<TData = Awaited<ReturnType<typeof getAssessmentsByRecruiter>>, TError = unknown>(
+ recruiterId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssessmentsByRecruiter>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAssessmentsByRecruiter>>,
+          TError,
+          Awaited<ReturnType<typeof getAssessmentsByRecruiter>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAssessmentsByRecruiter<TData = Awaited<ReturnType<typeof getAssessmentsByRecruiter>>, TError = unknown>(
+ recruiterId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssessmentsByRecruiter>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetAssessmentsByRecruiter<TData = Awaited<ReturnType<typeof getAssessmentsByRecruiter>>, TError = unknown>(
+ recruiterId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssessmentsByRecruiter>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetAssessmentsByRecruiterQueryOptions(recruiterId,options)
 
   const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
@@ -662,6 +1438,92 @@ export function useGetMyAssessments<TData = Awaited<ReturnType<typeof getMyAsses
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
   const queryOptions = getGetMyAssessmentsQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  query.queryKey = queryOptions.queryKey ;
+
+  return query;
+}
+
+
+
+
+export const getAssessmentsByJob = (
+    jobId: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+      
+      
+      return customInstance<ApiResponseListAssessmentResponse>(
+      {url: `/api/assessments/job/${jobId}`, method: 'GET', signal
+    },
+      options);
+    }
+  
+
+
+
+export const getGetAssessmentsByJobQueryKey = (jobId?: string,) => {
+    return [
+    `/api/assessments/job/${jobId}`
+    ] as const;
+    }
+
+    
+export const getGetAssessmentsByJobQueryOptions = <TData = Awaited<ReturnType<typeof getAssessmentsByJob>>, TError = unknown>(jobId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssessmentsByJob>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetAssessmentsByJobQueryKey(jobId);
+
+  
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAssessmentsByJob>>> = ({ signal }) => getAssessmentsByJob(jobId, requestOptions, signal);
+
+      
+
+      
+
+   return  { queryKey, queryFn, enabled: !!(jobId), ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAssessmentsByJob>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetAssessmentsByJobQueryResult = NonNullable<Awaited<ReturnType<typeof getAssessmentsByJob>>>
+export type GetAssessmentsByJobQueryError = unknown
+
+
+export function useGetAssessmentsByJob<TData = Awaited<ReturnType<typeof getAssessmentsByJob>>, TError = unknown>(
+ jobId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssessmentsByJob>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAssessmentsByJob>>,
+          TError,
+          Awaited<ReturnType<typeof getAssessmentsByJob>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAssessmentsByJob<TData = Awaited<ReturnType<typeof getAssessmentsByJob>>, TError = unknown>(
+ jobId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssessmentsByJob>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getAssessmentsByJob>>,
+          TError,
+          Awaited<ReturnType<typeof getAssessmentsByJob>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetAssessmentsByJob<TData = Awaited<ReturnType<typeof getAssessmentsByJob>>, TError = unknown>(
+ jobId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssessmentsByJob>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+
+export function useGetAssessmentsByJob<TData = Awaited<ReturnType<typeof getAssessmentsByJob>>, TError = unknown>(
+ jobId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAssessmentsByJob>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient 
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetAssessmentsByJobQueryOptions(jobId,options)
 
   const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 

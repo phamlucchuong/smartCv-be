@@ -13,7 +13,9 @@ export interface RegisterRequest {
    * @maxLength 2147483647
    */
   password?: string;
+  /** @pattern ^(0|\+84)(3|5|7|8|9)\d{8}$ */
   phone?: string;
   preferredVerification?: string;
   role: string;
+  companyName?: string;
 }

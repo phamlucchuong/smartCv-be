@@ -10,7 +10,6 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -34,6 +33,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -48,6 +48,7 @@ public class AuthService {
     NotificationClient notificationClient;
     CandidateService candidateService;
     RecruiterService recruiterService;
+    GoogleIdTokenVerifierService googleIdTokenVerifierService;
 
     @NonFinal
     @Value("${JWT_SECRET_KEY}")
@@ -63,17 +64,23 @@ public class AuthService {
     protected long LONG_REFRESHABLE_DURATION;
 
     public Map<String, String> authenticated(AuthRequest request) {
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         var user = userService.findByEmailAndDeletedFalse(request.getEmail())
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
 
-        boolean authenticated = passwordEncoder.matches(request.getPassword(), user.getPassword());
+        if (user.isLocked()) {
+            throw new AppException(ErrorCode.USER_LOCKED);
+        }
+
+        boolean authenticated = user.getPassword() != null
+                && !user.getPassword().isBlank()
+                && passwordEncoder.matches(request.getPassword(), user.getPassword());
         if (!authenticated) {
             throw new AppException(ErrorCode.AUTHENTICATION_FAILED);
         }
         if (!user.isVerified()) {
             notificationClient.sendOTP(user.getEmail(), "EMAIL", "VERIFY_ACCOUNT");
-            throw new AppException(ErrorCode.USER_NOT_VERIFIED);
+            Map<String, Object> data = Map.of("phone", user.getPhone() != null ? user.getPhone() : "");
+            throw new AppException(ErrorCode.USER_NOT_VERIFIED, data);
         }
 
         Map<String, String> tokens = new HashMap<>();
@@ -83,16 +90,31 @@ public class AuthService {
         return tokens;
     }
 
+    public AuthResponse authenticateWithGoogle(GoogleAuthRequest request) {
+        String requestedRole = normalizeRole(request.getRole());
+        GoogleTokenPayload googleToken = googleIdTokenVerifierService.verify(request.getIdToken());
+        User user = findOrCreateGoogleUser(googleToken, requestedRole);
+        if (!hasRole(user, requestedRole)) {
+            throw new AppException(ErrorCode.ROLE_MISMATCH);
+        }
+        return issueTokens(user);
+    }
+
     public UserResponse register(RegisterRequest request) {
         List<User> existing = userService.findAllByEmail(request.getEmail());
-        boolean hasVerified = existing.stream().anyMatch(User::isVerified);
-        if (hasVerified) throw new AppException(ErrorCode.EMAIL_EXISTED);
+        boolean hasActiveVerified = existing.stream().anyMatch(u -> u.isVerified() && !u.isDeleted());
+        if (hasActiveVerified) throw new AppException(ErrorCode.EMAIL_EXISTED);
+
+        // Reuse unverified non-deleted records (OTP resend case); ignore deleted accounts
+        List<User> reusable = existing.stream()
+                .filter(u -> !u.isVerified() && !u.isDeleted())
+                .collect(java.util.stream.Collectors.toList());
 
         User user;
-        if (!existing.isEmpty()) {
-            user = existing.get(0);
-            for (int i = 1; i < existing.size(); i++) {
-                userService.hardDeleteUser(existing.get(i).getId());
+        if (!reusable.isEmpty()) {
+            user = reusable.get(0);
+            for (int i = 1; i < reusable.size(); i++) {
+                userService.hardDeleteUser(reusable.get(i).getId());
             }
             user.setUpdatedAt(LocalDateTime.now());
         } else {
@@ -117,6 +139,10 @@ public class AuthService {
         user.setRoles(roles);
 
         User savedUser = userService.saveUser(user);
+
+        if ("RECRUITER".equals(roleName)) {
+            recruiterService.createBasicProfile(savedUser.getId(), request.getCompanyName());
+        }
 
         String target = "SMS".equalsIgnoreCase(request.getPreferredVerification()) ? request.getPhone() : request.getEmail();
         notificationClient.sendOTP(target, request.getPreferredVerification(), "VERIFY_ACCOUNT");
@@ -201,9 +227,7 @@ public class AuthService {
 
         SignedJWT signedJWT = SignedJWT.parse(token);
 
-        Date expirityTime = (isRefresh)
-                ? new Date(signedJWT.getJWTClaimsSet().getIssueTime().toInstant().plus(REFRESHABLE_DURATION, ChronoUnit.SECONDS).toEpochMilli())
-                : signedJWT.getJWTClaimsSet().getExpirationTime();
+        Date expirityTime = signedJWT.getJWTClaimsSet().getExpirationTime();
 
         boolean verify = signedJWT.verify(verifier);
 
@@ -247,20 +271,32 @@ public class AuthService {
         return jStringJoiner.toString();
     }
 
+    private AuthResponse issueTokens(User user) {
+        return AuthResponse.builder()
+                .token(generateToken(user, VALID_DURATION))
+                .refreshToken(generateToken(user, REFRESHABLE_DURATION))
+                .authenticated(true)
+                .build();
+    }
+
     public AuthResponse refreshToken(String token) throws JOSEException, ParseException {
         var signedJwt = verifyToken(token, true);
 
         var expirationTime = signedJwt.getJWTClaimsSet().getExpirationTime();
-        jwtBlacklistService.addTokenToBlacklist(token, (expirationTime.getTime() - System.currentTimeMillis()) / 1000);
+        long remainingTtlSeconds = Math.max(0, (expirationTime.getTime() - System.currentTimeMillis()) / 1000);
+        if (remainingTtlSeconds > 0) {
+            jwtBlacklistService.addTokenToBlacklist(token, remainingTtlSeconds);
+        }
 
         var userId = signedJwt.getJWTClaimsSet().getSubject();
         var user = userService.getById(userId);
 
+        var accessToken = generateToken(user, VALID_DURATION);
         var refreshToken = generateToken(user, LONG_REFRESHABLE_DURATION);
 
         return AuthResponse.builder()
-                .token(refreshToken)
-                .refreshToken(token)
+                .token(accessToken)
+                .refreshToken(refreshToken)
                 .authenticated(true)
                 .build();
     }
@@ -270,5 +306,106 @@ public class AuthService {
             return userService.findByPhone(contact).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
         }
         return userService.findByEmailAndDeletedFalse(contact).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
+    }
+
+    private User findOrCreateGoogleUser(GoogleTokenPayload googleToken, String requestedRole) {
+        List<User> activeUsers = userService.findAllByEmail(googleToken.email()).stream()
+                .filter(user -> !user.isDeleted())
+                .collect(Collectors.toList());
+
+        User user = selectGoogleUser(activeUsers, googleToken.subject());
+        if (user == null) {
+            return createGoogleUser(googleToken, requestedRole);
+        }
+
+        if (user.isLocked()) {
+            throw new AppException(ErrorCode.USER_LOCKED);
+        }
+
+        if (user.getGoogleSubject() != null && !user.getGoogleSubject().equals(googleToken.subject())) {
+            throw new AppException(ErrorCode.GOOGLE_ACCOUNT_CONFLICT);
+        }
+
+        boolean changed = false;
+        if (!user.isVerified()) {
+            user.setVerified(true);
+            changed = true;
+        }
+        if (!Objects.equals(user.getGoogleSubject(), googleToken.subject())) {
+            user.setGoogleSubject(googleToken.subject());
+            changed = true;
+        }
+        if ((user.getFullName() == null || user.getFullName().isBlank()) && googleToken.fullName() != null && !googleToken.fullName().isBlank()) {
+            user.setFullName(googleToken.fullName());
+            changed = true;
+        }
+        if (user.getAuthProvider() == null || user.getAuthProvider().isBlank()) {
+            user.setAuthProvider(user.getPassword() == null || user.getPassword().isBlank() ? "GOOGLE" : "LOCAL");
+            changed = true;
+        }
+        if (changed) {
+            user.setUpdatedAt(LocalDateTime.now());
+            user = userService.saveUser(user);
+        }
+
+        ensureProfileForRoles(user);
+        return user;
+    }
+
+    private User createGoogleUser(GoogleTokenPayload googleToken, String requestedRole) {
+        Role role = roleService.findById(requestedRole).orElseThrow(() -> new AppException(ErrorCode.ROLE_NOT_FOUND));
+        LocalDateTime now = LocalDateTime.now();
+        User user = User.builder()
+                .fullName(googleToken.fullName())
+                .email(googleToken.email())
+                .verified(true)
+                .locked(false)
+                .deleted(false)
+                .authProvider("GOOGLE")
+                .googleSubject(googleToken.subject())
+                .createdAt(now)
+                .updatedAt(now)
+                .roles(Set.of(role))
+                .build();
+        user = userService.saveUser(user);
+        ensureProfileForRoles(user);
+        return user;
+    }
+
+    private User selectGoogleUser(List<User> users, String googleSubject) {
+        return users.stream()
+                .filter(user -> googleSubject.equals(user.getGoogleSubject()))
+                .findFirst()
+                .or(() -> users.stream().filter(User::isVerified).findFirst())
+                .or(() -> users.stream().findFirst())
+                .orElse(null);
+    }
+
+    private void ensureProfileForRoles(User user) {
+        if (user.getRoles() == null) {
+            return;
+        }
+        user.getRoles().forEach(role -> {
+            if ("CANDIDATE".equals(role.getName())) {
+                candidateService.createBasicProfile(user.getId());
+            } else if ("RECRUITER".equals(role.getName())) {
+                recruiterService.createBasicProfile(user.getId());
+            }
+        });
+    }
+
+    private boolean hasRole(User user, String roleName) {
+        return user.getRoles() != null && user.getRoles().stream().anyMatch(role -> roleName.equals(role.getName()));
+    }
+
+    private String normalizeRole(String roleName) {
+        if (roleName == null || roleName.isBlank()) {
+            return "CANDIDATE";
+        }
+        String normalized = roleName.trim().toUpperCase(Locale.ROOT);
+        if (!normalized.equals("CANDIDATE") && !normalized.equals("RECRUITER")) {
+            throw new AppException(ErrorCode.INVALID_ROLE);
+        }
+        return normalized;
     }
 }

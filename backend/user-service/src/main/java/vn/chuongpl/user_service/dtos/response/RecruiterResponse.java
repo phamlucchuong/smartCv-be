@@ -2,6 +2,7 @@ package vn.chuongpl.user_service.dtos.response;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import vn.chuongpl.user_service.enums.JobCategory;
 import vn.chuongpl.user_service.enums.RecruiterStatus;
 
 import java.time.LocalDateTime;
@@ -24,12 +25,14 @@ public class RecruiterResponse {
     String companyName;
     String companyWebsite;
     String companyAddress;
+    String companyCity;
     String companyDescription;
     String companyPhone;
     String companySize;
     String companyType;
     Integer foundedYear;
     String industry;
+    JobCategory category;
 
     // ── Media ─────────────────────────────────────────────────────────────────
     String logoUrl;
@@ -48,10 +51,24 @@ public class RecruiterResponse {
     String contactEmail;
     String contactPhone;
 
-    // ── Status & quota ────────────────────────────────────────────────────────
+    // ── Status & approval ─────────────────────────────────────────────────────
     RecruiterStatus status;
+    String rejectionNote;
     int quotaJobPost;
     int quotaCvViews;
+
+    // ── Package Activation ───────────────────────────────────────────────────
+    String activePackageId;
+    LocalDateTime packageActivatedAt;
+    LocalDateTime packageExpiresAt;
+    Integer aiCreditsTotal;
+    Integer aiCreditsUsed;
+    Integer aiCreditsRemaining;
+    LocalDateTime platformFeeDueAt;
+    LocalDateTime platformFeeLastPaidAt;
+    LocalDateTime platformFeeReminderSentAt;
+    LocalDateTime platformFeeOverdueSentAt;
+    LocalDateTime platformFeeLockedAt;
 
     // ── Audit ─────────────────────────────────────────────────────────────────
     LocalDateTime createdAt;

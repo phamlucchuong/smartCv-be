@@ -11,14 +11,14 @@ import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.test.util.ReflectionTestUtils;
 import vn.chuongpl.job_service.dtos.response.JobResponse;
 import vn.chuongpl.job_service.enums.ErrorCode;
-import vn.chuongpl.job_service.enums.JobStatus;
+import vn.chuongpl.job_service.enums.JobModerationStatus;
+import vn.chuongpl.job_service.enums.JobVisibilityStatus;
 import vn.chuongpl.job_service.exception.AppException;
 
 import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
@@ -39,12 +39,18 @@ class RelatedJobsServiceTest {
 
     @Test
     void getRelatedJobs_shouldReturnRelatedBySkillOverlap() {
-        Job target = Job.builder().id("j1").skills(List.of("Java", "Spring")).status(JobStatus.ACTIVE).deleted(false).build();
-        Job related = Job.builder().id("j2").skills(List.of("Java")).status(JobStatus.ACTIVE).deleted(false).build();
+        Job target = Job.builder().id("j1").skills(List.of("Java", "Spring"))
+                .moderationStatus(JobModerationStatus.PUBLISHED)
+                .visibilityStatus(JobVisibilityStatus.ACTIVE)
+                .deleted(false).build();
+        Job related = Job.builder().id("j2").skills(List.of("Java"))
+                .moderationStatus(JobModerationStatus.PUBLISHED)
+                .visibilityStatus(JobVisibilityStatus.ACTIVE)
+                .deleted(false).build();
 
         when(jobRepository.findByIdAndDeletedFalse("j1")).thenReturn(Optional.of(target));
-        when(jobRepository.findTop5ByStatusAndSkillsInAndIdNotAndDeletedFalse(
-                eq(JobStatus.ACTIVE), eq(List.of("Java", "Spring")), eq("j1")))
+        when(jobRepository.findTop5ByModerationStatusAndVisibilityStatusAndSkillsInAndIdNotAndDeletedFalse(
+                eq(JobModerationStatus.PUBLISHED), eq(JobVisibilityStatus.ACTIVE), eq(List.of("Java", "Spring")), eq("j1")))
                 .thenReturn(List.of(related));
         when(jobMapper.toJobResponse(related)).thenReturn(JobResponse.builder().id("j2").build());
 
@@ -56,7 +62,10 @@ class RelatedJobsServiceTest {
 
     @Test
     void getRelatedJobs_shouldReturnEmptyWhenNoSkills() {
-        Job target = Job.builder().id("j1").skills(List.of()).status(JobStatus.ACTIVE).deleted(false).build();
+        Job target = Job.builder().id("j1").skills(List.of())
+                .moderationStatus(JobModerationStatus.PUBLISHED)
+                .visibilityStatus(JobVisibilityStatus.ACTIVE)
+                .deleted(false).build();
         when(jobRepository.findByIdAndDeletedFalse("j1")).thenReturn(Optional.of(target));
 
         List<JobResponse> result = jobService.getRelatedJobs("j1");

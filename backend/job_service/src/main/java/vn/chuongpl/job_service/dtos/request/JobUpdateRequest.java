@@ -3,6 +3,7 @@ package vn.chuongpl.job_service.dtos.request;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import vn.chuongpl.job_service.enums.ExperienceLevel;
+import vn.chuongpl.job_service.enums.JobCategory;
 import vn.chuongpl.job_service.enums.JobType;
 
 import java.time.LocalDate;
@@ -26,4 +27,10 @@ public class JobUpdateRequest {
     List<String> requirements;
     List<String> benefits;
     LocalDate deadline;
+    Integer openings;
+    Integer qualifiedThreshold;
+    Integer rejectThreshold;
+    Boolean autoRejectEnabled;
+    String requiredTest;
+    JobCategory category;
 }

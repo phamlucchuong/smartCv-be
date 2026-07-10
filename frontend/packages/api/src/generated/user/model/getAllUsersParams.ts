@@ -8,4 +8,7 @@
 export type GetAllUsersParams = {
 page?: number;
 size?: number;
+keyword?: string;
+role?: string;
+locked?: boolean;
 };

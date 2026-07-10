@@ -9,6 +9,8 @@ import type { AssessmentResultResponseResult } from './assessmentResultResponseR
 export interface AssessmentResultResponse {
   attemptId?: string;
   score?: number;
+  correctAnswers?: number;
+  totalQuestions?: number;
   result?: AssessmentResultResponseResult;
   submittedAt?: string;
 }

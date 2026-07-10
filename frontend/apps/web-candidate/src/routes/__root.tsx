@@ -1,7 +1,6 @@
 import { createRootRoute, Link, Outlet, useNavigate, useRouterState } from '@tanstack/react-router'
 import * as React from 'react'
 import {
-  Bell,
   ChevronDown,
   ClipboardCheck,
   Facebook,
@@ -19,12 +18,20 @@ import {
   UserRound,
   ArrowLeft,
 } from 'lucide-react'
-import { Button } from '@smart-cv/ui'
-import { i18n, useTranslation } from '@smart-cv/i18n'
-import { registerSignOutHandler } from '@smart-cv/api'
+import { Button, NotificationPopover } from '@smart-cv/ui'
+import { useTranslation } from '@smart-cv/i18n'
+import {
+  registerSignOutHandler,
+  useGetMe2,
+  useNotificationsList,
+  useMarkNotificationRead,
+  useMarkAllNotificationsRead,
+  useDeleteNotification,
+} from '@smart-cv/api'
+import type { NotificationItem, NotificationFilter } from '@smart-cv/ui'
 import { Toaster } from 'sonner'
-import { usePreferencesStore } from '../store/usePreferencesStore'
-import { useAuthStore } from '../store/useAuthStore'
+import { hasCandidateRole, useAuthStore } from '../store/useAuthStore'
+import { useCandidatePreferences } from '../store/candidatePreferences'
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -35,9 +42,10 @@ function RootComponent() {
   const { t } = useTranslation()
   const navigate = useNavigate()
   const pathname = useRouterState({ select: (s) => s.location.pathname })
-  const accountPaths = ['/profile', '/cv', '/assessments', '/notifications', '/settings', '/applications', '/wishlists', '/job-suggestions']
+  const accountPaths = ['/profile', '/cv', '/assessments', '/settings', '/applications', '/wishlists', '/job-suggestions', '/billing']
   const isAccountArea = accountPaths.some((path) => pathname === path || pathname.startsWith(`${path}/`))
-  const hidePublicChrome = isAccountArea
+  const isPaymentArea = pathname.startsWith('/payment/')
+  const hidePublicChrome = isAccountArea || isPaymentArea || pathname === '/signin' || pathname === '/signup'
   const hideFooter = pathname === '/signin' || pathname === '/signup' || hidePublicChrome
   const [jobMenuOpen, setJobMenuOpen] = React.useState(false)
   const [resourceMenuOpen, setResourceMenuOpen] = React.useState(false)
@@ -47,12 +55,70 @@ function RootComponent() {
   const [jobHighlightIndex, setJobHighlightIndex] = React.useState(0)
   const [resourceHighlightIndex, setResourceHighlightIndex] = React.useState(0)
 
-  const { isAuthenticated, email, signOut } = useAuthStore()
-  const theme = usePreferencesStore((state) => state.theme)
-  const language = usePreferencesStore((state) => state.language)
-  const toggleTheme = usePreferencesStore((state) => state.toggleTheme)
-  const toggleLanguage = usePreferencesStore((state) => state.toggleLanguage)
-  const syncLanguageFromI18n = usePreferencesStore((state) => state.syncLanguageFromI18n)
+  const { isAuthenticated, email, role, fullName, setFullName, avatarUrl, setAvatarUrl, signOut } = useAuthStore()
+  const {
+    theme,
+    language,
+    toggleTheme,
+    toggleLanguage,
+    isLoading: preferencesLoading,
+  } = useCandidatePreferences()
+  // Load real notifications from backend notification-service
+  const { data: apiNotificationsData } = useNotificationsList(
+    { page: 1, pageSize: 50 },
+    { query: { enabled: isAuthenticated, refetchInterval: 10000 } }
+  )
+
+  const markReadMutation = useMarkNotificationRead()
+  const markAllReadMutation = useMarkAllNotificationsRead()
+  const deleteMutation = useDeleteNotification()
+
+  const [notiFilter, setNotiFilter] = React.useState<NotificationFilter>('all')
+
+  const notifications = React.useMemo<NotificationItem[]>(() => {
+    if (!isAuthenticated) return []
+    const items = apiNotificationsData?.data?.items ?? []
+    return items.map((item) => {
+      let tone: "default" | "success" | "warning" | "danger" | "info" = "default"
+      if (item.type === "SUCCESS" || item.type === "info") tone = "success"
+      else if (item.type === "WARNING") tone = "warning"
+      else if (item.type === "ERROR") tone = "danger"
+      else if (item.type === "INFO" || item.type === "CREDIT_EXHAUSTED") tone = "info"
+
+      return {
+        id: item.id,
+        title: item.title || "Notification",
+        message: item.body || "",
+        createdAt: item.createdAt,
+        read: item.isRead,
+        tone,
+      }
+    })
+  }, [apiNotificationsData, isAuthenticated])
+
+  const unreadCount = React.useMemo(() => {
+    if (!isAuthenticated) return 0
+    return apiNotificationsData?.data?.unreadCount ?? notifications.filter((n) => !n.read).length
+  }, [apiNotificationsData, notifications, isAuthenticated])
+
+  const handleMarkRead = (id: string) => {
+    markReadMutation.mutate(id)
+  }
+
+  const handleMarkAllRead = () => {
+    markAllReadMutation.mutate()
+  }
+
+  const handleDeleteNotification = (id: string) => {
+    deleteMutation.mutate(id)
+  }
+
+  const handleClearAll = () => {
+    const items = apiNotificationsData?.data?.items ?? []
+    items.forEach((item) => {
+      deleteMutation.mutate(item.id)
+    })
+  }
 
   const jobMenuRef = React.useRef<HTMLDivElement>(null)
   const resourceMenuRef = React.useRef<HTMLDivElement>(null)
@@ -61,6 +127,7 @@ function RootComponent() {
 
   const jobOptions = [t('nav_all_jobs'), t('nav_companies'), t('nav_top_companies'), t('nav_remote_jobs'), t('nav_internships')]
   const resourceOptions = [t('nav_career_resources'), t('nav_cv_templates'), t('nav_interview_guides'), t('nav_salary_report')]
+  
 
   const navigateToJobOption = (item: string) => {
     if (item === t('nav_companies')) {
@@ -127,23 +194,28 @@ function RootComponent() {
 
   const handleToggleLanguage = () => {
     toggleLanguage()
-    i18n.changeLanguage(language === 'EN' ? 'vi' : 'en')
   }
 
   React.useEffect(() => {
     registerSignOutHandler(() => useAuthStore.getState().signOut())
   }, [])
 
+  // Fetch profile once to cache fullName and avatar globally
+  const { data: profileData } = useGetMe2({ query: { enabled: isAuthenticated && hasCandidateRole(role) && (!fullName || !avatarUrl), retry: false } })
+  React.useEffect(() => {
+    const name = profileData?.data?.fullName
+    if (name) setFullName(name)
+    setAvatarUrl(profileData?.data?.avatarUrl ?? null)
+  }, [profileData, setAvatarUrl, setFullName])
+
+  // Derived display values for header
+  const displayName = fullName ?? email?.split('@')[0] ?? 'Account'
+
   // auth state is derived from cookies in useAuthStore directly
 
   React.useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark')
   }, [theme])
-
-  React.useEffect(() => {
-    const currentLanguage = i18n.language?.toUpperCase() === 'VI' ? 'VI' : 'EN'
-    syncLanguageFromI18n(currentLanguage)
-  }, [syncLanguageFromI18n, t])
 
   React.useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -221,11 +293,9 @@ function RootComponent() {
           </div>
 
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="text-muted-foreground hover:bg-muted/80">
-              <Bell className="h-5 w-5" />
-            </Button>
             <button
               onClick={handleToggleLanguage}
+              disabled={preferencesLoading}
               className="border-border bg-muted/60 relative flex h-10 w-[92px] cursor-pointer items-center rounded-lg border p-1 text-sm"
             >
               <span
@@ -237,11 +307,39 @@ function RootComponent() {
             <Button
               variant="outline"
               onClick={toggleTheme}
+              disabled={preferencesLoading}
               size="icon"
               className="border-border bg-muted/60 text-muted-foreground transition-transform duration-300 active:scale-95"
             >
               {theme === 'dark' ? <Sun className="h-4 w-4 transition-transform duration-300 hover:rotate-12" /> : <Moon className="h-4 w-4 transition-transform duration-300 hover:-rotate-12" />}
             </Button>
+
+            <NotificationPopover
+              notifications={notifications}
+              unreadCount={unreadCount}
+              filter={notiFilter}
+              onFilterChange={setNotiFilter}
+              onMarkRead={handleMarkRead}
+              onDelete={handleDeleteNotification}
+              onMarkAllRead={handleMarkAllRead}
+              onClearAll={handleClearAll}
+              locale={language === 'VI' ? 'vi-VN' : 'en-US'}
+              triggerClassName="text-muted-foreground hover:bg-muted/80"
+              labels={{
+                title: t('account_notifications'),
+                all: t('notifications_filter_all'),
+                unread: t('notifications_filter_unread'),
+                read: t('notifications_filter_read'),
+                markRead: t('notifications_mark_read'),
+                delete: t('notifications_delete'),
+                markAllRead: t('notifications_mark_all_read'),
+                clearAll: t('notifications_clear_all'),
+                empty: t('notifications_empty'),
+                noUnread: t('notifications_no_unread'),
+                unreadCount: t('notifications_unread_count', { count: unreadCount }),
+                openNotifications: t('notifications_popup_aria'),
+              }}
+            />
 
             {isAuthenticated ? (
               <div
@@ -251,22 +349,31 @@ function RootComponent() {
                 onMouseLeave={handleAccountMouseLeave}
               >
                 <div className="rounded-full bg-primary/20 border border-primary/30 flex items-center gap-2 px-3 py-1.5 cursor-pointer">
-                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-primary/20 text-primary">
-                    <UserRound className="h-4 w-4" />
+                  <div className="flex h-7 w-7 items-center justify-center overflow-hidden rounded-full bg-primary/20 text-primary">
+                    {avatarUrl ? (
+                      <img src={avatarUrl} alt={displayName} className="h-full w-full object-cover" />
+                    ) : (
+                      <UserRound className="h-4 w-4" />
+                    )}
                   </div>
-                  <span className="text-sm font-medium text-foreground">{email?.split('@')[0] ?? 'Account'}</span>
+                  <span className="text-sm font-medium text-foreground">{displayName}</span>
                   <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform ${accountMenuOpen ? 'rotate-180' : ''}`} />
                 </div>
 
                 <div
                   className={`absolute right-0 top-full mt-2 min-w-[220px] rounded-xl border border-border bg-card shadow-xl z-50 transition-opacity duration-150 ${accountMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+                  onClick={() => setAccountMenuOpen(false)}
                 >
                   <div className="flex items-center gap-3 px-3 py-3">
-                    <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
-                      <UserRound className="h-5 w-5" />
+                    <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-primary/20 text-primary">
+                      {avatarUrl ? (
+                        <img src={avatarUrl} alt={displayName} className="h-full w-full object-cover" />
+                      ) : (
+                        <UserRound className="h-5 w-5" />
+                      )}
                     </div>
                     <div className="min-w-0">
-                      <p className="text-sm font-semibold text-foreground">{email?.split('@')[0] ?? 'Account'}</p>
+                      <p className="text-sm font-semibold text-foreground">{displayName}</p>
                       <p className="text-xs text-muted-foreground truncate">{email ?? ''}</p>
                     </div>
                   </div>
@@ -283,10 +390,6 @@ function RootComponent() {
                     <Link to="/assessments" className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-foreground hover:bg-muted/60 transition-colors">
                       <ClipboardCheck className="h-4 w-4 text-muted-foreground" />
                       {t('account_assessments')}
-                    </Link>
-                    <Link to="/notifications" className="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-foreground hover:bg-muted/60 transition-colors">
-                      <Bell className="h-4 w-4 text-muted-foreground" />
-                      {t('account_notifications')}
                     </Link>
                   </div>
                   <hr className="border-border my-1" />

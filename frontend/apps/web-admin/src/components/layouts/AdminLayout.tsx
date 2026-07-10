@@ -1,10 +1,12 @@
 import { Link, Outlet, useNavigate, useRouterState } from '@tanstack/react-router'
-import { Bell, Brain, ChevronDown, CreditCard, FileWarning, KeyRound, LayoutDashboard, Menu, Moon, Package, ScrollText, Search, Settings, ShieldCheck, Sparkles, Sun, Users } from 'lucide-react'
+import { Brain, ChevronDown, CreditCard, FileWarning, KeyRound, LayoutDashboard, LogOut, Menu, Moon, Package, ScrollText, Search, Settings, ShieldCheck, Sparkles, Sun, Users, UserRound } from 'lucide-react'
 import { useEffect, useMemo, useState } from 'react'
 import { cn } from '@/lib/utils'
 import { useAuthStore } from '@/store/auth'
-import { Button } from '@smart-cv/ui'
+import { Button, NotificationPopover, DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@smart-cv/ui'
+import type { NotificationItem, NotificationFilter } from '@smart-cv/ui'
 import { useTranslation } from '@smart-cv/i18n'
+import { useNotificationsList, useMarkNotificationRead, useMarkAllNotificationsRead } from '@smart-cv/api'
 
 export function AdminLayout() {
   const pathname = useRouterState({ select: (s) => s.location.pathname })
@@ -24,14 +26,44 @@ export function AdminLayout() {
   })
   const user = useAuthStore((s) => s.user)
   const clearAuth = useAuthStore((s) => s.clearAuth)
+
+  const [filter, setFilter] = useState<NotificationFilter>('all')
+  const [dismissed, setDismissed] = useState<Set<string>>(new Set())
+  const { data: notifData } = useNotificationsList({ pageSize: 20 })
+  const markReadMutation = useMarkNotificationRead()
+  const markAllReadMutation = useMarkAllNotificationsRead()
+
+  const notifications: NotificationItem[] = (notifData?.data?.items ?? [])
+    .filter((item) => !dismissed.has(item.id))
+    .map((item) => ({
+      id: item.id,
+      title: item.title,
+      message: item.body,
+      createdAt: item.createdAt,
+      read: item.isRead,
+      tone: 'info' as const,
+      url: item.data?.url,
+    }))
+
+  const markAsRead = (id: string) => markReadMutation.mutate(id)
+  const markAllAsRead = () => markAllReadMutation.mutate()
+  const deleteNotification = (id: string) => setDismissed((prev) => new Set(prev).add(id))
+  const clearAll = () => setDismissed(new Set((notifData?.data?.items ?? []).map((i) => i.id)))
+
+  const unreadCount = notifData?.data?.unreadCount ?? notifications.filter((n) => !n.read).length
+
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark')
   }, [theme])
+
   const toggleLanguage = () => {
     const nextLanguage = language === 'EN' ? 'VI' : 'EN'
     localStorage.setItem('smartcv_lang', nextLanguage.toLowerCase())
     i18n.changeLanguage(nextLanguage.toLowerCase())
   }
+
+
+
   const toggleTheme = () => {
     setTheme((prev) => {
       const next = prev === 'dark' ? 'light' : 'dark'
@@ -39,6 +71,7 @@ export function AdminLayout() {
       return next
     })
   }
+
   const navGroups = useMemo(() => ([
     {
       key: 'overview',
@@ -59,6 +92,7 @@ export function AdminLayout() {
       label: t('admin_sidebar_group_operations'),
       items: [
         { to: '/admin/job-moderation', label: t('admin_nav_job_moderation'), icon: FileWarning },
+        { to: '/admin/assessments', label: 'Kiểm duyệt bài test', icon: ScrollText },
         { to: '/admin/packages', label: t('admin_nav_packages'), icon: Package },
         { to: '/admin/payments', label: t('admin_nav_payments'), icon: CreditCard },
       ],
@@ -156,22 +190,58 @@ export function AdminLayout() {
             >
               {theme === 'dark' ? <Sun className="h-4 w-4 transition-transform duration-300 hover:rotate-12" /> : <Moon className="h-4 w-4 transition-transform duration-300 hover:-rotate-12" />}
             </Button>
-            <button className="p-2 rounded-lg hover:bg-accent"><Bell className="size-5" /></button>
-            <button
-              onClick={() => {
-                clearAuth()
-                navigate({ to: '/signin' })
+            <NotificationPopover
+              notifications={notifications}
+              unreadCount={unreadCount}
+              filter={filter}
+              onFilterChange={setFilter}
+              onMarkRead={markAsRead}
+              onDelete={deleteNotification}
+              onMarkAllRead={markAllAsRead}
+              onClearAll={clearAll}
+              onClickNotification={(id, url) => {
+                markAsRead(id)
+                if (url) window.location.href = url
               }}
-              className="flex items-center gap-2 rounded-lg px-2 py-1.5 hover:bg-accent"
-            >
-              <div className="size-8 rounded-full bg-primary/15 text-primary flex items-center justify-center text-xs font-bold">
-                {(user?.name ?? 'A').slice(0, 1)}
-              </div>
-              <div className="hidden md:block text-left">
-                <div className="text-sm font-medium">{user?.name ?? 'Admin SmartCV'}</div>
-                <div className="text-xs text-muted-foreground">{t('admin_account_actions')}</div>
-              </div>
-            </button>
+              locale={language === 'VI' ? 'vi-VN' : 'en-US'}
+              triggerClassName="text-foreground hover:bg-accent"
+              labels={{
+                title: t('account_notifications'),
+                all: t('notifications_filter_all'),
+                unread: t('notifications_filter_unread'),
+                read: t('notifications_filter_read'),
+                markRead: t('notifications_mark_read'),
+                delete: t('notifications_delete'),
+                markAllRead: t('notifications_mark_all_read'),
+                clearAll: t('notifications_clear_all'),
+                empty: t('notifications_empty'),
+                noUnread: t('notifications_no_unread'),
+                unreadCount: t('notifications_unread_count', { count: unreadCount }),
+                openNotifications: t('notifications_popup_aria'),
+              }}
+            />
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center gap-2 rounded-full bg-primary/20 border border-primary/30 px-3 py-1.5 cursor-pointer hover:bg-primary/25 transition-colors">
+                  <div className="flex h-7 w-7 items-center justify-center overflow-hidden rounded-full bg-primary/20 text-primary">
+                    <UserRound className="h-4 w-4" />
+                  </div>
+                  <span className="text-sm font-medium text-foreground">{user?.email?.split('@')[0] ?? 'Admin'}</span>
+                  <ChevronDown className="h-4 w-4 text-muted-foreground" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-48">
+                <DropdownMenuItem
+                  onClick={() => {
+                    clearAuth()
+                    navigate({ to: '/signin' })
+                  }}
+                  className="cursor-pointer text-destructive focus:text-destructive"
+                >
+                  <LogOut className="mr-2 size-4" /> {t('account_sign_out')}
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </header>
 

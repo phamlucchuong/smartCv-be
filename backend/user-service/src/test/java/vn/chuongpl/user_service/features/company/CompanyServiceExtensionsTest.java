@@ -7,7 +7,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import vn.chuongpl.user_service.enums.RecruiterStatus;
+import vn.chuongpl.user_service.enums.JobCategory;
 import vn.chuongpl.user_service.features.recruiter.Recruiter;
+
 import vn.chuongpl.user_service.features.recruiter.RecruiterRepository;
 import vn.chuongpl.user_service.integration.job.JobClient;
 import vn.chuongpl.user_service.integration.job.JobSummary;
@@ -30,6 +32,8 @@ class CompanyServiceExtensionsTest {
         JobSummary job = new JobSummary();
         job.setId("j1");
         job.setTitle("Backend Engineer");
+        Recruiter recruiter = Recruiter.builder().id("r1").deleted(false).build();
+        when(recruiterRepository.findById("r1")).thenReturn(Optional.of(recruiter));
         when(jobClient.getJobsByRecruiter("r1")).thenReturn(List.of(job));
 
         List<JobSummary> result = companyService.getCompanyJobs("r1");
@@ -41,6 +45,8 @@ class CompanyServiceExtensionsTest {
 
     @Test
     void getCompanyJobs_shouldReturnEmptyListWhenJobClientFails() {
+        Recruiter recruiter = Recruiter.builder().id("r1").deleted(false).build();
+        when(recruiterRepository.findById("r1")).thenReturn(Optional.of(recruiter));
         when(jobClient.getJobsByRecruiter("r1")).thenReturn(List.of());
 
         List<JobSummary> result = companyService.getCompanyJobs("r1");
@@ -50,10 +56,10 @@ class CompanyServiceExtensionsTest {
 
     @Test
     void getRelatedCompanies_shouldReturnSameIndustryCompanies() {
-        Recruiter current = Recruiter.builder().id("r1").industry("IT").status(RecruiterStatus.APPROVED).build();
-        Recruiter related = Recruiter.builder().id("r2").companyName("OtherCorp").industry("IT").status(RecruiterStatus.APPROVED).build();
-        when(recruiterRepository.findByIdAndDeletedFalse("r1")).thenReturn(Optional.of(current));
-        when(recruiterRepository.findTop5ByIndustryAndIdNotAndStatusAndDeletedFalse("IT", "r1", RecruiterStatus.APPROVED))
+        Recruiter current = Recruiter.builder().id("r1").category(JobCategory.IT_SOFTWARE).status(RecruiterStatus.APPROVED).build();
+        Recruiter related = Recruiter.builder().id("r2").companyName("OtherCorp").category(JobCategory.IT_SOFTWARE).status(RecruiterStatus.APPROVED).build();
+        when(recruiterRepository.findById("r1")).thenReturn(Optional.of(current));
+        when(recruiterRepository.findTop5ByCategoryAndIdNotAndStatusAndDeletedFalse(JobCategory.IT_SOFTWARE, "r1", RecruiterStatus.APPROVED))
                 .thenReturn(List.of(related));
 
         List<CompanyResponse> result = companyService.getRelatedCompanies("r1");
@@ -64,12 +70,14 @@ class CompanyServiceExtensionsTest {
 
     @Test
     void getRelatedCompanies_shouldReturnEmptyListWhenNoIndustry() {
-        Recruiter current = Recruiter.builder().id("r1").industry(null).status(RecruiterStatus.APPROVED).build();
-        when(recruiterRepository.findByIdAndDeletedFalse("r1")).thenReturn(Optional.of(current));
+        Recruiter current = Recruiter.builder().id("r1").category(null).status(RecruiterStatus.APPROVED).build();
+        when(recruiterRepository.findById("r1")).thenReturn(Optional.of(current));
 
         List<CompanyResponse> result = companyService.getRelatedCompanies("r1");
 
         assertTrue(result.isEmpty());
+        verify(recruiterRepository).findById("r1");
         verifyNoMoreInteractions(recruiterRepository);
     }
 }
+

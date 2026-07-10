@@ -1,7 +1,10 @@
 import { createRootRoute, Link, Outlet } from '@tanstack/react-router'
+import { registerSignOutHandler } from '@smart-cv/api'
 import { ArrowLeft } from 'lucide-react'
 import { useTranslation } from '@smart-cv/i18n'
 import { useEffect } from 'react'
+import { useAuthStore } from '../store/useAuthStore'
+import { Toaster } from 'sonner'
 
 export const Route = createRootRoute({
   component: RootComponent,
@@ -9,7 +12,16 @@ export const Route = createRootRoute({
 })
 
 function RootComponent() {
-  return <Outlet />
+  useEffect(() => {
+    registerSignOutHandler(() => useAuthStore.getState().signOut())
+  }, [])
+
+  return (
+    <>
+      <Outlet />
+      <Toaster richColors />
+    </>
+  )
 }
 
 function NotFoundPage() {

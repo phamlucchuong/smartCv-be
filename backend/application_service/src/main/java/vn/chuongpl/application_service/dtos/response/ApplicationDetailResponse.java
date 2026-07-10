@@ -20,6 +20,8 @@ public class ApplicationDetailResponse {
     String candidateId;
     String jobId;
     String recruiterId;
+    String jobTitle;
+    String companyName;
     ApplicationStatus status;
     String coverLetter;
     String cvUrl;

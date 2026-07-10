@@ -6,8 +6,10 @@
  */
 import type { NotificationPreferences } from './notificationPreferences';
 import type { PrivacySettings } from './privacySettings';
+import type { PreferencesSettings } from './preferencesSettings';
 
 export interface CandidateSettings {
   notifications?: NotificationPreferences;
   privacy?: PrivacySettings;
+  preferences?: PreferencesSettings;
 }

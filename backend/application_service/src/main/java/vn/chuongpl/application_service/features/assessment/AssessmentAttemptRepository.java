@@ -13,4 +13,6 @@ public interface AssessmentAttemptRepository extends MongoRepository<AssessmentA
 
     Optional<AssessmentAttempt> findByCandidateIdAndAssessmentIdAndStatus(
             String candidateId, String assessmentId, AttemptStatus status);
+
+    List<AssessmentAttempt> findByAssessmentId(String assessmentId);
 }

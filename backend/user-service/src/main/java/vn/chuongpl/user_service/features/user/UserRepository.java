@@ -26,4 +26,5 @@ public interface UserRepository extends MongoRepository<User, String> {
     Optional<User> findByIdAndDeletedFalse(String id);
 //    Optional<User> findByIdAndDeletedFalse(String id);
     Page<User> findByRolesIn(List<String> roles , Pageable pageable);
+    Page<User> findByRoles_NameIn(List<String> roleNames, Pageable pageable);
 }

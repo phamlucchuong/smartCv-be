@@ -12,4 +12,5 @@ import lombok.experimental.FieldDefaults;
 public class CandidateSettings {
     @Builder.Default NotificationPreferences notifications = new NotificationPreferences();
     @Builder.Default PrivacySettings privacy = new PrivacySettings();
+    @Builder.Default PreferencesSettings preferences = new PreferencesSettings();
 }

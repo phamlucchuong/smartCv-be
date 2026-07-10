@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head><meta charset="UTF-8"><title>Gói dịch vụ đã hết hạn</title></head>
+<body style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:24px;color:#1a1a1a;">
+  <div style="background:#f59e0b;padding:16px 24px;border-radius:8px 8px 0 0;">
+    <h1 style="color:#fff;margin:0;font-size:18px;">Gói dịch vụ của bạn đã hết hạn</h1>
+  </div>
+  <div style="border:1px solid #e5e7eb;border-top:none;padding:24px;border-radius:0 0 8px 8px;">
+    <p>Xin chào,</p>
+    <p>Gói dịch vụ <strong>{{.PackageID}}</strong> của bạn đã <strong>hết hạn vào {{.ExpiredAt}}</strong>.</p>
+    <p>Tài khoản của bạn đã được tự động chuyển về <strong>gói miễn phí</strong>. Một số tính năng cao cấp sẽ không còn khả dụng.</p>
+
+    <div style="background:#fef3c7;border:1px solid #f59e0b;border-radius:8px;padding:16px;margin:20px 0;">
+      <p style="margin:0 0 8px 0;font-weight:600;color:#92400e;">⚠️ Lưu ý quan trọng — Thời hạn 3 ngày</p>
+      <p style="margin:0;color:#78350f;">Vui lòng <strong>sao lưu dữ liệu cần thiết</strong> hoặc <strong>gia hạn gói dịch vụ</strong> trong vòng <strong>3 ngày</strong>.</p>
+      <p style="margin:8px 0 0 0;color:#78350f;">Sau thời hạn này, hệ thống sẽ tự động xóa các CV và tin tuyển dụng vượt quá giới hạn của gói miễn phí.</p>
+    </div>
+
+    <div style="margin:24px 0;">
+      <a href="http://localhost:3000/billing"
+         style="background:#2563eb;color:#fff;padding:12px 24px;border-radius:6px;text-decoration:none;font-weight:600;">
+        Gia hạn gói dịch vụ
+      </a>
+    </div>
+    <p style="margin-top:24px;color:#6b7280;font-size:13px;">Email này được gửi tự động từ hệ thống SmartCV. Vui lòng không trả lời email này.</p>
+  </div>
+</body>
+</html>

@@ -12,7 +12,8 @@ import lombok.experimental.FieldDefaults;
 public class JobResponse {
     String id;
     String recruiterId;
-    String status;
+    String visibilityStatus;
+    String moderationStatus;
     String title;
     String company;
     String location;

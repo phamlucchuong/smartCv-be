@@ -6,6 +6,12 @@ server:
 spring:
   config:
     import: optional:file:../.env[.properties]
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+  devtools:
+    livereload:
+      enabled: false
 
   application:
     name: UserService
@@ -13,7 +19,7 @@ spring:
     include: local
   data:
     mongodb:
-      uri: mongodb://${MONGO_DB_USERNAME:admin}:${MONGO_DB_PASSWORD:admin}@${MONGO_DB_HOST:localhost}:${MONGO_DB_PORT:27017}/${MONGO_DB_NAME:user_db}?authSource=admin
+      uri: mongodb://${MONGO_DB_USERNAME:admin}:${MONGO_DB_PASSWORD:admin}@${MONGO_DB_HOST:localhost}:${MONGO_DB_PORT:27017}/${USER_MONGO_DB_NAME:smartcv_user}?authSource=admin
       auto-index-creation: true
 
   cache:
@@ -41,6 +47,7 @@ spring:
 
   main:
     banner-mode: "off"
+    log-startup-info: false
 
   output:
     ansi:
@@ -49,6 +56,11 @@ spring:
 logging:
   level:
     root: WARN
+    org.springframework: WARN
+    org.springframework.boot: WARN
+    org.springframework.data: WARN
+    org.mongodb.driver: WARN
+    org.hibernate: WARN
     "vn.chuongpl.user_service": INFO
   pattern:
     console: "%d{HH:mm:ss.SSS} %-5level %msg%n"
@@ -72,3 +84,9 @@ app:
 
 integration:
   job-service-url: ${JOB_SERVICE_URL:http://localhost:8082/job}
+
+google:
+  oauth:
+    client-id: ${GOOGLE_OAUTH_CLIENT_ID:}
+    allowed-audiences: ${GOOGLE_OAUTH_ALLOWED_AUDIENCES:}
+    jwk-set-uri: ${GOOGLE_OAUTH_JWK_SET_URI:https://www.googleapis.com/oauth2/v3/certs}

@@ -18,6 +18,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class NotificationClient {
+    private static final int OTP_TTL_MINUTES = 5;
+
     RestTemplate restTemplate;
     RabbitTemplate rabbitTemplate;
 
@@ -34,6 +36,7 @@ public class NotificationClient {
                 .target(target)
                 .targetType(targetType)
                 .otpType(otpType)
+                .ttlMinutes(OTP_TTL_MINUTES)
                 .build();
         rabbitTemplate.convertAndSend(RabbitMQConfig.EXCHANGE, RabbitMQConfig.ROUTING_KEY, message);
     }

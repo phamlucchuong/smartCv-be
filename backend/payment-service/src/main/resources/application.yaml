@@ -1,0 +1,66 @@
+server:
+  port: ${PAYMENT_SERVICE_PORT:8086}
+  servlet:
+    context-path: /payment
+
+spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+  config:
+    import: optional:file:../.env[.properties]
+  application:
+    name: payment-service
+  data:
+    mongodb:
+      uri: mongodb://${MONGO_DB_USERNAME}:${MONGO_DB_PASSWORD}@${MONGO_DB_HOST:localhost}:${MONGO_DB_PORT:27017}/smartcv_payment?authSource=admin
+      auto-index-creation: true
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:admin}
+    password: ${RABBITMQ_PASSWORD:admin123}
+  main:
+    banner-mode: "off"
+    log-startup-info: false
+  output:
+    ansi:
+      enabled: ALWAYS
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+
+app:
+  gateway:
+    internal-secret: ${GATEWAY_INTERNAL_SECRET:changeme}
+
+integration:
+  user-service-url: ${USER_SERVICE_URL:http://localhost:8081/user}
+
+payos:
+  client-id: ${PAYOS_CLIENT_ID:}
+  api-key: ${PAYOS_API_KEY:}
+  checksum-key: ${PAYOS_CHECKSUM_KEY:}
+  webhook-token: ${PAYOS_WEBHOOK_TOKEN:}
+  return-url: ${PAYMENT_RETURN_URL:http://localhost:3000/payment/success}
+  cancel-url: ${PAYMENT_CANCEL_URL:http://localhost:3000/payment/cancel}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+
+logging:
+  level:
+    root: WARN
+    org.springframework: WARN
+    "vn.chuongpl.payment_service": INFO
+  pattern:
+    console: "%d{HH:mm:ss.SSS} %-5level %msg%n"

@@ -1,6 +1,5 @@
 import { Link, Outlet, useNavigate, useRouterState } from '@tanstack/react-router'
 import {
-  Bell,
   ChevronDown,
   ClipboardCheck,
   FileText,
@@ -13,12 +12,20 @@ import {
   Sparkles,
   Sun,
   UserRound,
+  CreditCard,
 } from 'lucide-react'
 import * as React from 'react'
-import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger, cn } from '@smart-cv/ui'
+import { Button, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger, NotificationPopover, cn } from '@smart-cv/ui'
+import type { NotificationItem, NotificationFilter } from '@smart-cv/ui'
 import { i18n, useTranslation } from '@smart-cv/i18n'
 import { usePreferencesStore } from '../../store/usePreferencesStore'
 import { useAuthStore } from '../../store/useAuthStore'
+import {
+  useNotificationsList,
+  useMarkNotificationRead,
+  useMarkAllNotificationsRead,
+  useDeleteNotification,
+} from '@smart-cv/api'
 
 interface NavItem {
   key: string
@@ -45,11 +52,37 @@ export function CandidateDashboardLayout() {
     other: true,
   })
 
-  const { email, signOut } = useAuthStore()
+  const { email, fullName, avatarUrl, signOut } = useAuthStore()
+  const displayName = fullName ?? email?.split('@')[0] ?? 'Account'
   const theme = usePreferencesStore((s) => s.theme)
   const language = usePreferencesStore((s) => s.language)
   const toggleTheme = usePreferencesStore((s) => s.toggleTheme)
   const toggleLanguage = usePreferencesStore((s) => s.toggleLanguage)
+
+  const [filter, setFilter] = React.useState<NotificationFilter>('all')
+  const [dismissed, setDismissed] = React.useState<Set<string>>(new Set())
+
+  const { data: notifData } = useNotificationsList({ page: 1, pageSize: 30 })
+  const markReadMutation = useMarkNotificationRead()
+  const markAllReadMutation = useMarkAllNotificationsRead()
+  const deleteMutation = useDeleteNotification()
+
+  const notifications: NotificationItem[] = React.useMemo(() => {
+    const items = notifData?.data?.items ?? []
+    return items
+      .filter((item) => !dismissed.has(item.id))
+      .map((item) => ({
+        id: item.id,
+        title: item.title,
+        message: item.body,
+        createdAt: item.createdAt,
+        read: item.isRead,
+        tone: 'info' as const,
+        url: item.data?.url,
+      }))
+  }, [notifData, dismissed])
+
+  const unreadCount = notifData?.data?.unreadCount ?? 0
 
   const navGroups: NavGroup[] = [
     {
@@ -74,8 +107,8 @@ export function CandidateDashboardLayout() {
       key: 'other',
       label: t('candidate_sidebar_group_other'),
       items: [
-        { key: 'notifications', label: t('account_notifications'), to: '/notifications', icon: Bell },
         { key: 'settings', label: t('account_settings'), to: '/settings', icon: Settings },
+        { key: 'billing', label: 'Gói & Thanh toán', to: '/billing', icon: CreditCard },
       ],
     },
   ]
@@ -174,20 +207,49 @@ export function CandidateDashboardLayout() {
               {theme === 'dark' ? <Sun className="h-4 w-4 transition-transform duration-300 hover:rotate-12" /> : <Moon className="h-4 w-4 transition-transform duration-300 hover:-rotate-12" />}
             </Button>
 
-            <button className="hover:bg-accent relative rounded-lg p-2">
-              <Bell className="size-5" />
-              <span className="bg-danger absolute top-1.5 right-1.5 size-2 rounded-full" />
-            </button>
+            <NotificationPopover
+              notifications={notifications}
+              unreadCount={unreadCount}
+              filter={filter}
+              onFilterChange={setFilter}
+              onMarkRead={(id) => markReadMutation.mutate(id)}
+              onDelete={(id) => deleteMutation.mutate(id)}
+              onMarkAllRead={() => markAllReadMutation.mutate()}
+              onClearAll={() => setDismissed(new Set((notifData?.data?.items ?? []).map((i) => i.id)))}
+              onClickNotification={(id, url) => {
+                markReadMutation.mutate(id)
+                if (url) window.location.href = url
+              }}
+              locale={language === 'VI' ? 'vi-VN' : 'en-US'}
+              triggerClassName="hover:bg-accent text-foreground"
+              labels={{
+                title: t('account_notifications'),
+                all: t('notifications_filter_all'),
+                unread: t('notifications_filter_unread'),
+                read: t('notifications_filter_read'),
+                markRead: t('notifications_mark_read'),
+                delete: t('notifications_delete'),
+                markAllRead: t('notifications_mark_all_read'),
+                clearAll: t('notifications_clear_all'),
+                empty: t('notifications_empty'),
+                noUnread: t('notifications_no_unread'),
+                unreadCount: t('notifications_unread_count', { count: unreadCount }),
+                openNotifications: t('notifications_popup_aria'),
+              }}
+            />
 
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <button className="hover:bg-accent flex items-center gap-2 rounded-lg px-1.5 py-1">
-                  <div className="bg-primary text-primary-foreground flex size-8 items-center justify-center rounded-full text-xs font-semibold">
-                    {email?.charAt(0).toUpperCase() ?? '?'}
+                <button className="flex items-center gap-2 rounded-full bg-primary/20 border border-primary/30 px-3 py-1.5 cursor-pointer hover:bg-primary/25 transition-colors">
+                  <div className="flex h-7 w-7 items-center justify-center overflow-hidden rounded-full bg-primary/20 text-primary">
+                    {avatarUrl ? (
+                      <img src={avatarUrl} alt={displayName} className="h-full w-full object-cover" />
+                    ) : (
+                      <UserRound className="h-4 w-4" />
+                    )}
                   </div>
-                  <div className="hidden text-left leading-tight md:block">
-                    <div className="text-sm font-medium">{email?.split('@')[0] ?? 'Account'}</div>
-                  </div>
+                  <span className="text-sm font-medium text-foreground">{displayName}</span>
+                  <ChevronDown className="h-4 w-4 text-muted-foreground" />
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-48">

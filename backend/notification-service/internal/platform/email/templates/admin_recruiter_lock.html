@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head><meta charset="UTF-8"><title>Nhà tuyển dụng bị khóa</title></head>
+<body style="font-family:sans-serif;max-width:600px;margin:0 auto;padding:24px;color:#1a1a1a;">
+  <div style="background:#dc2626;padding:16px 24px;border-radius:8px 8px 0 0;">
+    <h1 style="color:#fff;margin:0;font-size:18px;">[Admin] Nhà tuyển dụng bị khóa tài khoản</h1>
+  </div>
+  <div style="border:1px solid #e5e7eb;border-top:none;padding:24px;border-radius:0 0 8px 8px;">
+    <p>Xin chào Admin,</p>
+    <p>Tài khoản nhà tuyển dụng dưới đây đã bị hệ thống <strong>tự động khóa</strong> do chưa thanh toán phí sàn đúng hạn:</p>
+    <table style="width:100%;border-collapse:collapse;margin:16px 0;">
+      <tr>
+        <td style="padding:8px;background:#f9fafb;border:1px solid #e5e7eb;font-weight:600;width:40%;">Công ty</td>
+        <td style="padding:8px;border:1px solid #e5e7eb;">{{.CompanyName}}</td>
+      </tr>
+      <tr>
+        <td style="padding:8px;background:#f9fafb;border:1px solid #e5e7eb;font-weight:600;">Email liên hệ</td>
+        <td style="padding:8px;border:1px solid #e5e7eb;">{{.RecruiterEmail}}</td>
+      </tr>
+      <tr>
+        <td style="padding:8px;background:#f9fafb;border:1px solid #e5e7eb;font-weight:600;">Hạn thanh toán</td>
+        <td style="padding:8px;border:1px solid #e5e7eb;color:#dc2626;">{{.DueAt}}</td>
+      </tr>
+    </table>
+    <p>Nhà tuyển dụng cần liên hệ admin để được mở khóa sau khi hoàn tất thanh toán phí sàn.</p>
+    <p style="margin-top:24px;color:#6b7280;font-size:13px;">Email này được gửi tự động từ hệ thống SmartCV. Vui lòng không trả lời email này.</p>
+  </div>
+</body>
+</html>
